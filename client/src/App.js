@@ -4,6 +4,7 @@ import Books from "./pages/Books";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
+import Trip from "./pages/Trip";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Switch>
           <Route exact path={["/", "/books"]}>
             <Books />
+            <Trip />
           </Route>
           <Route exact path="/books/:id">
             <Detail />
