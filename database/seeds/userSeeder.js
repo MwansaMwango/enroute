@@ -17,7 +17,7 @@ async function seedData() {
       // avatar: Faker.image.avatar(), ToDo
     });
     //User.create(user);
-    user.save().catch((err) => console.log(err));
+    await user.save().catch((err) => console.log(err));
   }
 }
 module.exports = seedData;

@@ -24,7 +24,7 @@ async function seedData() {
       trip_id: randomTrip._id,
     });
 
-    request.save().catch((err) => console.log(err));
+    await request.save().catch((err) => console.log(err));
   }
 }
 

@@ -19,8 +19,8 @@ async function seedData() {
       departTime: faker.date.future(),
       departDate: faker.date.future(),
     });
-
-    trip.save().catch((err) => console.log(err));
+    // await db.Trip.create(trip);
+    await trip.save().catch((err) => console.log(err));
   }
 }
 
