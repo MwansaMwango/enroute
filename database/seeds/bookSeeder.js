@@ -1,12 +1,7 @@
 const mongoose = require("mongoose");
-const db = require("../models");
+const db = require("../../models");
 
-// This file empties the Books collection and inserts the books below
-
-mongoose.connect(
-  process.env.MONGODB_URI ||
-  "mongodb://localhost/reactreadinglist"
-);
+async function seedData() {
 
 const bookSeed = [
   {
@@ -124,7 +119,7 @@ const bookSeed = [
 ];
 
 db.Book
-  .remove({})
+  .deleteMany({})
   .then(() => db.Book.collection.insertMany(bookSeed))
   .then(data => {
     console.log(data.result.n + " records inserted!");
@@ -134,3 +129,8 @@ db.Book
     console.error(err);
     process.exit(1);
   });
+
+}
+
+module.exports = seedData;
+
