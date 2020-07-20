@@ -14,7 +14,6 @@ function App() {
         <Switch>
           <Route exact path={["/", "/books"]}>
             <Books />
-            <Trip />
           </Route>
           <Route exact path="/books/:id">
             <Detail />
