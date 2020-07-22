@@ -3,7 +3,7 @@ const faker = require("faker/locale/en_AU");
 
 async function seedData() {
 
-  db.User.collection.drop(); // delete existing data in collection
+  db.User.collection.deleteMany(); // delete existing data in collection
   console.log("Creating Users");
   // for loop to generate X amount of records in my db
   for (let index = 0; index < 5; index++) {

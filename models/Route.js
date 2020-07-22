@@ -5,7 +5,7 @@ const RouteSchema = new Schema({
   
   from: {type: String},
   to: {type: String},
-  via: {type: Array}, // Todo change to array
+  via: {type: Array}, 
   pointsEarned: {type: Number}
       }, { timestamps: true });
 

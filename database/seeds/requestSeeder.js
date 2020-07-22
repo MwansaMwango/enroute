@@ -4,7 +4,7 @@ const getRandomModel = require("./helper/getRandomModel.js");
 
 async function seedData() {
 
-  db.Request.collection.drop(); // delete existing data in collection
+  db.Request.collection.deleteMany(); // delete existing data in collection
   console.log("Creating Requests");
   // for loop to generate X amount of records in my db
   for (let index = 0; index < 10; index++) {

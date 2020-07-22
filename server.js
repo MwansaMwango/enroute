@@ -13,10 +13,9 @@ if (process.env.NODE_ENV === "production") {
 }
 // Add routes, both API and view
 app.use(routes);
+
+// Connect to the Mongo DB
 connectDb();
-// // Connect to the Mongo DB
-// mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/reactreadinglist", { useNewUrlParser: true, useUnifiedTopology: true });
-// // Added { useNewUrlParser: true, useUnifiedTopology: true } to remove Depracation warnings
 
 // Start the API server
 app.listen(PORT, function() {
