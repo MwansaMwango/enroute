@@ -1,5 +1,5 @@
 module.exports = {
-  Book: require("./Book.js"),
+  Book: require("./book.js"),
   Request: require("./Request.js"),
   Route: require("./Route.js"),
   Trip: require("./Trip.js"),
