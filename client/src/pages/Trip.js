@@ -9,111 +9,147 @@ import { Input, TextArea, FormBtn } from "../components/Form";
 import "./trip.css";
 
 function Trip() {
-    // Setting our component's initial state
-    const [trips, setTrip] = useState([])
-    const [formObject, setFormObject] = useState({})
-  
-    // Load all books and store them with setTrip
-    useEffect(() => {
-      loadBooks()
-    }, [])
-  
-    // Loads all books and sets them to books
-    function loadBooks() {
-      API.getBooks()
-        .then(res => 
-          setTrip(res.data)
-        )
-        .catch(err => console.log(err));
-    };
-  
-    // Deletes a book from the database with a given id, then reloads books from the db
-    function deleteBook(id) {
-      API.deleteBook(id)
-        .then(res => loadBooks())
-        .catch(err => console.log(err));
-    }
-  
-    // Handles updating component state when the user types into the input field
-    function handleInputChange(event) {
-      const { name, value } = event.target;
-      setFormObject({...formObject, [name]: value})
-    };
-  
-    // When the form is submitted, use the API.saveBook method to save the book data
-    // Then reload books from the database
-    function handleFormSubmit(event) {
-      event.preventDefault();
-      if (formObject.from && formObject.to) {
-        API.saveBook({
-          from: formObject.from,
-          to: formObject.to,
-          when: formObject.when
-        })
-          .then(res => loadBooks())
-          .catch(err => console.log(err));
-      }
-    };
-  
-      return (
-        <Container fluid>
-          <Row>
-            <Col size="md-12">
-              <Jumbotron>
-                <h1>Drive</h1>
-              </Jumbotron>
-              <form>
-                <Input
-                  onChange={handleInputChange}
-                  name="from"
-                  placeholder="From (required)"
-                />
-                <Input
-                  onChange={handleInputChange}
-                  name="to"
-                  placeholder="To (required)"
-                />
-                <TextArea
-                  onChange={handleInputChange}
-                  name="when"
-                  placeholder="When (Date Time)"
-                />
-                <FormBtn
-                  disabled={!(formObject.from && formObject.title)}
-                  onClick={handleFormSubmit}
-                >
-                  Post Trip
-                </FormBtn>
-              </form>
-            </Col>
-            <Col size="md-6 sm-12">
-              <Jumbotron>
-                <h1>Books On My List</h1>
-              </Jumbotron>
-              {trips.length ? (
-                <List>
-                  {trips.map(trip => (
-                    <ListItem key={trip._id}>
-                      <Link to={"/books/" + trip._id}>
-                        <strong>
-                          {trip.title} by {trip.author}
-                        </strong>
-                      </Link>
-                      <DeleteBtn onClick={() => deleteBook(trip._id)} />
-                    </ListItem>
-                  ))}
-                </List>
-              ) : (
-                <h3>No Results to Display</h3>
-              )}
-            </Col>
-          </Row>
-        </Container>
-      );
-    }
-  
-  
-  export default Trip;
+  // Setting our component's initial state
+  const [trips, setTrip] = useState([]);
+  const [formObject, setFormObject] = useState({});
+
+  // TODO Initialise and Load Requests from database, to be displayed in newfeed
+  useEffect(() => {
+    loadTrips();
+  }, []);
+
+  // TODO Loads recent Requests with status = 'complete' and sets them to trips
+  function loadTrips() {
+    API.getTrips()
+      .then((res) => setTrip(res.data))
+      .catch((err) => console.log(err));
+  }
+
+  // Deletes a trip from the database with a given id, then reloads trips from the db
+  function deleteTrip(id) {
+    API.deleteTrip(id)
+      .then((res) => loadTrips())
+      .catch((err) => console.log(err));
+  }
+
+  // Handles updating component state when the user types into the input field
+  function handleInputChange(event) {
+    const { name, value } = event.target;
+    setFormObject({ ...formObject, [name]: value });
+  }
+
+  // When the form is submitted, use the API.saveTrip method to save the trip data
+  // Then reload trips from the database
+  function handleFormSubmit(event) {
+    event.preventDefault();
+    console.log(formObject);
+    // if (formObject.from && formObject.to) {
+    // From: and To: fields are mandatory.
+    API.saveTrip({
+      from: formObject.from,
+      to: formObject.to,
+      departTime: formObject.time,
+      departDate: formObject.date,
+      freeSeats: formObject.freeSeats,
+      tripNote: formObject.tripNote,
+      // user_id: req.user,
+    })
+      // .then((res) => loadTrips())
+      .then((res) => alert(JSON.stringify(res.data)))
+      .catch((err) => console.log(err))
+    // }
+  }
+
+  return (
+    <Container fluid>
+      <Row>
+        <Col size="md-12">
+          <Jumbotron>
+            <h1>Drive</h1>
+          </Jumbotron>
+          <form>
+            <Input
+              onChange={handleInputChange}
+              name="from"
+              placeholder="From (required)"
+            />
+    
+            <Input
+              onChange={handleInputChange}
+              name="to"
+              placeholder="To (required)"
+            />
+
+            <Input
+              onChange={handleInputChange}
+              type="date"
+              name="date"
+              placeholder="Date you'll be leaving..."
+            />
+
+            <Input
+              onChange={handleInputChange}
+              type="time"
+              name="time"
+              placeholder="Time you'll be leaving..."
+            />
+
+            <Input
+              onChange={handleInputChange}
+              type="number"
+              name="freeSeats"
+              placeholder="Number of seats available..."
+            />
+
+            <TextArea
+              onChange={handleInputChange}
+              name="tripNote"
+              placeholder="Enter note about your trip..."
+            />
+            <FormBtn
+              disabled={!(formObject.from && formObject.to)}
+              onClick={handleFormSubmit}
+            >
+              Post Trip
+            </FormBtn>
+          </form>
+        </Col>
+      </Row>
+    </Container>
+  );
+}
+
+export default Trip;
+
+// {
+// <FormGroup>
+// <Label for="exampleDatetime">Datetime</Label>
+// <Input
+//   type="datetime"
+//   name="datetime"
+//   id="exampleDatetime"
+//   placeholder="datetime placeholder"
+// />
+// </FormGroup>
+// <FormGroup>
+// <Label for="exampleDate">Date</Label>
+// <Input
+//   type="date"
+//   name="date"
+//   id="exampleDate"
+//   placeholder="date placeholder"
+// />
+// </FormGroup>
+// <FormGroup>
+// <Label for="exampleTime">Time</Label>
+// <Input
+//   type="time"
+//   name="time"
+//   id="exampleTime"
+//   placeholder="time placeholder"
+// />
+// </FormGroup>
+// }
 
 // <center>
 //   <div className="container" id="header-strip">
@@ -124,7 +160,7 @@ function Trip() {
 //     </center>
 //     <div className="row">
 //         <h4 className="pleaseLogIn">Enter the pickup request details</h4>
-        
+
 //     </div>
 //     <div className="row">
 
@@ -160,7 +196,6 @@ function Trip() {
 //             <label for='pickupTime'>Pick Up Time</label>
 //           </div>
 //         </div>
-
 
 //         <div className='row'>
 //           <div className='input-field col s12'>

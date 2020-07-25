@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const TripSchema = new Schema({
   
-  departTime: {type: Date},
+  departTime: {type: String }, //TODO compbine date and time using moment.js
   departDate: {type: Date, default: new Date(Date.now())},
   freeSeats: {type: Number, default: 1},
   tripNote: {type: String},
