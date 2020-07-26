@@ -38,6 +38,14 @@ function Trip() {
     setFormObject({ ...formObject, [name]: value });
   }
 
+  const [subscription, setSubscription] = useState(undefined);
+
+  function handleSubscriptionChange(e) {
+    const checked = e.target.checked;
+    console.log("subscription checked:", checked);
+    setSubscription(checked);
+  }
+
   // When the form is submitted, use the API.saveTrip method to save the trip data
   // Then reload trips from the database
   function handleFormSubmit(event) {
@@ -51,12 +59,13 @@ function Trip() {
       departTime: formObject.time,
       departDate: formObject.date,
       freeSeats: formObject.freeSeats,
+      carryPackage: formObject.carryPackage,
       tripNote: formObject.tripNote,
       // user_id: req.user,
     })
       // .then((res) => loadTrips())
       .then((res) => alert(JSON.stringify(res.data)))
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err));
     // }
   }
 
@@ -67,45 +76,51 @@ function Trip() {
           <Jumbotron>
             <h1>Drive</h1>
           </Jumbotron>
-          <form>
+          <form action="#">
             <Input
               onChange={handleInputChange}
               name="from"
               placeholder="From (required)"
             />
-    
             <Input
               onChange={handleInputChange}
               name="to"
               placeholder="To (required)"
             />
-
             <Input
               onChange={handleInputChange}
               type="date"
               name="date"
               placeholder="Date you'll be leaving..."
             />
-
             <Input
               onChange={handleInputChange}
               type="time"
               name="time"
               placeholder="Time you'll be leaving..."
             />
-
             <Input
               onChange={handleInputChange}
               type="number"
               name="freeSeats"
               placeholder="Number of seats available..."
             />
-
             <TextArea
               onChange={handleInputChange}
               name="tripNote"
               placeholder="Enter note about your trip..."
             />
+
+            <label>
+              <input
+                type="checkbox"
+                name="subscription"
+                onChange={handleSubscriptionChange}
+                checked={subscription}
+              />
+              <span>Room for package</span>
+            </label>
+
             <FormBtn
               disabled={!(formObject.from && formObject.to)}
               onClick={handleFormSubmit}
