@@ -4,6 +4,7 @@ import Books from "./pages/Books";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
 import Drive from "./pages/Drive";
+import Ride from "./pages/Ride";
 import Nav from "./components/Nav";
 
 
@@ -13,7 +14,10 @@ function App() {
       <div>
         <Nav />
         <Switch>
-          <Route exact path={["/", "/drive"]}>
+          <Route exact path={["/", "/ride"]}>
+          <Ride />
+          </Route>
+          <Route exact path="/drive">
           <Drive />
           </Route>
           <Route exact path="/books">

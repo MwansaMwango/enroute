@@ -35,5 +35,23 @@ export default {
   // Saves a trip to the database
   saveTrip: function(tripData) {
     return axios.post("/api/trips", tripData);
+  },
+
+    // ------------------Request APIs ----------------------------
+  // Gets all requests
+  getRequests: function() {
+    return axios.get("/api/requests");
+  },
+  // Gets the request with the given id
+  getRequest: function(id) {
+    return axios.get("/api/requests/" + id);
+  },
+  // Deletes the request with the given id
+  deleteRequest: function(id) {
+    return axios.delete("/api/requests/" + id);
+  },
+  // Posts a request to the database
+  requestRide: function(requestData) {
+    return axios.post("/api/requests", requestData);
   }
 };

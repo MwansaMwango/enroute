@@ -14,8 +14,8 @@ async function seedData() {
     const request = new db.Request({
       departTime: faker.date.future(),
       departDate: faker.date.future(),
-      hasParcels: faker.random.boolean(),
-      seatsRequired: faker.random.number( {min: 1, max: 2}),
+      hasPackage: faker.random.boolean(),
+      seatsRequired: faker.random.number( {min: 1, max: 3}),
       isTransportVehicle: faker.random.boolean(),
       requestNote: faker.lorem.sentence(),
       status: faker.random.arrayElement(["Draft", "Pending", "Confirmed", "Completed", "Expired"]),
