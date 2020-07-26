@@ -19,7 +19,7 @@ module.exports = {
     let resUserId, resRouteId;
     // Resolve user_id from passport req.user
     // req.body.user_id = req.user.id; 
-    req.body.user_id = "5f1852943ceda35bc8174e5c"; // hardcoded for test 
+    req.body.user_id = "5f1d53135a23c6554c153e14"; // hardcoded for test 
     
     // Resolve router_id from start and destination location
     // db.Trip.
@@ -27,8 +27,8 @@ module.exports = {
     //   .then(dbModel => resRouteId = dbModel.route_id)
     //   .catch(err => res.status(422).json(err));
     // req.body.route_id = req.user.id; 
-    req.body.route_id = "5f1852943ceda35bc8174e5d"; // hardcoded for test 
-    
+    req.body.route_id = "5f1d53135a23c6554c153e1e"; // hardcoded for test 
+    console.log("Req.body = ", req.body)
     db.Trip
       .create(req.body)
       .then(dbModel => res.json(dbModel))

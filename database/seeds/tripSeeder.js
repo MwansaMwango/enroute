@@ -15,6 +15,7 @@ async function seedData() {
       user_id: randomUser._id,
       route_id: randomRoute._id,
       tripNote: faker.lorem.sentence(),
+      carryPackage: faker.random.boolean(),
       freeSeats: faker.random.number( {min: 1, max: 2}),
       departTime: faker.date.future(),
       departDate: faker.date.future(),
