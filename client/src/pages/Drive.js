@@ -6,9 +6,9 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
-import "./trip.css";
+import "./drive.css";
 
-function Trip() {
+function Drive() {
   // Setting our component's initial state
   const [trips, setTrip] = useState([]);
   const [formObject, setFormObject] = useState({});
@@ -135,4 +135,4 @@ function Trip() {
   );
 }
 
-export default Trip;
+export default Drive;

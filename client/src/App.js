@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Books from "./pages/Books";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
-import Trip from "./pages/Trip";
+import Drive from "./pages/Drive";
 import Nav from "./components/Nav";
 
 
@@ -13,8 +13,10 @@ function App() {
       <div>
         <Nav />
         <Switch>
-          <Trip />
-          <Route exact path={["/", "/books"]}>
+          <Route exact path={["/", "/drive"]}>
+          <Drive />
+          </Route>
+          <Route exact path="/books">
             <Books />
           </Route>
           <Route exact path="/books/:id">

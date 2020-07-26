@@ -8,7 +8,7 @@ import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
 import "./trip.css";
 
-function Request() {
+function Trip() {
   // Setting our component's initial state
   const [trips, setTrip] = useState([]);
   const [formObject, setFormObject] = useState({});
@@ -38,19 +38,20 @@ function Request() {
     setFormObject({ ...formObject, [name]: value });
   }
 
-  const [subscription, setSubscription] = useState(undefined);
+  const [carryPackage, setCarryPackage] = useState(false);
 
-  function handleSubscriptionChange(e) {
+  function handleCarryPackageChange(e) {
     const checked = e.target.checked;
-    console.log("subscription checked:", checked);
-    setSubscription(checked);
+    console.log("carryPackage checked:", checked);
+    setCarryPackage(checked); // sets DOM checkbox
+    setFormObject({ ...formObject, "carryPackage": checked }); // sets formObject
   }
 
   // When the form is submitted, use the API.saveTrip method to save the trip data
   // Then reload trips from the database
   function handleFormSubmit(event) {
     event.preventDefault();
-    console.log(formObject);
+    console.log("FormObject carryPackage= ", formObject.carryPackage);
     // if (formObject.from && formObject.to) {
     // From: and To: fields are mandatory.
     API.saveTrip({
@@ -114,11 +115,11 @@ function Request() {
             <label>
               <input
                 type="checkbox"
-                name="subscription"
-                onChange={handleSubscriptionChange}
-                checked={subscription}
+                name="carryPackage"
+                onChange={handleCarryPackageChange}
+                checked={carryPackage}
               />
-              <span>Room for package</span>
+              <span>Able to carry package</span>
             </label>
 
             <FormBtn
@@ -134,5 +135,4 @@ function Request() {
   );
 }
 
-export default Request;
-
+export default Trip;
