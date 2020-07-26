@@ -131,6 +131,11 @@ function Drive() {
           </form>
         </Col>
       </Row>
+      <Row>
+          <Col size="md-2">
+            <Link to="/ride">Ride</Link>
+          </Col>
+        </Row>
     </Container>
   );
 }

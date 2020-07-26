@@ -150,6 +150,11 @@ function Ride() {
           </form>
         </Col>
       </Row>
+      <Row>
+          <Col size="md-2">
+            <Link to="/drive">Drive</Link>
+          </Col>
+        </Row>
     </Container>
   );
 }
