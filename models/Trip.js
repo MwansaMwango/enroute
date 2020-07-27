@@ -8,8 +8,8 @@ const TripSchema = new Schema({
   freeSeats: {type: Number, default: 1},
   tripNote: {type: String},
   carryPackage: {type: Boolean},
-  user_id: { type: Schema.Types.ObjectId, ref: "User" },
-  route_id: { type: Schema.Types.ObjectId, ref: "Route" }
+  user_id: [ {type: Schema.Types.ObjectId, ref: "User" } ],
+  route_id: [ { type: Schema.Types.ObjectId, ref: "Route" } ]
 
 }, { timestamps: true });
 

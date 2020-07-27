@@ -20,6 +20,10 @@ export default {
   },
   
   // ------------------Trips APIs ----------------------------
+  // Gets all routes
+  getRoutes: function() {
+    return axios.get("/api/routes");
+  },
   // Gets all trips
   getTrips: function() {
     return axios.get("/api/trips");
@@ -42,10 +46,7 @@ export default {
   getRequests: function() {
     return axios.get("/api/requests");
   },
-  // Gets current user's requests
-  getUserRequests: function(userId) {
-    return axios.get("/api/requests"+ userId);
-  },
+
   // Gets the request with the given id
   getRequest: function(id) {
     return axios.get("/api/requests/" + id);

@@ -12,7 +12,7 @@ function Drive() {
   // Setting our component's initial state
   const [trips, setTrip] = useState([]);
   const [formObject, setFormObject] = useState({});
-
+  const [carryPackage, setCarryPackage] = useState(false);
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
   useEffect(() => {
     loadTrips();
@@ -21,14 +21,10 @@ function Drive() {
   // TODO Loads recent Requests with status = 'complete' and sets them to trips
   function loadTrips() {
     API.getTrips()
-      .then((res) => setTrip(res.data))
-      .catch((err) => console.log(err));
-  }
-
-  // Deletes a trip from the database with a given id, then reloads trips from the db
-  function deleteTrip(id) {
-    API.deleteTrip(id)
-      .then((res) => loadTrips())
+      .then(function (res) {
+        setTrip(res.data);
+        console.log("My Trips  ", res.data);
+      })
       .catch((err) => console.log(err));
   }
 
@@ -38,13 +34,11 @@ function Drive() {
     setFormObject({ ...formObject, [name]: value });
   }
 
-  const [carryPackage, setCarryPackage] = useState(false);
-
   function handleCarryPackageChange(e) {
     const checked = e.target.checked;
     console.log("carryPackage checked:", checked);
     setCarryPackage(checked); // sets DOM checkbox
-    setFormObject({ ...formObject, "carryPackage": checked }); // sets formObject
+    setFormObject({ ...formObject, carryPackage: checked }); // sets formObject
   }
 
   // When the form is submitted, use the API.saveTrip method to save the trip data
@@ -132,10 +126,10 @@ function Drive() {
         </Col>
       </Row>
       <Row>
-          <Col size="md-2">
-            <Link to="/ride">Go to Ride</Link>
-          </Col>
-        </Row>
+        <Col size="md-2">
+          <Link to="/ride">Go to Ride</Link>
+        </Col>
+      </Row>
     </Container>
   );
 }

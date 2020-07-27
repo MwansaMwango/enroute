@@ -17,12 +17,12 @@ function RequestsCreated() {
 
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
   useEffect(() => {
-    loadUserRequests();
+    loadRequests();
   }, []);
 
   // TODO Loads recent Requests with user_id = 'userId' and sets them to trips
-  function loadUserRequests() {
-    API.getUserRequests(userId) // Use user's ID and not request ID
+  function loadRequests() {
+    API.getRequests() //
       .then((res) => setRequests(res.data))
       .catch((err) => console.log(err));
   }
@@ -30,20 +30,20 @@ function RequestsCreated() {
   // Call driver who accepted request 
   function callDriver(id) {
     API.callDriver(id)
-      .then((res) => loadUserRequests())
+      .then((res) => loadRequests())
       .catch((err) => console.log(err));
   }
   // Email driver who accepted request 
   function emailDriver(id) {
     API.emailDriver(id)
-      .then((res) => loadUserRequests())
+      .then((res) => loadRequests())
       .catch((err) => console.log(err));
   }
 
   // Decline a matching request 
   function cancelRequest(id) {
     API.cancelRequest(id)
-      .then((res) => loadUserRequests())
+      .then((res) => loadRequests())
       .catch((err) => console.log(err));
   }
 

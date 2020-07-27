@@ -9,9 +9,9 @@ const RequestSchema = new Schema({
     isTransportVehicle: {type: Boolean, default: false},
     requestNote: {type: String},
     status: {type: String, default: "Pending"},
-    trip_id: { type: Schema.Types.ObjectId, ref: "Trip" },
-    user_id: { type: Schema.Types.ObjectId, ref: "User" },
-    route_id: { type: Schema.Types.ObjectId, ref: "Route" }
+    trip_id: [{ type: Schema.Types.ObjectId, ref: "Trip" }],
+    user_id: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    route_id: [{ type: Schema.Types.ObjectId, ref: "Route" }]
 
 },
 {
