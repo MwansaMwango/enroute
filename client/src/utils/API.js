@@ -71,5 +71,18 @@ export default {
   declineRequest: function(id) {
     return axios.get("/api/decline/" + id);
   },
+    // ------------------Requests Created APIs ----------------------------
 
+  // Call driver who accepted the request with the given id
+  callDriver: function(id) {
+    return axios.get("/api/calldriver/" + id);
+  },
+  // Email driver who accepted request with the given id
+  emailDriver: function(id) {
+    return axios.get("/api/emaildriver/" + id);
+  },
+  // Cancel the request with the given id
+  cancelRequest: function(id) {
+    return axios.get("/api/cancelrequest/" + id);
+  },
 };

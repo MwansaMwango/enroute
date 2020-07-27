@@ -6,6 +6,7 @@ import NoMatch from "./pages/NoMatch";
 import Drive from "./pages/Drive";
 import Ride from "./pages/Ride";
 import RequestsReceived from "./pages/RequestsReceived";
+import RequestsCreated from "./pages/RequestsCreated";
 import Nav from "./components/Nav";
 
 
@@ -15,7 +16,10 @@ function App() {
       <div>
         <Nav />
         <Switch>
-          <Route exact path={["/", "/requests"]}>
+          <Route exact path={["/", "/requestscreated"]}>
+          <RequestsCreated />
+          </Route>
+          <Route exact path={"/requests"}>
           <RequestsReceived />
           </Route>
           <Route exact path="/ride">
