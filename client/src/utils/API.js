@@ -42,6 +42,10 @@ export default {
   getRequests: function() {
     return axios.get("/api/requests");
   },
+  // Gets current user's requests
+  getUserRequests: function(userId) {
+    return axios.get("/api/requests"+ userId);
+  },
   // Gets the request with the given id
   getRequest: function(id) {
     return axios.get("/api/requests/" + id);

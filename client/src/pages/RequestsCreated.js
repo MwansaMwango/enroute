@@ -17,33 +17,33 @@ function RequestsCreated() {
 
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
   useEffect(() => {
-    loadRequests();
+    loadUserRequests();
   }, []);
 
-  // TODO Loads recent Requests with status = 'complete' and sets them to trips
-  function loadRequests() {
-    API.getRequests() // TODO Change to matching requests
+  // TODO Loads recent Requests with user_id = 'userId' and sets them to trips
+  function loadUserRequests() {
+    API.getUserRequests(userId) // Use user's ID and not request ID
       .then((res) => setRequests(res.data))
       .catch((err) => console.log(err));
   }
 
-  // Accept a matching request from the loaded list with a given id, then reloads matching requests from the db
+  // Call driver who accepted request 
   function callDriver(id) {
     API.callDriver(id)
-      .then((res) => loadRequests())
+      .then((res) => loadUserRequests())
       .catch((err) => console.log(err));
   }
-  // Undo the accept matching request action
+  // Email driver who accepted request 
   function emailDriver(id) {
     API.emailDriver(id)
-      .then((res) => loadRequests())
+      .then((res) => loadUserRequests())
       .catch((err) => console.log(err));
   }
 
-  // Decline a matching request from the loaded list with a given id, then reloads matching requests from the db
+  // Decline a matching request 
   function cancelRequest(id) {
     API.cancelRequest(id)
-      .then((res) => loadRequests())
+      .then((res) => loadUserRequests())
       .catch((err) => console.log(err));
   }
 
