@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import DeleteBtn from "../components/DeleteBtn";
+import DeleteBtn from "../components/DeclineBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
@@ -133,7 +133,7 @@ function Drive() {
       </Row>
       <Row>
           <Col size="md-2">
-            <Link to="/ride">Ride</Link>
+            <Link to="/ride">Go to Ride</Link>
           </Col>
         </Row>
     </Container>

@@ -5,6 +5,7 @@ import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
 import Drive from "./pages/Drive";
 import Ride from "./pages/Ride";
+import RequestsReceived from "./pages/RequestsReceived";
 import Nav from "./components/Nav";
 
 
@@ -14,7 +15,10 @@ function App() {
       <div>
         <Nav />
         <Switch>
-          <Route exact path={["/", "/ride"]}>
+          <Route exact path={["/", "/requests"]}>
+          <RequestsReceived />
+          </Route>
+          <Route exact path="/ride">
           <Ride />
           </Route>
           <Route exact path="/drive">

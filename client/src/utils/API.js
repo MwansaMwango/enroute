@@ -37,7 +37,7 @@ export default {
     return axios.post("/api/trips", tripData);
   },
 
-    // ------------------Request APIs ----------------------------
+    // ------------------Request Made APIs ----------------------------
   // Gets all requests
   getRequests: function() {
     return axios.get("/api/requests");
@@ -53,5 +53,23 @@ export default {
   // Posts a request to the database
   requestRide: function(requestData) {
     return axios.post("/api/requests", requestData);
-  }
+  },
+    // ------------------Requests Received APIs ----------------------------
+  // Gets all matching requests
+  getMatchingRequests: function() {
+    return axios.get("/api/matches");
+  },
+  // Accept the request with the given id
+  acceptRequest: function(id) {
+    return axios.get("/api/accept/" + id);
+  },
+  // Cancel /undo the accepted request with the given id
+  undoAcceptRequest: function(id) {
+    return axios.get("/api/undoaccept/" + id);
+  },
+  // Decline the matching request with the given id
+  declineRequest: function(id) {
+    return axios.get("/api/decline/" + id);
+  },
+
 };
