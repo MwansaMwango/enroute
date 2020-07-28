@@ -65,14 +65,13 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   create: function (req, res) {
-    let resUserId, resRouteId;
     // Resolve user_id from passport req.user
     // req.body.user_id = req.user.id;
     req.body.user_id = "5f1d53135a23c6554c153e14"; // hardcoded for testing
 
     // Resolve route_id from start and destination 
     db.Route.find({
-      $or: [
+      $or: [ // swaps to and from to ensure both cases are captured
         {
           from: req.body.from,
           to: req.body.to,
@@ -83,14 +82,13 @@ module.exports = {
         },
       ],
     })
-      .then(function (dbModel) {
+      .then(function (dbModel) { 
         req.body.route_id = dbModel[0]._id;
         db.Trip.create(req.body)
           .then((dbModel) => res.json(dbModel))
           .catch((err) => res.status(422).json(err));
       })
       .catch((err) => res.status(422).json(err));
-
   },
   update: function (req, res) {
     db.Trip.findOneAndUpdate({ _id: req.params.id }, req.body)

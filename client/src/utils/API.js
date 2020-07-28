@@ -20,10 +20,7 @@ export default {
   },
   
   // ------------------Trips APIs ----------------------------
-  // Gets all routes
-  getRoutes: function() {
-    return axios.get("/api/routes");
-  },
+
   // Gets all trips
   getTrips: function() {
     return axios.get("/api/trips");
@@ -90,4 +87,9 @@ export default {
   cancelRequest: function(id) {
     return axios.get("/api/cancelrequest/" + id);
   },
+    // ------------------Routes APIs ----------------------------
+    // Gets all routes
+    getRoutes: function() {
+      return axios.get("/api/routes");
+    },
 };

@@ -7,15 +7,18 @@ import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
 import { Input, TextArea, FormBtn } from "../components/Form";
 import "./drive.css";
+import { Select } from "react-materialize";
 
 function Drive() {
   // Setting our component's initial state
   const [trips, setTrip] = useState([]);
+  const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [carryPackage, setCarryPackage] = useState(false);
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
   useEffect(() => {
     loadTrips();
+    loadRoutes();
   }, []);
 
   // TODO Loads recent Requests with status = 'complete' and sets them to trips
@@ -27,6 +30,22 @@ function Drive() {
       })
       .catch((err) => console.log(err));
   }
+  function loadRoutes() {
+    let routeList = [];
+    let uniqueRouteList = [];
+    API.getRoutes()
+      .then(function (res) {
+
+        res.data.map((route) => {
+          routeList.push(route.from, route.to);
+        });
+        uniqueRouteList = [...new Set(routeList)] // removes duplicate elements in array
+        setRoutes(uniqueRouteList);
+        console.log("Preset routes all  ", routeList);
+        console.log("Preset routes unique  ", uniqueRouteList);
+      })
+      .catch((err) => console.log(err));
+    }
 
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
@@ -77,6 +96,7 @@ function Drive() {
               name="from"
               placeholder="From (required)"
             />
+
             <Input
               onChange={handleInputChange}
               name="to"

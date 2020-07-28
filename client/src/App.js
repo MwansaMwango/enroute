@@ -9,7 +9,6 @@ import RequestsReceived from "./pages/RequestsReceived";
 import RequestsCreated from "./pages/RequestsCreated";
 import Nav from "./components/Nav";
 
-
 function App() {
   return (
     <Router>
@@ -17,7 +16,7 @@ function App() {
         <Nav />
         <Switch>
           <Route exact path={["/", "/requestscreated"]}>
-          <RequestsCreated />
+            <RequestsCreated />
           </Route>
           <Route exact path={"/requests"}>
           <RequestsReceived />

@@ -21,11 +21,14 @@
     "nodemon": "^1.18.7"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.0",
     "axios": "^0.18.1",
     "create-react-context": "^0.3.0",
     "express": "^4.16.3",
     "faker": "^4.1.0",
     "if-env": "^1.0.4",
-    "mongoose": "^5.3.16"
+    "materialize-css": "^1.0.0",
+    "mongoose": "^5.3.16",
+    "react-materialize": "^3.9.2"
   }
 }
