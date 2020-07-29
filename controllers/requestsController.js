@@ -25,6 +25,33 @@ module.exports = {
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
+
+  findMatchingTrips: function (req, res) {
+    console.log(req.body);
+    db.Trip.find({
+      // Mandatory parameters
+      from: req.body.from,
+      to: req.body.to,
+      freeSeats: {
+        $gte: req.body.seatsRequired,
+      },
+      // Optional parameters
+      $or: [
+        {
+          // departDate: ISODate("2020-08-10T16:00:00.000Z"),
+          departDate: req.body.departDate, // TODO Matching by Date and Time using Moment
+        },
+        {
+          carryPackage: req.body.hasPackage,
+        }
+      ]
+    })
+      .then(function (dbModel) {
+        res.json(dbModel);
+        console.log("Result matches =", dbModel);
+      })
+      .catch((err) => res.status(422).json(err));
+  },
   update: function (req, res) {
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then((dbModel) => res.json(dbModel))

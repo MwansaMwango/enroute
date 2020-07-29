@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Moment from 'react-moment';
 import DeleteBtn from "../components/DeclineBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
@@ -11,6 +12,7 @@ import "./drive.css";
 function Ride() {
   // Setting our component's initial state
   const [trips, setTrip] = useState([]);
+  const [matches, setMatches] = useState([]);
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [hasPackage, setHasPackage] = useState(false);
@@ -77,7 +79,7 @@ function Ride() {
   // Then reload trips from the database
   function handleFormSubmit(event) {
     event.preventDefault();
-    alert("Searching for Drivers...") // TODO use Modal instead of alert 
+    alert("Processing request...") // TODO use Modal instead of alert 
     console.log("FormObject= ", formObject);
     // if (formObject.from && formObject.to) {
     // From: and To: fields are mandatory.
@@ -93,9 +95,25 @@ function Ride() {
       // user_id: req.user,
     })
       // .then((res) => loadTrips())
-      .then((res) => alert(JSON.stringify(res.data)))
+      .then( function (res) {
+         alert(JSON.stringify(res.data))
+      })
       .catch((err) => console.log(err));
-    // }
+      API.findMatchingTrips({
+        from: formObject.from,
+        to: formObject.to,
+        departTime: formObject.time,
+        departDate: formObject.date,
+        isTransportVehicle: formObject.isTransportVehicle,
+        hasPackage: formObject.hasPackage,
+        requestNote: formObject.requestNote,
+        seatsRequired: formObject.seatsRequired,
+        // user_id: req.user,
+       }).then( function (res) {
+      setMatches(res.data)
+      console.log("Matches = ", res.data)
+       })
+    .catch((err) => console.log(err));
   }
 
   return (

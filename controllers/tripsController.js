@@ -64,21 +64,30 @@ module.exports = {
     req.body.user_id = "5f1d53135a23c6554c153e14"; // hardcoded for testing
 
     // Resolve route_id from start and destination
-    db.Trips.find({
+    db.Trip.find({
+      // Mandatory parameters
+      from: req.body.from,
+      to: req.body.to,
+      freeSeats: {
+        $gte: req.body.freeSeats,
+      },
       $or: [
-        // swaps to and from to ensure both cases are captured
         {
-          from: req.body.from,
-          to: req.body.to,
+          // departDate: ISODate("2020-08-10T16:00:00.000Z"),
+          departDate: req.body.departDate,
         },
         {
-          from: req.body.to,
-          to: req.body.from,
+          carryPackage: req.body.carryPackage,
         },
       ],
+
     })
-      .then((dbModel) => res.json(dbModel[0]))
+      .then(function (dbModel) {
+        res.json(dbModel[0])
+        console.log("Result match =", dbModel); 
+      })
       .catch((err) => res.status(422).json(err));
+      
   },
 
   findById: function (req, res) {

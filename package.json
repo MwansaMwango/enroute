@@ -28,7 +28,10 @@
     "faker": "^4.1.0",
     "if-env": "^1.0.4",
     "materialize-css": "^1.0.0",
+    "moment": "^2.27.0",
+    "moment-timezone": "^0.5.31",
     "mongoose": "^5.3.16",
-    "react-materialize": "^3.9.2"
+    "react-materialize": "^3.9.2",
+    "react-moment": "^0.9.7"
   }
 }

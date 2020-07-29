@@ -7,6 +7,9 @@ router.route("/")
   .get(requestsController.findAll)
   .post(requestsController.create);
 
+  // Matches with "/api/requests/matches"
+  router.route("/matches")
+  .post(requestsController.findMatchingTrips);
 
 // Matches with "/api/requests/:id"
 router.route("/:id")

@@ -6,10 +6,6 @@ router.route("/")
   .get(tripsController.findAll)
   .post(tripsController.create);
 
-  // Matches with "/api/matches"
-router.route("/matches")
-  .get(tripsController.findMatchingTrips);
-
 // Matches with "/api/trips/:id"
 router.route("/:id")
   .get(tripsController.findById)

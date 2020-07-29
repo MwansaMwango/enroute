@@ -25,10 +25,7 @@ export default {
   getTrips: function () {
     return axios.get("/api/trips");
   },
-  // Gets all matching trips
-  findMatchingTrips: function () {
-    return axios.get("/api/matches");
-  },
+
   // Gets the trip with the given id
   getTrip: function (id) {
     return axios.get("/api/trips/" + id);
@@ -43,11 +40,18 @@ export default {
   },
 
   // ------------------Request Made APIs ----------------------------
+  // Posts a request to the database
+  requestRide: function (requestData) {
+    return axios.post("/api/requests", requestData);
+  },
+  // Gets all matching trips
+  findMatchingTrips: function (requestData) {
+    return axios.post("/api/requests/matches", requestData);
+  },
   // Gets all requests
   getRequests: function () {
     return axios.get("/api/requests");
   },
-
   // Gets the request with the given id
   getRequest: function (id) {
     return axios.get("/api/requests/" + id);
@@ -56,10 +60,7 @@ export default {
   deleteRequest: function (id) {
     return axios.delete("/api/requests/" + id);
   },
-  // Posts a request to the database
-  requestRide: function (requestData) {
-    return axios.post("/api/requests", requestData);
-  },
+
   // ------------------Requests Received APIs ----------------------------
 
   // Accept the request with the given id
