@@ -6,6 +6,24 @@ module.exports = {
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
+  findByLocations: function (req, res) {
+    // Resolve route_id from start and destination
+    db.Route.find({
+      $or: [
+        // swaps to and from to ensure both cases are captured
+        {
+          from: req.body.from,
+          to: req.body.to,
+        },
+        {
+          from: req.body.to,
+          to: req.body.from,
+        },
+      ],
+    })
+      .then((dbModel) => res.json(dbModel[0]))
+      .catch((err) => res.status(422).json(err));
+  },
   findById: function (req, res) {
     db.Route.findById(req.params.id)
       .then((dbModel) => res.json(dbModel))

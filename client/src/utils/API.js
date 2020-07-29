@@ -1,95 +1,96 @@
 import axios from "axios";
 
-  // ------------------Books APIs ----------------------------
+// ------------------Books APIs ----------------------------
 export default {
   // Gets all books
-  getBooks: function() {
+  getBooks: function () {
     return axios.get("/api/books");
   },
   // Gets the book with the given id
-  getBook: function(id) {
+  getBook: function (id) {
     return axios.get("/api/books/" + id);
   },
   // Deletes the book with the given id
-  deleteBook: function(id) {
+  deleteBook: function (id) {
     return axios.delete("/api/books/" + id);
   },
   // Saves a book to the database
-  saveBook: function(bookData) {
+  saveBook: function (bookData) {
     return axios.post("/api/books", bookData);
   },
-  
+
   // ------------------Trips APIs ----------------------------
 
   // Gets all trips
-  getTrips: function() {
+  getTrips: function () {
     return axios.get("/api/trips");
   },
+  // Gets all matching trips
+  findMatchingTrips: function () {
+    return axios.get("/api/matches");
+  },
   // Gets the trip with the given id
-  getTrip: function(id) {
+  getTrip: function (id) {
     return axios.get("/api/trips/" + id);
   },
   // Deletes the trip with the given id
-  deleteTrip: function(id) {
+  deleteTrip: function (id) {
     return axios.delete("/api/trips/" + id);
   },
   // Saves a trip to the database
-  saveTrip: function(tripData) {
+  saveTrip: function (tripData) {
     return axios.post("/api/trips", tripData);
   },
 
-    // ------------------Request Made APIs ----------------------------
+  // ------------------Request Made APIs ----------------------------
   // Gets all requests
-  getRequests: function() {
+  getRequests: function () {
     return axios.get("/api/requests");
   },
 
   // Gets the request with the given id
-  getRequest: function(id) {
+  getRequest: function (id) {
     return axios.get("/api/requests/" + id);
   },
   // Deletes the request with the given id
-  deleteRequest: function(id) {
+  deleteRequest: function (id) {
     return axios.delete("/api/requests/" + id);
   },
   // Posts a request to the database
-  requestRide: function(requestData) {
+  requestRide: function (requestData) {
     return axios.post("/api/requests", requestData);
   },
-    // ------------------Requests Received APIs ----------------------------
-  // Gets all matching requests
-  getMatchingRequests: function() {
-    return axios.get("/api/matches");
-  },
+  // ------------------Requests Received APIs ----------------------------
+
   // Accept the request with the given id
-  acceptRequest: function(id) {
+  acceptRequest: function (id) {
     return axios.get("/api/accept/" + id);
   },
   // Cancel /undo the accepted request with the given id
-  undoAcceptRequest: function(id) {
+  undoAcceptRequest: function (id) {
     return axios.get("/api/undoaccept/" + id);
   },
   // Decline the matching request with the given id
-  declineRequest: function(id) {
+  declineRequest: function (id) {
     return axios.get("/api/decline/" + id);
   },
-    // ------------------Requests Created APIs ----------------------------
+  // ------------------Requests Created APIs ----------------------------
 
   // Call driver who accepted the request with the given id
-  callDriver: function(id) {
+  callDriver: function (id) {
     return axios.get("/api/calldriver/" + id);
   },
   // Email driver who accepted request with the given id
-  emailDriver: function(id) {
+  emailDriver: function (id) {
     return axios.get("/api/emaildriver/" + id);
   },
   // Cancel the request with the given id
-  cancelRequest: function(id) {
+  cancelRequest: function (id) {
     return axios.get("/api/cancelrequest/" + id);
   },
-    // ------------------Routes APIs ----------------------------
-    // Gets all routes
-    getRoutes: function() {
-      return axios.get("/api/routes");
-    },
+  // ------------------Routes APIs ----------------------------
+  // Gets all routes
+  getRoutes: function () {
+    return axios.get("/api/routes");
+  },
 };

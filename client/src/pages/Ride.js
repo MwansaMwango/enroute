@@ -11,6 +11,7 @@ import "./drive.css";
 function Ride() {
   // Setting our component's initial state
   const [trips, setTrip] = useState([]);
+  const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [hasPackage, setHasPackage] = useState(false);
   const [isTransportVehicle, setIsTransportVehicle] = useState(false);
@@ -18,6 +19,7 @@ function Ride() {
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
   useEffect(() => {
     loadTrips();
+    loadRoutes();
   }, []);
 
   // TODO Loads recent Requests with status = 'complete' and sets them to trips
@@ -26,6 +28,23 @@ function Ride() {
       .then((res) => setTrip(res.data))
       .catch((err) => console.log(err));
   }
+
+  function loadRoutes() {
+    let routeList = [];
+    let uniqueRouteList = [];
+    API.getRoutes()
+      .then(function (res) {
+
+        res.data.map((route) => {
+          routeList.push(route.from, route.to);
+        });
+        uniqueRouteList = [...new Set(routeList)] // removes duplicate elements in array
+        setRoutes(uniqueRouteList);
+        console.log("Preset routes all  ", routeList);
+        console.log("Preset routes unique  ", uniqueRouteList);
+      })
+      .catch((err) => console.log(err));
+    }
 
   // Deletes a trip from the database with a given id, then reloads trips from the db
   function deleteTrip(id) {
@@ -58,6 +77,7 @@ function Ride() {
   // Then reload trips from the database
   function handleFormSubmit(event) {
     event.preventDefault();
+    alert("Searching for Drivers...") // TODO use Modal instead of alert 
     console.log("FormObject= ", formObject);
     // if (formObject.from && formObject.to) {
     // From: and To: fields are mandatory.

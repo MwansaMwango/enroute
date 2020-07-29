@@ -54,24 +54,19 @@ module.exports = {
   findAll: function (req, res) {
     db.Trip.find({ user_id: "5f1d53135a23c6554c153e14" })
       .populate("user_id")
-      .populate("route_id")
       .sort({ departDate: -1 })
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
-  findById: function (req, res) {
-    db.Trip.findById(req.params.id)
-      .then((dbModel) => res.json(dbModel))
-      .catch((err) => res.status(422).json(err));
-  },
-  create: function (req, res) {
+  findMatchingTrips: function (req, res) {
     // Resolve user_id from passport req.user
     // req.body.user_id = req.user.id;
     req.body.user_id = "5f1d53135a23c6554c153e14"; // hardcoded for testing
 
-    // Resolve route_id from start and destination 
-    db.Route.find({
-      $or: [ // swaps to and from to ensure both cases are captured
+    // Resolve route_id from start and destination
+    db.Trips.find({
+      $or: [
+        // swaps to and from to ensure both cases are captured
         {
           from: req.body.from,
           to: req.body.to,
@@ -82,12 +77,22 @@ module.exports = {
         },
       ],
     })
-      .then(function (dbModel) { 
-        req.body.route_id = dbModel[0]._id;
-        db.Trip.create(req.body)
-          .then((dbModel) => res.json(dbModel))
-          .catch((err) => res.status(422).json(err));
-      })
+      .then((dbModel) => res.json(dbModel[0]))
+      .catch((err) => res.status(422).json(err));
+  },
+
+  findById: function (req, res) {
+    db.Trip.findById(req.params.id)
+      .then((dbModel) => res.json(dbModel))
+      .catch((err) => res.status(422).json(err));
+  },
+  create: function (req, res) {
+    // Resolve user_id from passport req.user
+    // req.body.user_id = req.user.id;
+    req.body.user_id = "5f1d53135a23c6554c153e14"; // hardcoded for testing
+
+    db.Trip.create(req.body)
+      .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
   update: function (req, res) {

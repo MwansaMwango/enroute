@@ -9,16 +9,17 @@ async function seedData() {
   console.log("Creating Trips");
   // for loop to generate X amount of records in my db
   for (let index = 0; index < 10; index++) {
-    const randomUser = await getRandomModel("User");
-    const randomRoute = await getRandomModel("Route");
+    let randomUser = await getRandomModel("User");
+    // let randomRoute = await getRandomModel("Route");
     const trip = new db.Trip({
       user_id: randomUser._id,
-      route_id: randomRoute._id,
       tripNote: faker.lorem.sentence(),
       carryPackage: faker.random.boolean(),
       freeSeats: faker.random.number( {min: 1, max: 2}),
       departTime: faker.date.future(),
       departDate: faker.date.future(),
+      to: faker.random.arrayElement(["Stirling", "Mount Lawley", "Joondalup", "Victoria Park", "Nedlands"]),
+      from: faker.random.arrayElement(["Perth", "Burswood", "Belmont", "Cannington", "Malaga"]),
     });
     // await db.Trip.create(trip);
     await trip.save().catch((err) => console.log(err));

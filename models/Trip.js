@@ -3,13 +3,15 @@ const Schema = mongoose.Schema;
 
 const TripSchema = new Schema({
   
+  from: {type: String},
+  to: {type: String},
   departTime: {type: String }, //TODO combine date and time using moment.js
   departDate: {type: Date, default: new Date(Date.now())},
   freeSeats: {type: Number, default: 1},
   tripNote: {type: String},
   carryPackage: {type: Boolean},
-  user_id: [ {type: Schema.Types.ObjectId, ref: "User" } ],
-  route_id: [ { type: Schema.Types.ObjectId, ref: "Route" } ]
+  user_id: {type: Schema.Types.ObjectId, ref: "User" }, // 1 to 1 Relationship
+
 
 }, { timestamps: true });
 
