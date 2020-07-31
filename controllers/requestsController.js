@@ -18,8 +18,8 @@ module.exports = {
   },
   create: function (req, res) {
     // Resolve user_id from passport req.user
-    // req.body.user_id = req.user.id;
-    req.body.user_id = "5f1d53135a23c6554c153e14"; // hardcoded for testing
+    // req.body.user_id = req.user._id;
+    req.body.user_id = req.user._id; // hardcoded for testing
 
     db.Request.create(req.body)
       .then((dbModel) => res.json(dbModel))

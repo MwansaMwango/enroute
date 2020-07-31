@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from "react";
-import Moment from 'react-moment';
-import DeleteBtn from "../components/DeclineBtn";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
-import { TextArea, FormBtn } from "../components/Form";
+import { Container, Col, Row } from "../components/Grid"; // removed container
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  InputWithIcon,
+  BasicTextFields,
+  TextArea,
+  FormBtn,
+} from "../components/Form";
+import {
+  Input,
+  Box,
+  Grid,
+  TextField,
+  // Container,
+  MenuItem,
+  Button,
+  Checkbox,
+  FormControlLabel,
+} from "@material-ui/core/";
+
 import "./drive.css";
 
 function Ride() {
@@ -17,6 +32,26 @@ function Ride() {
   const [formObject, setFormObject] = useState({});
   const [hasPackage, setHasPackage] = useState(false);
   const [isTransportVehicle, setIsTransportVehicle] = useState(false);
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      "& .MuiTextField-root": {
+        margin: theme.spacing(1),
+        width: "25ch",
+      },
+    },
+    container: {
+      display: "flex",
+      flexWrap: "wrap",
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 200,
+    },
+  }));
+  const classes = useStyles();
+  let uniqueRouteList = [];
 
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
   useEffect(() => {
@@ -33,20 +68,20 @@ function Ride() {
 
   function loadRoutes() {
     let routeList = [];
-    let uniqueRouteList = [];
+
     API.getRoutes()
       .then(function (res) {
-
         res.data.map((route) => {
           routeList.push(route.from, route.to);
+          console.log("Response of getroutes=", route.from);
         });
-        uniqueRouteList = [...new Set(routeList)] // removes duplicate elements in array
+        uniqueRouteList = [...new Set(routeList)]; // removes duplicate elements in array
         setRoutes(uniqueRouteList);
         console.log("Preset routes all  ", routeList);
         console.log("Preset routes unique  ", uniqueRouteList);
       })
       .catch((err) => console.log(err));
-    }
+  }
 
   // Deletes a trip from the database with a given id, then reloads trips from the db
   function deleteTrip(id) {
@@ -65,21 +100,21 @@ function Ride() {
     const checked = e.target.checked;
     console.log("hasPackage checked:", checked);
     setHasPackage(checked); // sets DOM checkbox
-    setFormObject({ ...formObject, "hasPackage": checked }); // sets formObject
+    setFormObject({ ...formObject, hasPackage: checked }); // sets formObject
   }
 
   function handleIsTransportVehicleChange(e) {
     const checked = e.target.checked;
     console.log("isTransportVehicle checked:", checked);
     setIsTransportVehicle(checked); // sets DOM checkbox
-    setFormObject({ ...formObject, "isTransportVehicle": checked }); // sets formObject
+    setFormObject({ ...formObject, isTransportVehicle: checked }); // sets formObject
   }
 
   // When the form is submitted, use the API.requestRide method to save the trip data
   // Then reload trips from the database
   function handleFormSubmit(event) {
     event.preventDefault();
-    alert("Processing request...") // TODO use Modal instead of alert 
+    alert("Processing request..."); // TODO use Modal instead of alert
     console.log("FormObject= ", formObject);
     // if (formObject.from && formObject.to) {
     // From: and To: fields are mandatory.
@@ -95,36 +130,180 @@ function Ride() {
       // user_id: req.user,
     })
       // .then((res) => loadTrips())
-      .then( function (res) {
-         alert(JSON.stringify(res.data))
+      .then(function (res) {
+        alert(JSON.stringify(res.data));
       })
       .catch((err) => console.log(err));
-      API.findMatchingTrips({
-        from: formObject.from,
-        to: formObject.to,
-        departTime: formObject.time,
-        departDate: formObject.date,
-        isTransportVehicle: formObject.isTransportVehicle,
-        hasPackage: formObject.hasPackage,
-        requestNote: formObject.requestNote,
-        seatsRequired: formObject.seatsRequired,
-        // user_id: req.user,
-       }).then( function (res) {
-      setMatches(res.data)
-      console.log("Matches = ", res.data)
-       })
-    .catch((err) => console.log(err));
+
+    API.findMatchingTrips({
+      from: formObject.from,
+      to: formObject.to,
+      departTime: formObject.time,
+      departDate: formObject.date,
+      isTransportVehicle: formObject.isTransportVehicle,
+      hasPackage: formObject.hasPackage,
+      requestNote: formObject.requestNote,
+      seatsRequired: formObject.seatsRequired,
+      // user_id: req.user,
+    })
+      .then(function (res) {
+        setMatches(res.data);
+        console.log("Matches = ", res.data);
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
-    <Container fluid>
-      <Row>
-        <Col size="md-12">
-          <Jumbotron>
-            <h1>Ride</h1>
-          </Jumbotron>
-          <form action="#">
-            {/* <Input
+    <Box>
+      <Container fluid maxWidth="100vw">
+        <Row>
+          <Col size="md-12">
+            <Jumbotron>
+              <h1>Ride</h1>
+            </Jumbotron>
+            <Grid container justify="center" alignItems="center">
+              <form className={classes.root}>
+                <TextField
+                  id="from"
+                  select
+                  label="From (required)"
+                  onChange={handleInputChange}
+                  name="from"
+                  helperText="Please select your start location"
+                  variant="outlined"
+                >
+                  {routes.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+
+                <TextField
+                  id="to"
+                  select
+                  label="To (required)"
+                  onChange={handleInputChange}
+                  name="to"
+                  helperText="Please select your end location"
+                  variant="outlined"
+                >
+                  {routes.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <br />
+
+                <TextField
+                  id="departDate"
+                  type="date"
+                  name="date"
+                  label="Start Date"
+                  variant="outlined"
+                  onChange={handleInputChange}
+                  helperText="Date you'll be leaving..."
+                  InputLabelProps={{
+                    // removes the header from inside the input box
+                    shrink: true,
+                  }}
+                />
+
+                <TextField
+                  id="departTime"
+                  label="Start Time"
+                  variant="outlined"
+                  onChange={handleInputChange}
+                  type="time"
+                  name="time"
+                  helperText="Time you'll be leaving..."
+                  InputLabelProps={{
+                    // removes the header from inside the input box
+                    shrink: true,
+                  }}
+                />
+                <br />
+                <Grid
+                  container
+                  justify="center"
+                  alignItems="center"
+                  item
+                  xs={12}
+                >
+                  <TextField
+                    id="outlined-basic"
+                    label="Seats Required?"
+                    variant="outlined"
+                    onChange={handleInputChange}
+                    type="number"
+                    name="seatsRequired"
+                    helperText="Number of seats required..."
+                  />
+                </Grid>
+                <br />
+                <Grid
+                  xs={12}
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                >
+                  <TextField
+                    id="tripNote"
+                    label="Trip Note"
+                    multiline
+                    rows={4}
+                    variant="outlined"
+                    helperText="Enter other details of your request..."
+                  />
+                  {/* <TextArea
+              onChange={handleInputChange}
+              name="tripNote"
+              helperText="Enter note about your trip..."
+            /> */}
+                  <br />
+                </Grid>
+                <Grid
+                  container
+                  justify="center"
+                  alignItems="center"
+                  item
+                  xs={12}
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={hasPackage}
+                        onChange={handleHasPackageChange}
+                        name="carryPackage"
+                        inputProps={{ "aria-label": "primary checkbox" }}
+                      />
+                    }
+                    label="Send a parcel?"
+                  />
+                </Grid>
+                <br />
+                <Grid
+                  container
+                  justify="center"
+                  alignItems="center"
+                  item
+                  xs={12}
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={isTransportVehicle}
+                        onChange={handleIsTransportVehicleChange}
+                        name="isTransportVehicle"
+                        inputProps={{ "aria-label": "primary checkbox" }}
+                      />
+                    }
+                    label="Transport or drive vehicle"
+                  />
+                </Grid>
+                {/* <Input
               onChange={handleInputChange}
               name="from"
               placeholder="From (required)"
@@ -154,46 +333,49 @@ function Ride() {
               name="seatsRequired"
               placeholder="Number of passengers..."
             /> */}
-            <TextArea
-              onChange={handleInputChange}
-              name="requestNote"
-              placeholder="Enter note about your request..."
-            />
-            <label>
-              <input
-                type="checkbox"
-                name="hasPackage"
-                onChange={handleHasPackageChange}
-                checked={hasPackage}
-              />
-              <span>Send a package</span>
-            </label>
-            <br></br>
-            <label>
-              <input
-                type="checkbox"
-                name="isTransportVehicle"
-                onChange={handleIsTransportVehicleChange}
-                checked={isTransportVehicle}
-              />
-              <span>Transport or drive vehicle</span>
-            </label>
+                {/* <TextArea
+                  onChange={handleInputChange}
+                  name="requestNote"
+                  placeholder="Enter note about your request..."
+                />
+                <label>
+                  <input
+                    type="checkbox"
+                    name="hasPackage"
+                    onChange={handleHasPackageChange}
+                    checked={hasPackage}
+                  /> */}
+                {/* <span>Send a package</span>
+                </label> */}
+                {/* <br></br>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="isTransportVehicle"
+                    onChange={handleIsTransportVehicleChange}
+                    checked={isTransportVehicle}
+                  />
+                  <span>Transport or drive vehicle</span>
+                </label> */}
 
-            <FormBtn
-              disabled={!(formObject.from && formObject.to)}
-              onClick={handleFormSubmit}
-            >
-              Request Ride
-            </FormBtn>
-          </form>
-        </Col>
-      </Row>
-      <Row>
-          <Col size="md-2">
-            <Link to="/drive">Go to Drive</Link>
+                <Grid container justify="center" alignItems="center">
+                  <FormBtn
+                    disabled={!(formObject.from && formObject.to)}
+                    onClick={handleFormSubmit}
+                  >
+                    Request Ride
+                  </FormBtn>
+                </Grid>
+                <br />
+                <Grid container justify="center" alignItems="center">
+                  <Link to="/drive">Go to Drive</Link>
+                </Grid>
+              </form>
+            </Grid>
           </Col>
         </Row>
-    </Container>
+      </Container>
+    </Box>
   );
 }
 

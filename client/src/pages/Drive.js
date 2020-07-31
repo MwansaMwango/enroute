@@ -1,13 +1,3 @@
-// import DateFnsUtils from "@date-io/date-fns";
-// import 'date-fns';
-// import {
-//   MuiPickersUtilsProvider,
-//   KeyboardTimePicker,
-//   KeyboardDatePicker,
-// } from "@material-ui/pickers";
-// import Moment from "react-moment";
-// import DeleteBtn from "../components/DeclineBtn";
-// import { List, ListItem } from "../components/List";
 import React, { useState, useEffect } from "react";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
@@ -218,11 +208,11 @@ function Drive() {
                     type="number"
                     name="freeSeats"
                     helperText="Number of seats available..."
+                    
                   />
                 </Grid>
                 <br />
                 <Grid
-                  
                   xs={12}
                   container
                   direction="row"
@@ -237,12 +227,12 @@ function Drive() {
                     variant="outlined"
                     helperText="Enter note about your trip..."
                   />
-                {/* <TextArea
+                  {/* <TextArea
               onChange={handleInputChange}
               name="tripNote"
               helperText="Enter note about your trip..."
             /> */}
-                <br />
+                  <br />
                 </Grid>
                 <Grid
                   container
@@ -250,20 +240,19 @@ function Drive() {
                   alignItems="center"
                   item
                   xs={12}
-                  >
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                    checked={carryPackage}
-                    onChange={handleCarryPackageChange}
-                    name="carryPackage"
-                    inputProps={{ "aria-label": "primary checkbox" }}
-                    />
-                  }
-                  label="Able to carry package"
+                >
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        checked={carryPackage}
+                        onChange={handleCarryPackageChange}
+                        name="carryPackage"
+                        inputProps={{ "aria-label": "primary checkbox" }}
+                      />
+                    }
+                    label="Able to carry package"
                   />
-
-                  </Grid>
+                </Grid>
                 <br />
 
                 {/* 
@@ -283,13 +272,12 @@ function Drive() {
                     Post Trip
                   </FormBtn>
                 </Grid>
+                <br />
+                <Grid container justify="center" alignItems="center">
+                  <Link to="/ride">Go to Ride</Link>
+                </Grid>
               </form>
             </Grid>
-          </Col>
-        </Row>
-        <Row>
-          <Col size="md-2">
-            <Link to="/ride">Go to Ride</Link>
           </Col>
         </Row>
       </Container>
