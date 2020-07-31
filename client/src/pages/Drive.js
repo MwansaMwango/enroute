@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
 // import DateFnsUtils from "@date-io/date-fns";
 // import 'date-fns';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
-import Moment from "react-moment";
-import DeleteBtn from "../components/DeclineBtn";
+// import {
+//   MuiPickersUtilsProvider,
+//   KeyboardTimePicker,
+//   KeyboardDatePicker,
+// } from "@material-ui/pickers";
+// import Moment from "react-moment";
+// import DeleteBtn from "../components/DeclineBtn";
+// import { List, ListItem } from "../components/List";
+import React, { useState, useEffect } from "react";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
-import { List, ListItem } from "../components/List";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   InputWithIcon,
@@ -169,20 +169,6 @@ function Drive() {
               ))}
             </TextField>
             <br />
-            {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <KeyboardDatePicker
-                disableToolbar
-                variant="inline"
-                format="dd/MM/yyyy"
-                margin="normal"
-                id="date-picker-inline"
-                label="Select departure date"
-                onChange={handleInputChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
-              />
-            </MuiPickersUtilsProvider> */}
 
             <TextField
               id="departDate"
@@ -248,8 +234,7 @@ function Drive() {
               }
               label="Able to carry package"
             />
-            <br/>
-
+            <br />
 
             {/* 
               <input
