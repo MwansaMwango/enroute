@@ -8,6 +8,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 // MUI
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import Checkbox from '@material-ui/core/Checkbox';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,22 +42,21 @@ export function TextArea(props) {
 
 export function FormBtn(props) {
   return (
-    <button
+    <Button
       {...props}
-      style={{ float: "right", marginBottom: 10 }}
-      className="btn btn-success"
+      variant="contained"
+      color="primary"
     >
       {props.children}
-    </button>
+    </Button>
   );
 }
 // // Mui Inputs
 
 
-
 export function InputWithIcon() {
   const classes = useStyles();
-  
+
   return (
     <div>
       <FormControl className={classes.margin}>

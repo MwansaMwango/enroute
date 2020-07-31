@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-
+// import DateFnsUtils from "@date-io/date-fns";
+// import 'date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from "@material-ui/pickers";
 import Moment from "react-moment";
 import DeleteBtn from "../components/DeclineBtn";
 import Jumbotron from "../components/Jumbotron";
@@ -14,18 +20,25 @@ import {
   TextArea,
   FormBtn,
 } from "../components/Form";
-import { Input, TextField, MenuItem } from "@material-ui/core/";
+import {
+  Input,
+  TextField,
+  MenuItem,
+  Button,
+  Checkbox,
+  FormControlLabel,
+} from "@material-ui/core/";
 
 import "./drive.css";
 
 function Drive() {
   // Setting our component's initial state
+
   const [trips, setTrip] = useState([]);
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [carryPackage, setCarryPackage] = useState(false);
-  let uniqueRouteList = [];
-          
+
   const useStyles = makeStyles((theme) => ({
     root: {
       "& .MuiTextField-root": {
@@ -33,26 +46,18 @@ function Drive() {
         width: "25ch",
       },
     },
+    container: {
+      display: "flex",
+      flexWrap: "wrap",
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 200,
+    },
   }));
   const classes = useStyles();
-  const currencies = [
-    {
-      value: "USD",
-      label: "$",
-    },
-    {
-      value: "EUR",
-      label: "€",
-    },
-    {
-      value: "BTC",
-      label: "฿",
-    },
-    {
-      value: "JPY",
-      label: "¥",
-    },
-  ];
+  let uniqueRouteList = [];
 
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
   useEffect(() => {
@@ -71,7 +76,7 @@ function Drive() {
   }
   function loadRoutes() {
     let routeList = [];
-  
+
     API.getRoutes()
       .then(function (res) {
         res.data.map((route) => {
@@ -79,15 +84,14 @@ function Drive() {
           console.log("Response of getroutes=", route.from);
         });
         uniqueRouteList = [...new Set(routeList)]; // removes duplicate elements in array
-        setRoutes(uniqueRouteList)
+        setRoutes(uniqueRouteList);
         console.log("Preset routes all  ", routeList);
         console.log("Preset routes unique  ", uniqueRouteList);
-        
       })
       .catch((err) => console.log(err));
   }
-console.log("loggin uniue routes =",uniqueRouteList)
-// console.log("loggin uniue routes =",routeList)
+  console.log("loggin uniue routes =", uniqueRouteList);
+  // console.log("loggin uniue routes =",routeList)
 
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
@@ -133,16 +137,11 @@ console.log("loggin uniue routes =",uniqueRouteList)
             <h1>Drive</h1>
           </Jumbotron>
           <form className={classes.root}>
-            <Input
-              placeholder="Placeholder"
-              inputProps={{ "aria-label": "description" }}
-            />
             <TextField
               id="from"
               select
               label="From (required)"
               onChange={handleInputChange}
-        
               name="from"
               helperText="Please select your start location"
               variant="outlined"
@@ -153,41 +152,66 @@ console.log("loggin uniue routes =",uniqueRouteList)
                 </MenuItem>
               ))}
             </TextField>
-            <TextField
-              id="outlined-basic"
-              label="From"
-              variant="outlined"
-              onChange={handleInputChange}
-              name="from2"
-              label="From (required)"
-            />
 
             <TextField
-              id="outlined-basic"
-              label="To"
-              variant="outlined"
+              id="to"
+              select
+              label="To (required)"
               onChange={handleInputChange}
               name="to"
-              placeholder="To (required)"
-            />
+              helperText="Please select your end location"
+              variant="outlined"
+            >
+              {routes.map((option) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+            </TextField>
+            <br />
+            {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <KeyboardDatePicker
+                disableToolbar
+                variant="inline"
+                format="dd/MM/yyyy"
+                margin="normal"
+                id="date-picker-inline"
+                label="Select departure date"
+                onChange={handleInputChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+            </MuiPickersUtilsProvider> */}
+
             <TextField
-              id="outlined-basic"
+              id="departDate"
+              type="date"
+              name="date"
               label="Start Date"
               variant="outlined"
               onChange={handleInputChange}
-              type="date"
-              name="date"
-              placeholder="Date you'll be leaving..."
+              helperText="Date you'll be leaving..."
+              InputLabelProps={{
+                // removes the header from inside the input box
+                shrink: true,
+              }}
             />
+
             <TextField
-              id="outlined-basic"
+              id="departTime"
               label="Start Time"
               variant="outlined"
               onChange={handleInputChange}
               type="time"
               name="time"
-              placeholder="Time you'll be leaving..."
+              helperText="Time you'll be leaving..."
+              InputLabelProps={{
+                // removes the header from inside the input box
+                shrink: true,
+              }}
             />
+            <br />
             <TextField
               id="outlined-basic"
               label="Free Seats?"
@@ -195,23 +219,47 @@ console.log("loggin uniue routes =",uniqueRouteList)
               onChange={handleInputChange}
               type="number"
               name="freeSeats"
-              placeholder="Number of seats available..."
+              helperText="Number of seats available..."
             />
-            <TextArea
-              onChange={handleInputChange}
-              name="tripNote"
-              placeholder="Enter note about your trip..."
+            <br />
+            <TextField
+              id="tripNote"
+              label="Trip Note"
+              multiline
+              rows={4}
+              variant="outlined"
+              helperText="Enter note about your trip..."
             />
 
-            <label>
+            {/* <TextArea
+              onChange={handleInputChange}
+              name="tripNote"
+              helperText="Enter note about your trip..."
+            /> */}
+            <br />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={carryPackage}
+                  onChange={handleCarryPackageChange}
+                  name="carryPackage"
+                  inputProps={{ "aria-label": "primary checkbox" }}
+                />
+              }
+              label="Able to carry package"
+            />
+            <br/>
+
+
+            {/* 
               <input
                 type="checkbox"
                 name="carryPackage"
                 onChange={handleCarryPackageChange}
                 checked={carryPackage}
               />
-              <span>Able to carry package</span>
-            </label>
+      
+            </label> */}
 
             <FormBtn
               disabled={!(formObject.from && formObject.to)}

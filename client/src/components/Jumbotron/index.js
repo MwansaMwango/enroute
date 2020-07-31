@@ -6,8 +6,8 @@ function Jumbotron({ children }) {
       style={{
         height: "15vh",
         clear: "both",
-        paddingTop: ".1rem",
-        fontSize: "2rem",
+        paddingTop: "1rem",
+        fontSize: "1rem",
         textAlign: "center",
         color: "white",
         backgroundImage: ` linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
