@@ -1,4 +1,5 @@
 import React from 'react';
+import Axios from 'axios';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -99,6 +100,12 @@ export default function Nav() {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
+  const logout = () => {
+    Axios.get('/api/auth/logout')
+      .then(() => {
+        window.location.href = '/'
+      })
+  }
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -117,6 +124,7 @@ export default function Nav() {
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={logout}>Logout</MenuItem>
     </Menu>
   );
 

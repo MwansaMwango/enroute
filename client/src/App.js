@@ -1,23 +1,35 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import React, {useEffect} from "react";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import Books from "./pages/Books";
+import Layout from "./pages/Layout";
 import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
 import Drive from "./pages/Drive";
 import Ride from "./pages/Ride";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 import RequestsReceived from "./pages/RequestsReceived";
 import RequestsCreated from "./pages/RequestsCreated";
 import Nav from "./components/Nav";
 
 function App() {
+
+
+
   return (
     <Router>
-      <div>
+      <Layout>
         <Nav />
         <Switch>
-          <Route exact path={["/", "/drive"]}>
+          <Route exact path={["/", "/login"]}>
+            <Login />
+          </Route>
+          <Route exact path={"/drive"}>
             <Drive />
           </Route>
+
+          <Route exact path="/register" component={Register} />
+            
           <Route exact path={"/requestscreated"}>
             <RequestsCreated />
           </Route>
@@ -37,7 +49,7 @@ function App() {
             <NoMatch />
           </Route>
         </Switch>
-      </div>
+      </Layout>
     </Router>
   );
 }
