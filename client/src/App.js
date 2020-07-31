@@ -15,17 +15,17 @@ function App() {
       <div>
         <Nav />
         <Switch>
-          <Route exact path={["/", "/requestscreated"]}>
+          <Route exact path={["/", "/drive"]}>
+            <Drive />
+          </Route>
+          <Route exact path={"/requestscreated"}>
             <RequestsCreated />
           </Route>
           <Route exact path={"/requests"}>
-          <RequestsReceived />
+            <RequestsReceived />
           </Route>
           <Route exact path="/ride">
-          <Ride />
-          </Route>
-          <Route exact path="/drive">
-          <Drive />
+            <Ride />
           </Route>
           <Route exact path="/books">
             <Books />
