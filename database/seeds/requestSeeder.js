@@ -18,7 +18,7 @@ async function seedData() {
       seatsRequired: faker.random.number( {min: 1, max: 3}),
       isTransportVehicle: faker.random.boolean(),
       requestNote: faker.lorem.sentence(),
-      status: faker.random.arrayElement(["Draft", "Pending", "Confirmed", "Completed", "Expired"]),
+      status: faker.random.arrayElement(["Created", "Pending", "Confirmed", "Completed", "Expired"]),
       user_id: randomUser._id,
       trip_id: randomTrip._id,
       to: faker.random.arrayElement(["Stirling", "Mount Lawley", "Joondalup", "Victoria Park", "Nedlands"]),

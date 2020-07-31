@@ -148,7 +148,7 @@ function Ride() {
     })
       .then(function (res) {
         setMatches(res.data);
-        console.log("Matches = ", res.data);
+        alert(res.data.length + " Matches found.");
       })
       .catch((err) => console.log(err));
   }
@@ -250,8 +250,8 @@ function Ride() {
                   alignItems="center"
                 >
                   <TextField
-                    id="tripNote"
-                    label="Trip Note"
+                    id="requestNote"
+                    label="Request Note"
                     multiline
                     rows={4}
                     variant="outlined"
@@ -276,7 +276,7 @@ function Ride() {
                       <Checkbox
                         checked={hasPackage}
                         onChange={handleHasPackageChange}
-                        name="carryPackage"
+                        name="hasPackage"
                         inputProps={{ "aria-label": "primary checkbox" }}
                       />
                     }
@@ -303,61 +303,7 @@ function Ride() {
                     label="Transport or drive vehicle"
                   />
                 </Grid>
-                {/* <Input
-              onChange={handleInputChange}
-              name="from"
-              placeholder="From (required)"
-            />
-            <Input
-              onChange={handleInputChange}
-              name="to"
-              placeholder="To (required)"
-            />
-            <Input
-              onChange={handleInputChange}
-              type="date"
-              name="date"
-              placeholder="Date you'll be leaving..."
-             
-            />
-            <Input
-              onChange={handleInputChange}
-              type="time"
-              name="time"
-              placeholder="Time you'll be leaving..."
-  
-            />
-            <Input
-              onChange={handleInputChange}
-              type="number"
-              name="seatsRequired"
-              placeholder="Number of passengers..."
-            /> */}
-                {/* <TextArea
-                  onChange={handleInputChange}
-                  name="requestNote"
-                  placeholder="Enter note about your request..."
-                />
-                <label>
-                  <input
-                    type="checkbox"
-                    name="hasPackage"
-                    onChange={handleHasPackageChange}
-                    checked={hasPackage}
-                  /> */}
-                {/* <span>Send a package</span>
-                </label> */}
-                {/* <br></br>
-                <label>
-                  <input
-                    type="checkbox"
-                    name="isTransportVehicle"
-                    onChange={handleIsTransportVehicleChange}
-                    checked={isTransportVehicle}
-                  />
-                  <span>Transport or drive vehicle</span>
-                </label> */}
-
+         
                 <Grid container justify="center" alignItems="center">
                   <FormBtn
                     disabled={!(formObject.from && formObject.to)}
@@ -368,7 +314,8 @@ function Ride() {
                 </Grid>
                 <br />
                 <Grid container justify="center" alignItems="center">
-                  <Link to="/drive">Go to Drive</Link>
+                  <Link to="/drive">Drive  </Link>
+                  <Link to="/requests">  | Requests</Link>
                 </Grid>
               </form>
             </Grid>

@@ -3,7 +3,7 @@ const db = require("../models");
 // Defining methods for the tripsController
 module.exports = {
   findAll: function (req, res) {
-    db.Request.find({ user_id: "5f1d53135a23c6554c153e14" }) //TODO replace with passport
+    db.Request.find({}) //TODO replace with passport
       .populate("user_id")
       .populate("route_id")
       .sort({ departDate: -1 })
@@ -35,11 +35,12 @@ module.exports = {
       freeSeats: {
         $gte: req.body.seatsRequired,
       },
+      departDate : req.body.departDate,
       // Optional parameters
       $or: [
         {
           // departDate: ISODate("2020-08-10T16:00:00.000Z"),
-          departDate: req.body.departDate, // TODO Matching by Date and Time using Moment
+          // departDate: req.body.departDate, // TODO Matching by Date and Time using Moment
         },
         {
           carryPackage: req.body.hasPackage,
@@ -48,12 +49,17 @@ module.exports = {
     })
       .then(function (dbModel) {
         res.json(dbModel);
-        console.log("Result matches =", dbModel);
+        console.log("Result matches =", dbModel.length);
       })
       .catch((err) => res.status(422).json(err));
   },
   update: function (req, res) {
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
+      .then((dbModel) => res.json(dbModel))
+      .catch((err) => res.status(422).json(err));
+  },
+  acceptRequest: function (req, res) {
+    db.Request.findOneAndUpdate({ _id:  ObjectId(req.params.id) }, {$set: {'status':'Confirmed'}}) //TODO add trip Id cross reference
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },

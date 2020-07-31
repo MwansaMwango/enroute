@@ -10,6 +10,9 @@ router.route("/")
   // Matches with "/api/requests/matches"
   router.route("/matches")
   .post(requestsController.findMatchingTrips);
+  // Accept request and confirm booking with "/api/requests/accept/:id"
+  router.route("/accept/:id")
+  .put(requestsController.update);
 
 // Matches with "/api/requests/:id"
 router.route("/:id")

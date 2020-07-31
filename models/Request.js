@@ -15,6 +15,7 @@ const RequestSchema = new Schema(
     status: { type: String, default: "Pending" },
     trip_id: { type: Schema.Types.ObjectId, ref: "Trip" }, // 1 to 1 Relationship
     user_id: { type: Schema.Types.ObjectId, ref: "User" }, // 1 to 1 Relationship
+    driver_id: { type: Schema.Types.ObjectId, ref: "User" }, // 1 to 1 Relationship
 
   },
   {

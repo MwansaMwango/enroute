@@ -65,7 +65,7 @@ export default {
 
   // Accept the request with the given id
   acceptRequest: function (id) {
-    return axios.get("/api/accept/" + id);
+    return axios.put("/api/requests/accept/" + id);
   },
   // Cancel /undo the accepted request with the given id
   undoAcceptRequest: function (id) {
