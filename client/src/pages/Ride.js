@@ -6,7 +6,7 @@ import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
+import { TextArea, FormBtn } from "../components/Form";
 import "./drive.css";
 
 function Ride() {
@@ -124,7 +124,7 @@ function Ride() {
             <h1>Ride</h1>
           </Jumbotron>
           <form action="#">
-            <Input
+            {/* <Input
               onChange={handleInputChange}
               name="from"
               placeholder="From (required)"
@@ -153,7 +153,7 @@ function Ride() {
               type="number"
               name="seatsRequired"
               placeholder="Number of passengers..."
-            />
+            /> */}
             <TextArea
               onChange={handleInputChange}
               name="requestNote"

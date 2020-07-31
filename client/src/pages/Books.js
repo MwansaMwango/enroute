@@ -5,7 +5,7 @@ import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../components/Grid";
 import { List, ListItem } from "../components/List";
-import { Input, TextArea, FormBtn } from "../components/Form";
+import { TextArea, FormBtn } from "../components/Form";
 
 function Books() {
   // Setting our component's initial state
@@ -62,7 +62,7 @@ function Books() {
               <h1>What Books Should I Read?</h1>
             </Jumbotron>
             <form>
-              <Input
+              {/* <Input
                 onChange={handleInputChange}
                 name="title"
                 placeholder="Title (required)"
@@ -71,7 +71,7 @@ function Books() {
                 onChange={handleInputChange}
                 name="author"
                 placeholder="Author (required)"
-              />
+              /> */}
               <TextArea
                 onChange={handleInputChange}
                 name="synopsis"

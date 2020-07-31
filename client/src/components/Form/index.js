@@ -1,14 +1,34 @@
 import React from "react";
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import FormControl from '@material-ui/core/FormControl';
+import Grid from '@material-ui/core/Grid';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+// MUI
+import { makeStyles } from "@material-ui/core/styles";
+import TextField from "@material-ui/core/TextField";
 
-// This file exports the Input, TextArea, and FormBtn components
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+      width: "25ch",
+    },
+  },
+}));
 
-export function Input(props) {
+export function BasicTextFields() {
+  const classes = useStyles();
+
   return (
-    <div className="form-group">
-      <input className="form-control" {...props} />
-    </div>
+    <form className={classes.root} noValidate autoComplete="off">
+      <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+    </form>
   );
 }
+
+// This file exports the Input, TextArea, and FormBtn components
 
 export function TextArea(props) {
   return (
@@ -20,8 +40,48 @@ export function TextArea(props) {
 
 export function FormBtn(props) {
   return (
-    <button {...props} style={{ float: "right", marginBottom: 10 }} className="btn btn-success">
+    <button
+      {...props}
+      style={{ float: "right", marginBottom: 10 }}
+      className="btn btn-success"
+    >
       {props.children}
     </button>
   );
 }
+// // Mui Inputs
+
+
+
+export function InputWithIcon() {
+  const classes = useStyles();
+  
+  return (
+    <div>
+      <FormControl className={classes.margin}>
+        <InputLabel htmlFor="input-with-icon-adornment">With a start adornment</InputLabel>
+        <Input
+          id="input-with-icon-adornment"
+          startAdornment={
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          }
+        />
+      </FormControl>
+      <TextField
+        className={classes.margin}
+        id="input-with-icon-textfield"
+        label="TextField"
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <AccountCircle />
+            </InputAdornment>
+          ),
+        }}
+      />
+    </div>
+  );
+}
+
