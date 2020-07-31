@@ -12,7 +12,7 @@ import React, { useState, useEffect } from "react";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../components/Grid";
+import { Container, Col, Row } from "../components/Grid"; // removed container
 import { makeStyles } from "@material-ui/core/styles";
 import {
   InputWithIcon,
@@ -22,7 +22,10 @@ import {
 } from "../components/Form";
 import {
   Input,
+  Box,
+  Grid,
   TextField,
+  // Container,
   MenuItem,
   Button,
   Checkbox,
@@ -130,113 +133,140 @@ function Drive() {
   }
 
   return (
-    <Container fluid>
-      <Row>
-        <Col size="md-12">
-          <Jumbotron>
-            <h1>Drive</h1>
-          </Jumbotron>
-          <form className={classes.root}>
-            <TextField
-              id="from"
-              select
-              label="From (required)"
-              onChange={handleInputChange}
-              name="from"
-              helperText="Please select your start location"
-              variant="outlined"
-            >
-              {routes.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
+    <Box>
+      <Container fluid maxWidth="100vw">
+        <Row>
+          <Col size="md-12">
+            <Jumbotron>
+              <h1>Drive</h1>
+            </Jumbotron>
+            <Grid container justify="center" alignItems="center">
+              <form className={classes.root}>
+                <TextField
+                  id="from"
+                  select
+                  label="From (required)"
+                  onChange={handleInputChange}
+                  name="from"
+                  helperText="Please select your start location"
+                  variant="outlined"
+                >
+                  {routes.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
 
-            <TextField
-              id="to"
-              select
-              label="To (required)"
-              onChange={handleInputChange}
-              name="to"
-              helperText="Please select your end location"
-              variant="outlined"
-            >
-              {routes.map((option) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-            </TextField>
-            <br />
+                <TextField
+                  id="to"
+                  select
+                  label="To (required)"
+                  onChange={handleInputChange}
+                  name="to"
+                  helperText="Please select your end location"
+                  variant="outlined"
+                >
+                  {routes.map((option) => (
+                    <MenuItem key={option} value={option}>
+                      {option}
+                    </MenuItem>
+                  ))}
+                </TextField>
+                <br />
 
-            <TextField
-              id="departDate"
-              type="date"
-              name="date"
-              label="Start Date"
-              variant="outlined"
-              onChange={handleInputChange}
-              helperText="Date you'll be leaving..."
-              InputLabelProps={{
-                // removes the header from inside the input box
-                shrink: true,
-              }}
-            />
+                <TextField
+                  id="departDate"
+                  type="date"
+                  name="date"
+                  label="Start Date"
+                  variant="outlined"
+                  onChange={handleInputChange}
+                  helperText="Date you'll be leaving..."
+                  InputLabelProps={{
+                    // removes the header from inside the input box
+                    shrink: true,
+                  }}
+                />
 
-            <TextField
-              id="departTime"
-              label="Start Time"
-              variant="outlined"
-              onChange={handleInputChange}
-              type="time"
-              name="time"
-              helperText="Time you'll be leaving..."
-              InputLabelProps={{
-                // removes the header from inside the input box
-                shrink: true,
-              }}
-            />
-            <br />
-            <TextField
-              id="outlined-basic"
-              label="Free Seats?"
-              variant="outlined"
-              onChange={handleInputChange}
-              type="number"
-              name="freeSeats"
-              helperText="Number of seats available..."
-            />
-            <br />
-            <TextField
-              id="tripNote"
-              label="Trip Note"
-              multiline
-              rows={4}
-              variant="outlined"
-              helperText="Enter note about your trip..."
-            />
-
-            {/* <TextArea
+                <TextField
+                  id="departTime"
+                  label="Start Time"
+                  variant="outlined"
+                  onChange={handleInputChange}
+                  type="time"
+                  name="time"
+                  helperText="Time you'll be leaving..."
+                  InputLabelProps={{
+                    // removes the header from inside the input box
+                    shrink: true,
+                  }}
+                />
+                <br />
+                <Grid
+                  container
+                  justify="center"
+                  alignItems="center"
+                  item
+                  xs={12}
+                >
+                  <TextField
+                    id="outlined-basic"
+                    label="Free Seats?"
+                    variant="outlined"
+                    onChange={handleInputChange}
+                    type="number"
+                    name="freeSeats"
+                    helperText="Number of seats available..."
+                  />
+                </Grid>
+                <br />
+                <Grid
+                  
+                  xs={12}
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                >
+                  <TextField
+                    id="tripNote"
+                    label="Trip Note"
+                    multiline
+                    rows={4}
+                    variant="outlined"
+                    helperText="Enter note about your trip..."
+                  />
+                {/* <TextArea
               onChange={handleInputChange}
               name="tripNote"
               helperText="Enter note about your trip..."
             /> */}
-            <br />
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={carryPackage}
-                  onChange={handleCarryPackageChange}
-                  name="carryPackage"
-                  inputProps={{ "aria-label": "primary checkbox" }}
-                />
-              }
-              label="Able to carry package"
-            />
-            <br />
+                <br />
+                </Grid>
+                <Grid
+                  container
+                  justify="center"
+                  alignItems="center"
+                  item
+                  xs={12}
+                  >
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                    checked={carryPackage}
+                    onChange={handleCarryPackageChange}
+                    name="carryPackage"
+                    inputProps={{ "aria-label": "primary checkbox" }}
+                    />
+                  }
+                  label="Able to carry package"
+                  />
 
-            {/* 
+                  </Grid>
+                <br />
+
+                {/* 
               <input
                 type="checkbox"
                 name="carryPackage"
@@ -245,22 +275,25 @@ function Drive() {
               />
       
             </label> */}
-
-            <FormBtn
-              disabled={!(formObject.from && formObject.to)}
-              onClick={handleFormSubmit}
-            >
-              Post Trip
-            </FormBtn>
-          </form>
-        </Col>
-      </Row>
-      <Row>
-        <Col size="md-2">
-          <Link to="/ride">Go to Ride</Link>
-        </Col>
-      </Row>
-    </Container>
+                <Grid container justify="center" alignItems="center">
+                  <FormBtn
+                    disabled={!(formObject.from && formObject.to)}
+                    onClick={handleFormSubmit}
+                  >
+                    Post Trip
+                  </FormBtn>
+                </Grid>
+              </form>
+            </Grid>
+          </Col>
+        </Row>
+        <Row>
+          <Col size="md-2">
+            <Link to="/ride">Go to Ride</Link>
+          </Col>
+        </Row>
+      </Container>
+    </Box>
   );
 }
 
