@@ -5,7 +5,7 @@ const requestRoutes = require("./requests");
 const routeRoutes = require("./routes.js");
 const authRoutes = require("./auth.js");
 const userRoutes = require("./user.js");
-const isAuthenticated = require("./../../../middleware/isAuthenticated");
+const isAuthenticated = require("../../middleware/isAuthenticated.js");
 
 // Auth  routes
 router.use("/auth", authRoutes);
