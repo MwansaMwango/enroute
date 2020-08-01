@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {useHistory} from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
+import Link from "@material-ui/core/Link";
 import Axios from "axios";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -16,6 +17,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import Grid from "@material-ui/core/Grid";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -81,6 +83,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
 export default function Nav() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -89,8 +93,9 @@ export default function Nav() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-  
-
+useEffect(() => {
+  getUser();
+}, []);
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -110,15 +115,16 @@ export default function Nav() {
   };
   const getUser = () => {
     Axios.get("/api/users/current-user")
-    .then((res) => {
-      setCurrentUserFirstName(res.data.data.firstName);
-  
-      // sessionStorage.setItem('current-user', JSON.stringify(res.data.data))
-    })
-    .catch((err) => {
-      console.log("Something went wrong");
-    });
-  }
+      .then((res) => {
+        setCurrentUserFirstName(res.data.data.firstName);
+        return true;
+
+        // sessionStorage.setItem('current-user', JSON.stringify(res.data.data))
+      })
+      .catch((err) => {
+        console.log("Something went wrong");
+      });
+  };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
@@ -127,7 +133,7 @@ export default function Nav() {
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <div>
-      {currentUserFirstName? (
+      {currentUserFirstName ? (
         <Menu
           anchorEl={anchorEl}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -149,43 +155,49 @@ export default function Nav() {
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
+    <div>
+      {currentUserFirstName ? (
+        <Menu
+          anchorEl={mobileMoreAnchorEl}
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          id={mobileMenuId}
+          keepMounted
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+          open={isMobileMenuOpen}
+          onClose={handleMobileMenuClose}
         >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
+          <MenuItem>
+            <IconButton aria-label="show 4 new mails" color="inherit">
+              <Badge badgeContent={4} color="secondary">
+                <MailIcon />
+              </Badge>
+            </IconButton>
+            <p>Messages</p>
+          </MenuItem>
+          <MenuItem>
+            <IconButton aria-label="show 11 new notifications" color="inherit">
+              <Badge badgeContent={11} color="secondary">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+            <p>Notifications</p>
+          </MenuItem>
+          <MenuItem onClick={handleProfileMenuOpen}>
+            <IconButton
+              aria-label="account of current user"
+              aria-controls="primary-search-account-menu"
+              aria-haspopup="true"
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+            <p>Profile</p>
+          </MenuItem>
+        </Menu>
+      ) : (
+        <div></div>
+      )}
+    </div>
   );
 
   return (
@@ -200,58 +212,77 @@ export default function Nav() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            Enroute
-          </Typography>
-          {/* <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div> */}
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-              {getUser()}
-              {currentUserFirstName}
-            </IconButton>
+          <div>
+            <Typography className={classes.title} variant="h5" noWrap>
+              Enroute
+            </Typography>
           </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
+
+          {currentUserFirstName ? (
+            <Grid
+              container
+              direction="col"
+              justify="flex-end"
+              alignItems="center"
             >
-              <MoreIcon />
-            </IconButton>
-          </div>
+              <div>
+                <div className={classes.grow} />
+                <div className={classes.sectionDesktop}>
+                  <IconButton aria-label="show 4 new mails" color="inherit">
+                    <Badge badgeContent={4} color="secondary">
+                      <MailIcon />
+                    </Badge>
+                  </IconButton>
+                  <IconButton
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                  >
+                    <Badge badgeContent={3} color="secondary">
+                      <NotificationsIcon />
+                    </Badge>
+                  </IconButton>
+                  <IconButton
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    <AccountCircle />
+                    {getUser()}
+                    {currentUserFirstName}
+                  </IconButton>
+                </div>
+                <div className={classes.sectionMobile}>
+                  <IconButton
+                    aria-label="show more"
+                    aria-controls={mobileMenuId}
+                    aria-haspopup="true"
+                    onClick={handleMobileMenuOpen}
+                    color="inherit"
+                  >
+                    <MoreIcon />
+                  </IconButton>
+                </div>
+              </div>
+            </Grid>
+          ) : (
+            <Grid
+              container
+              direction="col"
+              justify="flex-end"
+              alignItems="center"
+            >
+              <div>
+                <Typography variant="h6">
+                  <Link href="/login" color="inherit" underline="none">
+                    Login
+                  </Link>
+                </Typography>
+              </div>
+            </Grid>
+          )}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
