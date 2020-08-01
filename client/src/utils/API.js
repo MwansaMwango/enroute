@@ -69,11 +69,11 @@ export default {
   },
   // Cancel /undo the accepted request with the given id
   undoAcceptRequest: function (id) {
-    return axios.get("/api/undoaccept/" + id);
+    return axios.put("/api/requests/undoaccept/" + id);
   },
   // Decline the matching request with the given id
   declineRequest: function (id) {
-    return axios.get("/api/decline/" + id);
+    return axios.put("/api/requests/decline/" + id);
   },
   // ------------------Requests Created APIs ----------------------------
 

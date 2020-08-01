@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 import { Container, Col, Row } from "../components/Grid"; // removed container
 import { List, ListItem } from "../components/List"; //
 import AcceptBtn from "../components/AcceptBtn"; //
-import DeclineBtn from "../components/DeclineBtn"; //
-import DeleteBtn from "../components/DeleteBtn"; //
+import CancelBtn from "../components/CancelBtn"; //
+import DeleteBtn from "../components/CancelBtn"; //
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -53,7 +53,7 @@ function RequestsReceived() {
   // Accept a matching request from the loaded list with a given id, then reloads matching requests from the db
   function acceptRequest(id) {
     API.acceptRequest(id)
-      .then((res) => loadMatchingRequests())
+      .then((res) => loadMatchingRequests()) // reload
       .catch((err) => console.log(err));
   }
   // Undo the accept matching request action
@@ -103,10 +103,10 @@ function RequestsReceived() {
                         </Link>
                         <br></br>
                         <AcceptBtn onClick={() => acceptRequest(match._id)} />
-                        <DeleteBtn
+                        <CancelBtn
                           onClick={() => undoAcceptRequest(match._id)}
                         />
-                        <DeclineBtn onClick={() => declineRequest(match._id)} />
+                       
                       </ListItem>
                 
                   ))}

@@ -55,15 +55,41 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   update: function (req, res) {
+    
+    req.body.status = "Comfirmed" // change status booking to comfirmed
+    // req.body.driver_id = req.user_id // attach driver 
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
-  acceptRequest: function (req, res) {
-    db.Request.findOneAndUpdate({ _id:  ObjectId(req.params.id) }, {$set: {'status':'Confirmed'}}) //TODO add trip Id cross reference
+  undoAccept: function (req, res) {
+    console.log("undo route hit");
+    req.body.status = "Pending" // change status booking to comfirmed
+    // req.body.driver_id = req.user_id // attach driver 
+    db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
+  // decline: function (req, res) {
+  //   req.body.status = "Comfirmed" // change status booking to comfirmed
+  //   // req.body.driver_id = req.user_id // attach driver 
+  //   db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
+  //     .then((dbModel) => res.json(dbModel))
+  //     .catch((err) => res.status(422).json(err));
+  // },
+  // acceptRequest: function (req, res) {
+  //   db.Request.findByIdAndUpdate(
+  //     req.params.id,
+  //     {
+  //         $push: req.body,
+  //     },
+  //     { new: true, runValidators: true }
+  // ).then((updated) => {
+  //     res.json({
+  //         data: updated,
+  //     });
+  // });
+
   remove: function (req, res) {
     db.Request.findById({ _id: req.params.id })
       .then((dbModel) => dbModel.remove())

@@ -6,7 +6,7 @@ import { Container, Col, Row } from "../components/Grid"; // removed container
 import { List, ListItem } from "../components/List"; //
 import AcceptBtn from "../components/AcceptBtn"; //
 import DeclineBtn from "../components/DeclineBtn"; //
-import DeleteBtn from "../components/DeleteBtn"; //
+import DeleteBtn from "../components/CancelBtn"; //
 import moment from "moment";
 import { makeStyles } from "@material-ui/core/styles";
 import {
