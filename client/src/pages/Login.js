@@ -16,6 +16,8 @@ import LockIcon from "@material-ui/icons/Lock";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 
+
+
 const useStyles = makeStyles({
     root: {
         maxWidth: "100%",
@@ -65,8 +67,10 @@ function Login() {
                     withCredentials: true
                 }
             )
-            .then((response) => {
-                history.push("/drive");
+            .then(function (response) {
+                window.location.href = "/drive";
+                // history.push("/drive"); // history does not refresh page 
+      
             })
             .catch((err) => {
                 // not authenticated
