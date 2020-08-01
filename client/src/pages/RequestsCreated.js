@@ -92,13 +92,14 @@ function RequestsCreated() {
                     <AcceptBtn onClick={() => callDriver(request._id)}>
                       Phone
                     </AcceptBtn>
-                    <AcceptBtn onClick={() => emailDriver(request._id)}>
+                    <DeleteBtn onClick={() => emailDriver(request._id)}>
                       Email
-                    </AcceptBtn>
+                    </DeleteBtn>
                     <DeclineBtn onClick={() => cancelRequest(request._id)}>
                       Cancel
                     </DeclineBtn>
-                    <strong>{request.status}</strong>
+                    
+                    
                   </ListItem>
                   </Grid>
               ))}
@@ -108,12 +109,14 @@ function RequestsCreated() {
           )}
         </Col>
       </Row>
+      <Grid container justify="space-around" alignItems="center">
       <Row>
         <Col size="md-2">
           <Link to="/ride">Ride </Link>
           <Link to="/requests">|  Requests</Link>
         </Col>
       </Row>
+      </Grid>
     </Container>
   );
 }

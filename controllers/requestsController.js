@@ -3,6 +3,7 @@ const db = require("../models");
 // Defining methods for the tripsController
 module.exports = {
   findAll: function (req, res) {
+    console.log("route hit");
     db.Request.find({}) //TODO replace with passport
       .populate("user_id")
       .populate("route_id")
@@ -35,7 +36,7 @@ module.exports = {
       freeSeats: {
         $gte: req.body.seatsRequired,
       },
-      departDate : req.body.departDate,
+      // departDate : req.body.departDate,
       // Optional parameters
       $or: [
         {

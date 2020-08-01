@@ -89,7 +89,8 @@ function RequestsReceived() {
               <Grid container justify="space-around" alignItems="center">
                 <List>
                   {matchingRequests.map((match) => (
-                    <Grid container justify="space-around" alignItems="center">
+                   
+                    
                       <ListItem key={match._id}>
                         <Link to={"/requests/" + match._id}>
                           <strong>
@@ -107,7 +108,7 @@ function RequestsReceived() {
                         />
                         <DeclineBtn onClick={() => declineRequest(match._id)} />
                       </ListItem>
-                    </Grid>
+                
                   ))}
                 <Row>
                   <Col size="md-2">
