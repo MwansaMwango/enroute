@@ -36,6 +36,5 @@ Work in progress
 
 ---
 ## Have any questions?
-![Github profile picture](https://avatars1.githubusercontent.com/u/59949544?v=4)
 * [Github Link](https://api.github.com/users/MwansaMwango)
  
