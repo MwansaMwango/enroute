@@ -6,7 +6,7 @@ A carpooling app for businesses  to optimise transportation.
 
 ## Deployment
 
- ![Demo](https://enroute2020.herokuapp.com/)
+ [Demo](https://enroute2020.herokuapp.com/)
 
 
 ---
