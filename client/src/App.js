@@ -1,5 +1,10 @@
-import React, {useEffect} from "react";
-import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import Books from "./pages/Books";
 import Layout from "./pages/Layout";
 import Detail from "./pages/Detail";
@@ -11,11 +16,9 @@ import Register from "./pages/Register";
 import RequestsReceived from "./pages/RequestsReceived";
 import RequestsCreated from "./pages/RequestsCreated";
 import Nav from "./components/Nav";
+import MyTrips from "./pages/MyTrips";
 
 function App() {
-
-
-
   return (
     <Router>
       <Layout>
@@ -24,16 +27,20 @@ function App() {
           <Route exact path={["/", "/login"]}>
             <Login />
           </Route>
-          <Route exact path={"/drive"}>
+          <Route exact path="/drive">
             <Drive />
           </Route>
-
+          <Route exact path="/mytrips">
+            <MyTrips />
+          </Route>
           <Route exact path="/register" component={Register} />
-            
-          <Route exact path={"/requestscreated"}>
+          <Route exact path="/requestscreated">
             <RequestsCreated />
           </Route>
-          <Route exact path={"/requests"}>
+          <Route exact path="/trips/:id">
+            <RequestsReceived />
+          </Route>
+          <Route exact path="/requests">
             <RequestsReceived />
           </Route>
           <Route exact path="/ride">

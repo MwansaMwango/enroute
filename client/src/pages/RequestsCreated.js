@@ -70,38 +70,24 @@ function RequestsCreated() {
       <Row>
         <Col size="md-12">
           <Jumbotron>
-            <h1>Requests Created</h1>
+            <h1>My Requests</h1>
           </Jumbotron>
           {requests.length ? (
             <List>
               {requests.map((request) => (
-                <Grid container justify="space-around" alignItems="center">
+                <Grid container justify="center" alignItems="center">
                   <ListItem key={request._id}>
-                    <Link to={"/requests/" + request._id}>
+
                       <strong>
                         {request.from} - {request.to} <br />
                       </strong>
                       {moment(request.departDate).format("MM/DD/YYYY")}{" "}
-                      {request.departTime} {' '}
-                      <strong>
-                      {request.status}
-                      </strong>
-
-                    </Link>
-                    <br></br>
-                    <AcceptBtn onClick={() => callDriver(request._id)}>
-                      Phone
-                    </AcceptBtn>
-                    <DeleteBtn onClick={() => emailDriver(request._id)}>
-                      Email
-                    </DeleteBtn>
-                    <DeclineBtn onClick={() => cancelRequest(request._id)}>
-                      Cancel
-                    </DeclineBtn>
+                      {request.departTime} <strong>{request.status}</strong>
                     
+                    <br></br>
                     
                   </ListItem>
-                  </Grid>
+                </Grid>
               ))}
             </List>
           ) : (
@@ -110,12 +96,13 @@ function RequestsCreated() {
         </Col>
       </Row>
       <Grid container justify="space-around" alignItems="center">
-      <Row>
-        <Col size="md-2">
-          <Link to="/ride">Ride </Link>
-          <Link to="/requests">|  Requests</Link>
-        </Col>
-      </Row>
+        <Row>
+          <Col size="md-2">
+            <Link to="/ride">Ride  |</Link>
+            <Link to="/drive">Drive </Link>
+            <Link to="/myTrips">My Trips </Link>
+          </Col>
+        </Row>
       </Grid>
     </Container>
   );

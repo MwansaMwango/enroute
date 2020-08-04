@@ -21,11 +21,14 @@ export default {
 
   // ------------------Trips APIs ----------------------------
 
-  // Gets all trips
+  // Gets all my trips
   getTrips: function () {
     return axios.get("/api/trips");
   },
-
+  // Gets all matching trips
+  findMatchingTrips: function (requestData) {
+    return axios.post("/api/trips/matches", requestData);
+  },
   // Gets the trip with the given id
   getTrip: function (id) {
     return axios.get("/api/trips/" + id);
@@ -44,10 +47,11 @@ export default {
   requestRide: function (requestData) {
     return axios.post("/api/requests", requestData);
   },
-  // Gets all matching trips
-  findMatchingTrips: function (requestData) {
-    return axios.post("/api/requests/matches", requestData);
-  },
+    // Gets all matching requests
+    findMatchingRequests: function (tripData) {
+      return axios.post("/api/requests/matches", tripData);
+    },
+
   // Gets all requests
   getRequests: function () {
     return axios.get("/api/requests");

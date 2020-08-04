@@ -1,10 +1,10 @@
 const db = require("../models");
 
-// Defining methods for the tripsController
+// Defining methods for the request controller
 module.exports = {
   findAll: function (req, res) {
     console.log("route hit");
-    db.Request.find({}) //TODO replace with passport
+    db.Request.find({user_id: req.user.id}) //by user id from req.user passport obj
       .populate("user_id")
       .populate("route_id")
       .sort({ departDate: -1 })
@@ -26,37 +26,38 @@ module.exports = {
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
-
-  findMatchingTrips: function (req, res) {
-    console.log(req.body);
-    db.Trip.find({
+  
+  findMatchingRequests: function (req, res) { // load this in Requests Received page for driver req.body is an instance of 1 trip
+    console.log("Run findMatchingRequests, Post, Trip Data, req.body= ", req.body);
+    db.Request.find({ // find one first come first serve
       // Mandatory parameters
       from: req.body.from,
       to: req.body.to,
-      freeSeats: {
-        $gte: req.body.seatsRequired,
+      seatsRequired: {
+        $lte: req.body.freeSeats,
       },
       // departDate : req.body.departDate,
       // Optional parameters
-      $or: [
-        {
-          // departDate: ISODate("2020-08-10T16:00:00.000Z"),
-          // departDate: req.body.departDate, // TODO Matching by Date and Time using Moment
-        },
-        {
-          carryPackage: req.body.hasPackage,
-        }
-      ]
+      // $or: [
+      //   {
+      //     // departDate: ISODate("2020-08-10T16:00:00.000Z"),
+      //     // departDate: req.body.departDate, // TODO Matching by Date and Time using Moment
+      //   },
+      //   {
+      //     hasPackage: req.body.carryPackage
+      //   }
+      // ]
     })
       .then(function (dbModel) {
         res.json(dbModel);
-        console.log("Result matches =", dbModel.length);
+        console.log("Request matches =", dbModel);
       })
       .catch((err) => res.status(422).json(err));
   },
+
   update: function (req, res) {
-    
     req.body.status = "Comfirmed" // change status booking to comfirmed
+    console.log("update hit...req.body = ", req.body);
     // req.body.driver_id = req.user_id // attach driver 
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then((dbModel) => res.json(dbModel))

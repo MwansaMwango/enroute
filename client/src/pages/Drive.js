@@ -274,7 +274,10 @@ function Drive() {
                 </Grid>
                 <br />
                 <Grid container justify="center" alignItems="center">
-                  <Link to="/ride">Go to Ride</Link>
+                  <Link to="/ride">Ride |</Link>
+                  <Link to="/drive">Drive  </Link>
+                  <Link to="/requests">  | Requests Received</Link>
+
                 </Grid>
               </form>
             </Grid>
