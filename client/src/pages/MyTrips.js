@@ -20,7 +20,6 @@ import {
   Box,
   Grid,
   TextField,
-  // Container,
   MenuItem,
   Button,
   Checkbox,
@@ -32,16 +31,8 @@ import "./drive.css";
 function MyTrips() {
   // Setting our component's initial state
   const [myTrips, setMyTrips] = useState([]);
-  // const [tempTrip, setTempTrip] = useState();
   const [matchingRequests, setMatchingRequests] = useState([]);
 
-  // const [formObject, setFormObject] = useState({});
-
-  // TODO Initialise and Load Requests from database, to be displayed in newfeed
-  // useEffect(() => {
-  //   findMatchingRequests(tempTrip);
-  // }, []);
-  // findMatchingRequests(tempTrip);
 
   useEffect(() => {
     loadMyTrips();
@@ -72,51 +63,29 @@ function MyTrips() {
       .catch((err) => console.log(err));
   }
 
-  // Check if each trip has a matching request
-  // function getMatchList(allTrips) {
-  //   allTrips.map((trip) => {
-  //     console.log("Trip in All Trips = ", trip);
-  //     // return findMatchingRequests(trip);
-  //   });
-  // }
-
   // Find matching Requests using Trip Data
   function findMatchingRequests(tripData) {
     API.findMatchingRequests(tripData)
       .then(function (res) {
         setMatchingRequests(res.data);
-        // matchList.push(res);
         // console.log("Returned matching requests ", res.data);
       })
       .catch((err) => console.log(err));
   }
 
-  // Accept a matching request from the loaded list with a given id, then reloads matching requests from the db
-  function acceptRequest(id) {
-    API.acceptRequest(id)
-      .then((res) => (window.location.href = "/"))
-      // loadMyTripsRefresh()) // reload
-      .catch((err) => console.log(err));
-  }
   // Undo the accept matching request action
-  function undoAcceptRequest(id) {
-    API.undoAcceptRequest(id)
+  function updateTrip(id, tripData) {
+    API.updateTrip(id, tripData)
       .then((res) => loadMyTripsRefresh())
       .catch((err) => console.log(err));
   }
 
-  // // Decline a matching request from the loaded list with a given id, then reloads matching requests from the db
-  // function declineRequest(id) {
-  //   API.declineRequest(id)
-  //     .then((res) => loadMyTrips())
-  //     .catch((err) => console.log(err));
-  // }
-
-  // // Handles updating component state when the user types into the input field
-  // function handleInputChange(event) {
-  //   const { name, value } = event.target;
-  //   setFormObject({ ...formObject, [name]: value });
-  // }
+  // Decline a matching request from the loaded list with a given id, then reloads matching requests from the db
+  function deleteTrip(id) {
+    API.deleteTrip(id)
+      .then((res) => loadMyTrips())
+      .catch((err) => console.log(err));
+  }
 
   return (
     <Box>
@@ -133,25 +102,32 @@ function MyTrips() {
                     <ListItem key={trip._id}>
                       <Link to={"/trips/" + trip._id}>
                         <strong>
-                          {trip._id} <br />
                           {trip.from} - {trip.to} <br />
                         </strong>
                       </Link>
                       {moment(trip.departDate).format("MM/DD/YYYY")}{" "}
                       {trip.departTime}
                       <br />
-                      <DeclineBtn onClick={() => undoAcceptRequest(trip._id)}>
-                        Cancel Trip
-                      </DeclineBtn>
+                      <Grid container justify="space-around" alignItems="center">  
+                      <DeclineBtn
+                        btnName="CANCEL"
+                        onClick={() => deleteTrip(trip._id)}
+                      />
+                      
+                      <DeclineBtn
+                        btnName="EDIT" color="#259CBB" // cyan
+                        onClick={() => updateTrip(trip._id, trip)}
+                      />
+                      </Grid>
                     </ListItem>
                   ))}
                 </List>
               </Grid>
             ) : (
               <Grid container justify="center" alignItems="center">
-              <h3>
-                No trips yet. Register your next trip to start earning points.
-              </h3>
+                <h3>
+                  No trips yet. Register your next trip to start earning points.
+                </h3>
               </Grid>
             )}
             <Grid container justify="center" alignItems="center">

@@ -15,6 +15,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
+import LocalTaxiRoundedIcon from "@material-ui/icons/LocalTaxiRounded";
+import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
@@ -83,19 +85,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-export default function Nav() {
+export default function Nav(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [currentUserFirstName, setCurrentUserFirstName] = React.useState(null);
-
+  console.log("props.notificationStatus = ", props);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-useEffect(() => {
-  getUser();
-}, []);
+  useEffect(() => {
+    getUser();
+  }, []);
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -228,19 +229,30 @@ useEffect(() => {
               <div>
                 <div className={classes.grow} />
                 <div className={classes.sectionDesktop}>
-                  <IconButton aria-label="show 4 new mails" color="inherit">
-                    <Badge badgeContent={4} color="secondary">
-                      <MailIcon />
-                    </Badge>
-                  </IconButton>
                   <IconButton
-                    aria-label="show 17 new notifications"
+                    aria-label="show 4 new mails"
                     color="inherit"
+                    href="/myTrips"
                   >
-                    <Badge badgeContent={3} color="secondary">
-                      <NotificationsIcon />
+                    <Badge badgeContent={0} color="secondary">
+                      <LocalTaxiRoundedIcon />
                     </Badge>
                   </IconButton>
+             
+             
+                    <IconButton
+                      href="/requestscreated"
+                      aria-label="show 17 new notifications"
+                      color="inherit"
+                    >
+                      <Badge
+                        badgeContent={props.notificationStatus}
+                        color="secondary"
+                      >
+                        <EmojiPeopleRoundedIcon />
+                      </Badge>
+                    </IconButton>
+           
                   <IconButton
                     edge="end"
                     aria-label="account of current user"

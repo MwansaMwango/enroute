@@ -29,7 +29,7 @@ import {
 
 import "./drive.css";
 
-function RequestsReceived(props) {
+function RequestsReceived({  checkNotificationStatus }) {
   // Setting our component's initial state
   const [selectedTrip, setSelectedTrip] = useState({});
   // const [tempTrip, setTempTrip] = useState();
@@ -66,8 +66,10 @@ function RequestsReceived(props) {
   // Accept a matching request from the loaded list with a given id, then reloads matching requests from the db
   function acceptRequest(id) {
     API.acceptRequest(id)
-      .then((res) => window.location.reload())
-      // loadMyTripsRefresh()) // reload
+      .then((res) =>  checkNotificationStatus(res.data.status)
+       )
+      // .then(() => window.location.reload())
+   
       .catch((err) => console.log(err));
   }
   // Undo the accept matching request action
@@ -137,6 +139,7 @@ function RequestsReceived(props) {
                       <AcceptBtn
                         onClick={() => {
                           acceptRequest(match._id);
+                        
                         }}
                       />
                       <CancelBtn onClick={() => undoAcceptRequest(match._id)} />

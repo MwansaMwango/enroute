@@ -275,7 +275,7 @@ function Drive() {
                 <br />
                 <Grid container justify="center" alignItems="center">
                   <Link to="/ride">Ride |</Link>
-                  <Link to="/requests">My Requests  |</Link>
+                  <Link to="/requestscreated">My Requests  |</Link>
                   <Link to="/myTrips">  |  My Trips</Link>
 
                 </Grid>

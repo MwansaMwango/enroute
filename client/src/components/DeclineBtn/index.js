@@ -8,11 +8,11 @@ function DeclineBtn(props) {
     <Button 
       {...props}
       variant="contained"
-    style= {{"background": "red", "color": "white"}}
+    style= {{"background": props.color || "red" , "color": "white" }}
 
       tabIndex="0"
     >
-      DECLINE
+      {props.btnName}
     </Button>
   );
 }

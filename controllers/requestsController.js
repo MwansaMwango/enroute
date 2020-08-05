@@ -56,7 +56,7 @@ module.exports = {
   },
 
   update: function (req, res) {
-    req.body.status = "Comfirmed" // change status booking to comfirmed
+    req.body.status = "Confirmed" // change status booking to comfirmed
     console.log("update hit...req.body = ", req.body);
     // req.body.driver_id = req.user_id // attach driver 
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)

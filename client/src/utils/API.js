@@ -41,6 +41,10 @@ export default {
   saveTrip: function (tripData) {
     return axios.post("/api/trips", tripData);
   },
+  // Update a trip to the database
+  updateTrip: function (id, tripData) {
+    return axios.put("/api/trips/" + id, tripData);
+  },
 
   // ------------------Request Made APIs ----------------------------
   // Posts a request to the database
