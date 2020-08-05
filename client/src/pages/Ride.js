@@ -315,9 +315,9 @@ function Ride() {
                 <br />
                 <Grid container justify="center" alignItems="center">
                 <div>
-                  <Link to="/ride">Ride </Link>
-                  <Link to="/drive">Drive </Link>
-                  <Link to="/myTrips"> | My Trips</Link>
+                  <Link to="/requestscreated">My Requests  |</Link>
+                  <Link to="/drive">Drive |</Link>
+                  <Link to="/myTrips">| My Trips</Link>
                 </div>
               </Grid>
               </form>

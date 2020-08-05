@@ -147,7 +147,7 @@ function RequestsReceived(props) {
             ) : (
               <Grid container justify="center" alignItems="center">
                 <div>
-                  <h3>Hang in there... someone will evetually need a ride!</h3>
+                  <h3>Hang in there...😁 someone will evetually request a ride!</h3>
                   <br />
                 </div>
               </Grid>

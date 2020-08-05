@@ -145,26 +145,23 @@ function MyTrips() {
                       </DeclineBtn>
                     </ListItem>
                   ))}
-                  <Row>
-                    <Col size="md-2">
-                      <Link to="/ride">Ride </Link>
-                      <Link to="/drive">Drive </Link>
-                      <Link to="/myTrips"> | My Trips</Link>
-                      <Link to="/requestscreated"> | Requests Created</Link>
-                    </Col>
-                  </Row>
                 </List>
               </Grid>
             ) : (
               <Grid container justify="center" alignItems="center">
-                <div>
-                  <Link to="/ride">Ride </Link>
-                  <Link to="/drive">Drive </Link>
-                  <Link to="/myTrips"> | My Trips</Link>
-                  <Link to="/requestscreated"> | Requests Created</Link>
-                </div>
+              <h3>
+                No trips yet. Register your next trip to start earning points.
+              </h3>
               </Grid>
             )}
+            <Grid container justify="center" alignItems="center">
+              <div>
+                <Link to="/ride">Ride </Link>
+                <Link to="/drive">Drive </Link>
+                <Link to="/myTrips"> | My Trips</Link>
+                <Link to="/requestscreated"> | Requests Created</Link>
+              </div>
+            </Grid>
           </Col>
         </Row>
       </Container>

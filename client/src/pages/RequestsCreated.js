@@ -91,7 +91,9 @@ function RequestsCreated() {
               ))}
             </List>
           ) : (
-            <h3>No matching requests to display</h3>
+            <Grid container justify="space-around" alignItems="center">
+            <h3>No ride requests created.</h3>
+            </Grid>
           )}
         </Col>
       </Row>
