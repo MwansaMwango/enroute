@@ -168,20 +168,28 @@ export default function Nav(props) {
           onClose={handleMobileMenuClose}
         >
           <MenuItem>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
+            <IconButton
+              aria-label="show 4 new mails"
+              color="inherit"
+              href="/myTrips"
+            >
+              <Badge badgeContent={0} color="secondary">
+                <LocalTaxiRoundedIcon />
               </Badge>
             </IconButton>
-            <p>Messages</p>
+            <p>Trip Notifications</p>
           </MenuItem>
           <MenuItem>
-            <IconButton aria-label="show 11 new notifications" color="inherit">
-              <Badge badgeContent={11} color="secondary">
-                <NotificationsIcon />
+            <IconButton
+              href="/requestscreated"
+              aria-label="show 17 new notifications"
+              color="inherit"
+            >
+              <Badge badgeContent={props.notificationStatus} color="secondary">
+                <EmojiPeopleRoundedIcon />
               </Badge>
             </IconButton>
-            <p>Notifications</p>
+            <p>Ride Notifications</p>
           </MenuItem>
           <MenuItem onClick={handleProfileMenuOpen}>
             <IconButton
@@ -238,21 +246,20 @@ export default function Nav(props) {
                       <LocalTaxiRoundedIcon />
                     </Badge>
                   </IconButton>
-             
-             
-                    <IconButton
-                      href="/requestscreated"
-                      aria-label="show 17 new notifications"
-                      color="inherit"
+
+                  <IconButton
+                    href="/requestscreated"
+                    aria-label="show 17 new notifications"
+                    color="inherit"
+                  >
+                    <Badge
+                      badgeContent={props.notificationStatus}
+                      color="secondary"
                     >
-                      <Badge
-                        badgeContent={props.notificationStatus}
-                        color="secondary"
-                      >
-                        <EmojiPeopleRoundedIcon />
-                      </Badge>
-                    </IconButton>
-           
+                      <EmojiPeopleRoundedIcon />
+                    </Badge>
+                  </IconButton>
+
                   <IconButton
                     edge="end"
                     aria-label="account of current user"

@@ -1,24 +1,13 @@
-<<<<<<< HEAD
-# f ![Github Update](https://img.shields.io/static/v1?label=Updated%20at&message=14-3-2020&color=yellow&?style=social&logo=github) ![Github Forks](https://img.shields.io/static/v1?label=Forks&message=0&color=green&?style=social&logo=github) ![Github Forks](https://img.shields.io/static/v1?label=stars&message=0&color=blue&?style=social&logo=github) ![Github Forks](https://img.shields.io/static/v1?label=open%20issues&message=0&color=orange&?style=social&logo=github)
-
-# Enroute
-
-=======
 # Enroute ![Github Update](https://img.shields.io/static/v1?label=Updated%20at&message=14-3-2020&color=yellow&?style=social&logo=github) ![Github Forks](https://img.shields.io/static/v1?label=Forks&message=0&color=green&?style=social&logo=github) ![Github Forks](https://img.shields.io/static/v1?label=stars&message=0&color=blue&?style=social&logo=github) ![Github Forks](https://img.shields.io/static/v1?label=open%20issues&message=0&color=orange&?style=social&logo=github)
 
->>>>>>> 50c3298a088bfddca062ba0cf1b24ab1acb2cb7d
 ## Description
 
 A carpooling app for businesses  to optimise transportation.
 
-<<<<<<< HEAD
-=======
 ## Deployment
 
  [Demo](https://enroute2020.herokuapp.com/)
 
-
->>>>>>> 50c3298a088bfddca062ba0gcf1b24ab1acb2cb7d
 ---
 ## Table of Contents
 
@@ -28,6 +17,7 @@ A carpooling app for businesses  to optimise transportation.
  * [Contributing](#contributing)
  * [Tests](#tests)
  * [Questions](#questions) 
+  
 ---
 ## Installation
 
@@ -51,9 +41,4 @@ Work in progress
 
 ---
 ## Have any questions?
-<<<<<<< HEAD
-![Github profile picture](https://avatars1.githubusercontent.com/u/59949544?v=4)
-=======
->>>>>>> 50c3298a088bfddca062ba0cf1b24ab1acb2cb7d
 * [Github Link](https://api.github.com/users/MwansaMwango)
- 

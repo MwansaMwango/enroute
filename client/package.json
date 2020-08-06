@@ -9,6 +9,7 @@
     "@material-ui/pickers": "^3.2.10",
     "axios": "^0.18.0",
     "date-fns": "^2.15.0",
+    "material-kit-react": "^1.9.0",
     "moment": "^2.27.0",
     "react": "^16.6.3",
     "react-dom": "16.8.6",
