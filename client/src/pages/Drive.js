@@ -1,9 +1,39 @@
 import React, { useState, useEffect } from "react";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import LocalTaxiIcon from '@material-ui/icons/LocalTaxi';
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import MyLocationIcon from "@material-ui/icons/MyLocation";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import PersonPinCircleIcon from "@material-ui/icons/PersonPinCircle";
+import LocalMallIcon from "@material-ui/icons/LocalMall";
+import PublishIcon from "@material-ui/icons/Publish";
+import AirlineSeatReclineNormalIcon from "@material-ui/icons/AirlineSeatReclineNormal";
+import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import LocalTaxiRoundedIcon from "@material-ui/icons/LocalTaxiRounded";
+import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
+import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
+import MessageIcon from "@material-ui/icons/Message";
+import FormGroup from "@material-ui/core/FormGroup";
+import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
+// import Alert from "@material-ui/lab/Alert";
+import Switch from "@material-ui/core/Switch";
+
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import RestoreIcon from "@material-ui/icons/Restore";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Container, Col, Row } from "../components/Grid"; // removed container
-import { makeStyles } from "@material-ui/core/styles";
+
+import {
+  makeStyles,
+  ThemeProvider,
+  createMuiTheme,
+} from "@material-ui/core/styles";
 import {
   InputWithIcon,
   BasicTextFields,
@@ -23,7 +53,6 @@ import {
 } from "@material-ui/core/";
 
 import "./drive.css";
-
 function Drive() {
   // Setting our component's initial state
 
@@ -32,11 +61,31 @@ function Drive() {
   const [formObject, setFormObject] = useState({});
   const [carryPackage, setCarryPackage] = useState(false);
 
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        light: "#FF9057",
+        main: "#E64500",
+        dark: "#022222",
+        contrastText: "#fff",
+      },
+      secondary: {
+        light: "#78849E",
+        main: "#259CBB",
+        dark: "#168387",
+        contrastText: "#000",
+      },
+    },
+  });
+
   const useStyles = makeStyles((theme) => ({
     root: {
+      "& > svg": {
+        margin: theme.spacing(2),
+      },
       "& .MuiTextField-root": {
         margin: theme.spacing(1),
-        width: "25ch",
+        width: "100%",
       },
     },
     container: {
@@ -44,12 +93,24 @@ function Drive() {
       flexWrap: "wrap",
     },
     textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
+      // marginLeft: theme.spacing(1),
+      // marginRight: theme.spacing(1),
+      margin: theme.spacing(2),
+
+      maxWidth: "100%",
     },
   }));
   const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+  // const [state, setState] = React.useState({
+  //   checkedA: true,
+  //   checkedB: true,
+  // });
+
+  // const handleChange = (event) => {
+  //   setState({ ...state, [event.target.name]: event.target.checked });
+  // };
+
   let uniqueRouteList = [];
 
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
@@ -116,7 +177,15 @@ function Drive() {
       tripNote: formObject.tripNote,
       // user_id: req.user,
     })
-      // .then((res) => loadTrips())
+      .then(function (res) {
+        //   return (
+        //     <div className={classes.root}>
+        //       <Alert severity="success" color="info">
+        //         Trip posted successfully!
+        //       </Alert>
+        //     </div>
+        //   );
+      })
       .then((res) => alert(JSON.stringify(res.data)))
       .catch((err) => console.log(err));
     // }
@@ -125,164 +194,193 @@ function Drive() {
   return (
     <Box>
       <Container fluid maxWidth="100vw">
-        <Row>
-          <Col size="md-12">
-            <Jumbotron>
-              <h1>Drive</h1>
-            </Jumbotron>
-            <Grid container justify="center" alignItems="center">
-              <form className={classes.root}>
-                <TextField
-                  id="from"
-                  select
-                  label="From (required)"
-                  onChange={handleInputChange}
-                  name="from"
-                  helperText="Please select your start location"
-                  variant="outlined"
-                >
-                  {routes.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </TextField>
+        <ThemeProvider theme={theme}>
+          <Row>
+            <Col size="md-12">
+              <Jumbotron>
+                <h1>Drive<LocalTaxiIcon fontSize="large"/></h1>
+              </Jumbotron>
 
-                <TextField
-                  id="to"
-                  select
-                  label="To (required)"
-                  onChange={handleInputChange}
-                  name="to"
-                  helperText="Please select your end location"
-                  variant="outlined"
-                >
-                  {routes.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </TextField>
-                <br />
+              <Grid container justify="center" alignItems="center">
+                <form className={classes.root}>
+                  <Grid item>
+                    <TextField
+                      className={classes.margin}
+                      id="from"
+                      select
+                      label="From (required)"
+                      onChange={handleInputChange}
+                      name="from"
+                      helperText="Start location"
+                      variant="outlined"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment>
+                            <MyLocationIcon color="primary" />
+                          </InputAdornment>
+                        ),
+                      }}
+                    >
+                      {routes.map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                  <Grid item>
+                    <TextField
+                      id="to"
+                      select
+                      label="To (required)"
+                      onChange={handleInputChange}
+                      name="to"
+                      helperText="Please select your end location"
+                      variant="outlined"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment>
+                            <LocationOnIcon color="primary" />
+                          </InputAdornment>
+                        ),
+                      }}
+                    >
+                      {routes.map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
 
-                <TextField
-                  id="departDate"
-                  type="date"
-                  name="date"
-                  label="Start Date"
-                  variant="outlined"
-                  onChange={handleInputChange}
-                  helperText="Date you'll be leaving..."
-                  InputLabelProps={{
-                    // removes the header from inside the input box
-                    shrink: true,
-                  }}
-                />
+                  <Grid item>
+                    <TextField
+                      id="departDate"
+                      type="date"
+                      name="date"
+                      label="Start Date"
+                      variant="outlined"
+                      onChange={handleInputChange}
+                      helperText="Date you'll be leaving..."
+                      InputLabelProps={{
+                        // removes the header from inside the input box
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
 
-                <TextField
-                  id="departTime"
-                  label="Start Time"
-                  variant="outlined"
-                  onChange={handleInputChange}
-                  type="time"
-                  name="time"
-                  helperText="Time you'll be leaving..."
-                  InputLabelProps={{
-                    // removes the header from inside the input box
-                    shrink: true,
-                  }}
-                />
-                <br />
-                <Grid
-                  container
-                  justify="center"
-                  alignItems="center"
-                  item
-                  xs={12}
-                >
                   <TextField
-                    id="outlined-basic"
-                    label="Free Seats?"
+                    id="departTime"
+                    label="Start Time"
                     variant="outlined"
                     onChange={handleInputChange}
-                    type="number"
-                    name="freeSeats"
-                    helperText="Number of seats available..."
-                    
+                    type="time"
+                    name="time"
+                    helperText="Time you'll be leaving..."
+                    InputLabelProps={{
+                      // removes the header from inside the input box
+
+                      shrink: true,
+                    }}
                   />
-                </Grid>
-                <br />
-                <Grid
-                  xs={12}
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="center"
-                >
-                  <TextField
-                    id="tripNote"
-                    label="Trip Note"
-                    multiline
-                    rows={4}
-                    variant="outlined"
-                    helperText="Enter note about your trip..."
-                  />
-                  {/* <TextArea
-              onChange={handleInputChange}
-              name="tripNote"
-              helperText="Enter note about your trip..."
-            /> */}
+
+                  <Grid item>
+                    <TextField
+                      id="outlined-basic"
+                      label="Free Seats?"
+                      variant="outlined"
+                      onChange={handleInputChange}
+                      type="number"
+                      defaultValue={1}
+                      name="freeSeats"
+                      helperText="Number of seats available..."
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment>
+                            <AirlineSeatReclineNormalIcon color="primary" />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid item>
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={carryPackage}
+                          onChange={handleCarryPackageChange}
+                          name="carryPackage"
+                        />
+                      }
+                      label="Able to carry package"
+                    ></FormControlLabel>
+                    <LocalMallIcon color="primary" />
+                  </Grid>
+
+                  <Grid>
+                    <TextField
+                      id="tripNote"
+                      label="Trip Note"
+                      multiline
+                      rows={2}
+                      variant="outlined"
+                      helperText="Enter note about your trip..."
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment>
+                            <SpeakerNotesIcon color="primary" />
+                          </InputAdornment>
+                        ),
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid item>
+                    <FormBtn
+                      disabled={!(formObject.from && formObject.to)}
+                      onClick={handleFormSubmit}
+                    >
+                      Post Trip
+                    </FormBtn>
+                  </Grid>
+
                   <br />
-                </Grid>
-                <Grid
-                  container
-                  justify="center"
-                  alignItems="center"
-                  item
-                  xs={12}
-                >
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={carryPackage}
-                        onChange={handleCarryPackageChange}
-                        name="carryPackage"
-                        inputProps={{ "aria-label": "primary checkbox" }}
-                      />
-                    }
-                    label="Able to carry package"
-                  />
-                </Grid>
-                <br />
-
-                {/* 
-              <input
-                type="checkbox"
-                name="carryPackage"
-                onChange={handleCarryPackageChange}
-                checked={carryPackage}
-              />
-      
-            </label> */}
-                <Grid container justify="center" alignItems="center">
-                  <FormBtn
-                    disabled={!(formObject.from && formObject.to)}
-                    onClick={handleFormSubmit}
+                  <BottomNavigation
+                    value={value}
+                    onChange={(event, newValue) => {
+                      setValue(newValue);
+                    }}
+                    showLabels
+                    className={classes.root}
+                    // style={{background:"#022222", color:"white"}}
                   >
-                    Post Trip
-                  </FormBtn>
-                </Grid>
-                <br />
-                <Grid container justify="center" alignItems="center">
-                  <Link to="/ride">Ride |</Link>
-                  <Link to="/requestscreated">My Requests  |</Link>
-                  <Link to="/myTrips">  |  My Trips</Link>
+                    <BottomNavigationAction
+                      label="Ride"
+                      icon={<EmojiPeopleRoundedIcon />}
+                      href="/ride"
+                    />
 
-                </Grid>
-              </form>
-            </Grid>
-          </Col>
-        </Row>
+                    <BottomNavigationAction
+                      label="My Trips"
+                      icon={<PersonPinCircleIcon />}
+                      href="/myTrips"
+                    />
+                    <BottomNavigationAction
+                      label="Newsfeed (future)"
+                      icon={<MessageIcon />}
+                    />
+                    <BottomNavigationAction
+                      label="Points (future)"
+                      icon={<EmojiEventsIcon />}
+                    />
+                  </BottomNavigation>
+                </form>
+              </Grid>
+            </Col>
+          </Row>
+        </ThemeProvider>
       </Container>
     </Box>
   );

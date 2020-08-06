@@ -211,7 +211,7 @@ export default function Nav(props) {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ backgroundColor: '#022222'}}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -221,8 +221,9 @@ export default function Nav(props) {
           >
             <MenuIcon />
           </IconButton>
-          <div>
-            <Typography className={classes.title} variant="h5" noWrap>
+          <MenuItem href="/"></MenuItem>
+          <div >
+            <Typography className={classes.title} variant="h5" noWrap >
               Enroute
             </Typography>
           </div>

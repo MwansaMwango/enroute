@@ -46,6 +46,7 @@ export function FormBtn(props) {
       {...props}
       variant="contained"
       color="primary"
+      style={{minWidth:"30vw"}}
     >
       {props.children}
     </Button>
