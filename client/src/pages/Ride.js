@@ -113,6 +113,7 @@ function Ride() {
     loadRoutes();
   }, []);
 
+  
   // TODO Loads recent Requests with status = 'complete' and sets them to trips
   function loadTrips() {
     API.getTrips()
@@ -185,24 +186,31 @@ function Ride() {
     })
       // .then((res) => loadTrips())
       .then(function (res) {
-        alert(JSON.stringify(res.data));
+        alert(JSON.stringify("Request sent..."));
+      })
+      .then(function () {
+        checkMatchingTrips();
       })
       .catch((err) => console.log(err));
+  }
 
+  function checkMatchingTrips() {
+    
     API.findMatchingTrips({
       from: formObject.from,
       to: formObject.to,
       departTime: formObject.time,
       departDate: formObject.date,
-      isTransportVehicle: formObject.isTransportVehicle,
-      hasPackage: formObject.hasPackage,
-      requestNote: formObject.requestNote,
-      seatsRequired: formObject.seatsRequired,
+      carryPackage: formObject.hasPackage,
+      freeSeats: formObject.seatsRequired,
       // user_id: req.user,
     })
       .then(function (res) {
+        alert(
+              res.data.length +
+                " Matching trip(s) found. You will be notified once the driver confirms."
+            );
         setMatches(res.data);
-        alert(res.data.length + " Matches found.");
       })
       .catch((err) => console.log(err));
   }
@@ -305,11 +313,11 @@ function Ride() {
 
                 <Grid item>
                   <TextField
-                    id="outlined-basic"
+                    id="seatsRequired"
                     label="Seats Required?"
                     variant="outlined"
                     onChange={handleInputChange}
-                    defaultValue={1}
+               
                     type="number"
                     name="seatsRequired"
                     helperText="Number of seats required..."
@@ -327,6 +335,7 @@ function Ride() {
                   <TextField
                     id="requestNote"
                     label="Request Note"
+                    name="requestNote"
                     multiline
                     rows={1}
                     variant="outlined"
@@ -353,21 +362,20 @@ function Ride() {
                     }
                     label="Send a parcel?"
                   ></FormControlLabel>
-            
 
-                {/* <Grid item> */}
+                  {/* <Grid item> */}
                   <FormControlLabel
                     control={
                       <Checkbox
-                      checked={isTransportVehicle}
-                      onChange={handleIsTransportVehicleChange}
-                      name="isTransportVehicle"
-                      inputProps={{ "aria-label": "primary checkbox" }}
+                        checked={isTransportVehicle}
+                        onChange={handleIsTransportVehicleChange}
+                        name="isTransportVehicle"
+                        inputProps={{ "aria-label": "primary checkbox" }}
                       />
                     }
                     label="Transport or drive vehicle"
-                    />
-                    </Grid>
+                  />
+                </Grid>
                 {/* </Grid> */}
 
                 <Grid container justify="center" alignItems="space-around">

@@ -126,13 +126,13 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   findMatchingTrips: function (req, res) {
-    console.log(req.body);
+    console.log("findMatchingTrips rout hit",req.body);
     db.Trip.find({
       // Mandatory parameters
       from: req.body.from,
       to: req.body.to,
       freeSeats: {
-        $gte: req.body.seatsRequired,
+        $gte: req.body.freeSeats,
       },
       departDate : req.body.departDate,
       // Optional parameters
@@ -142,7 +142,7 @@ module.exports = {
           // departDate: req.body.departDate, // TODO Matching by Date and Time using Moment
         },
         {
-          carryPackage: req.body.hasPackage,
+          carryPackage: req.body.carryPackage,
         }
       ]
     })
