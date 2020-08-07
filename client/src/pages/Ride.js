@@ -87,12 +87,16 @@ function Ride() {
       },
       "& .MuiTextField-root": {
         margin: theme.spacing(2),
-        width: "100%",
+        marginLeft: theme.spacing(5),
+
+        width: "80%",
+        // marginTop: theme.spacing(1)
       },
     },
     container: {
       display: "flex",
       flexWrap: "wrap",
+     
     },
     textField: {
       // marginLeft: theme.spacing(1),
@@ -101,6 +105,9 @@ function Ride() {
 
       maxWidth: "100%",
     },
+    // marginTop: {
+    //   marginTop: theme.spacing(5)
+    // }
   }));
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -113,7 +120,6 @@ function Ride() {
     loadRoutes();
   }, []);
 
-  
   // TODO Loads recent Requests with status = 'complete' and sets them to trips
   function loadTrips() {
     API.getTrips()
@@ -195,7 +201,6 @@ function Ride() {
   }
 
   function checkMatchingTrips() {
-    
     API.findMatchingTrips({
       from: formObject.from,
       to: formObject.to,
@@ -207,9 +212,9 @@ function Ride() {
     })
       .then(function (res) {
         alert(
-              res.data.length +
-                " Matching trip(s) found. You will be notified once the driver confirms."
-            );
+          res.data.length +
+            " Matching trip(s) found. You will be notified once the driver confirms."
+        );
         setMatches(res.data);
       })
       .catch((err) => console.log(err));
@@ -227,11 +232,18 @@ function Ride() {
                 <EmojiPeopleRoundedIcon fontSize="large" />
               </h1>
             </Jumbotron>
-            <Grid container justify="center" alignItems="center">
+            <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+            
+                 
+                >
               <form className={classes.root}>
                 <Grid item>
                   <TextField
-                    className={classes.margin}
+                    className={classes.marginTop}
                     id="from"
                     select
                     label="From (required)"
@@ -317,7 +329,6 @@ function Ride() {
                     label="Seats Required?"
                     variant="outlined"
                     onChange={handleInputChange}
-               
                     type="number"
                     name="seatsRequired"
                     helperText="Number of seats required..."
@@ -351,7 +362,12 @@ function Ride() {
                   />
                 </Grid>
 
-                <Grid container justify="center" alignItems="center">
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-around"
+                  alignItems="center"
+                >
                   <FormControlLabel
                     control={
                       <Switch
@@ -362,8 +378,6 @@ function Ride() {
                     }
                     label="Send a parcel?"
                   ></FormControlLabel>
-
-                  {/* <Grid item> */}
                   <FormControlLabel
                     control={
                       <Checkbox
@@ -373,12 +387,18 @@ function Ride() {
                         inputProps={{ "aria-label": "primary checkbox" }}
                       />
                     }
-                    label="Transport or drive vehicle"
+                    label="Drive vehicle"
                   />
                 </Grid>
-                {/* </Grid> */}
 
-                <Grid container justify="center" alignItems="space-around">
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-around"
+                  alignItems="center"
+                 
+                >
+                  {" "}
                   <FormBtn
                     disabled={!(formObject.from && formObject.to)}
                     onClick={handleFormSubmit}
@@ -386,41 +406,46 @@ function Ride() {
                     Request Ride
                   </FormBtn>
                 </Grid>
-                <br />
-                <BottomNavigation
-                  value={value}
-                  onChange={(event, newValue) => {
-                    setValue(newValue);
-                  }}
-                  showLabels
-                  className={classes.root}
-                  // style={{background:"#022222", color:"white"}}
-                >
-                  <BottomNavigationAction
-                    label="Drive"
-                    icon={<LocalTaxiIcon />}
-                    href="/drive"
-                  />
-                  {/* <BottomNavigationAction
-                    label="My Requests"
-                    icon={<EmojiPeopleRoundedIcon />}
-                    href="/requestscreated"
-                  /> */}
+                
+                <div
+                style={{
+                  position: "relative",
+                  left: "0",
+                  bottom: "0",
+                  width: "90%",
 
-                  <BottomNavigationAction
-                    label="My Trips"
-                    icon={<PersonPinCircleIcon />}
-                    href="/myTrips"
-                  />
-                  <BottomNavigationAction
-                    label="News(future)"
-                    icon={<MessageIcon />}
-                  />
-                  <BottomNavigationAction
-                    label="Points(future)"
-                    icon={<EmojiEventsIcon />}
-                  />
-                </BottomNavigation>
+                  textAlign: "center",
+                }}
+              >
+                  <BottomNavigation
+                    value={value}
+                    onChange={(event, newValue) => {
+                      setValue(newValue);
+                    }}
+                    showLabels
+                 
+                  >
+                    <BottomNavigationAction
+                      label="Drive"
+                      icon={<LocalTaxiIcon />}
+                      href="/drive"
+                    />
+
+                    <BottomNavigationAction
+                      label="My Trips"
+                      icon={<PersonPinCircleIcon />}
+                      href="/myTrips"
+                    />
+                    <BottomNavigationAction
+                      label="News(future)"
+                      icon={<MessageIcon />}
+                    />
+                    <BottomNavigationAction
+                      label="Points(future)"
+                      icon={<EmojiEventsIcon />}
+                    />
+                  </BottomNavigation>
+                </div>
               </form>
             </Grid>
           </Col>

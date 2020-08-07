@@ -89,7 +89,8 @@ function Drive() {
       },
       "& .MuiTextField-root": {
         margin: theme.spacing(2),
-        width: "100%",
+        marginLeft: theme.spacing(5),
+        width: "80%",
       },
     },
     container: {
@@ -214,7 +215,13 @@ function Drive() {
                 </h1>
               </Jumbotron>
 
-              <Grid container justify="center" alignItems="center">
+              <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                 
+                >
                 <form className={classes.root}>
                   <Grid item>
                     <TextField
@@ -317,7 +324,13 @@ function Drive() {
                     />
                   </Grid>
 
-                  <Grid item>
+                  <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                 
+                >
                     <FormControlLabel
                       control={
                         <Switch
@@ -350,7 +363,12 @@ function Drive() {
                     />
                   </Grid>
 
-                  <Grid  container justify="center" alignItems="space-around">
+                  <Grid
+                  container
+                  direction="row"
+                  justify="space-around"
+                  alignItems="center"
+                >
                     <FormBtn
                       disabled={!(formObject.from && formObject.to)}
                       onClick={handleFormSubmit}
@@ -358,7 +376,16 @@ function Drive() {
                       Post Trip
                     </FormBtn>
                   </Grid>
+                  <div
+                style={{
+                  position: "relative",
+                  left: "0",
+                  bottom: "0",
+                  width: "90%",
 
+                  textAlign: "center",
+                }}
+              >
                   <BottomNavigation
                       value={page}
                       onChange={(event, newValue) => {
@@ -366,7 +393,7 @@ function Drive() {
                       }}
            
                     showLabels
-                    className={classes.root}
+                    // className={classes.root}
                     // style={{background:"#022222", color:"white"}}
                   >
                     <BottomNavigationAction
@@ -389,6 +416,7 @@ function Drive() {
                       icon={<EmojiEventsIcon />}
                     />
                   </BottomNavigation>
+                  </div>
                 </form>
               </Grid>
             </Col>

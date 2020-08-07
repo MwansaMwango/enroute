@@ -244,7 +244,7 @@ function MyTrips() {
                     setPage(newValue);
                   }}
                   showLabels
-                  className={classes.root}
+                  // className={classes.root}
    
                 >
                   <BottomNavigationAction
