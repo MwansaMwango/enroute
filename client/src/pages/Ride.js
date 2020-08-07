@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import LocalTaxiIcon from '@material-ui/icons/LocalTaxi';
+import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
@@ -83,7 +83,7 @@ function Ride() {
   const useStyles = makeStyles((theme) => ({
     root: {
       "& > svg": {
-        margin: theme.spacing(2),
+        margin: theme.spacing(1),
       },
       "& .MuiTextField-root": {
         margin: theme.spacing(1),
@@ -214,7 +214,10 @@ function Ride() {
         <Row>
           <Col size="md-12">
             <Jumbotron>
-              <h1>Ride<EmojiPeopleRoundedIcon fontSize="large"/></h1>
+              <h1>
+                Ride
+                <EmojiPeopleRoundedIcon fontSize="large" />
+              </h1>
             </Jumbotron>
             <Grid container justify="center" alignItems="center">
               <form className={classes.root}>
@@ -325,7 +328,7 @@ function Ride() {
                     id="requestNote"
                     label="Request Note"
                     multiline
-                    rows={2}
+                    rows={1}
                     variant="outlined"
                     helperText="Enter other details of your request..."
                     InputProps={{
@@ -339,7 +342,7 @@ function Ride() {
                   />
                 </Grid>
 
-                <Grid item>
+                <Grid container justify="center" alignItems="center">
                   <FormControlLabel
                     control={
                       <Switch
@@ -350,22 +353,22 @@ function Ride() {
                     }
                     label="Send a parcel?"
                   ></FormControlLabel>
-                  <LocalMallIcon color="primary" />
-                </Grid>
+            
 
-                <Grid item>
+                {/* <Grid item> */}
                   <FormControlLabel
                     control={
                       <Checkbox
-                        checked={isTransportVehicle}
-                        onChange={handleIsTransportVehicleChange}
-                        name="isTransportVehicle"
-                        inputProps={{ "aria-label": "primary checkbox" }}
+                      checked={isTransportVehicle}
+                      onChange={handleIsTransportVehicleChange}
+                      name="isTransportVehicle"
+                      inputProps={{ "aria-label": "primary checkbox" }}
                       />
                     }
                     label="Transport or drive vehicle"
-                  />
-                </Grid>
+                    />
+                    </Grid>
+                {/* </Grid> */}
 
                 <Grid item>
                   <FormBtn
@@ -387,14 +390,14 @@ function Ride() {
                 >
                   <BottomNavigationAction
                     label="Drive"
-                    icon={<LocalTaxiIcon/>}
+                    icon={<LocalTaxiIcon />}
                     href="/drive"
                   />
-                  <BottomNavigationAction
+                  {/* <BottomNavigationAction
                     label="My Requests"
                     icon={<EmojiPeopleRoundedIcon />}
                     href="/requestscreated"
-                  />
+                  /> */}
 
                   <BottomNavigationAction
                     label="My Trips"
@@ -404,6 +407,10 @@ function Ride() {
                   <BottomNavigationAction
                     label="Newsfeed (future)"
                     icon={<MessageIcon />}
+                  />
+                  <BottomNavigationAction
+                    label="Points (future)"
+                    icon={<EmojiEventsIcon />}
                   />
                 </BottomNavigation>
               </form>

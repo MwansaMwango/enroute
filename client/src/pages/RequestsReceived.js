@@ -1,14 +1,42 @@
+
 import React, { useState, useEffect } from "react";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import MyLocationIcon from "@material-ui/icons/MyLocation";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import PersonPinCircleIcon from "@material-ui/icons/PersonPinCircle";
+import LocalMallIcon from "@material-ui/icons/LocalMall";
+import PublishIcon from "@material-ui/icons/Publish";
+import AirlineSeatReclineNormalIcon from "@material-ui/icons/AirlineSeatReclineNormal";
+import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import LocalTaxiRoundedIcon from "@material-ui/icons/LocalTaxiRounded";
+import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
+import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
+import MessageIcon from "@material-ui/icons/Message";
+import FormGroup from "@material-ui/core/FormGroup";
+import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
+import Popper from "@material-ui/core/Popper";
+// import Alert from "@material-ui/lab/Alert";
+import Switch from "@material-ui/core/Switch";
+
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import RestoreIcon from "@material-ui/icons/Restore";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Container, Col, Row } from "../components/Grid"; // removed container
-import { List, ListItem } from "../components/List"; //
-import AcceptBtn from "../components/AcceptBtn"; //
-import CancelBtn from "../components/CancelBtn"; //
-import DeleteBtn from "../components/CancelBtn"; //
-import moment from "moment";
-import { makeStyles } from "@material-ui/core/styles";
+
+import {
+  makeStyles,
+  ThemeProvider,
+  createMuiTheme,
+} from "@material-ui/core/styles";
 import {
   InputWithIcon,
   BasicTextFields,
@@ -29,12 +57,83 @@ import {
 
 import "./drive.css";
 
-function RequestsReceived({  checkNotificationStatus }) {
+
+
+import DeclineBtn from "../components/DeclineBtn"; //
+
+import moment from "moment";
+import { useParams } from "react-router-dom";
+
+import { List, ListItem } from "../components/List"; //
+import AcceptBtn from "../components/AcceptBtn"; //
+import CancelBtn from "../components/CancelBtn"; //
+import DeleteBtn from "../components/CancelBtn"; //
+
+
+function RequestsReceived({ checkNotificationStatus }) {
   // Setting our component's initial state
   const [selectedTrip, setSelectedTrip] = useState({});
   // const [tempTrip, setTempTrip] = useState();
   const [matchingRequests, setMatchingRequests] = useState([]);
+  const [value, setValue] = React.useState(0);
+  const [page, setPage] = React.useState("ride");
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        light: "#FF9057",
+        main: "#E64500",
+        dark: "#022222",
+        contrastText: "#fff",
+      },
+      secondary: {
+        light: "#78849E",
+        main: "#259CBB",
+        dark: "#168387",
+        contrastText: "#000",
+      },
+    },
+  });
 
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      footer: {
+        position: "fixed",
+        left: "0",
+        bottom: "0",
+        width: "100",
+        // backgroundcolor:
+        // color: white,
+        textAlign: "center",
+      },
+
+      demo: {
+        backgroundColor: theme.palette.background.paper,
+      },
+      "& > svg": {
+        margin: theme.spacing(2),
+      },
+      "& .MuiTextField-root": {
+        margin: theme.spacing(1),
+        width: "100%",
+      },
+    },
+    container: {
+      display: "flex",
+      flexWrap: "wrap",
+    },
+    textField: {
+      // marginLeft: theme.spacing(1),
+      // marginRight: theme.spacing(1),
+      margin: theme.spacing(2),
+
+      maxWidth: "100%",
+    },
+  }));
+  const classes = useStyles();
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   // When this component mounts, grab the trip with the _id of props.match.params.id
   // e.g. localhost:3000/requestsreceived/599dcb67f0f16317844583fc
   const { id } = useParams();
@@ -66,10 +165,9 @@ function RequestsReceived({  checkNotificationStatus }) {
   // Accept a matching request from the loaded list with a given id, then reloads matching requests from the db
   function acceptRequest(id) {
     API.acceptRequest(id)
-      .then((res) =>  checkNotificationStatus(res.data.status)
-       )
-      // .then(() => window.location.reload())
-   
+      .then((res) => checkNotificationStatus(res.data.status))
+      .then(() => window.location.reload())
+
       .catch((err) => console.log(err));
   }
   // Undo the accept matching request action
@@ -98,12 +196,11 @@ function RequestsReceived({  checkNotificationStatus }) {
         <Row>
           <Col size="md-12">
             <Jumbotron>
-              <h1>Requests Received</h1>
+              <h1>Requests Received  <NotificationsActiveIcon fontSize="large" /></h1>
             </Jumbotron>
-            <Grid container justify="center" alignItems="center">
+            <Grid container justify="space-around" alignItems="center">
               <div>
                 <h2>
-    
                   <strong>
                     {selectedTrip.from} - {selectedTrip.to}
                   </strong>
@@ -111,7 +208,7 @@ function RequestsReceived({  checkNotificationStatus }) {
                   {moment(selectedTrip.departDate).format("MM/DD/YYYY")}{" "}
                   {selectedTrip.departTime}
                 </h2>
-               
+
                 <h4>
                   {matchingRequests.length} Matching Requests Received for this
                   Trip!
@@ -120,8 +217,8 @@ function RequestsReceived({  checkNotificationStatus }) {
             </Grid>
 
             {matchingRequests.length ? (
-              <List>
-                <Grid container justify="center" alignItems="center">
+              <Grid container justify="space-around" alignItems="space-evenly">
+                <List>
                   {matchingRequests.map((match) => (
                     <ListItem key={match._id}>
                       <Link to={"/requests/" + match._id}>
@@ -139,29 +236,63 @@ function RequestsReceived({  checkNotificationStatus }) {
                       <AcceptBtn
                         onClick={() => {
                           acceptRequest(match._id);
-                        
                         }}
                       />
                       <CancelBtn onClick={() => undoAcceptRequest(match._id)} />
                     </ListItem>
                   ))}
-                </Grid>
               </List>
+                </Grid>
             ) : (
               <Grid container justify="center" alignItems="center">
                 <div>
-                  <h3>Hang in there...😁 someone will evetually request a ride!</h3>
+                  <h3>
+                    Hang in there...😁 someone will evetually request a ride!
+                  </h3>
                   <br />
                 </div>
               </Grid>
             )}
-            <Grid container justify="center" alignItems="center">
-                <Link to="/ride">Ride </Link>
-                <Link to="/drive">Drive </Link>
-                <Link to="/myTrips"> | My Trips</Link>
-                <Link to="/requestscreated"> | Requests Created</Link>
+            <div  style={{
+                  position: "fixed",
+                  left: "0",
+                  bottom: "0",
+                  width: "100vw",
+
+                  textAlign: "center",
+                }}>
+
           
-            </Grid>
+           <BottomNavigation
+                  value={page}
+                  onChange={(event, newValue) => {
+                    setPage(newValue);
+                  }}
+                  showLabels
+                  className={classes.root}
+               
+                >
+                  <BottomNavigationAction
+                    label="Ride"
+                    icon={<EmojiPeopleRoundedIcon />}
+                    href="/ride"
+                  />
+                  <BottomNavigationAction
+                    label="My Trips"
+                    icon={<PersonPinCircleIcon />}
+                    href="/myTrips"
+                  />
+                  <BottomNavigationAction
+                    label="Drive"
+                    icon={<LocalTaxiIcon />}
+                    href="/drive"
+                  />
+                  <BottomNavigationAction
+                    label="Points (future)"
+                    icon={<EmojiEventsIcon />}
+                  />
+                </BottomNavigation>
+                </div>
           </Col>
         </Row>
       </Container>

@@ -181,7 +181,7 @@ export default function Nav(props) {
           </MenuItem>
           <MenuItem>
             <IconButton
-              href="/requestscreated"
+              href="/ride"
               aria-label="show 17 new notifications"
               color="inherit"
             >
@@ -249,7 +249,7 @@ export default function Nav(props) {
                   </IconButton>
 
                   <IconButton
-                    href="/requestscreated"
+                    href="/ride"
                     aria-label="show 17 new notifications"
                     color="inherit"
                   >
@@ -294,13 +294,18 @@ export default function Nav(props) {
               justify="flex-end"
               alignItems="center"
             >
-              <div>
+                        <Grid
+              container
+              direction="col"
+              justify="flex-end"
+              alignItems="center"
+            >
                 <Typography variant="h6">
                   <Link href="/login" color="inherit" underline="none">
                     Login
                   </Link>
                 </Typography>
-              </div>
+              </Grid>
             </Grid>
           )}
         </Toolbar>

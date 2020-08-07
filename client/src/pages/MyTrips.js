@@ -1,14 +1,40 @@
 import React, { useState, useEffect } from "react";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import MyLocationIcon from "@material-ui/icons/MyLocation";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import PersonPinCircleIcon from "@material-ui/icons/PersonPinCircle";
+import LocalMallIcon from "@material-ui/icons/LocalMall";
+import PublishIcon from "@material-ui/icons/Publish";
+import AirlineSeatReclineNormalIcon from "@material-ui/icons/AirlineSeatReclineNormal";
+import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import LocalTaxiRoundedIcon from "@material-ui/icons/LocalTaxiRounded";
+import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
+import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
+import MessageIcon from "@material-ui/icons/Message";
+import FormGroup from "@material-ui/core/FormGroup";
+import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
+import Popper from "@material-ui/core/Popper";
+// import Alert from "@material-ui/lab/Alert";
+import Switch from "@material-ui/core/Switch";
+
+import BottomNavigation from "@material-ui/core/BottomNavigation";
+import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import RestoreIcon from "@material-ui/icons/Restore";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Container, Col, Row } from "../components/Grid"; // removed container
-import { List, ListItem } from "../components/List"; //
-import AcceptBtn from "../components/AcceptBtn"; //
-import DeclineBtn from "../components/DeclineBtn"; //
-import DeleteBtn from "../components/CancelBtn"; //
-import moment from "moment";
-import { makeStyles } from "@material-ui/core/styles";
+
+import {
+  makeStyles,
+  ThemeProvider,
+  createMuiTheme,
+} from "@material-ui/core/styles";
 import {
   InputWithIcon,
   BasicTextFields,
@@ -20,6 +46,7 @@ import {
   Box,
   Grid,
   TextField,
+  // Container,
   MenuItem,
   Button,
   Checkbox,
@@ -28,12 +55,77 @@ import {
 
 import "./drive.css";
 
+import { List, ListItem } from "../components/List"; //
+
+import DeclineBtn from "../components/DeclineBtn"; //
+
+import moment from "moment";
+
 function MyTrips() {
   // Setting our component's initial state
   const [myTrips, setMyTrips] = useState([]);
+  
   const [matchingRequests, setMatchingRequests] = useState([]);
 
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        light: "#FF9057",
+        main: "#E64500",
+        dark: "#022222",
+        contrastText: "#fff",
+      },
+      secondary: {
+        light: "#78849E",
+        main: "#259CBB",
+        dark: "#168387",
+        contrastText: "#000",
+      },
+    },
+  });
 
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      footer: {
+        position: "fixed",
+        left: "0",
+        bottom: "0",
+        width: "100",
+        // backgroundcolor:
+        // color: white,
+        textAlign: "center",
+      },
+
+      demo: {
+        backgroundColor: theme.palette.background.paper,
+      },
+      "& > svg": {
+        margin: theme.spacing(2),
+      },
+      "& .MuiTextField-root": {
+        margin: theme.spacing(1),
+        width: "100%",
+      },
+    },
+    container: {
+      display: "flex",
+      flexWrap: "wrap",
+    },
+    textField: {
+      // marginLeft: theme.spacing(1),
+      // marginRight: theme.spacing(1),
+      margin: theme.spacing(2),
+
+      maxWidth: "100%",
+    },
+  }));
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+  const [page, setPage] = React.useState("ride");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   useEffect(() => {
     loadMyTrips();
   }, []);
@@ -93,10 +185,10 @@ function MyTrips() {
         <Row>
           <Col size="md-12">
             <Jumbotron>
-              <h1>My Trips</h1>
+              <h1>My Trips  <PersonPinCircleIcon fontSize="large" /></h1>
             </Jumbotron>
             {myTrips.length ? (
-              <Grid container justify="space-around" alignItems="center">
+              <Grid container justify="space-around" alignItems="space-evenly">
                 <List>
                   {myTrips.map((trip) => (
                     <ListItem key={trip._id}>
@@ -108,16 +200,21 @@ function MyTrips() {
                       {moment(trip.departDate).format("MM/DD/YYYY")}{" "}
                       {trip.departTime}
                       <br />
-                      <Grid container justify="space-around" alignItems="center">  
-                      <DeclineBtn
-                        btnName="CANCEL"
-                        onClick={() => deleteTrip(trip._id)}
-                      />
-                      
-                      <DeclineBtn
-                        btnName="EDIT" color="#259CBB" // cyan
-                        onClick={() => updateTrip(trip._id, trip)}
-                      />
+                      <Grid
+                        container
+                        justify="space-around"
+                        alignItems="center"
+                      >
+                        <DeclineBtn
+                          btnName="CANCEL"
+                          onClick={() => deleteTrip(trip._id)}
+                        />
+
+                        <DeclineBtn
+                          btnName="EDIT"
+                          color="#259CBB" // cyan
+                          onClick={() => updateTrip(trip._id, trip)}
+                        />
                       </Grid>
                     </ListItem>
                   ))}
@@ -130,12 +227,46 @@ function MyTrips() {
                 </h3>
               </Grid>
             )}
-            <Grid container justify="center" alignItems="center">
-              <div>
-                <Link to="/ride">Ride </Link>
-                <Link to="/drive">Drive </Link>
-                <Link to="/myTrips"> | My Trips</Link>
-                <Link to="/requestscreated"> | Requests Created</Link>
+            <Grid c driection="row" justify="center" alignItems="center">
+              <div
+                style={{
+                  position: "fixed",
+                  left: "0",
+                  bottom: "0",
+                  width: "100%",
+
+                  textAlign: "center",
+                }}
+              >
+                <BottomNavigation
+                  value={page}
+                  onChange={(event, newValue) => {
+                    setPage(newValue);
+                  }}
+                  showLabels
+                  className={classes.root}
+   
+                >
+                  <BottomNavigationAction
+                    label="Ride"
+                    icon={<EmojiPeopleRoundedIcon />}
+                    href="/ride"
+                  />
+                  <BottomNavigationAction
+                    label="My Trips"
+                    icon={<PersonPinCircleIcon />}
+                    href="/myTrips"
+                  />
+                  <BottomNavigationAction
+                    label="Drive"
+                    icon={<LocalTaxiIcon />}
+                    href="/drive"
+                  />
+                  <BottomNavigationAction
+                    label="Points (future)"
+                    icon={<EmojiEventsIcon />}
+                  />
+                </BottomNavigation>
               </div>
             </Grid>
           </Col>

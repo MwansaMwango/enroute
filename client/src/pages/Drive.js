@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import LocalTaxiIcon from '@material-ui/icons/LocalTaxi';
+import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
@@ -16,6 +16,7 @@ import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
 import MessageIcon from "@material-ui/icons/Message";
 import FormGroup from "@material-ui/core/FormGroup";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
+import Popper from "@material-ui/core/Popper";
 // import Alert from "@material-ui/lab/Alert";
 import Switch from "@material-ui/core/Switch";
 
@@ -80,6 +81,9 @@ function Drive() {
 
   const useStyles = makeStyles((theme) => ({
     root: {
+      demo: {
+        backgroundColor: theme.palette.background.paper,
+      },
       "& > svg": {
         margin: theme.spacing(2),
       },
@@ -102,6 +106,20 @@ function Drive() {
   }));
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const [page, setPage] = React.useState("ride");
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+  const handleClick = (event) => {
+    setAnchorEl(anchorEl);
+    // setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popper" : undefined;
   // const [state, setState] = React.useState({
   //   checkedA: true,
   //   checkedB: true,
@@ -177,17 +195,9 @@ function Drive() {
       tripNote: formObject.tripNote,
       // user_id: req.user,
     })
-      .then(function (res) {
-        //   return (
-        //     <div className={classes.root}>
-        //       <Alert severity="success" color="info">
-        //         Trip posted successfully!
-        //       </Alert>
-        //     </div>
-        //   );
-      })
-      .then((res) => alert(JSON.stringify(res.data)))
-      .catch((err) => console.log(err));
+
+      .then((res) => alert("Trip has been saved"))
+      .catch((err) => console.log(err))
     // }
   }
 
@@ -198,7 +208,10 @@ function Drive() {
           <Row>
             <Col size="md-12">
               <Jumbotron>
-                <h1>Drive<LocalTaxiIcon fontSize="large"/></h1>
+                <h1>
+                  Drive
+                  <LocalTaxiIcon fontSize="large" />
+                </h1>
               </Jumbotron>
 
               <Grid container justify="center" alignItems="center">
@@ -346,12 +359,12 @@ function Drive() {
                     </FormBtn>
                   </Grid>
 
-                  <br />
                   <BottomNavigation
-                    value={value}
-                    onChange={(event, newValue) => {
-                      setValue(newValue);
-                    }}
+                      value={page}
+                      onChange={(event, newValue) => {
+                        setPage(newValue);
+                      }}
+           
                     showLabels
                     className={classes.root}
                     // style={{background:"#022222", color:"white"}}
