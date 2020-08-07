@@ -103,7 +103,7 @@ function MyTrips() {
         margin: theme.spacing(2),
       },
       "& .MuiTextField-root": {
-        margin: theme.spacing(1),
+        margin: theme.spacing(2),
         width: "100%",
       },
     },

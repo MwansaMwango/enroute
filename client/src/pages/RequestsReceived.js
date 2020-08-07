@@ -113,7 +113,7 @@ function RequestsReceived({ checkNotificationStatus }) {
         margin: theme.spacing(2),
       },
       "& .MuiTextField-root": {
-        margin: theme.spacing(1),
+        margin: theme.spacing(2),
         width: "100%",
       },
     },
@@ -288,7 +288,7 @@ function RequestsReceived({ checkNotificationStatus }) {
                     href="/drive"
                   />
                   <BottomNavigationAction
-                    label="Points (future)"
+                    label="Points(future)"
                     icon={<EmojiEventsIcon />}
                   />
                 </BottomNavigation>

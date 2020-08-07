@@ -83,10 +83,10 @@ function Ride() {
   const useStyles = makeStyles((theme) => ({
     root: {
       "& > svg": {
-        margin: theme.spacing(1),
+        margin: theme.spacing(2),
       },
       "& .MuiTextField-root": {
-        margin: theme.spacing(1),
+        margin: theme.spacing(2),
         width: "100%",
       },
     },
@@ -370,7 +370,7 @@ function Ride() {
                     </Grid>
                 {/* </Grid> */}
 
-                <Grid item>
+                <Grid container justify="center" alignItems="space-around">
                   <FormBtn
                     disabled={!(formObject.from && formObject.to)}
                     onClick={handleFormSubmit}
@@ -405,11 +405,11 @@ function Ride() {
                     href="/myTrips"
                   />
                   <BottomNavigationAction
-                    label="Newsfeed (future)"
+                    label="News(future)"
                     icon={<MessageIcon />}
                   />
                   <BottomNavigationAction
-                    label="Points (future)"
+                    label="Points(future)"
                     icon={<EmojiEventsIcon />}
                   />
                 </BottomNavigation>

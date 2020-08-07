@@ -88,7 +88,7 @@ function Drive() {
         margin: theme.spacing(2),
       },
       "& .MuiTextField-root": {
-        margin: theme.spacing(1),
+        margin: theme.spacing(2),
         width: "100%",
       },
     },
@@ -350,7 +350,7 @@ function Drive() {
                     />
                   </Grid>
 
-                  <Grid item>
+                  <Grid  container justify="center" alignItems="space-around">
                     <FormBtn
                       disabled={!(formObject.from && formObject.to)}
                       onClick={handleFormSubmit}
@@ -381,11 +381,11 @@ function Drive() {
                       href="/myTrips"
                     />
                     <BottomNavigationAction
-                      label="Newsfeed (future)"
+                      label="News(future)"
                       icon={<MessageIcon />}
                     />
                     <BottomNavigationAction
-                      label="Points (future)"
+                      label="Points(future)"
                       icon={<EmojiEventsIcon />}
                     />
                   </BottomNavigation>
