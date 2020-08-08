@@ -247,16 +247,31 @@ function RequestsReceived({ checkNotificationStatus }) {
                       {/* Add conditional render if there is a match in request pool for this each match */}
                       {console.log("Matches found array ", matchingRequests)}
                       <br />
-                      { match.status === "Pending" ? (
-                     
-                      <AcceptBtn
-                        onClick={() => {
-                          acceptRequest(match._id);
-                        }}
-                      />
-                      ) : (
-                      <CancelBtn onClick={() => undoAcceptRequest(match._id)} />
-                      )}
+                      {(() => {
+                        switch (match.status) {
+                          case "Pending":
+                            return (
+                              <AcceptBtn
+                                onClick={() => {
+                                  acceptRequest(match._id);
+                                }}
+                              />
+                            );
+
+                          case "Confirmed":
+                            return (
+                              <div>
+                                <h5>
+                                  {match.user_id.firstName} |
+                                  {match.user_id.phone}
+                                </h5>
+                                <CancelBtn
+                                  onClick={() => undoAcceptRequest(match._id)}
+                                />
+                              </div>
+                            );
+                        }
+                      })()}
                       <br />
                     </ListItem>
                   ))}
