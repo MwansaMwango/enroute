@@ -73,10 +73,6 @@ function RequestsReceived({ checkNotificationStatus }) {
   const [matchingRequests, setMatchingRequests] = useState([]);
   const [value, setValue] = React.useState(0);
   const [page, setPage] = React.useState("ride");
-  const [
-    isDisplayRequestorDetails,
-    setIsDisplayRequestorDetails,
-  ] = React.useState(false);
 
   const theme = createMuiTheme({
     palette: {
@@ -171,10 +167,10 @@ function RequestsReceived({ checkNotificationStatus }) {
         // console.log("Accepted Request res.data = ", res.data);
         checkNotificationStatus(res.data.status);
         findMatchingRequests(selectedTrip);
-        setIsDisplayRequestorDetails(true);
+       
         //TODO run confirm action modal screen
-        //Send details of Driver to Ride Requestor
-        // Reveal details of Ride Requestor
+        //Send details of Driver to Ride Requestor - done in server
+
       })
 
       // .then(() => window.location.reload())

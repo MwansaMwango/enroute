@@ -435,10 +435,12 @@ function Ride() {
                       label="My Trips"
                       icon={<PersonPinCircleIcon />}
                       href="/myTrips"
-                    />
+                      />
                     <BottomNavigationAction
-                      label="News(future)"
-                      icon={<MessageIcon />}
+                      label="My Requests"
+                      icon={<AirlineSeatReclineNormalIcon />}
+                      href="/myrequests"
+
                     />
                     <BottomNavigationAction
                       label="Points(future)"

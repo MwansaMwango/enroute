@@ -14,7 +14,7 @@ import Ride from "./pages/Ride";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RequestsReceived from "./pages/RequestsReceived";
-import RequestsCreated from "./pages/RequestsCreated";
+import MyRequests from "./pages/MyRequests";
 import Nav from "./components/Nav";
 import MyTrips from "./pages/MyTrips";
 import NotificationContext from "./utils/NotificationContext";
@@ -45,13 +45,13 @@ function App() {
               <MyTrips />
             </Route>
             <Route exact path="/register" component={Register} />
-            <Route exact path="/requestscreated">
-              <RequestsCreated />
+            <Route exact path="/myrequests">
+              <MyRequests />
             </Route>
             <Route exact path="/trips/:id">
               <RequestsReceived checkNotificationStatus={checkNotificationStatus} />
             </Route>
-            <Route exact path="/requests">
+            <Route exact path="/requestsreceived">
               <RequestsReceived />
             </Route>
             <Route exact path="/ride">

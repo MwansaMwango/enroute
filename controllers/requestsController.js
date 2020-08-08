@@ -6,7 +6,7 @@ module.exports = {
     console.log("route hit");
     db.Request.find({ user_id: req.user.id }) //by user id from req.user passport obj
       .populate("user_id")
-      .populate("route_id")
+      .populate("driver_id")
       .sort({ departDate: -1 })
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
@@ -70,10 +70,14 @@ module.exports = {
 
   acceptRequest: function (req, res) {
     req.body.status = "Confirmed"; // change status booking to comfirmed
+    req.body.driver_id = req.user.id; // attach driver id to request record
     console.log("update hit...req.body = ", req.body);
     // req.body.driver_id = req.user_id // attach driver
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
-      .then((dbModel) => res.json(dbModel))
+      .then((dbModel) => {
+        res.json(dbModel);
+      })
+
       .catch((err) => res.status(422).json(err));
   },
   undoAccept: function (req, res) {
