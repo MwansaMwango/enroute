@@ -4,7 +4,7 @@ const db = require("../models");
 module.exports = {
   findAll: function (req, res) {
     console.log("route hit");
-    db.Request.find({user_id: req.user.id}) //by user id from req.user passport obj
+    db.Request.find({ user_id: req.user.id }) //by user id from req.user passport obj
       .populate("user_id")
       .populate("route_id")
       .sort({ departDate: -1 })
@@ -26,10 +26,15 @@ module.exports = {
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
-  
-  findMatchingRequests: function (req, res) { // load this in Requests Received page for driver req.body is an instance of 1 trip
-    console.log("Run findMatchingRequests, Post, Trip Data, req.body= ", req.body);
-    db.Request.find({ // find one first come first serve
+
+  findMatchingRequests: function (req, res) {
+    // load this in Requests Received page for driver req.body is an instance of 1 trip
+    console.log(
+      "Run findMatchingRequests, Post, Trip Data, req.body= ",
+      req.body
+    );
+    db.Request.find({
+      // find one first come first serve
       // Mandatory parameters
       from: req.body.from,
       to: req.body.to,
@@ -48,6 +53,8 @@ module.exports = {
       //   }
       // ]
     })
+      .populate("user_id")
+      .sort({ departDate: -1 })
       .then(function (dbModel) {
         res.json(dbModel);
         console.log("Request matches =", dbModel);
@@ -56,24 +63,24 @@ module.exports = {
   },
 
   update: function (req, res) {
-    req.body.status = "Confirmed" // change status booking to comfirmed
+    req.body.status = "Confirmed"; // change status booking to comfirmed
     console.log("update hit...req.body = ", req.body);
-    // req.body.driver_id = req.user_id // attach driver 
+    // req.body.driver_id = req.user_id // attach driver
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
   undoAccept: function (req, res) {
     console.log("undo route hit");
-    req.body.status = "Pending" // change status booking to comfirmed
-    // req.body.driver_id = req.user_id // attach driver 
+    req.body.status = "Pending"; // change status booking to comfirmed
+    // req.body.driver_id = req.user_id // attach driver
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
   // decline: function (req, res) {
   //   req.body.status = "Comfirmed" // change status booking to comfirmed
-  //   // req.body.driver_id = req.user_id // attach driver 
+  //   // req.body.driver_id = req.user_id // attach driver
   //   db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
   //     .then((dbModel) => res.json(dbModel))
   //     .catch((err) => res.status(422).json(err));

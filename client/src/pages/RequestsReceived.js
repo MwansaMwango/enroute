@@ -1,7 +1,6 @@
-
 import React, { useState, useEffect } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
@@ -57,8 +56,6 @@ import {
 
 import "./drive.css";
 
-
-
 import DeclineBtn from "../components/DeclineBtn"; //
 
 import moment from "moment";
@@ -69,7 +66,6 @@ import AcceptBtn from "../components/AcceptBtn"; //
 import CancelBtn from "../components/CancelBtn"; //
 import DeleteBtn from "../components/CancelBtn"; //
 
-
 function RequestsReceived({ checkNotificationStatus }) {
   // Setting our component's initial state
   const [selectedTrip, setSelectedTrip] = useState({});
@@ -77,6 +73,8 @@ function RequestsReceived({ checkNotificationStatus }) {
   const [matchingRequests, setMatchingRequests] = useState([]);
   const [value, setValue] = React.useState(0);
   const [page, setPage] = React.useState("ride");
+  const [requestStatus, setRequestStatus] = React.useState();
+
   const theme = createMuiTheme({
     palette: {
       primary: {
@@ -156,6 +154,7 @@ function RequestsReceived({ checkNotificationStatus }) {
     API.findMatchingRequests(tripData)
       .then((res) => {
         setMatchingRequests(res.data);
+        console.log("Matching request res.data = ", res.data);
         // matchList.push(res);
         // console.log("Returned matching requests ", res.data);
       })
@@ -165,15 +164,25 @@ function RequestsReceived({ checkNotificationStatus }) {
   // Accept a matching request from the loaded list with a given id, then reloads matching requests from the db
   function acceptRequest(id) {
     API.acceptRequest(id)
-      .then((res) => checkNotificationStatus(res.data.status))
-      .then(() => window.location.reload())
+      .then((res) => {
+        // console.log("Accepted Request res.data = ", res.data);
+        checkNotificationStatus(res.data.status);
+        findMatchingRequests(selectedTrip);
+        //TODO run confirm action modal screen
+        //Send details of Driver to Ride Requestor
+        // Reveal details of Ride Requestor
+      })
+
+      // .then(() => window.location.reload())
 
       .catch((err) => console.log(err));
   }
   // Undo the accept matching request action
   function undoAcceptRequest(id) {
     API.undoAcceptRequest(id)
-      .then((res) => window.location.reload())
+      .then((res) => {
+        findMatchingRequests(selectedTrip);
+      })
       .catch((err) => console.log(err));
   }
 
@@ -196,9 +205,11 @@ function RequestsReceived({ checkNotificationStatus }) {
         <Row>
           <Col size="md-12">
             <Jumbotron>
-              <h1>Requests Received  <NotificationsActiveIcon fontSize="large" /></h1>
+              <h1>
+                Requests Received <NotificationsActiveIcon fontSize="large" />
+              </h1>
             </Jumbotron>
-            <Grid container justify="space-around" alignItems="center">
+            <Grid container justify="center" alignItems="center">
               <div>
                 <h2>
                   <strong>
@@ -208,7 +219,6 @@ function RequestsReceived({ checkNotificationStatus }) {
                   {moment(selectedTrip.departDate).format("MM/DD/YYYY")}{" "}
                   {selectedTrip.departTime}
                 </h2>
-
                 <h4>
                   {matchingRequests.length} Matching Requests Received for this
                   Trip!
@@ -221,11 +231,11 @@ function RequestsReceived({ checkNotificationStatus }) {
                 <List>
                   {matchingRequests.map((match) => (
                     <ListItem key={match._id}>
-                      <Link to={"/requests/" + match._id}>
-                        <strong>
-                          {match.from} - {match.to} <br />
-                        </strong>
-                      </Link>
+                      {/* <Link disabled={true} to={"/requests/" + match._id}> */}
+                      <strong>
+                        {match.from} - {match.to} <br />
+                      </strong>
+                      {/* </Link> */}
                       {moment(match.departDate).format("MM/DD/YYYY")}{" "}
                       {match.departTime} - {match.status}
                       {/* Check for matching requests against match */}
@@ -239,60 +249,60 @@ function RequestsReceived({ checkNotificationStatus }) {
                         }}
                       />
                       <CancelBtn onClick={() => undoAcceptRequest(match._id)} />
-                    </ListItem>
+                      <br/>
+                     </ListItem>
                   ))}
-              </List>
-                </Grid>
+                </List>
+              </Grid>
             ) : (
               <Grid container justify="center" alignItems="center">
                 <div>
-                  <h3>
+                  <h4>
                     Hang in there...😁 someone will evetually request a ride!
-                  </h3>
+                  </h4>
                   <br />
                 </div>
               </Grid>
             )}
-            <div  style={{
-                  position: "fixed",
-                  left: "0",
-                  bottom: "0",
-                  width: "100vw",
+            <div
+              style={{
+                position: "fixed",
+                left: "0",
+                bottom: "0",
+                width: "100vw",
 
-                  textAlign: "center",
-                }}>
-
-          
-           <BottomNavigation
-                  value={page}
-                  onChange={(event, newValue) => {
-                    setPage(newValue);
-                  }}
-                  showLabels
-                  className={classes.root}
-               
-                >
-                  <BottomNavigationAction
-                    label="Ride"
-                    icon={<EmojiPeopleRoundedIcon />}
-                    href="/ride"
-                  />
-                  <BottomNavigationAction
-                    label="My Trips"
-                    icon={<PersonPinCircleIcon />}
-                    href="/myTrips"
-                  />
-                  <BottomNavigationAction
-                    label="Drive"
-                    icon={<LocalTaxiIcon />}
-                    href="/drive"
-                  />
-                  <BottomNavigationAction
-                    label="Points(future)"
-                    icon={<EmojiEventsIcon />}
-                  />
-                </BottomNavigation>
-                </div>
+                textAlign: "center",
+              }}
+            >
+              <BottomNavigation
+                value={page}
+                onChange={(event, newValue) => {
+                  setPage(newValue);
+                }}
+                showLabels
+                className={classes.root}
+              >
+                <BottomNavigationAction
+                  label="Ride"
+                  icon={<EmojiPeopleRoundedIcon />}
+                  href="/ride"
+                />
+                <BottomNavigationAction
+                  label="My Trips"
+                  icon={<PersonPinCircleIcon />}
+                  href="/myTrips"
+                />
+                <BottomNavigationAction
+                  label="Drive"
+                  icon={<LocalTaxiIcon />}
+                  href="/drive"
+                />
+                <BottomNavigationAction
+                  label="Points(future)"
+                  icon={<EmojiEventsIcon />}
+                />
+              </BottomNavigation>
+            </div>
           </Col>
         </Row>
       </Container>

@@ -64,7 +64,7 @@ import moment from "moment";
 function MyTrips() {
   // Setting our component's initial state
   const [myTrips, setMyTrips] = useState([]);
-  
+
   const [matchingRequests, setMatchingRequests] = useState([]);
 
   const theme = createMuiTheme({
@@ -185,7 +185,9 @@ function MyTrips() {
         <Row>
           <Col size="md-12">
             <Jumbotron>
-              <h1>My Trips  <PersonPinCircleIcon fontSize="large" /></h1>
+              <h1>
+                My Trips <PersonPinCircleIcon fontSize="large" />
+              </h1>
             </Jumbotron>
             {myTrips.length ? (
               <Grid container justify="space-around" alignItems="space-evenly">
@@ -221,13 +223,13 @@ function MyTrips() {
                 </List>
               </Grid>
             ) : (
-              <Grid container justify="center" alignItems="center">
+              <Grid container justify="center" alignItems="space-around">
                 <h3>
                   No trips yet. Register your next trip to start earning points.
                 </h3>
               </Grid>
             )}
-            <Grid c driection="row" justify="center" alignItems="center">
+            <Grid driection="row" justify="center" alignItems="center">
               <div
                 style={{
                   position: "fixed",
@@ -245,7 +247,6 @@ function MyTrips() {
                   }}
                   showLabels
                   // className={classes.root}
-   
                 >
                   <BottomNavigationAction
                     label="Ride"
@@ -253,17 +254,16 @@ function MyTrips() {
                     href="/ride"
                   />
                   <BottomNavigationAction
-                    label="My Trips"
-                    icon={<PersonPinCircleIcon />}
-                    href="/myTrips"
-                  />
-                  <BottomNavigationAction
                     label="Drive"
                     icon={<LocalTaxiIcon />}
                     href="/drive"
                   />
                   <BottomNavigationAction
-                    label="Points (future)"
+                    label="News(future)"
+                    icon={<MessageIcon />}
+                  />
+                  <BottomNavigationAction
+                    label="Points(future)"
                     icon={<EmojiEventsIcon />}
                   />
                 </BottomNavigation>
