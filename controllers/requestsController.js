@@ -63,6 +63,12 @@ module.exports = {
   },
 
   update: function (req, res) {
+    db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
+      .then((dbModel) => res.json(dbModel))
+      .catch((err) => res.status(422).json(err));
+  },
+
+  acceptRequest: function (req, res) {
     req.body.status = "Confirmed"; // change status booking to comfirmed
     console.log("update hit...req.body = ", req.body);
     // req.body.driver_id = req.user_id // attach driver

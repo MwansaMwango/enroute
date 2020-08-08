@@ -189,8 +189,9 @@ function MyTrips() {
                 My Trips <PersonPinCircleIcon fontSize="large" />
               </h1>
             </Jumbotron>
+            <br/>
             {myTrips.length ? (
-              <Grid container justify="space-around" alignItems="space-evenly">
+              <Grid container justify="space-around" alignItems="center">
                 <List>
                   {myTrips.map((trip) => (
                     <ListItem key={trip._id}>
@@ -218,6 +219,7 @@ function MyTrips() {
                           onClick={() => updateTrip(trip._id, trip)}
                         />
                       </Grid>
+                      <br />
                     </ListItem>
                   ))}
                 </List>

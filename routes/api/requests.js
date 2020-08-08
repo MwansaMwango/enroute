@@ -12,7 +12,7 @@ router.route("/")
   .post(requestsController.findMatchingRequests);
   // Accept request and confirm booking with "/api/requests/accept/:id"
   router.route("/accept/:id")
-  .put(requestsController.update);
+  .put(requestsController.acceptRequest);
   
   // Undo request and confirm booking with "/api/requests/accept/:id"
   router.route("/undoaccept/:id")

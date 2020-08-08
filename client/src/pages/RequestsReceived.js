@@ -73,7 +73,10 @@ function RequestsReceived({ checkNotificationStatus }) {
   const [matchingRequests, setMatchingRequests] = useState([]);
   const [value, setValue] = React.useState(0);
   const [page, setPage] = React.useState("ride");
-  const [requestStatus, setRequestStatus] = React.useState();
+  const [
+    isDisplayRequestorDetails,
+    setIsDisplayRequestorDetails,
+  ] = React.useState(false);
 
   const theme = createMuiTheme({
     palette: {
@@ -168,6 +171,7 @@ function RequestsReceived({ checkNotificationStatus }) {
         // console.log("Accepted Request res.data = ", res.data);
         checkNotificationStatus(res.data.status);
         findMatchingRequests(selectedTrip);
+        setIsDisplayRequestorDetails(true);
         //TODO run confirm action modal screen
         //Send details of Driver to Ride Requestor
         // Reveal details of Ride Requestor
@@ -227,7 +231,7 @@ function RequestsReceived({ checkNotificationStatus }) {
             </Grid>
 
             {matchingRequests.length ? (
-              <Grid container justify="space-around" alignItems="space-evenly">
+              <Grid container justify="space-around" alignItems="center">
                 <List>
                   {matchingRequests.map((match) => (
                     <ListItem key={match._id}>
@@ -243,14 +247,18 @@ function RequestsReceived({ checkNotificationStatus }) {
                       {/* Add conditional render if there is a match in request pool for this each match */}
                       {console.log("Matches found array ", matchingRequests)}
                       <br />
+                      { match.status === "Pending" ? (
+                     
                       <AcceptBtn
                         onClick={() => {
                           acceptRequest(match._id);
                         }}
                       />
+                      ) : (
                       <CancelBtn onClick={() => undoAcceptRequest(match._id)} />
-                      <br/>
-                     </ListItem>
+                      )}
+                      <br />
+                    </ListItem>
                   ))}
                 </List>
               </Grid>
