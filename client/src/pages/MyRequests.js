@@ -161,8 +161,9 @@ function MyRequests() {
                 left: "0",
                 bottom: "0",
                 height: "50px",
-                width: "100%",
+                width: "90%",
                 textAlign: "center",
+                
               }}
             >
               <BottomNavigation

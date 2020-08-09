@@ -381,7 +381,7 @@ function Drive() {
                       position: "fixed",
                       left: "0",
                       bottom: "0",
-                      width: "100%",
+                      width: "90%",
                       height: "50px",
     
                       textAlign: "center",
