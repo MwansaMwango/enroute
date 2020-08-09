@@ -200,7 +200,9 @@ function RequestsReceived({ checkNotificationStatus }) {
   // }
 
   return (
-    <Box>
+    <Box style={{
+      paddingBottom: "50px",
+    }}>
       <Container spacing={3} fluid maxWidth="100vw">
         <Row>
           <Col size="md-12">
@@ -288,7 +290,8 @@ function RequestsReceived({ checkNotificationStatus }) {
                 position: "fixed",
                 left: "0",
                 bottom: "0",
-                width: "100vw",
+                width: "100%",
+                height: "50px",
 
                 textAlign: "center",
               }}

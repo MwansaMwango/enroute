@@ -180,7 +180,9 @@ function MyTrips() {
   }
 
   return (
-    <Box>
+    <Box style={{
+      paddingBottom: "50px",
+    }}>
       <Container spacing={3} fluid maxWidth="100vw">
         <Row>
           <Col size="md-12">

@@ -198,12 +198,14 @@ function Drive() {
     })
 
       .then((res) => alert("Trip has been saved"))
-      .catch((err) => console.log(err))
+      .catch((err) => console.log(err));
     // }
   }
 
   return (
-    <Box>
+    <Box style={{
+      paddingBottom: "50px",
+    }}>
       <Container fluid maxWidth="100vw">
         <ThemeProvider theme={theme}>
           <Row>
@@ -216,12 +218,11 @@ function Drive() {
               </Jumbotron>
 
               <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="center"
-                 
-                >
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
                 <form className={classes.root}>
                   <Grid item>
                     <TextField
@@ -325,12 +326,11 @@ function Drive() {
                   </Grid>
 
                   <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="center"
-                 
-                >
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
                     <FormControlLabel
                       control={
                         <Switch
@@ -364,11 +364,11 @@ function Drive() {
                   </Grid>
 
                   <Grid
-                  container
-                  direction="row"
-                  justify="space-around"
-                  alignItems="center"
-                >
+                    container
+                    direction="row"
+                    justify="space-around"
+                    alignItems="center"
+                  >
                     <FormBtn
                       disabled={!(formObject.from && formObject.to)}
                       onClick={handleFormSubmit}
@@ -377,45 +377,46 @@ function Drive() {
                     </FormBtn>
                   </Grid>
                   <div
-                style={{
-                  position: "relative",
-                  left: "0",
-                  bottom: "0",
-                  width: "90%",
-
-                  textAlign: "center",
-                }}
-              >
-                  <BottomNavigation
+                    style={{
+                      position: "fixed",
+                      left: "0",
+                      bottom: "0",
+                      width: "100%",
+                      height: "50px",
+    
+                      textAlign: "center",
+                    }}
+                  >
+                    <BottomNavigation
                       value={page}
                       onChange={(event, newValue) => {
                         setPage(newValue);
                       }}
-           
-                    showLabels
-                    className={classes.root}
-                    // style={{background:"#022222", color:"white"}}
-                  >
-                    <BottomNavigationAction
-                      label="Ride"
-                      icon={<EmojiPeopleRoundedIcon />}
-                      href="/ride"
-                    />
+                      showLabels
+                      className={classes.root}
+                      // style={{background:"#022222", color:"white"}}
+                    >
+                      <BottomNavigationAction
+                        label="Ride"
+                        icon={<EmojiPeopleRoundedIcon />}
+                        href="/ride"
+                      />
 
-                    <BottomNavigationAction
-                      label="My Trips"
-                      icon={<PersonPinCircleIcon />}
-                      href="/myTrips"
-                    />
-                    <BottomNavigationAction
-                      label="News(future)"
-                      icon={<MessageIcon />}
-                    />
-                    <BottomNavigationAction
-                      label="Points(future)"
-                      icon={<EmojiEventsIcon />}
-                    />
-                  </BottomNavigation>
+                      <BottomNavigationAction
+                        label="My Trips"
+                        icon={<PersonPinCircleIcon />}
+                        href="/myTrips"
+                      />
+                      <BottomNavigationAction
+                        label="My Requests"
+                        icon={<AirlineSeatReclineNormalIcon />}
+                        href="/myrequests"
+                      />
+                      <BottomNavigationAction
+                        label="Points(future)"
+                        icon={<EmojiEventsIcon />}
+                      />
+                    </BottomNavigation>
                   </div>
                 </form>
               </Grid>

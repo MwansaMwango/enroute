@@ -221,7 +221,9 @@ function Ride() {
   }
 
   return (
-    <Box>
+    <Box  style={{
+      paddingBottom: "50px",
+    }}>
       <Container fluid maxWidth="100vw">
         <ThemeProvider theme={theme}></ThemeProvider>
         <Row>
@@ -409,10 +411,11 @@ function Ride() {
                 
                 <div
                 style={{
-                  position: "relative",
+                  position: "fixed",
                   left: "0",
                   bottom: "0",
-                  width: "90%",
+                  width: "100%",
+                  height: "50px",
 
                   textAlign: "center",
                 }}

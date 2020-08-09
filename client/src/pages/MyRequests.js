@@ -99,6 +99,9 @@ function MyRequests() {
   }
 
   return (
+    <Box style={{
+      paddingBottom: "50px",
+    }}>
     <Container fluid>
       <Row>
         <Col size="md-12">
@@ -157,8 +160,8 @@ function MyRequests() {
                 position: "fixed",
                 left: "0",
                 bottom: "0",
+                height: "50px",
                 width: "100%",
-
                 textAlign: "center",
               }}
             >
@@ -195,6 +198,7 @@ function MyRequests() {
         </Col>
       </Row>
     </Container>
+    </Box>
   );
 }
 
