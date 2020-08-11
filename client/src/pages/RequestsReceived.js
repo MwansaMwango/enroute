@@ -1,4 +1,11 @@
 import React, { useState, useEffect } from "react";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
+import ListItemText from "@material-ui/core/ListItemText";
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
@@ -25,7 +32,7 @@ import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import RestoreIcon from "@material-ui/icons/Restore";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-
+import InteractiveList from "../components/InteractiveList";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
@@ -73,6 +80,7 @@ function RequestsReceived({ checkNotificationStatus }) {
   const [matchingRequests, setMatchingRequests] = useState([]);
   const [value, setValue] = React.useState(0);
   const [page, setPage] = React.useState("ride");
+  const [secondary, setSecondary] = React.useState(false);
 
   const theme = createMuiTheme({
     palette: {
@@ -107,10 +115,10 @@ function RequestsReceived({ checkNotificationStatus }) {
         backgroundColor: theme.palette.background.paper,
       },
       "& > svg": {
-        margin: theme.spacing(2),
+        margin: theme.spacing(0.25),
       },
       "& .MuiTextField-root": {
-        margin: theme.spacing(2),
+        margin: theme.spacing(.25),
         width: "100%",
       },
     },
@@ -121,7 +129,7 @@ function RequestsReceived({ checkNotificationStatus }) {
     textField: {
       // marginLeft: theme.spacing(1),
       // marginRight: theme.spacing(1),
-      margin: theme.spacing(2),
+      margin: theme.spacing(1),
 
       maxWidth: "100%",
     },
@@ -167,10 +175,9 @@ function RequestsReceived({ checkNotificationStatus }) {
         // console.log("Accepted Request res.data = ", res.data);
         checkNotificationStatus(res.data.status);
         findMatchingRequests(selectedTrip);
-       
+
         //TODO run confirm action modal screen
         //Send details of Driver to Ride Requestor - done in server
-
       })
 
       // .then(() => window.location.reload())
@@ -200,10 +207,12 @@ function RequestsReceived({ checkNotificationStatus }) {
   // }
 
   return (
-    <Box style={{
-      paddingBottom: "50px",
-    }}>
-      <Container spacing={3} fluid maxWidth="100vw">
+    <Box
+      style={{
+        paddingBottom: "50px",
+      }}
+    >
+      <Container spacing={1} fluid maxWidth="100vw">
         <Row>
           <Col size="md-12">
             <Jumbotron>
@@ -214,11 +223,11 @@ function RequestsReceived({ checkNotificationStatus }) {
             <Grid container justify="center" alignItems="center">
               <div>
                 <h2>
-                  <strong>
+              
                     {selectedTrip.from} - {selectedTrip.to}
-                  </strong>
+                
                   <br />
-                  {moment(selectedTrip.departDate).format("MM/DD/YYYY")}{" "}
+                  {moment(selectedTrip.departDate).format("DD-MMM-YYYY")}{" "}
                   {selectedTrip.departTime}
                 </h2>
                 <h4>
@@ -227,25 +236,28 @@ function RequestsReceived({ checkNotificationStatus }) {
                 </h4>
               </div>
             </Grid>
-
+              <br/>
+     
             {matchingRequests.length ? (
-              <Grid container justify="space-around" alignItems="center">
-                <List>
+              <Grid container justify="center" alignItems="center">
+                {/* <List> */}
                   {matchingRequests.map((match) => (
-                    <ListItem key={match._id}>
+                    <div>
+                    <InteractiveList props={match} undoAcceptRequest={undoAcceptRequest} acceptRequest={acceptRequest} />
+                    {/* <ListItem key={match._id}> */}
                       {/* <Link disabled={true} to={"/requests/" + match._id}> */}
-                      <strong>
-                        {match.from} - {match.to} <br />
-                      </strong>
+                      {/* <strong> */}
+                        {/* {match.from} - {match.to} <br /> */}
+                      {/* </strong> */}
                       {/* </Link> */}
-                      {moment(match.departDate).format("MM/DD/YYYY")}{" "}
-                      {match.departTime} - {match.status}
+                      {/* {moment(match.departDate).format("MM/DD/YYYY")}{" "} */}
+                      {/* {match.departTime} - {match.status} */}
                       {/* Check for matching requests against match */}
-                      {console.log("Match data ", match)}
+                      {/* {console.log("Match data ", match)} */}
                       {/* Add conditional render if there is a match in request pool for this each match */}
-                      {console.log("Matches found array ", matchingRequests)}
-                      <br />
-                      {(() => {
+                      {/* {console.log("Matches found array ", matchingRequests)} */}
+                      
+                      {/* {(() => {
                         switch (match.status) {
                           case "Pending":
                             return (
@@ -270,10 +282,11 @@ function RequestsReceived({ checkNotificationStatus }) {
                             );
                         }
                       })()}
-                      <br />
-                    </ListItem>
+                      <br /> */}
+                    {/* </ListItem> */}
+                    </div>
                   ))}
-                </List>
+                {/* </List> */}
               </Grid>
             ) : (
               <Grid container justify="center" alignItems="center">
@@ -285,6 +298,7 @@ function RequestsReceived({ checkNotificationStatus }) {
                 </div>
               </Grid>
             )}
+
             <div
               style={{
                 position: "fixed",

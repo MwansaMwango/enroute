@@ -21,7 +21,7 @@ import NotificationContext from "./utils/NotificationContext";
 
 function App() {
 
-  const [isNewNotification, setIsNewNotification] = useState(0);
+  const [isNewNotification, setIsNewNotification] = useState();
 
   function checkNotificationStatus(status) {
     if (status === "Confirmed") {
