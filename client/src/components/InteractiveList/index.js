@@ -29,25 +29,32 @@ import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // flexGrow: 1,
-    // maxWidth: 752,
+    // "& > *": {
+    //   margin: theme.spacing(1),
+    // },
+    maxWidth: 400,
+    display: "block",
     // width: "fit-content",
-    width: "100vw",
-
+    // width: "100%",
+    width: "95vw",
+   
     // marginBottom: theme.spacing(0.5),
     border: `2px solid ${theme.palette.divider}`,
-    // borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.shape.borderRadius,
     borderRadius: theme.spacing(3),
     backgroundColor: theme.palette.background.paper,
-    color: theme.palette.text.secondary,
+    // color: theme.palette.text.secondary,
     // marginBottom: theme.spacing(1),
 
     "& svg": {
-      margin: theme.spacing(0.25),
+      margin: theme.spacing(0),
       "& hr": {
-        margin: theme.spacing(0.25),
+        margin: theme.spacing(0),
       },
     },
+  },
+  listItem: {
+      display: "block"
   },
   demo: {
     backgroundColor: theme.palette.background.paper,
@@ -75,101 +82,71 @@ export default function InteractiveList({
   const [secondary, setSecondary] = React.useState(true);
 
   return (
-    <div>
-      {/* <FormGroup row>
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={dense}
-              onChange={(event) => setDense(event.target.checked)}
+      <List>
+      <Grid container justify="center" direction="column" alignItems="center" >
+        {generate(
+        <div className={classes.root}>
+          <ListItem >
+            <ListItemAvatar>
+              <Avatar>
+                {props.status === "Confirmed" ? (
+                  <AccountBoxRoundedIcon />
+                ) : (
+                  <NotificationsActiveIcon />
+                )}
+              </Avatar>
+            </ListItemAvatar>
+
+            <ListItemText
+              primary={
+                props.status === "Confirmed"
+                  ? props.user_id.firstName + " " + props.user_id.lastName
+                  : "1 Rider"
+              }
+              secondary={
+                props.status === "Confirmed"
+                  ? props.user_id.phone
+                  : props.status
+              }
             />
-          }
-          label="Enable dense" */}
-      {/* /> */}
-      {/* <FormControlLabel
-          control={
-            <Checkbox
-              checked={secondary}
-              onChange={(event) => setSecondary(event.target.checked)}
+            {/* <Divider variant="middle" /> */}
+
+            <ListItemText
+              primary="20" // hard coded for MVP
+              secondary="pts"
             />
-          }
-          label="Enable secondary text"
-        /> */}
-      {/* </FormGroup> */}
-      <Grid container alignItems="center" justify="center">
-        {/* <Grid item xs={12} md={12}> */}
-        {/* <Typography variant="h6" className={classes.title}>
-            Matching Rides
-          </Typography> */}
-        {/* <div className={classes.demo}> */}
-        {/* <List> */}
-          {generate(
-            <div className={classes.root}>
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar>
-                    {props.status === "Confirmed" ? (
-                      <AccountBoxRoundedIcon />
-                    ) : (
-                      <NotificationsActiveIcon />
-                    )}
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={
-                    props.status === "Confirmed"
-                      ? props.user_id.firstName + " " + props.user_id.lastName
-                      : "1 Rider"
-                  }
-                  secondary={
-                    props.status === "Confirmed"
-                      ? props.user_id.phone
-                      : props.status
-                  }
-                />
-                <Divider variant="middle" />
 
-                <ListItemText
-                  primary="20" // hard coded for MVP
-                  secondary="pts"
-                />
+            {/* <Divider variant="middle" /> */}
 
-                <Divider variant="middle" />
+            <ListItemText
+              primary={moment(props.departDate).format("DD MMM")}
+              secondary={props.departTime}
+            />
 
-                <ListItemText
-                  primary={moment(props.departDate).format("DD MMM")}
-                  secondary={props.departTime}
-                />
+            {/* <Divider variant="middle" /> */}
+            {(() => {
+              switch (props.status) {
+                case "Pending":
+                  return (
+              
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => {
+                        acceptRequest(props._id);
+                      }}
+                      startIcon={<CheckCircleIcon />}
+                      fontSize="large"
+                    >
+                      Accept
+                    </Button>
+               
+                  );
 
-                {/* <Divider orientation="vertical" flexItem /> */}
-
-                {/* <ListItemSecondaryAction> */}
-                {/* <Grid container alignItems="center" justify="center"> */}
-                {/* <IconButton edge="end" aria-label="Delete">
-                    <CancelIcon color="secondary" fontSize="large" />
-                  </IconButton>
-                  {}
-                  <IconButton edge="end" aria-label="Accept">
-                    <CheckCircleIcon color="primary" fontSize="large" />
-                  </IconButton> */}
-
-                {(() => {
-                  switch (props.status) {
-                    case "Pending":
-                      return (
-                        <IconButton edge="end" aria-label="Accept">
-                          <CheckCircleIcon
-                            color="primary"
-                            fontSize="large"
-                            onClick={() => {
-                              acceptRequest(props._id);
-                            }}
-                          />
-                        </IconButton>
-                      );
-
-                    case "Confirmed":
-                      return (
+                case "Confirmed":
+                  return (
+                    <Grid direction="row">
+                
                         <IconButton edge="end" aria-label="Cancel">
                           <CancelIcon
                             color="error"
@@ -177,38 +154,25 @@ export default function InteractiveList({
                             onClick={() => undoAcceptRequest(props._id)}
                           />
                         </IconButton>
-                      );
-                  }
-                })()}
-                {/* <br /> */}
-                {/* Status: {props.status} */}
-                {/* </Grid> */}
-                {/* <Button
-                      variant="contained"
-                      color="primary"
-                      //   className={classes.button}
-                      startIcon={<CheckCircleIcon />}
-                      size="small"
-                    >
-                      Accept
-                    </Button>
-                    <br/>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      //   className={classes.button}
-                      startIcon={<NotInterestedIcon />}
-                      size="small"
-                    >
-                      Cancel
-                    </Button> */}
-              </ListItem>
-              {/* <Divider /> */}
-              {/* <Divider variant="middle" /> */}
-            </div>
-          )}
-        {/* </List> */}
+
+                         <IconButton edge="end" aria-label="Cancel">
+                          <PhoneIcon
+                            color="success"
+                            fontSize="large"
+                            onClick={() => undoAcceptRequest(props._id)}
+                          />
+                        </IconButton>
+                    
+                    </Grid>
+
+                  );
+             }
+            })()}
+            
+          </ListItem>
+        </div>
+        )}
       </Grid>
-    </div>
+      </List>
   );
 }

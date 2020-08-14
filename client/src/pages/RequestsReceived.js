@@ -239,7 +239,7 @@ function RequestsReceived({ checkNotificationStatus }) {
               <br/>
      
             {matchingRequests.length ? (
-              <Grid container justify="center" alignItems="center">
+              <Grid container justify="center" alignItems="center" direction="column">
                 {/* <List> */}
                   {matchingRequests.map((match) => (
                     <div>
