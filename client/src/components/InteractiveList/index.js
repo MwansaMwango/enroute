@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     // width: "fit-content",
     // width: "100%",
     width: "95vw",
-   
+
     // marginBottom: theme.spacing(0.5),
     border: `2px solid ${theme.palette.divider}`,
     borderRadius: theme.shape.borderRadius,
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  
+
   demo: {
     backgroundColor: theme.palette.background.paper,
   },
@@ -78,76 +78,75 @@ export default function InteractiveList({
   const classes = useStyles();
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(true);
+  let phoneLink = "tel:" + props.user_id.phone;
 
   return (
-      <List>
-      <Grid container justify="center" direction="column" alignItems="stretch" >
+    <List>
+      <Grid container justify="center" direction="column" alignItems="stretch">
         {generate(
-        <div className={classes.root}>
-          <ListItem >
-            <ListItemAvatar>
-              <Avatar>
-                {props.status === "Confirmed" ? (
-                  <AccountBoxRoundedIcon />
-                ) : (
-                  <NotificationsActiveIcon />
-                )}
-              </Avatar>
-            </ListItemAvatar>
+          <div className={classes.root}>
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  {props.status === "Confirmed" ? (
+                    <AccountBoxRoundedIcon />
+                  ) : (
+                    <NotificationsActiveIcon />
+                  )}
+                </Avatar>
+              </ListItemAvatar>
 
-            <ListItemText
-                
-              primary={
-                props.status === "Confirmed"
-                  ? props.user_id.firstName + " " + props.user_id.lastName
-                  : "1 Rider"
-              }
-              secondary={
-                props.status === "Confirmed"
-                  ? <a href="tel:+61123-456-789">{props.user_id.phone}</a>
-                  : props.status
-              }
-            />
-            {/* <Divider variant="middle" /> */}
+              <ListItemText
+                primary={
+                  props.status === "Confirmed"
+                    ? props.user_id.firstName + " " + props.user_id.lastName
+                    : "1 Rider"
+                }
+                secondary={
+                  props.status === "Confirmed" ? (
+                    <a href = {phoneLink} >
+                      {props.user_id.phone}
+                    </a>
+                  ) : (
+                    props.status
+                  )
+                }
+              />
+              {/* <Divider variant="middle" /> */}
 
-            {/* <ListItemText
+              {/* <ListItemText
               primary="20" // hard coded for MVP
               secondary="pts"
             /> */}
 
-            {/* <Divider variant="middle" /> */}
+              {/* <Divider variant="middle" /> */}
 
-            <ListItemText
-              primary={moment(props.departDate).format("DD MMM")}
-          
-              secondary={props.departTime}
+              <ListItemText
+                primary={moment(props.departDate).format("DD MMM")}
+                secondary={props.departTime}
               />
-           
 
-            {/* <Divider variant="middle" /> */}
-            {(() => {
-              switch (props.status) {
-                case "Pending":
-                  return (
-              
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => {
-                        acceptRequest(props._id);
-                      }}
-                      startIcon={<CheckCircleIcon />}
-                      fontSize="medium"
-                    >
-                      Accept
-                    </Button>
-               
-                  );
+              {/* <Divider variant="middle" /> */}
+              {(() => {
+                switch (props.status) {
+                  case "Pending":
+                    return (
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => {
+                          acceptRequest(props._id);
+                        }}
+                        startIcon={<CheckCircleIcon />}
+                        fontSize="medium"
+                      >
+                        Accept
+                      </Button>
+                    );
 
-                case "Confirmed":
-                  return (
-                    <Grid direction="row">
-                
+                  case "Confirmed":
+                    return (
+                      <Grid direction="row">
                         <IconButton edge="end" aria-label="Cancel">
                           <CancelIcon
                             color="disabled"
@@ -156,32 +155,36 @@ export default function InteractiveList({
                           />
                         </IconButton>
 
-                        <IconButton edge="end" aria-label="Cancel">
+                        <IconButton
+                          edge="end"
+                          aria-label="Cancel"
+                          disabled={true}
+                        >
                           <MessageIcon
                             color="secondary"
                             fontSize="medium"
                             onClick={() => undoAcceptRequest(props._id)}
                           />
                         </IconButton>
-
-                         <IconButton edge="end" aria-label="Cancel">
+                        <IconButton
+                          edge="end"
+                          aria-label="Cancel"
+                          disabled={true}
+                        >
                           <PhoneIcon
                             color="primary"
                             fontSize="medium"
-                            onClick={() => <a href="tel:+61123-456-789">{props.user_id.phone}</a>}
+                            onClick={() => undoAcceptRequest(props._id)}
                           />
                         </IconButton>
-                    
-                    </Grid>
-
-                  );
-             }
-            })()}
-            
-          </ListItem>
-        </div>
+                      </Grid>
+                    );
+                }
+              })()}
+            </ListItem>
+          </div>
         )}
       </Grid>
-      </List>
+    </List>
   );
 }
