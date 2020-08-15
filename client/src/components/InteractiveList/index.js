@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     //   margin: theme.spacing(1),
     // },
     maxWidth: 400,
-    display: "block",
+    // display: "block",
     // width: "fit-content",
     // width: "100%",
     width: "95vw",
@@ -53,9 +53,7 @@ const useStyles = makeStyles((theme) => ({
       },
     },
   },
-  listItem: {
-      display: "block"
-  },
+  
   demo: {
     backgroundColor: theme.palette.background.paper,
   },
@@ -83,7 +81,7 @@ export default function InteractiveList({
 
   return (
       <List>
-      <Grid container justify="center" direction="column" alignItems="center" >
+      <Grid container justify="center" direction="column" alignItems="stretch" >
         {generate(
         <div className={classes.root}>
           <ListItem >
@@ -98,6 +96,7 @@ export default function InteractiveList({
             </ListItemAvatar>
 
             <ListItemText
+                
               primary={
                 props.status === "Confirmed"
                   ? props.user_id.firstName + " " + props.user_id.lastName
@@ -105,23 +104,25 @@ export default function InteractiveList({
               }
               secondary={
                 props.status === "Confirmed"
-                  ? props.user_id.phone
+                  ? <a href="tel:+61123-456-789">{props.user_id.phone}</a>
                   : props.status
               }
             />
             {/* <Divider variant="middle" /> */}
 
-            <ListItemText
+            {/* <ListItemText
               primary="20" // hard coded for MVP
               secondary="pts"
-            />
+            /> */}
 
             {/* <Divider variant="middle" /> */}
 
             <ListItemText
               primary={moment(props.departDate).format("DD MMM")}
+          
               secondary={props.departTime}
-            />
+              />
+           
 
             {/* <Divider variant="middle" /> */}
             {(() => {
@@ -136,7 +137,7 @@ export default function InteractiveList({
                         acceptRequest(props._id);
                       }}
                       startIcon={<CheckCircleIcon />}
-                      fontSize="large"
+                      fontSize="medium"
                     >
                       Accept
                     </Button>
@@ -149,17 +150,25 @@ export default function InteractiveList({
                 
                         <IconButton edge="end" aria-label="Cancel">
                           <CancelIcon
-                            color="error"
-                            fontSize="large"
+                            color="disabled"
+                            fontSize="medium"
+                            onClick={() => undoAcceptRequest(props._id)}
+                          />
+                        </IconButton>
+
+                        <IconButton edge="end" aria-label="Cancel">
+                          <MessageIcon
+                            color="secondary"
+                            fontSize="medium"
                             onClick={() => undoAcceptRequest(props._id)}
                           />
                         </IconButton>
 
                          <IconButton edge="end" aria-label="Cancel">
                           <PhoneIcon
-                            color="success"
-                            fontSize="large"
-                            onClick={() => undoAcceptRequest(props._id)}
+                            color="primary"
+                            fontSize="medium"
+                            onClick={() => <a href="tel:+61123-456-789">{props.user_id.phone}</a>}
                           />
                         </IconButton>
                     
