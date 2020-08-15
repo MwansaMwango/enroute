@@ -79,6 +79,7 @@ export default function InteractiveList({
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(true);
   let phoneLink = "tel:" + props.user_id.phone;
+  let smsLink = "sms:" + props.user_id.phone;
 
   return (
     <List>
@@ -104,9 +105,7 @@ export default function InteractiveList({
                 }
                 secondary={
                   props.status === "Confirmed" ? (
-                    <a href = {phoneLink} >
-                      {props.user_id.phone}
-                    </a>
+                    <a href={phoneLink}>{props.user_id.phone}</a>
                   ) : (
                     props.status
                   )
@@ -114,10 +113,10 @@ export default function InteractiveList({
               />
               {/* <Divider variant="middle" /> */}
 
-              {/* <ListItemText
+              <ListItemText
               primary="20" // hard coded for MVP
               secondary="pts"
-            /> */}
+            />
 
               {/* <Divider variant="middle" /> */}
 
@@ -146,37 +145,21 @@ export default function InteractiveList({
 
                   case "Confirmed":
                     return (
-                      <Grid direction="row">
+                      <Grid direction="row" justify="space-evenly" alignItems="center">
+                          <a href={smsLink}>
+                        <IconButton edge="end" aria-label="Sms">
+                            <MessageIcon color="secondary" fontSize="large" />
+                        </IconButton>
+                          </a>
+
                         <IconButton edge="end" aria-label="Cancel">
                           <CancelIcon
                             color="disabled"
-                            fontSize="medium"
+                            fontSize="large"
                             onClick={() => undoAcceptRequest(props._id)}
                           />
                         </IconButton>
 
-                        <IconButton
-                          edge="end"
-                          aria-label="Cancel"
-                          disabled={true}
-                        >
-                          <MessageIcon
-                            color="secondary"
-                            fontSize="medium"
-                            onClick={() => undoAcceptRequest(props._id)}
-                          />
-                        </IconButton>
-                        <IconButton
-                          edge="end"
-                          aria-label="Cancel"
-                          disabled={true}
-                        >
-                          <PhoneIcon
-                            color="primary"
-                            fontSize="medium"
-                            onClick={() => undoAcceptRequest(props._id)}
-                          />
-                        </IconButton>
                       </Grid>
                     );
                 }
