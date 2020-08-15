@@ -204,8 +204,8 @@ function RequestsReceived({ checkNotificationStatus }) {
                   {selectedTrip.departTime}
                 </h3>
                 <h4>
-                  {matchingRequests.length} Matching Requests Received for this
-                  Trip!
+                  {matchingRequests.length} Matching ride request(s) received for this
+                  trip!
                 </h4>
               </div>
             </Grid>

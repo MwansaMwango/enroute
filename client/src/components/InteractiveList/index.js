@@ -26,25 +26,22 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import MessageIcon from "@material-ui/icons/Message";
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import moment from "moment";
+import AirlineSeatReclineExtraIcon from "@material-ui/icons/AirlineSeatReclineExtra";
+import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import ClickAwayListener from "@material-ui/core/ClickAwayListener";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // "& > *": {
-    //   margin: theme.spacing(1),
-    // },
     maxWidth: 400,
-    // display: "block",
-    // width: "fit-content",
-    // width: "100%",
     width: "95vw",
-
-    // marginBottom: theme.spacing(0.5),
     border: `2px solid ${theme.palette.divider}`,
     borderRadius: theme.shape.borderRadius,
     borderRadius: theme.spacing(3),
     backgroundColor: theme.palette.background.paper,
-    // color: theme.palette.text.secondary,
-    // marginBottom: theme.spacing(1),
 
     "& svg": {
       margin: theme.spacing(0),
@@ -52,10 +49,24 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(0),
       },
     },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular,
+    },
   },
 
-  demo: {
+  dropdown: {
+    position: "absolute",
+    top: 60,
+    right: 0,
+    left: 0,
+    zIndex: 1,
+    border: "1px solid",
+    padding: theme.spacing(2),
     backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.spacing(3),
+    overflowWrap: "breakWord",
   },
   title: {
     margin: theme.spacing(4, 0, 2),
@@ -80,6 +91,15 @@ export default function InteractiveList({
   const [secondary, setSecondary] = React.useState(true);
   let phoneLink = "tel:" + props.user_id.phone;
   let smsLink = "sms:" + props.user_id.phone;
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen((prev) => !prev);
+  };
+
+  const handleClickAway = () => {
+    setOpen(false);
+  };
 
   return (
     <List>
@@ -92,7 +112,7 @@ export default function InteractiveList({
                   {props.status === "Confirmed" ? (
                     <AccountBoxRoundedIcon />
                   ) : (
-                    <NotificationsActiveIcon />
+                    <EmojiPeopleRoundedIcon />
                   )}
                 </Avatar>
               </ListItemAvatar>
@@ -114,13 +134,6 @@ export default function InteractiveList({
               {/* <Divider variant="middle" /> */}
 
               <ListItemText
-              primary="20" // hard coded for MVP
-              secondary="pts"
-            />
-
-              {/* <Divider variant="middle" /> */}
-
-              <ListItemText
                 primary={moment(props.departDate).format("DD MMM")}
                 secondary={props.departTime}
               />
@@ -137,7 +150,7 @@ export default function InteractiveList({
                           acceptRequest(props._id);
                         }}
                         startIcon={<CheckCircleIcon />}
-                        fontSize="medium"
+                        fontSize="large"
                       >
                         Accept
                       </Button>
@@ -145,21 +158,75 @@ export default function InteractiveList({
 
                   case "Confirmed":
                     return (
-                      <Grid direction="row" justify="space-evenly" alignItems="center">
-                          <a href={smsLink}>
-                        <IconButton edge="end" aria-label="Sms">
-                            <MessageIcon color="secondary" fontSize="large" />
-                        </IconButton>
-                          </a>
+                      <Grid
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                      >
+                        <a href={smsLink}>
+                          <IconButton edge="end" aria-label="Sms">
+                            <MessageIcon color="secondary" fontSize="medium" />
+                          </IconButton>
+                        </a>
 
                         <IconButton edge="end" aria-label="Cancel">
                           <CancelIcon
                             color="disabled"
-                            fontSize="large"
+                            fontSize="medium"
                             onClick={() => undoAcceptRequest(props._id)}
                           />
                         </IconButton>
 
+                        <ClickAwayListener onClickAway={handleClickAway}>
+                          <span>
+                            <IconButton>
+                              {open ? (
+                                <ExpandLess
+                                  fontSize="medium"
+                                  onClick={handleClick}
+                                />
+                              ) : (
+                                <ExpandMore
+                                  fontSize="medium"
+                                  onClick={handleClick}
+                                />
+                              )}
+                            </IconButton>
+
+                            {open ? (
+                              <div className={classes.dropdown}>
+                                {/* Click me, I will stay visible until you click
+                                outside. */}
+                                <Typography>
+                                    <strong>
+                                        Other Details
+                                    </strong>
+                                    <hr/>
+                                  Request Note:{" "}
+                                  {props.requestNote ? (
+                                    <Typography
+                                      fontStyle="oblique"
+                                      fontFamily="Monospace"
+
+                                    >
+                                      {props.requestNote}{" "}
+                                    </Typography>
+                                  ) : (
+                                    "None"
+                                  )}{" "}
+                                  <br />
+                                  Seats required:{" "}
+                                  {props.seatsRequired
+                                    ? "  " + props.seatsRequired
+                                    : "None"}{" "}
+                                  <br />
+                                  Has a pacakge?:{" "}
+                                  {props.hasPackage ? " Yes" : "No"} <br />
+                                </Typography>
+                              </div>
+                            ) : null}
+                          </span>
+                        </ClickAwayListener>
                       </Grid>
                     );
                 }
