@@ -101,37 +101,11 @@ function RequestsReceived({ checkNotificationStatus }) {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      footer: {
-        position: "fixed",
-        left: "0",
-        bottom: "0",
-        width: "100",
-        // backgroundcolor:
-        // color: white,
-        textAlign: "center",
+      // width: "100vw",
+      container: {
+        // display: "flex",
+        // flexWrap: "wrap",
       },
-
-      demo: {
-        backgroundColor: theme.palette.background.paper,
-      },
-      "& > svg": {
-        margin: theme.spacing(0.25),
-      },
-      "& .MuiTextField-root": {
-        margin: theme.spacing(.25),
-        width: "100%",
-      },
-    },
-    container: {
-      display: "flex",
-      flexWrap: "wrap",
-    },
-    textField: {
-      // marginLeft: theme.spacing(1),
-      // marginRight: theme.spacing(1),
-      margin: theme.spacing(1),
-
-      maxWidth: "100%",
     },
   }));
   const classes = useStyles();
@@ -212,7 +186,7 @@ function RequestsReceived({ checkNotificationStatus }) {
         paddingBottom: "50px",
       }}
     >
-      <Container spacing={1} fluid maxWidth="100vw">
+      <Container fluid maxWidth="sm">
         <Row>
           <Col size="md-12">
             <Jumbotron>
@@ -223,76 +197,50 @@ function RequestsReceived({ checkNotificationStatus }) {
             <Grid container justify="center" alignItems="center">
               <div>
                 <h2>
-              
-                    {selectedTrip.from} - {selectedTrip.to}
-                
-                  <br />
+                  {selectedTrip.from} - {selectedTrip.to}
+                </h2>
+                <h3>
                   {moment(selectedTrip.departDate).format("DD-MMM-YYYY")}{" "}
                   {selectedTrip.departTime}
-                </h2>
+                </h3>
                 <h4>
                   {matchingRequests.length} Matching Requests Received for this
                   Trip!
                 </h4>
               </div>
             </Grid>
-              <br/>
-     
-            {matchingRequests.length ? (
-              <Grid container justify="center" alignItems="center" direction="column">
-                {/* <List> */}
-                  {matchingRequests.map((match) => (
-                    <div>
-                    <InteractiveList props={match} undoAcceptRequest={undoAcceptRequest} acceptRequest={acceptRequest} />
-                    {/* <ListItem key={match._id}> */}
-                      {/* <Link disabled={true} to={"/requests/" + match._id}> */}
-                      {/* <strong> */}
-                        {/* {match.from} - {match.to} <br /> */}
-                      {/* </strong> */}
-                      {/* </Link> */}
-                      {/* {moment(match.departDate).format("MM/DD/YYYY")}{" "} */}
-                      {/* {match.departTime} - {match.status} */}
-                      {/* Check for matching requests against match */}
-                      {/* {console.log("Match data ", match)} */}
-                      {/* Add conditional render if there is a match in request pool for this each match */}
-                      {/* {console.log("Matches found array ", matchingRequests)} */}
-                      
-                      {/* {(() => {
-                        switch (match.status) {
-                          case "Pending":
-                            return (
-                              <AcceptBtn
-                                onClick={() => {
-                                  acceptRequest(match._id);
-                                }}
-                              />
-                            );
+            <br />
 
-                          case "Confirmed":
-                            return (
-                              <div>
-                                <h5>
-                                  {match.user_id.firstName} |
-                                  {match.user_id.phone}
-                                </h5>
-                                <CancelBtn
-                                  onClick={() => undoAcceptRequest(match._id)}
-                                />
-                              </div>
-                            );
-                        }
-                      })()}
-                      <br /> */}
-                    {/* </ListItem> */}
-                    </div>
-                  ))}
+            {matchingRequests.length ? (
+              <Grid
+                container
+                justify="center"
+                alignItems="center"
+                direction="column"
+              >
+                {/* <List> */}
+                {matchingRequests.map((match) => (
+                  <div>
+                    <InteractiveList
+                      props={match}
+                      undoAcceptRequest={undoAcceptRequest}
+                      acceptRequest={acceptRequest}
+                    />
+                  </div>
+                ))}
                 {/* </List> */}
               </Grid>
             ) : (
-              <Grid container justify="center" alignItems="center">
+              <Grid
+                container
+                direction="row"
+                justify="space-evenly"
+                alignItems="center"
+              >
                 <div>
                   <h4>
-                    Hang in there...😁 someone will evetually request a ride!
+                    Hang in there...😁 <br />
+                    Someone will evetually request a ride!
                   </h4>
                   <br />
                 </div>
@@ -304,9 +252,9 @@ function RequestsReceived({ checkNotificationStatus }) {
                 position: "fixed",
                 left: "0",
                 bottom: "0",
-                width: "90%",
                 height: "50px",
-
+                width: "100%",
+                maxWidth: "100%",
                 textAlign: "center",
               }}
             >
@@ -316,7 +264,9 @@ function RequestsReceived({ checkNotificationStatus }) {
                   setPage(newValue);
                 }}
                 showLabels
-                className={classes.root}
+                style={{
+                  paddingRight: "30px", // TODO fix padding
+                }}
               >
                 <BottomNavigationAction
                   label="Ride"
@@ -335,9 +285,11 @@ function RequestsReceived({ checkNotificationStatus }) {
                 />
                 <BottomNavigationAction
                   label="Points(future)"
+                  disabled={true}
                   icon={<EmojiEventsIcon />}
                 />
               </BottomNavigation>
+              <br />
             </div>
           </Col>
         </Row>
