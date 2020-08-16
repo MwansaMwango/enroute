@@ -41,7 +41,10 @@ module.exports = {
       seatsRequired: {
         $lte: req.body.freeSeats,
       },
-      // departDate : req.body.departDate,
+      departDate: req.body.departDate,
+      user_id: {
+        $ne: req.user._id, // exclude my requests
+      },
       // Optional parameters
       // $or: [
       //   {

@@ -134,7 +134,10 @@ module.exports = {
       freeSeats: {
         $gte: req.body.freeSeats,
       },
-      departDate : req.body.departDate,
+      departDate : req.body.departDate, // matches form same day
+      user_id: { 
+        $ne: req.user._id, // exclude my trips
+      },
       // Optional parameters
       $or: [
         {

@@ -104,7 +104,7 @@ function RequestsReceived({ checkNotificationStatus }) {
       container: {
         // display: "flex",
         // flexWrap: "wrap",
-        // width: "90vw",
+        width: "90vw",
       },
     },
   }));
@@ -204,7 +204,7 @@ function RequestsReceived({ checkNotificationStatus }) {
                   {selectedTrip.departTime}
                 </h3>
                 <h4>
-                  {matchingRequests.length} Matching ride request(s) received for this
+                  {matchingRequests.length} Matching ride request(s) for this
                   trip!
                 </h4>
               </div>
