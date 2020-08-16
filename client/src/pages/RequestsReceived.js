@@ -101,10 +101,10 @@ function RequestsReceived({ checkNotificationStatus }) {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      // width: "100vw",
       container: {
         // display: "flex",
         // flexWrap: "wrap",
+        // width: "90vw",
       },
     },
   }));
@@ -186,7 +186,7 @@ function RequestsReceived({ checkNotificationStatus }) {
         paddingBottom: "50px",
       }}
     >
-      <Container fluid maxWidth="sm">
+      <Container fluid maxWidth="md">
         <Row>
           <Col size="md-12">
             <Jumbotron>

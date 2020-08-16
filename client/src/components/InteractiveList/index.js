@@ -36,17 +36,18 @@ import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 400,
+    maxWidth: 400, // limits display across very wide screens / desktops
+    minWidth: 280, 
     width: "95vw",
     border: `2px solid ${theme.palette.divider}`,
     borderRadius: theme.shape.borderRadius,
     borderRadius: theme.spacing(3),
-    backgroundColor: theme.palette.background.paper,
 
     "& svg": {
-      margin: theme.spacing(0),
+  
+      margin: theme.spacing(.25),
       "& hr": {
-        margin: theme.spacing(0),
+
       },
     },
     heading: {
@@ -103,7 +104,7 @@ export default function InteractiveList({
 
   return (
     <List>
-      <Grid container justify="center" direction="column" alignItems="stretch">
+      <Grid container justify="center" direction="column" alignItems="center">
         {generate(
           <div className={classes.root}>
             <ListItem>
@@ -150,7 +151,7 @@ export default function InteractiveList({
                           acceptRequest(props._id);
                         }}
                         startIcon={<CheckCircleIcon />}
-                        fontSize="large"
+                        fontSize=""
                       >
                         Accept
                       </Button>
@@ -163,51 +164,43 @@ export default function InteractiveList({
                         justify="center"
                         alignItems="center"
                       >
+                        <CancelIcon
+                          color="disabled"
+                          fontSize="large"
+                          onClick={() => undoAcceptRequest(props._id)}
+                        />
+
                         <a href={smsLink}>
-                          <IconButton edge="end" aria-label="Sms">
-                            <MessageIcon color="secondary" fontSize="medium" />
-                          </IconButton>
+                          <MessageIcon color="secondary" fontSize="large" />
                         </a>
 
-                        <IconButton edge="end" aria-label="Cancel">
-                          <CancelIcon
-                            color="disabled"
-                            fontSize="medium"
-                            onClick={() => undoAcceptRequest(props._id)}
-                          />
-                        </IconButton>
 
                         <ClickAwayListener onClickAway={handleClickAway}>
                           <span>
-                            <IconButton>
-                              {open ? (
-                                <ExpandLess
-                                  fontSize="medium"
-                                  onClick={handleClick}
-                                />
-                              ) : (
-                                <ExpandMore
-                                  fontSize="medium"
-                                  onClick={handleClick}
-                                />
-                              )}
-                            </IconButton>
+                            {open ? (
+                              <ExpandLess
+                                fontSize="large"
+                                onClick={handleClick}
+                              />
+                            ) : (
+                              <ExpandMore
+                                fontSize="large"
+                                onClick={handleClick}
+                              />
+                            )}
 
                             {open ? (
                               <div className={classes.dropdown}>
                                 {/* Click me, I will stay visible until you click
                                 outside. */}
                                 <Typography>
-                                    <strong>
-                                        Other Details
-                                    </strong>
-                                    <hr/>
+                                  <strong>Other Details</strong>
+                                  <hr />
                                   Request Note:{" "}
                                   {props.requestNote ? (
                                     <Typography
                                       fontStyle="oblique"
                                       fontFamily="Monospace"
-
                                     >
                                       {props.requestNote}{" "}
                                     </Typography>
