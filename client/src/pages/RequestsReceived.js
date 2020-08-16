@@ -27,12 +27,12 @@ import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import Popper from "@material-ui/core/Popper";
 // import Alert from "@material-ui/lab/Alert";
 import Switch from "@material-ui/core/Switch";
-
+import Divider from "@material-ui/core/Divider";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import RestoreIcon from "@material-ui/icons/Restore";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import InteractiveList from "../components/InteractiveList";
+import InteractiveListMatches from "../components/InteractiveListMatches";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
@@ -209,19 +209,18 @@ function RequestsReceived({ checkNotificationStatus }) {
                 </h4>
               </div>
             </Grid>
-            <br />
 
             {matchingRequests.length ? (
               <Grid
-                container
-                justify="center"
-                alignItems="center"
-                direction="column"
+              container
+              justify="center"
+              alignItems="center"
+              direction="column"
               >
                 {/* <List> */}
                 {matchingRequests.map((match) => (
                   <div>
-                    <InteractiveList
+                    <InteractiveListMatches
                       props={match}
                       undoAcceptRequest={undoAcceptRequest}
                       acceptRequest={acceptRequest}

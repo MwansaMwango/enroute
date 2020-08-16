@@ -183,7 +183,7 @@ function MyTrips() {
     <Box style={{
       paddingBottom: "50px",
     }}>
-      <Container spacing={3} fluid maxWidth="100vw">
+      <Container fluid maxWidth="md">
         <Row>
           <Col size="md-12">
             <Jumbotron>
@@ -193,7 +193,7 @@ function MyTrips() {
             </Jumbotron>
             <br/>
             {myTrips.length ? (
-              <Grid container justify="space-around" alignItems="center">
+              <Grid container justify="center" alignItems="center">
                 <List>
                   {myTrips.map((trip) => (
                     <ListItem key={trip._id}>

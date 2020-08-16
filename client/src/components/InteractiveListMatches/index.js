@@ -82,7 +82,7 @@ function generate(element) {
   );
 }
 
-export default function InteractiveList({
+export default function InteractiveListMatches({
   props,
   undoAcceptRequest,
   acceptRequest,
@@ -111,7 +111,7 @@ export default function InteractiveList({
               <ListItemAvatar>
                 <Avatar>
                   {props.status === "Confirmed" ? (
-                    <AccountBoxRoundedIcon />
+                    <AccountBoxRoundedIcon /> // TODO adopt User's avator
                   ) : (
                     <EmojiPeopleRoundedIcon />
                   )}
