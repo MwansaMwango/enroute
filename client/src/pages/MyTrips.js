@@ -19,7 +19,7 @@ import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import Popper from "@material-ui/core/Popper";
 // import Alert from "@material-ui/lab/Alert";
 import Switch from "@material-ui/core/Switch";
-
+import InteractiveListTrips from "../components/InteractiveListTrips";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import RestoreIcon from "@material-ui/icons/Restore";
@@ -86,39 +86,14 @@ function MyTrips() {
 
   const useStyles = makeStyles((theme) => ({
     root: {
-      footer: {
-        position: "fixed",
-        left: "0",
-        bottom: "0",
-        width: "100",
-        // backgroundcolor:
-        // color: white,
-        textAlign: "center",
+      container: {
+        // display: "flex",
+        // flexWrap: "wrap",
+        width: "90vw",
       },
-
-      demo: {
-        backgroundColor: theme.palette.background.paper,
-      },
-      "& > svg": {
-        margin: theme.spacing(2),
-      },
-      "& .MuiTextField-root": {
-        margin: theme.spacing(2),
-        width: "100%",
-      },
-    },
-    container: {
-      display: "flex",
-      flexWrap: "wrap",
-    },
-    textField: {
-      // marginLeft: theme.spacing(1),
-      // marginRight: theme.spacing(1),
-      margin: theme.spacing(2),
-
-      maxWidth: "100%",
     },
   }));
+
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [page, setPage] = React.useState("ride");
@@ -180,9 +155,11 @@ function MyTrips() {
   }
 
   return (
-    <Box style={{
-      paddingBottom: "50px",
-    }}>
+    <Box
+      style={{
+        paddingBottom: "50px",
+      }}
+    >
       <Container fluid maxWidth="md">
         <Row>
           <Col size="md-12">
@@ -191,40 +168,25 @@ function MyTrips() {
                 My Trips <PersonPinCircleIcon fontSize="large" />
               </h1>
             </Jumbotron>
-            <br/>
+            <br />
             {myTrips.length ? (
-              <Grid container justify="center" alignItems="center">
-                <List>
+              <Grid
+                container
+                justify="center"
+                alignItems="center"
+                direction="column"
+              >
+         
                   {myTrips.map((trip) => (
-                    <ListItem key={trip._id}>
-                      <Link to={"/trips/" + trip._id}>
-                        <strong>
-                          {trip.from} - {trip.to} <br />
-                        </strong>
-                      </Link>
-                      {moment(trip.departDate).format("MM/DD/YYYY")}{" "}
-                      {trip.departTime}
-                      <br />
-                      <Grid
-                        container
-                        justify="space-around"
-                        alignItems="center"
-                      >
-                        <DeclineBtn
-                          btnName="CANCEL"
-                          onClick={() => deleteTrip(trip._id)}
-                        />
-
-                        <DeclineBtn
-                          btnName="EDIT"
-                          color="#259CBB" // cyan
-                          onClick={() => updateTrip(trip._id, trip)}
-                        />
-                      </Grid>
-                      <br />
-                    </ListItem>
+                    <div>
+                      <InteractiveListTrips
+                        props={trip}
+                        deleteTrip={deleteTrip}
+                        updateTrip={updateTrip}
+                      />
+                    </div>
                   ))}
-                </List>
+   
               </Grid>
             ) : (
               <Grid container justify="center" alignItems="space-around">
@@ -233,14 +195,13 @@ function MyTrips() {
                 </h3>
               </Grid>
             )}
-            <Grid driection="row" justify="center" alignItems="center">
+            <Grid direction="row" justify="center" alignItems="center">
               <div
                 style={{
                   position: "fixed",
                   left: "0",
                   bottom: "0",
                   width: "90%",
-
                   textAlign: "center",
                 }}
               >

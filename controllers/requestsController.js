@@ -74,21 +74,40 @@ module.exports = {
   acceptRequest: function (req, res) {
     req.body.status = "Confirmed"; // change status booking to comfirmed
     req.body.driver_id = req.user.id; // attach driver id to request record
+    // req.body.trip_id = req.body.trip_id; // attach driver id to request record
+
     console.log("update hit...req.body = ", req.body);
     // req.body.driver_id = req.user_id // attach driver
-    db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
+    db.Request.findOneAndUpdate({ _id: req.params.id }, req.body) //only updates different fields
       .then((dbModel) => {
         res.json(dbModel);
+        db.Trip.findOneAndUpdate(
+          // bind request_id to trip record
+          { _id: req.body.trip_id },
+          { request_id: req.params.id }
+        ).then((dbModel) => {
+          console.log("Updated trip record with request_id", dbModel);
+        });
       })
-
       .catch((err) => res.status(422).json(err));
   },
   undoAccept: function (req, res) {
-    console.log("undo route hit");
+    console.log("undo route hit1", req.body);
     req.body.status = "Pending"; // change status booking to comfirmed
-    // req.body.driver_id = req.user_id // attach driver
+    req.body.driver_id = null; //mongoDB does not process empty strings
+    let tempTrip_id = req.body.trip_id // copy trip_id for use Trip collection query
+    req.body.trip_id = null; // dettach trip_id
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
-      .then((dbModel) => res.json(dbModel))
+      .then((dbModel) => {
+        res.json(dbModel);
+        db.Trip.findOneAndUpdate(
+          // bind request_id to trip record
+          { _id: tempTrip_id },
+          { request_id: null }
+        ).then((dbModel) => {
+          console.log("UndoAccept trip record with request_id", dbModel);
+        });
+      })
       .catch((err) => res.status(422).json(err));
   },
   // decline: function (req, res) {

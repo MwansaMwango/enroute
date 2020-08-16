@@ -72,12 +72,13 @@ export default {
   // ------------------Requests Received APIs ----------------------------
 
   // Accept the request with the given id
-  acceptRequest: function (id) {
-    return axios.put("/api/requests/accept/" + id);
+  acceptRequest: function (id, trip_idObject) {
+    return axios.put("/api/requests/accept/" + id, trip_idObject );
   },
-  // Cancel /undo the accepted request with the given id
-  undoAcceptRequest: function (id) {
-    return axios.put("/api/requests/undoaccept/" + id);
+  // Cancel /undo the accepted request with the given id and update trip_id field
+  undoAcceptRequest: function (id, trip_idObject) {
+    console.log("API =  ", trip_idObject);
+    return axios.put("/api/requests/undoaccept/" + id, trip_idObject);
   },
   // Decline the matching request with the given id
   declineRequest: function (id) {

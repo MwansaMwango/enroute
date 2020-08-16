@@ -12,7 +12,7 @@ const TripSchema = new Schema({
   // status: {type: String, default: "Pending"},
   carryPackage: {type: Boolean},
   user_id: {type: Schema.Types.ObjectId, ref: "User" }, // 1 to 1 Relationship
-  request_id: {type: Schema.Types.ObjectId, ref: "User" }, // 1 to 1 Relationship
+  request_id: {type: Schema.Types.ObjectId, ref: "Request" }, // 1 to 1 Relationship
 
 }, { timestamps: true });
 

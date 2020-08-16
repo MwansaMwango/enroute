@@ -33,23 +33,29 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Box from "@material-ui/core/Box";
-import HistoryIcon from '@material-ui/icons/History';
-
+import HistoryIcon from "@material-ui/icons/History";
+import LocalTaxiRoundedIcon from "@material-ui/icons/LocalTaxiRounded";
+import Badge from "@material-ui/core/Badge";
+import { Link } from "react-router-dom";
+import FindInPageIcon from "@material-ui/icons/FindInPage";
+import AlarmOnIcon from "@material-ui/icons/AlarmOn";
+import EditIcon from "@material-ui/icons/Edit";
+import MyLocationIcon from "@material-ui/icons/MyLocation";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 400, // limits display across very wide screens / desktops
-    minWidth: 280, 
+    minWidth: 280,
     width: "95vw",
     border: `2px solid ${theme.palette.divider}`,
     borderRadius: theme.shape.borderRadius,
     borderRadius: theme.spacing(3),
 
     "& svg": {
-  
-      margin: theme.spacing(.25),
-      "& hr": {
-
-      },
+      margin: theme.spacing(0.25),
+      "& hr": {},
     },
     heading: {
       fontSize: theme.typography.pxToRem(15),
@@ -85,8 +91,8 @@ function generate(element) {
 
 export default function InteractiveListTrips({
   props,
-  undoAcceptRequest,
-  acceptRequest,
+  deleteTrip,
+  updateTrip,
 }) {
   const classes = useStyles();
   const [dense, setDense] = React.useState(false);
@@ -109,122 +115,103 @@ export default function InteractiveListTrips({
         {generate(
           <div className={classes.root}>
             <ListItem>
-              <ListItemAvatar>
+              {/* <ListItemAvatar>
                 <Avatar>
-                  {props.status === "Confirmed" ? (
-                    <AccountBoxRoundedIcon /> // TODO adopt User's avator
-                  ) : (
-                    <EmojiPeopleRoundedIcon />
-                  )}
+                  <LocalTaxiRoundedIcon />
                 </Avatar>
-              </ListItemAvatar>
+              </ListItemAvatar> */}
+
+              {/* <Divider variant="middle" /> */}
 
               <ListItemText
                 primary={
-                  props.status === "Confirmed"
-                    ? props.user_id.firstName + " " + props.user_id.lastName
-                    : "1 Rider"
+                  <Grid container alignItems="center">
+                    <MyLocationIcon />
+                    {props.from}
+                  </Grid>
                 }
                 secondary={
-                  props.status === "Confirmed" ? (
-                    <a href={phoneLink}>{props.user_id.phone}</a>
-                  ) : (
-                    props.status
-                  )
+                  <Grid container alignItems="center">
+                    <LocationOnIcon />
+                    {props.to}
+                  </Grid>
                 }
               />
-              {/* <Divider variant="middle" /> */}
 
               <ListItemText
                 primary={moment(props.departDate).format("DD MMM")}
                 secondary={props.departTime}
               />
+              <ListItemText
+                primary="Status"
+                secondary={props.request_id ? "Confirmed" : "Pending"}
+              />
+
+              <Link to={"/trips/" + props._id}>
+                <FindInPageIcon fontSize="large" />
+              </Link>
 
               {/* <Divider variant="middle" /> */}
-              {(() => {
-                switch (props.status) {
-                  case "Pending":
-                    return (
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {
-                          acceptRequest(props._id);
-                        }}
-                        startIcon={<CheckCircleIcon />}
-                        fontSize=""
-                      >
-                        Accept
-                      </Button>
-                    );
 
-                  case "Confirmed":
-                    return (
-                      <Grid
-                        direction="row"
-                        justify="center"
-                        alignItems="center"
-                      >
-                        <CancelIcon
-                          color="disabled"
-                          fontSize="large"
-                          onClick={() => undoAcceptRequest(props._id)}
-                        />
+              <Grid direction="row" justify="center" alignItems="center">
+                <ClickAwayListener onClickAway={handleClickAway}>
+                  <span>
+                    {open ? (
+                      <ExpandLess fontSize="large" onClick={handleClick} />
+                    ) : (
+                      <ExpandMore fontSize="large" onClick={handleClick} />
+                    )}
 
-                        <a href={smsLink}>
-                          <MessageIcon color="secondary" fontSize="large" />
-                        </a>
-
-
-                        <ClickAwayListener onClickAway={handleClickAway}>
-                          <span>
-                            {open ? (
-                              <ExpandLess
-                                fontSize="large"
-                                onClick={handleClick}
-                              />
-                            ) : (
-                              <ExpandMore
-                                fontSize="large"
-                                onClick={handleClick}
-                              />
-                            )}
-
-                            {open ? (
-                              <div className={classes.dropdown}>
-                                {/* Click me, I will stay visible until you click
-                                outside. */}
-                                <Typography>
-                                  <strong>Other Details</strong>
-                                  <hr />
-                                  Request Note:{" "}
-                                  {props.requestNote ? (
-                                    <Typography
-                                      fontStyle="oblique"
-                                      fontFamily="Monospace"
-                                    >
-                                      {props.requestNote}{" "}
-                                    </Typography>
-                                  ) : (
-                                    "None"
-                                  )}{" "}
-                                  <br />
-                                  Seats required:{" "}
-                                  {props.seatsRequired
-                                    ? "  " + props.seatsRequired
-                                    : "None"}{" "}
-                                  <br />
-                                  Has a pacakge?:{" "}
-                                  {props.hasPackage ? " Yes" : "No"} <br />
-                                </Typography>
-                              </div>
-                            ) : null}
-                          </span>
-                        </ClickAwayListener>
-                      </Grid>
-                    );
-                }
-              })()}
+                    {open ? (
+                      <div className={classes.dropdown}>
+                        <Typography>
+                          <Grid
+                            direction="row"
+                            container
+                            justify="space-around"
+                            alignItems="center"
+                          >
+                            <b>Other Details</b>
+                            {/*TODO Link to edit trip data*/}
+                            <EditIcon
+                              color="#259CBB" // cyan
+                              fontSize="large"
+                              onClick={() => updateTrip(props._id, props)}
+                            />
+                            <DeleteForeverIcon
+                              color="#2222"
+                              fontSize="large"
+                              onClick={() => deleteTrip(props._id)}
+                            />
+                          </Grid>
+                          <hr />
+                          Trips Note:{" "}
+                          {props.tripNote ? (
+                            <Typography
+                              fontStyle="oblique"
+                              fontFamily="Monospace"
+                            >
+                              {props.tripNote}{" "}
+                            </Typography>
+                          ) : (
+                            "None"
+                          )}{" "}
+                          <br />
+                          Seats required:{" "}
+                          {props.freeSeats
+                            ? "  " + props.freeSeats
+                            : "None"}{" "}
+                          <br />
+                          Carry package?: {props.carryPackage
+                            ? " Yes"
+                            : "No"}{" "}
+                          <br />
+                        </Typography>
+                      </div>
+                    ) : null}
+                  </span>
+                </ClickAwayListener>
+              </Grid>
             </ListItem>
           </div>
         )}

@@ -90,9 +90,10 @@ export default function InteractiveListMatches({
   const classes = useStyles();
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   let phoneLink = "tel:" + props.user_id.phone;
   let smsLink = "sms:" + props.user_id.phone;
-  const [open, setOpen] = React.useState(false);
+  let tempTrip_id = props.trip_id; 
 
   const handleClick = () => {
     setOpen((prev) => !prev);
@@ -148,7 +149,7 @@ export default function InteractiveListMatches({
                         variant="contained"
                         color="primary"
                         onClick={() => {
-                          acceptRequest(props._id);
+                          acceptRequest(props._id, { "trip_id" : tempTrip_id });
                         }}
                         startIcon={<CheckCircleIcon />}
                         fontSize=""
@@ -167,7 +168,7 @@ export default function InteractiveListMatches({
                         <CancelIcon
                           color="disabled"
                           fontSize="large"
-                          onClick={() => undoAcceptRequest(props._id)}
+                          onClick={() => undoAcceptRequest(props._id, { "trip_id" : tempTrip_id })}
                         />
 
                         <a href={smsLink}>

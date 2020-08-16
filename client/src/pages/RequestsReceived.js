@@ -143,8 +143,8 @@ function RequestsReceived({ checkNotificationStatus }) {
   }
 
   // Accept a matching request from the loaded list with a given id, then reloads matching requests from the db
-  function acceptRequest(id) {
-    API.acceptRequest(id)
+  function acceptRequest(id, trip_idObject) {
+    API.acceptRequest(id, trip_idObject)
       .then((res) => {
         // console.log("Accepted Request res.data = ", res.data);
         checkNotificationStatus(res.data.status);
@@ -159,8 +159,9 @@ function RequestsReceived({ checkNotificationStatus }) {
       .catch((err) => console.log(err));
   }
   // Undo the accept matching request action
-  function undoAcceptRequest(id) {
-    API.undoAcceptRequest(id)
+  function undoAcceptRequest(id, trip_idObject) { // request_id
+    console.log("id = ", id, "trip_idObject = ", trip_idObject)
+    API.undoAcceptRequest(id, trip_idObject)
       .then((res) => {
         findMatchingRequests(selectedTrip);
       })
@@ -221,6 +222,7 @@ function RequestsReceived({ checkNotificationStatus }) {
                 {matchingRequests.map((match) => (
                   <div>
                     <InteractiveListMatches
+                      {...match.trip_id = selectedTrip._id} // spread syntax - bind trip_id to the matched request
                       props={match}
                       undoAcceptRequest={undoAcceptRequest}
                       acceptRequest={acceptRequest}
