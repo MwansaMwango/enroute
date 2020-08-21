@@ -87,9 +87,7 @@ function MyTrips() {
   const useStyles = makeStyles((theme) => ({
     root: {
       container: {
-        // display: "flex",
-        // flexWrap: "wrap",
-        width: "90vw",
+          width: "90vw",
       },
     },
   }));
@@ -117,7 +115,7 @@ function MyTrips() {
           console.log("Trip in All Trips = ", trip);
           findMatchingRequests(trip);
         });
-        // getMatchList(myTrips);
+        
       })
       .catch((err) => console.log(err));
   }

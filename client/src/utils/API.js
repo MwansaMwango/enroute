@@ -51,6 +51,11 @@ export default {
   requestRide: function (requestData) {
     return axios.post("/api/requests", requestData);
   },
+
+    // Update a request to the database
+    updateRequest: function (id, requestData) {
+      return axios.put("/api/requests/" + id, requestData);
+    },
     // Gets all matching requests
     findMatchingRequests: function (tripData) {
       return axios.post("/api/requests/matches", tripData);

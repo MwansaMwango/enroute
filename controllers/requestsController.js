@@ -3,11 +3,11 @@ const db = require("../models");
 // Defining methods for the request controller
 module.exports = {
   findAll: function (req, res) {
-    console.log("route hit");
+    console.log("findAll my requests");
     db.Request.find({ user_id: req.user.id }) //by user id from req.user passport obj
-      .populate("user_id")
-      .populate("driver_id")
-      .sort({ departDate: -1 })
+      .populate("user_id") // include current user details TODO - exclude password
+      .populate("driver_id") // include confirmed driver details TODO - exclude password
+      .sort({ departDate: -1 }) //most recent first
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },
@@ -18,9 +18,7 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   create: function (req, res) {
-    // Resolve user_id from passport req.user
-    // req.body.user_id = req.user._id;
-    req.body.user_id = req.user._id; // hardcoded for testing
+    req.body.user_id = req.user._id; // get current user from passport object
 
     db.Request.create(req.body)
       .then((dbModel) => res.json(dbModel))
@@ -74,10 +72,8 @@ module.exports = {
   acceptRequest: function (req, res) {
     req.body.status = "Confirmed"; // change status booking to comfirmed
     req.body.driver_id = req.user.id; // attach driver id to request record
-    // req.body.trip_id = req.body.trip_id; // attach driver id to request record
-
     console.log("update hit...req.body = ", req.body);
-    // req.body.driver_id = req.user_id // attach driver
+
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body) //only updates different fields
       .then((dbModel) => {
         res.json(dbModel);
@@ -95,7 +91,7 @@ module.exports = {
     console.log("undo route hit1", req.body);
     req.body.status = "Pending"; // change status booking to comfirmed
     req.body.driver_id = null; //mongoDB does not process empty strings
-    let tempTrip_id = req.body.trip_id // copy trip_id for use Trip collection query
+    let tempTrip_id = req.body.trip_id; // copy trip_id for use Trip collection query
     req.body.trip_id = null; // dettach trip_id
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then((dbModel) => {

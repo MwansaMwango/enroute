@@ -19,7 +19,7 @@ import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import Popper from "@material-ui/core/Popper";
 // import Alert from "@material-ui/lab/Alert";
 import Switch from "@material-ui/core/Switch";
-
+import InteractiveListTrips from "../components/InteractiveListTrips";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import RestoreIcon from "@material-ui/icons/Restore";
@@ -60,145 +60,156 @@ import { List, ListItem } from "../components/List"; //
 import DeclineBtn from "../components/DeclineBtn"; //
 
 import moment from "moment";
+import InteractiveListRequests from "../components/InteractiveListRequests";
 
 function MyRequests() {
   // Setting our component's initial state
   const [requests, setRequests] = useState([]);
+  const [value, setValue] = React.useState(0);
+  const [routes, setRoutes] = useState([]);
+  const [formObject, setFormObject] = useState({});
   const [page, setPage] = React.useState("ride");
+
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      container: {
+        width: "90vw",
+      },
+    },
+  }));
+
+  const classes = useStyles();
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
   useEffect(() => {
-    loadRequests();
+    loadMyRequests();
+    loadRoutes();
   }, []);
 
   // TODO Loads recent Requests with user_id = 'userId' and sets them to trips
-  function loadRequests() {
-    API.getRequests() //
-      .then((res) => setRequests(res.data))
+  function loadMyRequests() {
+    API.getRequests() // Get my requests
+      .then((res) => {
+        setRequests(res.data);
+        console.log("loadMyRequests", res.data);
+      })
       .catch((err) => console.log(err));
   }
 
-  // Call driver who accepted request
-  function callDriver(id) {
-    API.callDriver(id)
-      .then((res) => loadRequests())
-      .catch((err) => console.log(err));
-  }
-  // Email driver who accepted request
-  function emailDriver(id) {
-    API.emailDriver(id)
-      .then((res) => loadRequests())
+  let uniqueRouteList = []; // expose unique route list
+  function loadRoutes() {
+    let routeList = [];
+
+    API.getRoutes()
+      .then(function (res) {
+        res.data.map((route) => {
+          routeList.push(route.from, route.to);
+        });
+        uniqueRouteList = [...new Set(routeList)]; // removes duplicate elements in array
+        setRoutes(uniqueRouteList);
+      })
       .catch((err) => console.log(err));
   }
 
-  // Decline a matching request
-  function cancelRequest(id) {
-    API.cancelRequest(id)
-      .then((res) => loadRequests())
+  // Delete a request from the loaded list with a given id, then reloads  requests from the db
+  function deleteRequest(id) {
+    API.deleteRequest(id)
+      .then((res) => loadMyRequests())
+      .catch((err) => console.log(err));
+  }
+
+  // Edit request from the loaded list with a given id, then reloads requests from the db
+  function editRequest(id, requestData) {
+    API.updateRequest(id, requestData)
+      .then((res) => loadMyRequests())
       .catch((err) => console.log(err));
   }
 
   return (
-    <Box style={{
-      paddingBottom: "50px",
-    }}>
-    <Container fluid>
-      <Row>
-        <Col size="md-12">
-          <Jumbotron>
-            <h1>My Requests</h1>
-          </Jumbotron>
-          <br />
-          {requests.length ? (
-            <Grid
-              spacing={3}
-              container
-              justify="space-around"
-              alignItems="center"
-            >
-              <List>
-                {requests.map((request) => (
-                  <ListItem key={request._id}>
-                    <strong>
-                      {request.from} - {request.to} <br />
-                    </strong>
-                    {moment(request.departDate).format("MM/DD/YYYY")}{" "}
-                    {request.departTime} <strong>{request.status}</strong>
-                    {console.log("Reqest object = ", request)}
-                    <br />
-                    {(() => {
-                      switch (request.status) {
-                        case "Pending":
-                          return null;
-                        // <h5>Pending drivers</h5>;
-
-                        case "Confirmed":
-                          return (
-                            <div>
-                              <h5>
-                                {request.driver_id.firstName} |
-                                {request.driver_id.phone}
-                              </h5>
-                              {/* TODO button to send notification, email, text, call driver */}
-                            </div>
-                          );
-                      }
-                    })()}
-                    <br />
-                  </ListItem>
-                ))}
-              </List>
-            </Grid>
-          ) : (
-            <Grid container justify="space-around" alignItems="center">
-              <h3>No ride requests created.</h3>
-            </Grid>
-          )}
-          <Grid driection="row" justify="center" alignItems="center">
-            <div
-              style={{
-                position: "fixed",
-                left: "0",
-                bottom: "0",
-                height: "50px",
-                width: "90%",
-                textAlign: "center",
-                
-              }}
-            >
-              <BottomNavigation
-                value={page}
-                onChange={(event, newValue) => {
-                  setPage(newValue);
-                }}
-                showLabels
-                // className={classes.root}
+    <Box
+      style={{
+        paddingBottom: "50px",
+      }}
+    >
+      <Container fluid>
+        <Row>
+          <Col size="md-12">
+            <Jumbotron>
+              <h1>
+                My Requests <EmojiPeopleRoundedIcon fontSize="large" />
+              </h1>
+            </Jumbotron>
+            <br />
+            {requests.length ? (
+              <Grid
+                ontainer
+                justify="center"
+                alignItems="center"
+                direction="column"
               >
-                <BottomNavigationAction
-                  label="Ride"
-                  icon={<EmojiPeopleRoundedIcon />}
-                  href="/ride"
-                />
-                <BottomNavigationAction
-                  label="Drive"
-                  icon={<LocalTaxiIcon />}
-                  href="/drive"
-                />
-                <BottomNavigationAction
-                  label="My Trips"
-                  icon={<PersonPinCircleIcon />}
-                  href="/myTrips"
-                />
-                <BottomNavigationAction
-                  label="Points(future)"
-                  icon={<EmojiEventsIcon />}
-                />
-              </BottomNavigation>
-            </div>
-          </Grid>
-        </Col>
-      </Row>
-    </Container>
+                {requests.map((request) => (
+                  <div key={request._id}>
+                    <InteractiveListRequests
+                      props={request}
+                      deleteRequest={deleteRequest}
+                      editRequest={editRequest}
+                    />
+                  </div>
+                ))}
+              </Grid>
+            ) : (
+              <Grid container justify="space-around" alignItems="center">
+                <h3>No ride requests created.</h3>
+              </Grid>
+            )}
+            <Grid driection="row" justify="center" alignItems="center">
+              <div
+                style={{
+                  position: "fixed",
+                  left: "0",
+                  bottom: "0",
+                  height: "50px",
+                  width: "90%",
+                  textAlign: "center",
+                }}
+              >
+                <BottomNavigation
+                  value={page}
+                  onChange={(event, newValue) => {
+                    setPage(newValue);
+                  }}
+                  showLabels
+                  // className={classes.root}
+                >
+                  <BottomNavigationAction
+                    label="Ride"
+                    icon={<EmojiPeopleRoundedIcon />}
+                    href="/ride"
+                  />
+                  <BottomNavigationAction
+                    label="Drive"
+                    icon={<LocalTaxiIcon />}
+                    href="/drive"
+                  />
+                  <BottomNavigationAction
+                    label="My Trips"
+                    icon={<PersonPinCircleIcon />}
+                    href="/myTrips"
+                  />
+                  <BottomNavigationAction
+                    label="Points(future)"
+                    icon={<EmojiEventsIcon />}
+                  />
+                </BottomNavigation>
+              </div>
+            </Grid>
+          </Col>
+        </Row>
+      </Container>
     </Box>
   );
 }

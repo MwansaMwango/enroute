@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -24,15 +24,19 @@ import EventBusyIcon from "@material-ui/icons/EventBusy";
 import PhoneIcon from "@material-ui/icons/Phone";
 import CancelIcon from "@material-ui/icons/Cancel";
 import MessageIcon from "@material-ui/icons/Message";
+import EditIcon from "@material-ui/icons/Edit";
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import moment from "moment";
 import AirlineSeatReclineExtraIcon from "@material-ui/icons/AirlineSeatReclineExtra";
 import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
+import MyLocationIcon from "@material-ui/icons/MyLocation";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Box from "@material-ui/core/Box";
+import API from "../../utils/API";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -79,18 +83,19 @@ function generate(element) {
   );
 }
 
-export default function InteractiveListMatches({
+export default function InteractiveListRequests({
   props,
-  undoAcceptRequest,
-  acceptRequest,
+  editRequest,
+  deleteRequest,
 }) {
   const classes = useStyles();
+  const [formObject, setFormObject] = useState({});
   const [dense, setDense] = React.useState(false);
   const [secondary, setSecondary] = React.useState(true);
   const [open, setOpen] = React.useState(false);
-  let phoneLink = "tel:" + props.user_id.phone;
-  let smsLink = "sms:" + props.user_id.phone;
-  let tempTrip_id = props.trip_id;
+  let phoneLink = "tel:" + "" || props.driver_id.phone;
+  let smsLink = "sms:" + "" || props.driver_id.phone;
+  // let tempTrip_id = props.trip_id;
 
   const handleClick = () => {
     setOpen((prev) => !prev);
@@ -99,50 +104,69 @@ export default function InteractiveListMatches({
   const handleClickAway = () => {
     setOpen(false);
   };
+  const handleClickEditRequest = () => {
+    //TO DO call modal form here
+    // editRequest(props._id, requestData)
+  };
+  const handleClickDeleteRequest = () => {
+    deleteRequest(props._id);
+  };
 
+  function handleFormSubmit(event) {
+    event.preventDefault();
+    alert("Updating request..."); // TODO use Modal instead of alert
+    console.log("FormObject= ", formObject);
+    // if (formObject.from && formObject.to) {
+    // From: and To: fields are mandatory.
+    API.requestRide({
+      from: formObject.from,
+      to: formObject.to,
+      departTime: formObject.time,
+      departDate: formObject.date,
+      isTransportVehicle: formObject.isTransportVehicle,
+      hasPackage: formObject.hasPackage,
+      requestNote: formObject.requestNote,
+      seatsRequired: formObject.seatsRequired,
+    })
+
+      .then(function (res) {
+        alert(JSON.stringify("Request updated..."));
+      })
+
+      .catch((err) => console.log(err));
+  }
   return (
     <List>
       <Grid container justify="center" direction="column" alignItems="center">
         {generate(
           <div className={classes.root}>
             <ListItem>
-              <ListItemAvatar>
+              {/* <ListItemAvatar>
                 <Avatar>
                   {props.status === "Confirmed" ? (
-                    <AccountBoxRoundedIcon /> // TODO adopt User's avator
+                    <AccountBoxRoundedIcon /> // TODO adopt Drivers avator
                   ) : (
                     <EmojiPeopleRoundedIcon />
                   )}
                 </Avatar>
-              </ListItemAvatar>
+              </ListItemAvatar> */}
 
               <ListItemText
                 primary={
-                  props.status === "Confirmed" ? (
-                    <b>
-                      {" "}
-                      {props.user_id.firstName +
-                        " " +
-                        props.user_id.lastName}{" "}
-                    </b>
-                  ) : (
-                    "1 Rider"
-                  )
+                  <Grid container alignItems="center">
+                    <MyLocationIcon />
+                    {props.from}
+                  </Grid>
                 }
                 secondary={
-                  props.status === "Confirmed" ? (
-                      <a href={phoneLink}>
-                    <Grid container alignItems="center">
-                        {/* <PhoneIcon /> */}
-                        {props.user_id.phone}
-                    </Grid>
-                      </a>
-                  ) : (
-                    props.status
-                  )
+                  <Grid container alignItems="center">
+                    <LocationOnIcon />
+                    {props.to}
+                  </Grid>
                 }
               />
-              {/* <Divider variant="middle" /> */}
+
+              {/* <ListItemText primary="Status" secondary={props.status} /> */}
 
               <ListItemText
                 primary={moment(props.departDate).format("DD MMM")}
@@ -154,17 +178,23 @@ export default function InteractiveListMatches({
                 switch (props.status) {
                   case "Pending":
                     return (
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {
-                          acceptRequest(props._id, { trip_id: tempTrip_id });
-                        }}
-                        startIcon={<CheckCircleIcon />}
-                        fontSize=""
+                      <Grid
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
                       >
-                        Accept
-                      </Button>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => {
+                            handleClickEditRequest();
+                          }}
+                          startIcon={<EditIcon />}
+                          fontSize="large"
+                        >
+                          Edit
+                        </Button>
+                      </Grid>
                     );
 
                   case "Confirmed":
@@ -174,18 +204,16 @@ export default function InteractiveListMatches({
                         justify="center"
                         alignItems="center"
                       >
-                        <CancelIcon
+                        <DeleteIcon
                           color="disabled"
                           fontSize="large"
-                          onClick={() =>
-                            undoAcceptRequest(props._id, {
-                              trip_id: tempTrip_id,
-                            })
+                          onClick={
+                            () => handleClickDeleteRequest() // todo delete request
                           }
                         />
 
-                        <a href={smsLink}>
-                          <MessageIcon color="secondary" fontSize="large" />
+                        <a href={phoneLink}>
+                          <PhoneIcon color="secondary" fontSize="large" />
                         </a>
 
                         <ClickAwayListener onClickAway={handleClickAway}>

@@ -96,7 +96,6 @@ function Ride() {
     container: {
       display: "flex",
       flexWrap: "wrap",
-     
     },
     textField: {
       // marginLeft: theme.spacing(1),
@@ -188,9 +187,7 @@ function Ride() {
       hasPackage: formObject.hasPackage,
       requestNote: formObject.requestNote,
       seatsRequired: formObject.seatsRequired,
-      // user_id: req.user,
     })
-      // .then((res) => loadTrips())
       .then(function (res) {
         alert(JSON.stringify("Request sent..."));
       })
@@ -221,9 +218,11 @@ function Ride() {
   }
 
   return (
-    <Box  style={{
-      paddingBottom: "50px",
-    }}>
+    <Box
+      style={{
+        paddingBottom: "50px",
+      }}
+    >
       <Container fluid maxWidth="100vw">
         <ThemeProvider theme={theme}></ThemeProvider>
         <Row>
@@ -235,13 +234,11 @@ function Ride() {
               </h1>
             </Jumbotron>
             <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="center"
-            
-                 
-                >
+              container
+              direction="row"
+              justify="center"
+              alignItems="center"
+            >
               <form className={classes.root}>
                 <Grid item>
                   <TextField
@@ -398,7 +395,6 @@ function Ride() {
                   direction="row"
                   justify="space-around"
                   alignItems="center"
-                 
                 >
                   {" "}
                   <FormBtn
@@ -408,25 +404,24 @@ function Ride() {
                     Request Ride
                   </FormBtn>
                 </Grid>
-                
-                <div
-                style={{
-                  position: "fixed",
-                  left: "0",
-                  bottom: "0",
-                  width: "90%",
-                  height: "50px",
 
-                  textAlign: "center",
-                }}
-              >
+                <div
+                  style={{
+                    position: "fixed",
+                    left: "0",
+                    bottom: "0",
+                    width: "90%",
+                    height: "50px",
+
+                    textAlign: "center",
+                  }}
+                >
                   <BottomNavigation
                     value={value}
                     onChange={(event, newValue) => {
                       setValue(newValue);
                     }}
                     showLabels
-                 
                   >
                     <BottomNavigationAction
                       label="Drive"
@@ -438,12 +433,11 @@ function Ride() {
                       label="My Trips"
                       icon={<PersonPinCircleIcon />}
                       href="/myTrips"
-                      />
+                    />
                     <BottomNavigationAction
                       label="My Requests"
                       icon={<AirlineSeatReclineNormalIcon />}
                       href="/myrequests"
-
                     />
                     <BottomNavigationAction
                       label="Points(future)"
