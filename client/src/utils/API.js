@@ -85,6 +85,7 @@ export default {
     console.log("API =  ", trip_idObject);
     return axios.put("/api/requests/undoaccept/" + id, trip_idObject);
   },
+
   // Decline the matching request with the given id
   declineRequest: function (id) {
     return axios.put("/api/requests/decline/" + id);

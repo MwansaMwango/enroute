@@ -37,6 +37,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Box from "@material-ui/core/Box";
 import API from "../../utils/API";
+import TransitionsModalRequest from "../TransitionsModalRequest";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -87,6 +88,7 @@ export default function InteractiveListRequests({
   props,
   editRequest,
   deleteRequest,
+  
 }) {
   const classes = useStyles();
   const [formObject, setFormObject] = useState({});
@@ -95,19 +97,15 @@ export default function InteractiveListRequests({
   const [open, setOpen] = React.useState(false);
   let phoneLink = "tel:" + "" || props.driver_id.phone;
   let smsLink = "sms:" + "" || props.driver_id.phone;
-  // let tempTrip_id = props.trip_id;
 
   const handleClick = () => {
     setOpen((prev) => !prev);
   };
-
   const handleClickAway = () => {
     setOpen(false);
   };
-  const handleClickEditRequest = () => {
-    //TO DO call modal form here
-    // editRequest(props._id, requestData)
-  };
+
+
   const handleClickDeleteRequest = () => {
     deleteRequest(props._id);
   };
@@ -183,17 +181,10 @@ export default function InteractiveListRequests({
                         justify="center"
                         alignItems="center"
                       >
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => {
-                            handleClickEditRequest();
-                          }}
-                          startIcon={<EditIcon />}
-                          fontSize="large"
-                        >
-                          Edit
-                        </Button>
+                        <TransitionsModalRequest
+                          requestData={props}
+                          editClicked={true}
+                        />
                       </Grid>
                     );
 
