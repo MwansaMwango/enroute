@@ -41,18 +41,21 @@ import {
 } from "@material-ui/core/";
 
 import "./drive.css";
+import moment from "moment";
+import { Redirect } from "react-router-dom";
 
-function Ride({ isEdit, requestData }) { // set default value for requestData to empty object {}
+function Ride({ isEdit, requestData }) {
+  // set default value for requestData to empty object {}
   // Setting our component's initial state
   console.log("isModule =", isEdit, "requestData = ", requestData);
   const [trips, setTrip] = useState([]);
-  const [request, setRequest] = useState([]);
+  const [request, setRequest] = useState(requestData);
   const [matches, setMatches] = useState([]);
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
-  const [hasPackage, setHasPackage] = useState(false);
-  const [isTransportVehicle, setIsTransportVehicle] = useState(false);
-
+  const [hasPackage, setHasPackage] = useState(requestData? requestData.hasPackage : false);
+  const [isTransportVehicle, setIsTransportVehicle] = useState(requestData? requestData.isTransportVehicle : false);
+  const [redirect, setRedirect] = useState("/");
   const theme = createMuiTheme({
     palette: {
       primary: {
@@ -157,7 +160,7 @@ function Ride({ isEdit, requestData }) { // set default value for requestData to
   }
 
   function handleHasPackageChange(e) {
-    const checked = e.target.checked;
+    const checked = e.target.checked 
     console.log("hasPackage checked:", checked);
     setHasPackage(checked); // sets DOM checkbox
     setFormObject({ ...formObject, hasPackage: checked }); // sets formObject
@@ -187,7 +190,6 @@ function Ride({ isEdit, requestData }) { // set default value for requestData to
       hasPackage: formObject.hasPackage,
       requestNote: formObject.requestNote,
       seatsRequired: formObject.seatsRequired,
-      requestId: formObject.requestId,
     })
       .then(function (res) {
         alert(JSON.stringify("Request sent..."));
@@ -199,24 +201,28 @@ function Ride({ isEdit, requestData }) { // set default value for requestData to
   }
   // When the form is submitted, use the API.requestRide method to save the ride request data
   // check matching trips from database
-  function handleEditedFormSubmit(event, requestId) {
+  function handleEditedFormSubmit(event) {
     event.preventDefault();
-    alert("Processing Updated ride request..."); // TODO use Modal instead of alert
-    API.updateRequest(requestId, {
-      from: formObject.from,
-      to: formObject.to,
-      departTime: formObject.time,
-      departDate: formObject.date,
-      isTransportVehicle: formObject.isTransportVehicle,
-      hasPackage: formObject.hasPackage,
-      requestNote: formObject.requestNote,
-      seatsRequired: formObject.seatsRequired,
+    alert("Processing Updated ride details..."); // TODO use Modal instead of alert
+
+    console.log("Request = ", request, "formObject = ", formObject);
+    API.updateRequest(request._id, {
+      from: formObject.from || request.from,
+      to: formObject.to || request.to,
+      departTime: formObject.time || request.departTime,
+      departDate: formObject.date || request.departDate,
+      isTransportVehicle:
+        formObject.isTransportVehicle || request.isTransportVehicle,
+      hasPackage: formObject.hasPackage || request.hasPackage,
+      requestNote: formObject.requestNote || request.requestNote,
+      seatsRequired: formObject.seatsRequired || request.seatsRequired,
     })
       .then(function (res) {
-        alert(JSON.stringify("Uodated Request sent..."));
+        alert(JSON.stringify("Updated Request sent..."));
       })
       .then(function () {
         checkMatchingTrips();
+        window.location.reload();
       })
       .catch((err) => console.log(err));
   }
@@ -229,7 +235,6 @@ function Ride({ isEdit, requestData }) { // set default value for requestData to
       departDate: formObject.date,
       carryPackage: formObject.hasPackage,
       freeSeats: formObject.seatsRequired,
-      // user_id: req.user,
     })
       .then(function (res) {
         alert(
@@ -251,12 +256,14 @@ function Ride({ isEdit, requestData }) { // set default value for requestData to
         <ThemeProvider theme={theme}>
           <Row>
             <Col size="md-12">
-              <Jumbotron color={theme.palette.primary.main}>
-                <h1>
-                  Ride
-                  <EmojiPeopleRoundedIcon fontSize="large" />
-                </h1>
-              </Jumbotron>
+              {isEdit ? null : (
+                <Jumbotron color={theme.palette.primary.main}>
+                  <h1>
+                    Ride
+                    <EmojiPeopleRoundedIcon fontSize="large" />
+                  </h1>
+                </Jumbotron>
+              )}
               <Grid
                 container
                 direction="row"
@@ -323,7 +330,11 @@ function Ride({ isEdit, requestData }) { // set default value for requestData to
                       type="date"
                       name="date"
                       label="Start Date"
-                      defaultValue={requestData ? requestData.departDate : null}
+                      defaultValue={
+                        requestData
+                          ? moment(requestData.departDate).format("yyyy-MM-DD")
+                          : moment(new Date(Date.now())).format("yyyy-MM-DD")
+                      }
                       variant="outlined"
                       onChange={handleInputChange}
                       helperText="Date you'll be leaving..."
@@ -338,7 +349,11 @@ function Ride({ isEdit, requestData }) { // set default value for requestData to
                     id="departTime"
                     label="Start Time"
                     variant="outlined"
-                    defaultValue={requestData ? requestData.departTime : null}
+                    defaultValue={
+                      requestData
+                        ? requestData.departTime
+                        : moment(new Date(Date.now())).format("HH:mm")
+                    }
                     onChange={handleInputChange}
                     type="time"
                     name="time"
@@ -355,7 +370,7 @@ function Ride({ isEdit, requestData }) { // set default value for requestData to
                       id="seatsRequired"
                       label="Seats Required?"
                       variant="outlined"
-                      defaultValue={requestData ? requestData.seatsRequired : null}
+                      defaultValue={requestData ? requestData.seatsRequired : 1}
                       onChange={handleInputChange}
                       type="number"
                       name="seatsRequired"
@@ -374,7 +389,9 @@ function Ride({ isEdit, requestData }) { // set default value for requestData to
                     <TextField
                       id="requestNote"
                       label="Request Note"
-                      defaultValue={requestData ? requestData.requestNote : null}
+                      defaultValue={
+                        requestData ? requestData.requestNote : null
+                      }
                       name="requestNote"
                       multiline
                       rows={1}
@@ -401,7 +418,6 @@ function Ride({ isEdit, requestData }) { // set default value for requestData to
                       control={
                         <Switch
                           checked={hasPackage}
-                          defaultValue={requestData ? requestData.hasPackage : null}
                           onChange={handleHasPackageChange}
                           name="hasPackage"
                         />
@@ -412,7 +428,6 @@ function Ride({ isEdit, requestData }) { // set default value for requestData to
                       control={
                         <Checkbox
                           checked={isTransportVehicle}
-                          defaultValue={requestData ? requestData.isTransportVehicle : null}
                           onChange={handleIsTransportVehicleChange}
                           name="isTransportVehicle"
                           inputProps={{ "aria-label": "primary checkbox" }}
@@ -430,10 +445,12 @@ function Ride({ isEdit, requestData }) { // set default value for requestData to
                   >
                     {" "}
                     <FormBtn
-                      disabled={!(formObject.from && formObject.to)}
-                      onClick={isEdit? handleEditedFormSubmit : handleFormSubmit}
+                      // disabled={!(formObject.from && formObject.to)}
+                      onClick={
+                        isEdit ? handleEditedFormSubmit : handleFormSubmit
+                      }
                     >
-                      {isEdit? "Update Ride" : "Request Ride"}
+                      {isEdit ? "Update Ride" : "Request Ride"}
                     </FormBtn>
                   </Grid>
                   <div
