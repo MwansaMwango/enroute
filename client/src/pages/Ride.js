@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-import PersonPinCircleIcon from "@material-ui/icons/PersonPinCircle";
 import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
 import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
 import AirlineSeatReclineNormalIcon from "@material-ui/icons/AirlineSeatReclineNormal";
-import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import Switch from "@material-ui/core/Switch";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
-import RestoreIcon from "@material-ui/icons/Restore";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Container, Col, Row } from "../components/Grid"; // removed container
 import {
   makeStyles,
@@ -23,34 +16,29 @@ import {
   createMuiTheme,
 } from "@material-ui/core/styles";
 import {
-  InputWithIcon,
-  BasicTextFields,
-  TextArea,
   FormBtn,
 } from "../components/Form";
 import {
-  Input,
   Box,
   Grid,
   TextField,
   // Container,
   MenuItem,
-  Button,
   Checkbox,
   FormControlLabel,
 } from "@material-ui/core/";
 
 import "./drive.css";
 import moment from "moment";
-import { Redirect } from "react-router-dom";
+
 
 function Ride({ isEdit, requestData }) {
   // set default value for requestData to empty object {}
   // Setting our component's initial state
-  console.log("isEditMode =", isEdit, "requestData = ", requestData);
-  const [trips, setTrip] = useState([]);
+
+  const [, setTrip] = useState([]);
   const [request, setRequest] = useState(requestData);
-  const [matches, setMatches] = useState([]);
+  const [, setMatches] = useState([]);
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
   // set hasPackage & isTransportVehicle checkboxes to state of requestData in editMode else 'false' in normal mode
@@ -103,7 +91,7 @@ function Ride({ isEdit, requestData }) {
     // }
   }));
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [] = React.useState(0);
 
   let uniqueRouteList = [];
 
@@ -121,14 +109,6 @@ function Ride({ isEdit, requestData }) {
   }
 
   // TODO Loads relevant Requests with status = 'complete' and sets them to requests
-  function loadRequestById(requestId) {
-    API.getRequest(requestId)
-      .then((res) => {
-        setRequest(res.data);
-        console.log("request loaded by ID = ", res.data);
-      })
-      .catch((err) => console.log(err));
-  }
 
   function loadRoutes() {
     let routeList = [];
@@ -145,11 +125,6 @@ function Ride({ isEdit, requestData }) {
   }
 
   // Deletes a trip from the database with a given id, then reloads trips from the db
-  function deleteTrip(id) {
-    API.deleteTrip(id)
-      .then((res) => loadTrips())
-      .catch((err) => console.log(err));
-  }
 
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
@@ -189,7 +164,7 @@ function Ride({ isEdit, requestData }) {
       requestNote: formObject.requestNote,
       seatsRequired: formObject.seatsRequired,
     })
-      .then(function (res) {
+      .then(function () {
         alert(JSON.stringify("Request sent..."));
       })
       .then(function () {
@@ -215,8 +190,8 @@ function Ride({ isEdit, requestData }) {
       requestNote: formObject.requestNote || request.requestNote,
       seatsRequired: formObject.seatsRequired || request.seatsRequired,
     })
-      .then(function (res) {
-        alert(JSON.stringify("Updated Request sent..."));
+      .then(function () {
+        alert(JSON.stringify("Updated Request details sent..."));
       })
       .then(function () {
         checkMatchingTrips();

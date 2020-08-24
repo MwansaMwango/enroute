@@ -2,48 +2,20 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import FolderIcon from "@material-ui/icons/Folder";
-import DeleteIcon from "@material-ui/icons/Delete";
-import Divider from "@material-ui/core/Divider";
-import AccountBoxRoundedIcon from "@material-ui/icons/AccountBoxRounded";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import NotInterestedIcon from "@material-ui/icons/NotInterested";
-import Button from "@material-ui/core/Button";
-import EventBusyIcon from "@material-ui/icons/EventBusy";
-import PhoneIcon from "@material-ui/icons/Phone";
-import CancelIcon from "@material-ui/icons/Cancel";
-import MessageIcon from "@material-ui/icons/Message";
-import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import moment from "moment";
-import AirlineSeatReclineExtraIcon from "@material-ui/icons/AirlineSeatReclineExtra";
-import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import Box from "@material-ui/core/Box";
-import HistoryIcon from "@material-ui/icons/History";
-import LocalTaxiRoundedIcon from "@material-ui/icons/LocalTaxiRounded";
-import Badge from "@material-ui/core/Badge";
 import { Link } from "react-router-dom";
 import FindInPageIcon from "@material-ui/icons/FindInPage";
-import AlarmOnIcon from "@material-ui/icons/AlarmOn";
-import EditIcon from "@material-ui/icons/Edit";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-import HourglassEmptyIcon from "@material-ui/icons/HourglassEmpty";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import TransitionsModalTrips from "../TransitionsModalTrips";
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 400, // limits display across very wide screens / desktops
@@ -92,13 +64,10 @@ function generate(element) {
 export default function InteractiveListTrips({
   props,
   deleteTrip,
-  updateTrip,
 }) {
   const classes = useStyles();
-  const [dense, setDense] = React.useState(false);
-  const [secondary, setSecondary] = React.useState(true);
-  let phoneLink = "tel:" + props.user_id.phone;
-  let smsLink = "sms:" + props.user_id.phone;
+  const [] = React.useState(false);
+  const [] = React.useState(true);
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -156,33 +125,44 @@ export default function InteractiveListTrips({
               <Grid direction="row" justify="center" alignItems="center">
                 <ClickAwayListener onClickAway={handleClickAway}>
                   <span>
-                    {open ? (
-                      <ExpandLess fontSize="large" onClick={handleClick} />
-                    ) : (
-                      <ExpandMore fontSize="large" onClick={handleClick} />
-                    )}
-
+                    <IconButton>
+                      {open ? (
+                        <ExpandLess fontSize="large" onClick={handleClick} />
+                      ) : (
+                        <ExpandMore fontSize="large" onClick={handleClick} />
+                      )}
+                    </IconButton>
                     {open ? (
                       <div className={classes.dropdown}>
                         <Typography>
                           <Grid
                             direction="row"
                             container
-                            justify="space-around"
+                            justify="space-between"
                             alignItems="center"
                           >
-                            <b>Other Details</b>
+                            <h3>
+                              <b>Other Details</b>
+                            </h3>
                             {/*TODO Link to edit trip data*/}
-                            <EditIcon
-                              color="#259CBB" // cyan
-                              fontSize="large"
-                              onClick={() => updateTrip(props._id, props)}
-                            />
-                            <DeleteForeverIcon
-                              color="#2222"
-                              fontSize="large"
-                              onClick={() => deleteTrip(props._id)}
-                            />
+                            <IconButton>
+                              {/* <EditIcon
+                                color="#259CBB" // cyan
+                                fontSize="large"
+                                onClick={() => updateTrip(props._id, props)}
+                              /> */}
+                              <TransitionsModalTrips
+                                   tripData={props}
+                                   editClicked={true}
+                              />
+                            </IconButton>
+                            <IconButton>
+                              <DeleteForeverIcon
+                                color="#2222"
+                                fontSize="large"
+                                onClick={() => deleteTrip(props._id)}
+                              />
+                            </IconButton>
                           </Grid>
                           <hr />
                           Trips Note:{" "}

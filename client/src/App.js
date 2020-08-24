@@ -16,9 +16,8 @@ import Register from "./pages/Register";
 import RequestsReceived from "./pages/RequestsReceived";
 import MyRequests from "./pages/MyRequests";
 import Nav from "./components/Nav";
-import MyTrips from "./pages/MyTrips";
 import NotificationContext from "./utils/NotificationContext";
-
+import MyTrips from "./pages/MyTrips"
 function App() {
 
   const [isNewNotification, setIsNewNotification] = useState();

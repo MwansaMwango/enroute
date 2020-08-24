@@ -1,66 +1,47 @@
 import React, { useState, useEffect } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import PersonPinCircleIcon from "@material-ui/icons/PersonPinCircle";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
-import PublishIcon from "@material-ui/icons/Publish";
 import AirlineSeatReclineNormalIcon from "@material-ui/icons/AirlineSeatReclineNormal";
 import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import LocalTaxiRoundedIcon from "@material-ui/icons/LocalTaxiRounded";
 import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
-import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
-import MessageIcon from "@material-ui/icons/Message";
-import FormGroup from "@material-ui/core/FormGroup";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
-import Popper from "@material-ui/core/Popper";
-// import Alert from "@material-ui/lab/Alert";
 import Switch from "@material-ui/core/Switch";
-
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import RestoreIcon from "@material-ui/icons/Restore";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-
 import Jumbotron from "../components/Jumbotron";
+import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Container, Col, Row } from "../components/Grid"; // removed container
-
 import {
   makeStyles,
   ThemeProvider,
   createMuiTheme,
 } from "@material-ui/core/styles";
+import { FormBtn } from "../components/Form";
 import {
-  InputWithIcon,
-  BasicTextFields,
-  TextArea,
-  FormBtn,
-} from "../components/Form";
-import {
-  Input,
   Box,
   Grid,
   TextField,
   // Container,
   MenuItem,
-  Button,
-  Checkbox,
   FormControlLabel,
 } from "@material-ui/core/";
-
 import "./drive.css";
-function Drive() {
-  // Setting our component's initial state
+import moment from "moment";
 
-  const [trips, setTrip] = useState([]);
+function Drive({ isEdit, tripData }) {
+  // Setting our component's initial state
+  console.log("isEditMode =", isEdit, "tripData = ", tripData);
+  const [trip, setTrip] = useState(tripData);
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
-  const [carryPackage, setCarryPackage] = useState(false);
+  const [carryPackage, setCarryPackage] = useState(
+    tripData ? tripData.carryPackage : false
+  );
 
   const theme = createMuiTheme({
     palette: {
@@ -106,29 +87,8 @@ function Drive() {
     },
   }));
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
+  // const [value, setValue] = React.useState(0);
   const [page, setPage] = React.useState("ride");
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-  const handleClick = (event) => {
-    setAnchorEl(anchorEl);
-    // setAnchorEl(anchorEl ? null : event.currentTarget);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? "simple-popper" : undefined;
-  // const [state, setState] = React.useState({
-  //   checkedA: true,
-  //   checkedB: true,
-  // });
-
-  // const handleChange = (event) => {
-  //   setState({ ...state, [event.target.name]: event.target.checked });
-  // };
 
   let uniqueRouteList = [];
 
@@ -143,7 +103,6 @@ function Drive() {
     API.getTrips()
       .then(function (res) {
         setTrip(res.data);
-        console.log("My Trips  ", res.data);
       })
       .catch((err) => console.log(err));
   }
@@ -154,17 +113,12 @@ function Drive() {
       .then(function (res) {
         res.data.map((route) => {
           routeList.push(route.from, route.to);
-          console.log("Response of getroutes=", route.from);
         });
         uniqueRouteList = [...new Set(routeList)]; // removes duplicate elements in array
         setRoutes(uniqueRouteList);
-        console.log("Preset routes all  ", routeList);
-        console.log("Preset routes unique  ", uniqueRouteList);
       })
       .catch((err) => console.log(err));
   }
-  console.log("loggin uniue routes =", uniqueRouteList);
-  // console.log("loggin uniue routes =",routeList)
 
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
@@ -194,29 +148,52 @@ function Drive() {
       freeSeats: formObject.freeSeats,
       carryPackage: formObject.carryPackage,
       tripNote: formObject.tripNote,
-      // user_id: req.user,
     })
 
-      .then((res) => alert("Trip has been saved"))
+      .then(() => alert("Trip has been saved"))
       .catch((err) => console.log(err));
-    // }
+  }
+
+  // Handle edit trip details
+  function handleEditedFormSubmit(event) {
+    event.preventDefault();
+    alert("Processing Updated trip details..."); // TODO use Modal instead of alert
+
+    console.log("Trip = ", trip[0], "formObject = ", formObject);
+    API.updateTrip(trip[0]._id, {
+      from: formObject.from || trip[0].from,
+      to: formObject.to || trip[0].to,
+      departTime: formObject.time || trip[0].departTime,
+      departDate: formObject.date || trip[0].departDate,
+      carryPackage: formObject.hasPackage || carryPackage, // not a property of trip[0]
+      tripNote: formObject.tripNote || trip[0].tripNote,
+      freeSeats: formObject.freeSeats || trip[0].freeSeats,
+    })
+      .then(function () {
+        alert(JSON.stringify("Updated trip details sent..."));
+        window.location.reload(); //refresh page to get updated request
+      })
+      .catch((err) => console.log(err));
   }
 
   return (
-    <Box style={{
-      paddingBottom: "50px",
-    }}>
+    <Box
+      style={{
+        paddingBottom: "50px",
+      }}
+    >
       <Container fluid maxWidth="100vw">
         <ThemeProvider theme={theme}>
           <Row>
             <Col size="md-12">
-              <Jumbotron>
-                <h1>
-                  Drive
-                  <LocalTaxiIcon fontSize="large" />
-                </h1>
-              </Jumbotron>
-
+              {isEdit ? null : (
+                <Jumbotron>
+                  <h1>
+                    Drive
+                    <LocalTaxiIcon fontSize="large" />
+                  </h1>
+                </Jumbotron>
+              )}
               <Grid
                 container
                 direction="row"
@@ -230,6 +207,7 @@ function Drive() {
                       id="from"
                       select
                       label="From (required)"
+                      defaultValue={tripData ? tripData.from : null}
                       onChange={handleInputChange}
                       name="from"
                       helperText="Start location"
@@ -254,6 +232,7 @@ function Drive() {
                       id="to"
                       select
                       label="To (required)"
+                      defaultValue={tripData ? tripData.to : null}
                       onChange={handleInputChange}
                       name="to"
                       helperText="Please select your end location"
@@ -280,6 +259,11 @@ function Drive() {
                       type="date"
                       name="date"
                       label="Start Date"
+                      defaultValue={
+                        tripData
+                          ? moment(tripData.departDate).format("yyyy-MM-DD") // needs correct date format
+                          : moment(new Date(Date.now())).format("yyyy-MM-DD") // show current  date by default
+                      }
                       variant="outlined"
                       onChange={handleInputChange}
                       helperText="Date you'll be leaving..."
@@ -293,6 +277,11 @@ function Drive() {
                   <TextField
                     id="departTime"
                     label="Start Time"
+                    defaultValue={
+                      tripData
+                        ? tripData.departTime
+                        : moment(new Date(Date.now())).format("HH:mm") // requires correct time format, display current time
+                    }
                     variant="outlined"
                     onChange={handleInputChange}
                     type="time"
@@ -312,7 +301,7 @@ function Drive() {
                       variant="outlined"
                       onChange={handleInputChange}
                       type="number"
-                      defaultValue={1}
+                      defaultValue={tripData ? tripData.freeSeats : 1}
                       name="freeSeats"
                       helperText="Number of seats available..."
                       InputProps={{
@@ -339,7 +328,7 @@ function Drive() {
                           name="carryPackage"
                         />
                       }
-                      label="Able to carry package"
+                      label="Carry a package?"
                     ></FormControlLabel>
                     <LocalMallIcon color="primary" />
                   </Grid>
@@ -370,10 +359,15 @@ function Drive() {
                     alignItems="center"
                   >
                     <FormBtn
-                      disabled={!(formObject.from && formObject.to)}
-                      onClick={handleFormSubmit}
+                      // enable form submit if to/from is filled or in edit mode
+                      disabled={
+                        !((formObject.from && formObject.to) || tripData)
+                      }
+                      onClick={
+                        isEdit ? handleEditedFormSubmit : handleFormSubmit
+                      }
                     >
-                      Post Trip
+                      {isEdit ? "Update Trip" : "Post Trip"}
                     </FormBtn>
                   </Grid>
                   <div
@@ -383,40 +377,10 @@ function Drive() {
                       bottom: "0",
                       width: "90%",
                       height: "50px",
-    
                       textAlign: "center",
                     }}
                   >
-                    <BottomNavigation
-                      value={page}
-                      onChange={(event, newValue) => {
-                        setPage(newValue);
-                      }}
-                      showLabels
-                      className={classes.root}
-                      // style={{background:"#022222", color:"white"}}
-                    >
-                      <BottomNavigationAction
-                        label="Ride"
-                        icon={<EmojiPeopleRoundedIcon />}
-                        href="/ride"
-                      />
-
-                      <BottomNavigationAction
-                        label="My Trips"
-                        icon={<PersonPinCircleIcon />}
-                        href="/myTrips"
-                      />
-                      <BottomNavigationAction
-                        label="My Requests"
-                        icon={<AirlineSeatReclineNormalIcon />}
-                        href="/myrequests"
-                      />
-                      <BottomNavigationAction
-                        label="Points(future)"
-                        icon={<EmojiEventsIcon />}
-                      />
-                    </BottomNavigation>
+                    {isEdit ? null : <SimpleBottomNavigation />}
                   </div>
                 </form>
               </Grid>

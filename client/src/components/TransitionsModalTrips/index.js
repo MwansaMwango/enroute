@@ -3,9 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
-import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
-import Ride from "../../pages/Ride"
+import Drive from "../../pages/Drive";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -21,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function TransitionsModalRequest({ editClicked, requestData }) {
-  console.log("props in modal =", requestData)
+export default function TransitionsModalTrips({ editClicked, tripData }) {
+  console.log("props in modal =", tripData);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -36,7 +35,7 @@ export default function TransitionsModalRequest({ editClicked, requestData }) {
 
   return (
     <div>
-      <Button
+      <EditIcon
         variant="contained"
         color="primary"
         onClick={() => {
@@ -44,10 +43,8 @@ export default function TransitionsModalRequest({ editClicked, requestData }) {
         }}
         startIcon={<EditIcon />}
         fontSize="large"
-      >
-        EDIT
-      </Button>
-
+      />
+    
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -62,9 +59,9 @@ export default function TransitionsModalRequest({ editClicked, requestData }) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">Update your Ride Details</h2>
+            <h2 id="transition-modal-title">Update your Trip Details</h2>
             <p id="transition-modal-description">
-            <Ride isEdit = {true} requestData = {requestData} />
+              <Drive isEdit={true} tripData={tripData} />
             </p>
           </div>
         </Fade>

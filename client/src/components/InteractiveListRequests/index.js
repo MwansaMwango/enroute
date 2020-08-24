@@ -1,41 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import FolderIcon from "@material-ui/icons/Folder";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Divider from "@material-ui/core/Divider";
-import AccountBoxRoundedIcon from "@material-ui/icons/AccountBoxRounded";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import NotInterestedIcon from "@material-ui/icons/NotInterested";
-import Button from "@material-ui/core/Button";
-import EventBusyIcon from "@material-ui/icons/EventBusy";
 import PhoneIcon from "@material-ui/icons/Phone";
-import CancelIcon from "@material-ui/icons/Cancel";
-import MessageIcon from "@material-ui/icons/Message";
-import EditIcon from "@material-ui/icons/Edit";
-import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import moment from "moment";
-import AirlineSeatReclineExtraIcon from "@material-ui/icons/AirlineSeatReclineExtra";
-import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import Box from "@material-ui/core/Box";
 import API from "../../utils/API";
 import TransitionsModalRequest from "../TransitionsModalRequest";
 
@@ -86,17 +63,15 @@ function generate(element) {
 
 export default function InteractiveListRequests({
   props,
-  editRequest,
   deleteRequest,
   
 }) {
   const classes = useStyles();
-  const [formObject, setFormObject] = useState({});
-  const [dense, setDense] = React.useState(false);
-  const [secondary, setSecondary] = React.useState(true);
+  const [formObject] = useState({});
+  const [] = React.useState(false);
+  const [] = React.useState(true);
   const [open, setOpen] = React.useState(false);
   let phoneLink = "tel:" + "" || props.driver_id.phone;
-  let smsLink = "sms:" + "" || props.driver_id.phone;
 
   const handleClick = () => {
     setOpen((prev) => !prev);
@@ -105,34 +80,10 @@ export default function InteractiveListRequests({
     setOpen(false);
   };
 
-
   const handleClickDeleteRequest = () => {
     deleteRequest(props._id);
   };
 
-  function handleFormSubmit(event) {
-    event.preventDefault();
-    alert("Updating request..."); // TODO use Modal instead of alert
-    console.log("FormObject= ", formObject);
-    // if (formObject.from && formObject.to) {
-    // From: and To: fields are mandatory.
-    API.requestRide({
-      from: formObject.from,
-      to: formObject.to,
-      departTime: formObject.time,
-      departDate: formObject.date,
-      isTransportVehicle: formObject.isTransportVehicle,
-      hasPackage: formObject.hasPackage,
-      requestNote: formObject.requestNote,
-      seatsRequired: formObject.seatsRequired,
-    })
-
-      .then(function (res) {
-        alert(JSON.stringify("Request updated..."));
-      })
-
-      .catch((err) => console.log(err));
-  }
   return (
     <List>
       <Grid container justify="center" direction="column" alignItems="center">
@@ -199,7 +150,7 @@ export default function InteractiveListRequests({
                           color="disabled"
                           fontSize="large"
                           onClick={
-                            () => handleClickDeleteRequest() // todo delete request
+                            () => handleClickDeleteRequest() // TODO delete request
                           }
                         />
 

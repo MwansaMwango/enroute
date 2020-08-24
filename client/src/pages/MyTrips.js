@@ -1,90 +1,35 @@
 import React, { useState, useEffect } from "react";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MyLocationIcon from "@material-ui/icons/MyLocation";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
 import PersonPinCircleIcon from "@material-ui/icons/PersonPinCircle";
-import LocalMallIcon from "@material-ui/icons/LocalMall";
-import PublishIcon from "@material-ui/icons/Publish";
-import AirlineSeatReclineNormalIcon from "@material-ui/icons/AirlineSeatReclineNormal";
-import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import LocalTaxiRoundedIcon from "@material-ui/icons/LocalTaxiRounded";
 import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
-import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
 import MessageIcon from "@material-ui/icons/Message";
-import FormGroup from "@material-ui/core/FormGroup";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
-import Popper from "@material-ui/core/Popper";
-// import Alert from "@material-ui/lab/Alert";
-import Switch from "@material-ui/core/Switch";
 import InteractiveListTrips from "../components/InteractiveListTrips";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import RestoreIcon from "@material-ui/icons/Restore";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Container, Col, Row } from "../components/Grid"; // removed container
 
 import {
   makeStyles,
-  ThemeProvider,
   createMuiTheme,
 } from "@material-ui/core/styles";
 import {
-  InputWithIcon,
-  BasicTextFields,
-  TextArea,
-  FormBtn,
-} from "../components/Form";
-import {
-  Input,
   Box,
   Grid,
-  TextField,
-  // Container,
-  MenuItem,
-  Button,
-  Checkbox,
-  FormControlLabel,
 } from "@material-ui/core/";
 
 import "./drive.css";
-
-import { List, ListItem } from "../components/List"; //
-
-import DeclineBtn from "../components/DeclineBtn"; //
-
-import moment from "moment";
 
 function MyTrips() {
   // Setting our component's initial state
   const [myTrips, setMyTrips] = useState([]);
 
-  const [matchingRequests, setMatchingRequests] = useState([]);
+  const [, setMatchingRequests] = useState([]);
 
-  const theme = createMuiTheme({
-    palette: {
-      primary: {
-        light: "#FF9057",
-        main: "#E64500",
-        dark: "#022222",
-        contrastText: "#fff",
-      },
-      secondary: {
-        light: "#78849E",
-        main: "#259CBB",
-        dark: "#168387",
-        contrastText: "#000",
-      },
-    },
-  });
 
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles(() => ({
     root: {
       container: {
           width: "90vw",
@@ -92,13 +37,9 @@ function MyTrips() {
     },
   }));
 
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [, setValue] = React.useState(0);
   const [page, setPage] = React.useState("ride");
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   useEffect(() => {
     loadMyTrips();
   }, []);
@@ -138,17 +79,17 @@ function MyTrips() {
       .catch((err) => console.log(err));
   }
 
-  // Undo the accept matching request action
+  // Update the accept matching request action
   function updateTrip(id, tripData) {
     API.updateTrip(id, tripData)
-      .then((res) => loadMyTripsRefresh())
+      .then(() => loadMyTripsRefresh())
       .catch((err) => console.log(err));
   }
 
   // Decline a matching request from the loaded list with a given id, then reloads matching requests from the db
   function deleteTrip(id) {
     API.deleteTrip(id)
-      .then((res) => loadMyTrips())
+      .then(() => loadMyTrips())
       .catch((err) => console.log(err));
   }
 

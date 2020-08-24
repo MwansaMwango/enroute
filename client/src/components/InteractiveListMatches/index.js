@@ -131,12 +131,12 @@ export default function InteractiveListMatches({
                 }
                 secondary={
                   props.status === "Confirmed" ? (
-                      <a href={phoneLink}>
-                    <Grid container alignItems="center">
+                    <a href={phoneLink}>
+                      <Grid container alignItems="center">
                         {/* <PhoneIcon /> */}
                         {props.user_id.phone}
-                    </Grid>
-                      </a>
+                      </Grid>
+                    </a>
                   ) : (
                     props.status
                   )
@@ -174,32 +174,40 @@ export default function InteractiveListMatches({
                         justify="center"
                         alignItems="center"
                       >
-                        <CancelIcon
-                          color="disabled"
-                          fontSize="large"
-                          onClick={() =>
-                            undoAcceptRequest(props._id, {
-                              trip_id: tempTrip_id,
-                            })
-                          }
-                        />
+                        <IconButton>
+                          <CancelIcon
+                            color="disabled"
+                            fontSize="large"
+                            onClick={() =>
+                              undoAcceptRequest(props._id, {
+                                trip_id: tempTrip_id,
+                              })
+                            }
+                          />
+                        </IconButton>
 
-                        <a href={smsLink}>
-                          <MessageIcon color="secondary" fontSize="large" />
-                        </a>
+                        <IconButton>
+                          <a href={smsLink}>
+                            <MessageIcon color="secondary" fontSize="large" />
+                          </a>
+                        </IconButton>
 
                         <ClickAwayListener onClickAway={handleClickAway}>
                           <span>
                             {open ? (
-                              <ExpandLess
-                                fontSize="large"
-                                onClick={handleClick}
-                              />
+                              <IconButton>
+                                <ExpandLess
+                                  fontSize="large"
+                                  onClick={handleClick}
+                                />
+                              </IconButton>
                             ) : (
-                              <ExpandMore
-                                fontSize="large"
-                                onClick={handleClick}
-                              />
+                              <IconButton>
+                                <ExpandMore
+                                  fontSize="large"
+                                  onClick={handleClick}
+                                />
+                              </IconButton>
                             )}
 
                             {open ? (
