@@ -47,15 +47,16 @@ import { Redirect } from "react-router-dom";
 function Ride({ isEdit, requestData }) {
   // set default value for requestData to empty object {}
   // Setting our component's initial state
-  console.log("isModule =", isEdit, "requestData = ", requestData);
+  console.log("isEditMode =", isEdit, "requestData = ", requestData);
   const [trips, setTrip] = useState([]);
   const [request, setRequest] = useState(requestData);
   const [matches, setMatches] = useState([]);
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
-  const [hasPackage, setHasPackage] = useState(requestData? requestData.hasPackage : false);
+  // set hasPackage & isTransportVehicle checkboxes to state of requestData in editMode else 'false' in normal mode
+  const [hasPackage, setHasPackage] = useState(requestData? requestData.hasPackage : false); 
   const [isTransportVehicle, setIsTransportVehicle] = useState(requestData? requestData.isTransportVehicle : false);
-  const [redirect, setRedirect] = useState("/");
+
   const theme = createMuiTheme({
     palette: {
       primary: {
@@ -83,7 +84,7 @@ function Ride({ isEdit, requestData }) {
         marginLeft: theme.spacing(5),
 
         width: "80%",
-        // marginTop: theme.spacing(1)
+     
       },
     },
     container: {
@@ -112,19 +113,19 @@ function Ride({ isEdit, requestData }) {
     loadRoutes();
   }, []);
 
-  // TODO Loads recent Requests with status = 'complete' and sets them to trips
+  // TODO Loads relevant trips with status !== 'complete' and sets them to trips
   function loadTrips() {
     API.getTrips()
       .then((res) => setTrip(res.data))
       .catch((err) => console.log(err));
   }
 
-  // TODO Loads recent Requests with status = 'complete' and sets them to trips
+  // TODO Loads relevant Requests with status = 'complete' and sets them to requests
   function loadRequestById(requestId) {
     API.getRequest(requestId)
       .then((res) => {
         setRequest(res.data);
-        console.log("request by ID = ", res.data);
+        console.log("request loaded by ID = ", res.data);
       })
       .catch((err) => console.log(err));
   }
@@ -136,12 +137,9 @@ function Ride({ isEdit, requestData }) {
       .then(function (res) {
         res.data.map((route) => {
           routeList.push(route.from, route.to);
-          console.log("Response of getroutes=", route.from);
         });
         uniqueRouteList = [...new Set(routeList)]; // removes duplicate elements in array
         setRoutes(uniqueRouteList);
-        console.log("Preset routes all  ", routeList);
-        console.log("Preset routes unique  ", uniqueRouteList);
       })
       .catch((err) => console.log(err));
   }
@@ -212,8 +210,8 @@ function Ride({ isEdit, requestData }) {
       departTime: formObject.time || request.departTime,
       departDate: formObject.date || request.departDate,
       isTransportVehicle:
-        formObject.isTransportVehicle || request.isTransportVehicle,
-      hasPackage: formObject.hasPackage || request.hasPackage,
+        formObject.isTransportVehicle || isTransportVehicle, // not a property of request
+      hasPackage: formObject.hasPackage || hasPackage, // not a property of request
       requestNote: formObject.requestNote || request.requestNote,
       seatsRequired: formObject.seatsRequired || request.seatsRequired,
     })
@@ -222,24 +220,24 @@ function Ride({ isEdit, requestData }) {
       })
       .then(function () {
         checkMatchingTrips();
-        window.location.reload();
+        window.location.reload(); //refresh page to get updated request
       })
       .catch((err) => console.log(err));
   }
 
   function checkMatchingTrips() {
     API.findMatchingTrips({
-      from: formObject.from,
-      to: formObject.to,
-      departTime: formObject.time,
-      departDate: formObject.date,
-      carryPackage: formObject.hasPackage,
-      freeSeats: formObject.seatsRequired,
+      from: formObject.from || request.from,
+      to: formObject.to || request.to,
+      departTime: formObject.time || request.departTime,
+      departDate: formObject.date || request.departDate,
+      carryPackage: formObject.hasPackage || request.hasPackage,
+      freeSeats: formObject.seatsRequired || request.seatsRequired,
     })
       .then(function (res) {
         alert(
           res.data.length +
-            " Matching trip(s) found. You will be notified once the driver confirms."
+            " Matching trip(s) found. You will be notified once a driver confirms."
         );
         setMatches(res.data);
       })
@@ -332,8 +330,8 @@ function Ride({ isEdit, requestData }) {
                       label="Start Date"
                       defaultValue={
                         requestData
-                          ? moment(requestData.departDate).format("yyyy-MM-DD")
-                          : moment(new Date(Date.now())).format("yyyy-MM-DD")
+                          ? moment(requestData.departDate).format("yyyy-MM-DD") // needs correct date format
+                          : moment(new Date(Date.now())).format("yyyy-MM-DD") // show current  date by default
                       }
                       variant="outlined"
                       onChange={handleInputChange}
@@ -352,7 +350,7 @@ function Ride({ isEdit, requestData }) {
                     defaultValue={
                       requestData
                         ? requestData.departTime
-                        : moment(new Date(Date.now())).format("HH:mm")
+                        : moment(new Date(Date.now())).format("HH:mm") // requires correct time format, display current time
                     }
                     onChange={handleInputChange}
                     type="time"
@@ -360,7 +358,6 @@ function Ride({ isEdit, requestData }) {
                     helperText="Time you'll be leaving..."
                     InputLabelProps={{
                       // removes the header from inside the input box
-
                       shrink: true,
                     }}
                   />
@@ -445,7 +442,7 @@ function Ride({ isEdit, requestData }) {
                   >
                     {" "}
                     <FormBtn
-                      // disabled={!(formObject.from && formObject.to)}
+                      disabled={!(formObject.from && formObject.to || requestData)} // enable form submit if to/from is filled or in edit mode
                       onClick={
                         isEdit ? handleEditedFormSubmit : handleFormSubmit
                       }
