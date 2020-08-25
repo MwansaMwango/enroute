@@ -211,7 +211,7 @@ export default function Nav(props) {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" style={{ backgroundColor: '#022222'}}>
+      <AppBar position="static" style={{ backgroundColor: "#022222" }}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -222,8 +222,8 @@ export default function Nav(props) {
             <MenuIcon />
           </IconButton>
           <MenuItem href="/"></MenuItem>
-          <div >
-            <Typography className={classes.title} variant="h5" noWrap >
+          <div>
+            <Typography className={classes.title} variant="h5" noWrap>
               Enroute
             </Typography>
           </div>
@@ -231,7 +231,7 @@ export default function Nav(props) {
           {currentUserFirstName ? (
             <Grid
               container
-              direction="col"
+              direction="row"
               justify="flex-end"
               alignItems="center"
             >
@@ -288,25 +288,20 @@ export default function Nav(props) {
               </div>
             </Grid>
           ) : (
-            <Grid
-              container
-              direction="col"
-              justify="flex-end"
-              alignItems="center"
-            >
-                        <Grid
-              container
-              direction="col"
-              justify="flex-end"
-              alignItems="center"
-            >
+   
+              <Grid
+                container
+                direction="row"
+                justify="flex-end"
+                alignItems="center"
+              >
                 <Typography variant="h6">
                   <Link href="/login" color="inherit" underline="none">
                     Login
                   </Link>
                 </Typography>
               </Grid>
-            </Grid>
+     
           )}
         </Toolbar>
       </AppBar>

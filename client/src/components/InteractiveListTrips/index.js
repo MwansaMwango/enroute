@@ -61,13 +61,8 @@ function generate(element) {
   );
 }
 
-export default function InteractiveListTrips({
-  props,
-  deleteTrip,
-}) {
+export default function InteractiveListTrips({ props, deleteTrip }) {
   const classes = useStyles();
-  const [] = React.useState(false);
-  const [] = React.useState(true);
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -125,13 +120,15 @@ export default function InteractiveListTrips({
               <Grid direction="row" justify="center" alignItems="center">
                 <ClickAwayListener onClickAway={handleClickAway}>
                   <span>
-                    <IconButton>
-                      {open ? (
+                    {open ? (
+                      <IconButton>
                         <ExpandLess fontSize="large" onClick={handleClick} />
-                      ) : (
+                      </IconButton>
+                    ) : (
+                      <IconButton>
                         <ExpandMore fontSize="large" onClick={handleClick} />
-                      )}
-                    </IconButton>
+                      </IconButton>
+                    )}
                     {open ? (
                       <div className={classes.dropdown}>
                         <Typography>
@@ -152,8 +149,8 @@ export default function InteractiveListTrips({
                                 onClick={() => updateTrip(props._id, props)}
                               /> */}
                               <TransitionsModalTrips
-                                   tripData={props}
-                                   editClicked={true}
+                                tripData={props}
+                                editClicked={true}
                               />
                             </IconButton>
                             <IconButton>

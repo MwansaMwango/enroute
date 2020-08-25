@@ -246,7 +246,7 @@ function Ride({ isEdit, requestData }) {
                 <form className={classes.root}>
                   <Grid item>
                     <TextField
-                      className={classes.marginTop}
+                     
                       id="from"
                       select
                       label="From (required)"

@@ -36,7 +36,7 @@ import moment from "moment";
 function Drive({ isEdit, tripData }) {
   // Setting our component's initial state
   console.log("isEditMode =", isEdit, "tripData = ", tripData);
-  const [trip, setTrip] = useState(tripData);
+  const [trip, setTrip] = useState({ tripData });
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [carryPackage, setCarryPackage] = useState(
@@ -94,18 +94,9 @@ function Drive({ isEdit, tripData }) {
 
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
   useEffect(() => {
-    loadTrips();
     loadRoutes();
   }, []);
 
-  // TODO Loads recent Requests with status = 'complete' and sets them to trips
-  function loadTrips() {
-    API.getTrips()
-      .then(function (res) {
-        setTrip(res.data);
-      })
-      .catch((err) => console.log(err));
-  }
   function loadRoutes() {
     let routeList = [];
 
@@ -119,7 +110,6 @@ function Drive({ isEdit, tripData }) {
       })
       .catch((err) => console.log(err));
   }
-
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -159,7 +149,7 @@ function Drive({ isEdit, tripData }) {
     event.preventDefault();
     alert("Processing Updated trip details..."); // TODO use Modal instead of alert
 
-    console.log("Trip = ", trip[0], "formObject = ", formObject);
+    console.log("Trip[0] = ", trip[0], "formObject = ", formObject);
     API.updateTrip(trip[0]._id, {
       from: formObject.from || trip[0].from,
       to: formObject.to || trip[0].to,
@@ -203,11 +193,10 @@ function Drive({ isEdit, tripData }) {
                 <form className={classes.root}>
                   <Grid item>
                     <TextField
-                      className={classes.margin}
                       id="from"
                       select
                       label="From (required)"
-                      defaultValue={tripData ? tripData.from : null}
+                      defaultValue={tripData ? tripData.from : ""}
                       onChange={handleInputChange}
                       name="from"
                       helperText="Start location"
@@ -232,7 +221,7 @@ function Drive({ isEdit, tripData }) {
                       id="to"
                       select
                       label="To (required)"
-                      defaultValue={tripData ? tripData.to : null}
+                      defaultValue={tripData ? tripData.to : ""}
                       onChange={handleInputChange}
                       name="to"
                       helperText="Please select your end location"
@@ -267,13 +256,13 @@ function Drive({ isEdit, tripData }) {
                       variant="outlined"
                       onChange={handleInputChange}
                       helperText="Date you'll be leaving..."
-                      InputLabelProps={{
-                        // removes the header from inside the input box
-                        shrink: true,
-                      }}
+                      InputLabelProps={
+                        {
+                          // removes the header from inside the input box
+                        }
+                      }
                     />
                   </Grid>
-
                   <TextField
                     id="departTime"
                     label="Start Time"
@@ -287,11 +276,11 @@ function Drive({ isEdit, tripData }) {
                     type="time"
                     name="time"
                     helperText="Time you'll be leaving..."
-                    InputLabelProps={{
-                      // removes the header from inside the input box
-
-                      shrink: true,
-                    }}
+                    InputLabelProps={
+                      {
+                        // removes the header from inside the input box
+                      }
+                    }
                   />
 
                   <Grid item>
@@ -347,7 +336,6 @@ function Drive({ isEdit, tripData }) {
                             <SpeakerNotesIcon color="primary" />
                           </InputAdornment>
                         ),
-                        shrink: true,
                       }}
                     />
                   </Grid>
