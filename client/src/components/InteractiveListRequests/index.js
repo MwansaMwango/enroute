@@ -67,9 +67,8 @@ export default function InteractiveListRequests({
   
 }) {
   const classes = useStyles();
-  const [formObject] = useState({});
-  const [] = React.useState(false);
-  const [] = React.useState(true);
+ 
+
   const [open, setOpen] = React.useState(false);
   let phoneLink = "tel:" + "" || props.driver_id.phone;
 

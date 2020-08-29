@@ -5,6 +5,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import EditIcon from "@material-ui/icons/Edit";
 import Drive from "../../pages/Drive";
+import { IconButton } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -35,16 +36,18 @@ export default function TransitionsModalTrips({ editClicked, tripData }) {
 
   return (
     <div>
-      <EditIcon
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          handleOpen();
-        }}
-        startIcon={<EditIcon />}
-        fontSize="large"
-      />
-    
+      <IconButton>
+        <EditIcon
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            handleOpen();
+          }}
+          startIcon={<EditIcon />}
+          fontSize="large"
+        />
+      </IconButton>
+
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"

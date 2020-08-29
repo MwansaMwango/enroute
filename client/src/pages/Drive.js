@@ -3,15 +3,10 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-import PersonPinCircleIcon from "@material-ui/icons/PersonPinCircle";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import AirlineSeatReclineNormalIcon from "@material-ui/icons/AirlineSeatReclineNormal";
 import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
-import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
-import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import Switch from "@material-ui/core/Switch";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import Jumbotron from "../components/Jumbotron";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 import API from "../utils/API";
@@ -36,7 +31,7 @@ import moment from "moment";
 function Drive({ isEdit, tripData }) {
   // Setting our component's initial state
   console.log("isEditMode =", isEdit, "tripData = ", tripData);
-  const [trip, setTrip] = useState({ tripData });
+  const [trip] = useState(tripData);
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [carryPackage, setCarryPackage] = useState(
@@ -87,8 +82,7 @@ function Drive({ isEdit, tripData }) {
     },
   }));
   const classes = useStyles();
-  // const [value, setValue] = React.useState(0);
-  const [page, setPage] = React.useState("ride");
+
 
   let uniqueRouteList = [];
 
@@ -116,15 +110,15 @@ function Drive({ isEdit, tripData }) {
     setFormObject({ ...formObject, [name]: value });
   }
 
-  function handleCarryPackageChange(e) {
-    const checked = e.target.checked;
+  function handleCarryPackageChange(event) {
+    const checked = event.target.checked;
     console.log("carryPackage checked:", checked);
     setCarryPackage(checked); // sets DOM checkbox
     setFormObject({ ...formObject, carryPackage: checked }); // sets formObject
   }
 
   // When the form is submitted, use the API.saveTrip method to save the trip data
-  // Then reload trips from the database
+ 
   function handleFormSubmit(event) {
     event.preventDefault();
     console.log("FormObject carryPackage= ", formObject.carryPackage);
@@ -140,7 +134,7 @@ function Drive({ isEdit, tripData }) {
       tripNote: formObject.tripNote,
     })
 
-      .then(() => alert("Trip has been saved"))
+      .then(() => alert(JSON.stringify("Trip has been saved")))
       .catch((err) => console.log(err));
   }
 
@@ -149,19 +143,21 @@ function Drive({ isEdit, tripData }) {
     event.preventDefault();
     alert("Processing Updated trip details..."); // TODO use Modal instead of alert
 
-    console.log("Trip[0] = ", trip[0], "formObject = ", formObject);
-    API.updateTrip(trip[0]._id, {
-      from: formObject.from || trip[0].from,
-      to: formObject.to || trip[0].to,
-      departTime: formObject.time || trip[0].departTime,
-      departDate: formObject.date || trip[0].departDate,
-      carryPackage: formObject.hasPackage || carryPackage, // not a property of trip[0]
-      tripNote: formObject.tripNote || trip[0].tripNote,
-      freeSeats: formObject.freeSeats || trip[0].freeSeats,
-    })
-      .then(function () {
-        alert(JSON.stringify("Updated trip details sent..."));
-        window.location.reload(); //refresh page to get updated request
+    console.log("Trip = ", trip, "formObject note = ", formObject);
+    let updatedTripData = {
+      from: formObject.from || trip.from,
+      to: formObject.to || trip.to,
+      departTime: formObject.time || trip.departTime,
+      departDate: formObject.date || trip.departDate,
+      carryPackage: formObject.hasPackage || carryPackage, // not a property of tripData
+      tripNote: formObject.tripNote || trip.tripNote,
+      freeSeats: formObject.freeSeats || trip.freeSeats,
+    };
+    console.log("updatedTripData obj= ",updatedTripData);
+    API.updateTrip(trip._id, updatedTripData )
+      .then(function (res) {
+        alert(JSON.stringify("Updated trip details sent...", res.data));
+        window.location.reload(); //refresh page to get updated request...TODO close modals
       })
       .catch((err) => console.log(err));
   }
@@ -195,6 +191,7 @@ function Drive({ isEdit, tripData }) {
                     <TextField
                       id="from"
                       select
+                  
                       label="From (required)"
                       defaultValue={tripData ? tripData.from : ""}
                       onChange={handleInputChange}
@@ -325,9 +322,12 @@ function Drive({ isEdit, tripData }) {
                   <Grid>
                     <TextField
                       id="tripNote"
+                      name="tripNote"
                       label="Trip Note"
                       multiline
                       rows={2}
+                      defaultValue={tripData ? tripData.tripNote : ''}
+                      onChange={handleInputChange}
                       variant="outlined"
                       helperText="Enter note about your trip..."
                       InputProps={{

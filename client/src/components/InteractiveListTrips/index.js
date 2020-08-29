@@ -55,13 +55,14 @@ const useStyles = makeStyles((theme) => ({
 
 function generate(element) {
   return [0].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    })
+  React.cloneElement(element, {
+    key: value,
+  })
   );
 }
 
 export default function InteractiveListTrips({ props, deleteTrip }) {
+  const textFieldRef = React.createRef();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -69,7 +70,16 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
     setOpen((prev) => !prev);
   };
 
-  const handleClickAway = () => {
+  const handleClickAway = (e) => { // TODO fix known bug of Muiselect triggering clickAwayListener
+    
+    if (
+   
+      e.target
+    ) {
+      e.target.focus();
+    
+      return;
+    }
     setOpen(false);
   };
 
@@ -117,9 +127,9 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
 
               {/* <Divider variant="middle" /> */}
 
-              <Grid direction="row" justify="center" alignItems="center">
-                <ClickAwayListener onClickAway={handleClickAway}>
-                  <span>
+              <ClickAwayListener onClickAway={handleClickAway}>
+                <span>
+                  <Grid direction="row" justify="center" alignItems="center">
                     {open ? (
                       <IconButton>
                         <ExpandLess fontSize="large" onClick={handleClick} />
@@ -142,17 +152,14 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
                               <b>Other Details</b>
                             </h3>
                             {/*TODO Link to edit trip data*/}
-                            <IconButton>
-                              {/* <EditIcon
-                                color="#259CBB" // cyan
-                                fontSize="large"
-                                onClick={() => updateTrip(props._id, props)}
-                              /> */}
-                              <TransitionsModalTrips
-                                tripData={props}
-                                editClicked={true}
-                              />
-                            </IconButton>
+
+                            <TransitionsModalTrips
+                              id="transitionsModalTrips"
+                              inputRef={textFieldRef}
+                              tripData={props}
+                              editClicked={true}
+                            />
+
                             <IconButton>
                               <DeleteForeverIcon
                                 color="#2222"
@@ -185,10 +192,12 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
                           <br />
                         </Typography>
                       </div>
-                    ) : null}
-                  </span>
-                </ClickAwayListener>
-              </Grid>
+                    ) : (
+                      ""
+                    )}
+                  </Grid>
+                </span>
+              </ClickAwayListener>
             </ListItem>
           </div>
         )}

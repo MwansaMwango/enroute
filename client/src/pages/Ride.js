@@ -91,7 +91,6 @@ function Ride({ isEdit, requestData }) {
     // }
   }));
   const classes = useStyles();
-  const [] = React.useState(0);
 
   let uniqueRouteList = [];
 
