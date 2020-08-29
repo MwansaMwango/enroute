@@ -44,6 +44,7 @@
     "react-material-ui": "0.0.1",
     "react-materialize": "^3.9.2",
     "react-moment": "^0.9.7",
+    "react-slick": "^0.27.10",
     "validator": "^13.1.1"
   }
 }

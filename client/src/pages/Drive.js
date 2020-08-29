@@ -10,6 +10,7 @@ import Switch from "@material-ui/core/Switch";
 import Jumbotron from "../components/Jumbotron";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 import API from "../utils/API";
+import SimpleSlider from "../components/SimpleSlider"
 import { Container, Col, Row } from "../components/Grid"; // removed container
 import {
   makeStyles,
@@ -186,7 +187,8 @@ function Drive({ isEdit, tripData }) {
                 direction="row"
                 justify="center"
                 alignItems="center"
-              >
+                >
+               
                 <form className={classes.root}>
                   <Grid >
                     <TextField
