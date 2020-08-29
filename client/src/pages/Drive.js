@@ -72,6 +72,7 @@ function Drive({ isEdit, tripData }) {
     container: {
       display: "flex",
       flexWrap: "wrap",
+      maxHeight: "90vw"
     },
     textField: {
       // marginLeft: theme.spacing(1),
@@ -187,11 +188,10 @@ function Drive({ isEdit, tripData }) {
                 alignItems="center"
               >
                 <form className={classes.root}>
-                  <Grid item>
+                  <Grid >
                     <TextField
                       id="from"
                       select
-                  
                       label="From (required)"
                       defaultValue={tripData ? tripData.from : ""}
                       onChange={handleInputChange}
@@ -213,7 +213,7 @@ function Drive({ isEdit, tripData }) {
                       ))}
                     </TextField>
                   </Grid>
-                  <Grid item>
+                  <Grid >
                     <TextField
                       id="to"
                       select
@@ -239,7 +239,7 @@ function Drive({ isEdit, tripData }) {
                     </TextField>
                   </Grid>
 
-                  <Grid item>
+                  <Grid >
                     <TextField
                       id="departDate"
                       type="date"
@@ -280,7 +280,7 @@ function Drive({ isEdit, tripData }) {
                     }
                   />
 
-                  <Grid item>
+                  <Grid>
                     <TextField
                       id="outlined-basic"
                       label="Free Seats?"
