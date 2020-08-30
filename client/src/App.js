@@ -19,6 +19,8 @@ import Nav from "./components/Nav";
 import NotificationContext from "./utils/NotificationContext";
 import MyTrips from "./pages/MyTrips"
 import NewsFeed from "./pages/NewsFeed";
+
+
 function App() {
 
   const [isNewNotification, setIsNewNotification] = useState();
