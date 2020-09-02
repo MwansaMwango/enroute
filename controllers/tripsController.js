@@ -11,6 +11,14 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
 
+  getTripsCompleted: function (req, res) { // Find all my Trips with status complete
+    db.Trip.find({ user_id: req.user._id, status: "Complete" })
+      .populate("user_id")
+      .sort({ departDate: -1 })
+      .then((dbModel) => res.json(dbModel))
+      .catch((err) => res.status(422).json(err));
+  },
+
   
   findById: function (req, res) {
     console.log("Trip req ID", req.params.id);

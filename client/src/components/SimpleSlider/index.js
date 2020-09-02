@@ -3,11 +3,10 @@ import Slider from "react-slick";
 import { Grid } from "@material-ui/core/";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 import "../../../node_modules/slick-carousel/slick/slick.css";
-// import "./style.css";
-// import './slick.css';
-// import './slick-theme.css';
+import ImgMediaCard from "../ImgMediaCard";
+import Typography from "@material-ui/core/Typography";
 
-export default function SimpleSlider() {
+export default function SimpleSlider(feedList) {
   const settings = {
     dots: true,
     infinite: true,
@@ -18,25 +17,34 @@ export default function SimpleSlider() {
     // pauseOnFocus: true,
   };
   return (
-    <div >
-      
-      <h2 style={{"display": "flex", "justifyContent":"center"}}> Newsfeed</h2>
+    <div>
+      <Typography variant="h3" gutterTop style={{ display: "flex", justifyContent: "center" }}> Newsfeed</Typography>
 
-      <Slider {...settings}  >
-        <div  >
-          <h3 style={{"display": "flex", "justifyContent":"center"}} >Jene Wilson from marking just earned 20pts...</h3>
+      <Slider {...settings}>
+        <div>
+          <h3 style={{ display: "flex", justifyContent: "center" }}>
+            <ImgMediaCard feed={feedList[0]} />
+          </h3>
         </div>
         <div>
-          <h3 style={{"display": "flex", "justifyContent":"center"}}>Redeem new bose headphones with only 250pts...</h3>
+          <h3 style={{ display: "flex", justifyContent: "center" }}>
+            <ImgMediaCard feed={feedList[1]} />
+          </h3>
         </div>
         <div>
-          <h3 style={{"display": "flex", "justifyContent":"center"}}>Rachel Hunter has completed a trip to Belmont...</h3>
+          <h3 style={{ display: "flex", justifyContent: "center" }}>
+            <ImgMediaCard feed={feedList[2]} />
+          </h3>
         </div>
         <div>
-          <h3 style={{"display": "flex", "justifyContent":"center"}}>Redeem lunch for two at Suchi Kings - 150pts</h3>
+          <h3 style={{ display: "flex", justifyContent: "center" }}>
+            <ImgMediaCard feed={feedList[3]} />
+          </h3>
         </div>
         <div>
-          <h3 style={{"display": "flex", "justifyContent":"center"}}>You have saved 500kgs of Co2 his year</h3>
+          <h3 style={{ display: "flex", justifyContent: "center" }}>
+            <ImgMediaCard feed={feedList[4]} />
+          </h3>
         </div>
       </Slider>
     </div>

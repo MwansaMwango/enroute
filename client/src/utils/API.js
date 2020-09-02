@@ -25,6 +25,10 @@ export default {
   getTrips: function () {
     return axios.get("/api/trips");
   },
+  // Gets all my trips with status Complete
+  getTripsCompleted: function () {
+    return axios.get("/api/trips");
+  },
   // Gets all matching trips
   findMatchingTrips: function (requestData) {
     return axios.post("/api/trips/matches", requestData);

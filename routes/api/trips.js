@@ -4,6 +4,7 @@ const tripsController = require("../../controllers/tripsController");
 // Matches with "/api/trips"
 router.route("/")
   .get(tripsController.findAll)
+  .get(tripsController.getTripsCompleted)
   .post(tripsController.create);
  
   router.route("/matches")

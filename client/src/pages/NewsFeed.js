@@ -34,6 +34,7 @@ function NewsFeed({ isEdit, tripData }) {
   console.log("isEditMode =", isEdit, "tripData = ", tripData);
   const [trip] = useState(tripData);
   const [routes, setRoutes] = useState([]);
+  const [feedList, setFeedList] = useState([]);
   const [formObject, setFormObject] = useState({});
   const [carryPackage, setCarryPackage] = useState(
     tripData ? tripData.carryPackage : false
@@ -90,6 +91,7 @@ function NewsFeed({ isEdit, tripData }) {
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
   useEffect(() => {
     loadRoutes();
+    loadNewsfeedList(); // TODO change to webscrapper API to get rewards
   }, []);
 
   function loadRoutes() {
@@ -105,6 +107,16 @@ function NewsFeed({ isEdit, tripData }) {
       })
       .catch((err) => console.log(err));
   }
+
+    // TODO Loads recent trips with user_id = 'userId' and sets them to feedList
+    function loadNewsfeedList() {
+      API.getTripsCompleted() // Get my trips with status = "Complete"
+        .then((res) => {
+          setFeedList(res.data);
+          console.log("Feedlist", res.data);
+        })
+        .catch((err) => console.log(err));
+    }
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
     const { name, value } = event.target;
@@ -174,7 +186,7 @@ function NewsFeed({ isEdit, tripData }) {
           <Row>
             <Col size="md-12">
               <Grid item>
-                <SimpleSlider />
+                <SimpleSlider props={feedList} />
               </Grid>
               <div
                 style={{
