@@ -7,6 +7,7 @@ import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
+import MessageIcon from "@material-ui/icons/Message";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 export default function SimpleBottomNavigation() {
