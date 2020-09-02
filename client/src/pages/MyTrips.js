@@ -163,8 +163,9 @@ function MyTrips() {
                     href="/drive"
                   />
                   <BottomNavigationAction
-                    label="News(future)"
+                    label="Newsfeed"
                     icon={<MessageIcon />}
+                    href="/newsfeed"
                   />
                   <BottomNavigationAction
                     label="Points(future)"

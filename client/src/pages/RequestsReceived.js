@@ -159,8 +159,9 @@ function RequestsReceived({ checkNotificationStatus }) {
       .catch((err) => console.log(err));
   }
   // Undo the accept matching request action
-  function undoAcceptRequest(id, trip_idObject) { // request_id
-    console.log("id = ", id, "trip_idObject = ", trip_idObject)
+  function undoAcceptRequest(id, trip_idObject) {
+    // request_id
+    console.log("id = ", id, "trip_idObject = ", trip_idObject);
     API.undoAcceptRequest(id, trip_idObject)
       .then((res) => {
         findMatchingRequests(selectedTrip);
@@ -213,16 +214,16 @@ function RequestsReceived({ checkNotificationStatus }) {
 
             {matchingRequests.length ? (
               <Grid
-              container
-              justify="center"
-              alignItems="center"
-              direction="column"
+                container
+                justify="center"
+                alignItems="center"
+                direction="column"
               >
                 {/* <List> */}
                 {matchingRequests.map((match) => (
                   <div>
                     <InteractiveListMatches
-                      {...match.trip_id = selectedTrip._id} // spread syntax - bind trip_id to the matched request
+                      {...(match.trip_id = selectedTrip._id)} // spread syntax - bind trip_id to the matched request
                       props={match}
                       undoAcceptRequest={undoAcceptRequest}
                       acceptRequest={acceptRequest}
@@ -285,9 +286,9 @@ function RequestsReceived({ checkNotificationStatus }) {
                   href="/drive"
                 />
                 <BottomNavigationAction
-                  label="Points(future)"
-                  disabled={true}
-                  icon={<EmojiEventsIcon />}
+                  label="Newsfeed"
+                  icon={<MessageIcon />}
+                  href="/newsfeed"
                 />
               </BottomNavigation>
               <br />

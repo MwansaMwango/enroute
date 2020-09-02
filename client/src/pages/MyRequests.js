@@ -202,8 +202,9 @@ function MyRequests() {
                     href="/myTrips"
                   />
                   <BottomNavigationAction
-                    label="Points(future)"
-                    icon={<EmojiEventsIcon />}
+                    label="Newsfeed"
+                    icon={<MessageIcon />}
+                    href="/newsfeed"
                   />
                 </BottomNavigation>
               </div>

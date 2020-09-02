@@ -10,37 +10,37 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 export default function SimpleBottomNavigation() {
-
   const [value, setValue] = React.useState(0);
 
   return (
     <BottomNavigation
-    value={value}
-    onChange={(event, newValue) => {
-      setValue(newValue);
-    }}
-    showLabels
-  >
-    <BottomNavigationAction
-      label="Drive"
-      icon={<LocalTaxiIcon />}
-      href="/drive"
-    />
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+      }}
+      showLabels
+    >
+      <BottomNavigationAction
+        label="Drive"
+        icon={<LocalTaxiIcon />}
+        href="/drive"
+      />
 
-    <BottomNavigationAction
-      label="My Trips"
-      icon={<PersonPinCircleIcon />}
-      href="/myTrips"
-    />
-    <BottomNavigationAction
-      label="My Requests"
-      icon={<AirlineSeatReclineNormalIcon />}
-      href="/myrequests"
-    />
-    <BottomNavigationAction
-      label="Points(future)"
-      icon={<EmojiEventsIcon />}
-    />
-  </BottomNavigation>
+      <BottomNavigationAction
+        label="My Trips"
+        icon={<PersonPinCircleIcon />}
+        href="/myTrips"
+      />
+      <BottomNavigationAction
+        label="My Requests"
+        icon={<AirlineSeatReclineNormalIcon />}
+        href="/myrequests"
+      />
+      <BottomNavigationAction
+        label="Newsfeed"
+        icon={<MessageIcon />}
+        href="/newsfeed"
+      />
+    </BottomNavigation>
   );
 }
