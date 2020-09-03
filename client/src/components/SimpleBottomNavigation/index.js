@@ -10,6 +10,7 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import MessageIcon from "@material-ui/icons/Message";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+
 export default function SimpleBottomNavigation() {
   const [value, setValue] = React.useState(0);
 
