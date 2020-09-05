@@ -11,8 +11,8 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
 
-  getTripsCompleted: function (req, res) { // Find all my Trips with status complete
-    db.Trip.find({ user_id: req.user._id, status: "Complete" })
+  getTripsCompleted: function (req, res) { // Find all my Trips with status completed 
+    db.Trip.find({ user_id: req.user._id, status: "Completed" })
       .populate("user_id")
       .sort({ departDate: -1 })
       .then((dbModel) => res.json(dbModel))
@@ -67,7 +67,7 @@ module.exports = {
   },
   
   update: function (req, res) {
-    db.Trip.findOneAndUpdate({ _id: req.params.id }, req.body)
+    db.Trip.findOneAndUpdate({ _id: req.params.id }, req.body) // only updates fields that are defined in the req,body, otherwise no change in DB
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
   },

@@ -12,7 +12,7 @@ const RequestSchema = new Schema(
     seatsRequired: { type: Number, default: 1 },
     isTransportVehicle: { type: Boolean, default: false },
     requestNote: { type: String },
-    status: { type: String, default: "Pending" },
+    status: { type: String, default: "Pending" }, // Request Status Lifecycle - Pending > Booked > Started > Completed || Expired
     trip_id: { type: Schema.Types.ObjectId, ref: "Trip" }, // 1 to 1 Relationship
     user_id: { type: Schema.Types.ObjectId, ref: "User" }, // 1 to 1 Relationship
     driver_id: { type: Schema.Types.ObjectId, ref: "User" }, // 1 to 1 Relationship with User

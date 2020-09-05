@@ -17,6 +17,7 @@ import API from "../../utils/API";
 import TransitionsModalRequest from "../TransitionsModalRequest";
 import IconButton from '@material-ui/core/IconButton';
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 400, // limits display across very wide screens / desktops
@@ -146,6 +147,7 @@ export default function InteractiveListRequests({
                         justify="center"
                         alignItems="center"
                       >
+
                         <DeleteIcon
                           color="disabled"
                           fontSize="large"

@@ -12,6 +12,7 @@ import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import Button from "@material-ui/core/Button";
 import CancelIcon from "@material-ui/icons/Cancel";
 import MessageIcon from "@material-ui/icons/Message";
+import PhoneIcon from "@material-ui/icons/Phone";
 import moment from "moment";
 import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
@@ -118,7 +119,7 @@ export default function InteractiveListMatches({
                   props.status === "Confirmed" ? (
                     <a href={phoneLink}>
                       <Grid container alignItems="center">
-                        {/* <PhoneIcon /> */}
+                        {/* <PhoneIcon size="small" /> */}
                         {props.user_id.phone}
                       </Grid>
                     </a>
@@ -129,11 +130,12 @@ export default function InteractiveListMatches({
               />
               {/* <Divider variant="middle" /> */}
 
+              <ListItemText primary="Pts" secondary="10" />
+
               <ListItemText
                 primary={moment(props.departDate).format("DD MMM")}
                 secondary={props.departTime}
               />
-
               {/* <Divider variant="middle" /> */}
               {(() => {
                 switch (props.status) {

@@ -16,7 +16,9 @@ import MyLocationIcon from "@material-ui/icons/MyLocation";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import TransitionsModalTrips from "../TransitionsModalTrips";
-
+import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
+import API from "../../utils/API";
+import DoneAllIcon from '@material-ui/icons/DoneAll';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,9 +62,9 @@ const useStyles = makeStyles((theme) => ({
 
 function generate(element) {
   return [0].map((value) =>
-  React.cloneElement(element, {
-    key: value,
-  })
+    React.cloneElement(element, {
+      key: value,
+    })
   );
 }
 
@@ -75,14 +77,23 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
     setOpen((prev) => !prev);
   };
 
-  const handleClickAway = (e) => { // TODO fix known bug of Muiselect triggering clickAwayListener
-    
-    if (
-   
-      e.target
-    ) {
+  const handleUpdateTripStatus = (newStatus) => {
+    props.status = newStatus
+    console.log("trip data updated props", props);
+    API.updateTrip(props._id, props)
+      .then(function (res) {
+        alert(JSON.stringify("Updated trip status.", res.data));
+        window.location.reload(); //refresh page
+      })
+      .catch((err) => console.log(err));
+  };
+ 
+  const handleClickAway = (e) => {
+    // TODO fix known bug of Muiselect triggering clickAwayListener
+
+    if (e.target) {
       e.target.focus();
-    
+
       return;
     }
     setOpen(false);
@@ -121,17 +132,32 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
                 primary={moment(props.departDate).format("DD MMM")}
                 secondary={props.departTime}
               />
-              <ListItemText
-                primary="Status"
-                // Status of booking set in UI if request_id / booking has been created in DB
-                // request_id can be used as flag for setting notification / alert bell icon
-                secondary={props.request_id ? "Booked" : "Posted"} 
-              />
 
-              <Link to={"/trips/" + props._id}>
-                <FindInPageIcon fontSize="large" />
-              </Link>
+              <ListItemText primary="Status" secondary={props.status} />
 
+              {props.status === "Started" ? (
+                <IconButton size="small">
+                  <DoneAllIcon
+                    fontSize="large"
+                    onClick={handleUpdateTripStatus("Completed")}
+                  />
+                </IconButton>
+              ) : (
+                ""
+              )}
+
+              {props.status === "Booked" ? (
+                <IconButton size="small">
+                  <PlayCircleFilledIcon
+                    fontSize="large"
+                    onClick={handleUpdateTripStatus("Started")}
+                  />
+                </IconButton>
+              ) : (
+                <Link to={"/trips/" + props._id}>
+                  <FindInPageIcon fontSize="large" />
+                </Link>
+              )}
               {/* <Divider variant="middle" /> */}
 
               <ClickAwayListener onClickAway={handleClickAway}>

@@ -70,7 +70,7 @@ module.exports = {
   },
 
   acceptRequest: function (req, res) {
-    req.body.status = "Confirmed"; // change status booking to comfirmed
+    req.body.status = "Booked"; // change status booking to booked
     req.body.driver_id = req.user.id; // attach driver id to request record
     console.log("update hit...req.body = ", req.body);
 
@@ -89,7 +89,7 @@ module.exports = {
   },
   undoAccept: function (req, res) {
     console.log("undo route hit1", req.body);
-    req.body.status = "Pending"; // change status booking to comfirmed
+    req.body.status = "Pending"; // change status booking to Pending
     req.body.driver_id = null; //mongoDB does not process empty strings
     let tempTrip_id = req.body.trip_id; // copy trip_id for use Trip collection query
     req.body.trip_id = null; // dettach trip_id
