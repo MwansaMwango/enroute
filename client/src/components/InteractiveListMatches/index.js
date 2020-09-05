@@ -3,36 +3,20 @@ import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import FolderIcon from "@material-ui/icons/Folder";
-import DeleteIcon from "@material-ui/icons/Delete";
-import Divider from "@material-ui/core/Divider";
 import AccountBoxRoundedIcon from "@material-ui/icons/AccountBoxRounded";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import NotInterestedIcon from "@material-ui/icons/NotInterested";
 import Button from "@material-ui/core/Button";
-import EventBusyIcon from "@material-ui/icons/EventBusy";
-import PhoneIcon from "@material-ui/icons/Phone";
 import CancelIcon from "@material-ui/icons/Cancel";
 import MessageIcon from "@material-ui/icons/Message";
-import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import moment from "moment";
-import AirlineSeatReclineExtraIcon from "@material-ui/icons/AirlineSeatReclineExtra";
 import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
-import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -85,8 +69,8 @@ export default function InteractiveListMatches({
   acceptRequest,
 }) {
   const classes = useStyles();
-  const [dense, setDense] = React.useState(false);
-  const [secondary, setSecondary] = React.useState(true);
+  const [] = React.useState(false);
+  const [] = React.useState(true);
   const [open, setOpen] = React.useState(false);
   let phoneLink = "tel:" + props.user_id.phone;
   let smsLink = "sms:" + props.user_id.phone;

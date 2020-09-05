@@ -1,105 +1,44 @@
 import React, { useState, useEffect } from "react";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import ListItemText from "@material-ui/core/ListItemText";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
-import AccountCircle from "@material-ui/icons/AccountCircle";
-import MyLocationIcon from "@material-ui/icons/MyLocation";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
 import PersonPinCircleIcon from "@material-ui/icons/PersonPinCircle";
-import LocalMallIcon from "@material-ui/icons/LocalMall";
-import PublishIcon from "@material-ui/icons/Publish";
-import AirlineSeatReclineNormalIcon from "@material-ui/icons/AirlineSeatReclineNormal";
-import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
-import ButtonGroup from "@material-ui/core/ButtonGroup";
-import LocalTaxiRoundedIcon from "@material-ui/icons/LocalTaxiRounded";
 import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
-import LocalLibraryIcon from "@material-ui/icons/LocalLibrary";
 import MessageIcon from "@material-ui/icons/Message";
-import FormGroup from "@material-ui/core/FormGroup";
-import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
-import Popper from "@material-ui/core/Popper";
 // import Alert from "@material-ui/lab/Alert";
-import Switch from "@material-ui/core/Switch";
-import Divider from "@material-ui/core/Divider";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-import RestoreIcon from "@material-ui/icons/Restore";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import InteractiveListMatches from "../components/InteractiveListMatches";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
-import { Link } from "react-router-dom";
 import { Container, Col, Row } from "../components/Grid"; // removed container
 
 import {
   makeStyles,
-  ThemeProvider,
   createMuiTheme,
 } from "@material-ui/core/styles";
 import {
-  InputWithIcon,
-  BasicTextFields,
-  TextArea,
-  FormBtn,
-} from "../components/Form";
-import {
-  Input,
   Box,
   Grid,
-  TextField,
-  // Container,
-  MenuItem,
-  Button,
-  Checkbox,
-  FormControlLabel,
 } from "@material-ui/core/";
 
 import "./drive.css";
 
-import DeclineBtn from "../components/DeclineBtn"; //
 
 import moment from "moment";
 import { useParams } from "react-router-dom";
 
-import { List, ListItem } from "../components/List"; //
-import AcceptBtn from "../components/AcceptBtn"; //
-import CancelBtn from "../components/CancelBtn"; //
-import DeleteBtn from "../components/CancelBtn"; //
 
 function RequestsReceived({ checkNotificationStatus }) {
   // Setting our component's initial state
   const [selectedTrip, setSelectedTrip] = useState({});
   // const [tempTrip, setTempTrip] = useState();
   const [matchingRequests, setMatchingRequests] = useState([]);
-  const [value, setValue] = React.useState(0);
+  const [, setValue] = React.useState(0);
   const [page, setPage] = React.useState("ride");
-  const [secondary, setSecondary] = React.useState(false);
+  const [] = React.useState(false);
 
-  const theme = createMuiTheme({
-    palette: {
-      primary: {
-        light: "#FF9057",
-        main: "#E64500",
-        dark: "#022222",
-        contrastText: "#fff",
-      },
-      secondary: {
-        light: "#78849E",
-        main: "#259CBB",
-        dark: "#168387",
-        contrastText: "#000",
-      },
-    },
-  });
 
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles(() => ({
     root: {
       container: {
         // display: "flex",
@@ -108,11 +47,7 @@ function RequestsReceived({ checkNotificationStatus }) {
       },
     },
   }));
-  const classes = useStyles();
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
   // When this component mounts, grab the trip with the _id of props.match.params.id
   // e.g. localhost:3000/trips/599dcb67f0f16317844583fc
   const { id } = useParams();
@@ -162,7 +97,7 @@ function RequestsReceived({ checkNotificationStatus }) {
     // request_id
     console.log("id = ", id, "trip_idObject = ", trip_idObject);
     API.undoAcceptRequest(id, trip_idObject)
-      .then((res) => {
+      .then(() => {
         findMatchingRequests(selectedTrip);
       })
       .catch((err) => console.log(err));
