@@ -118,7 +118,9 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
               />
               <ListItemText
                 primary="Status"
-                secondary={props.request_id ? "Confirmed" : "Pending"}
+                // Status of booking set in UI if request_id / booking has been created in DB
+                // request_id can be used as flag for setting notification / alert bell icon
+                secondary={props.request_id ? "Booked" : "Posted"} 
               />
 
               <Link to={"/trips/" + props._id}>
@@ -169,7 +171,7 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
                             </IconButton>
                           </Grid>
                           <hr />
-                          Trips Note:{" "}
+                          Trip note:{" "}
                           {props.tripNote ? (
                             <Typography
                               fontStyle="oblique"
@@ -181,12 +183,12 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
                             "None"
                           )}{" "}
                           <br />
-                          Seats required:{" "}
+                          Free seats:{" "}
                           {props.freeSeats
                             ? "  " + props.freeSeats
                             : "None"}{" "}
                           <br />
-                          Carry package?: {props.carryPackage
+                          Carry package? {props.carryPackage
                             ? " Yes"
                             : "No"}{" "}
                           <br />

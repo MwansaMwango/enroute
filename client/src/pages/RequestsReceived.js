@@ -114,7 +114,7 @@ function RequestsReceived({ checkNotificationStatus }) {
     setValue(newValue);
   };
   // When this component mounts, grab the trip with the _id of props.match.params.id
-  // e.g. localhost:3000/requestsreceived/599dcb67f0f16317844583fc
+  // e.g. localhost:3000/trips/599dcb67f0f16317844583fc
   const { id } = useParams();
 
   useEffect(() => {
@@ -124,6 +124,7 @@ function RequestsReceived({ checkNotificationStatus }) {
   function getMatchesbyTripId(id) {
     API.getTrip(id)
       .then((res) => {
+        console.log("getTrip res = ", res.data);
         findMatchingRequests(res.data);
         setSelectedTrip(res.data);
       })
@@ -136,8 +137,6 @@ function RequestsReceived({ checkNotificationStatus }) {
       .then((res) => {
         setMatchingRequests(res.data);
         console.log("Matching request res.data = ", res.data);
-        // matchList.push(res);
-        // console.log("Returned matching requests ", res.data);
       })
       .catch((err) => console.log(err));
   }

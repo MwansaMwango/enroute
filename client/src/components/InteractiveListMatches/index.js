@@ -174,40 +174,34 @@ export default function InteractiveListMatches({
                         justify="center"
                         alignItems="center"
                       >
-                        <IconButton>
-                          <CancelIcon
-                            color="disabled"
-                            fontSize="large"
-                            onClick={() =>
-                              undoAcceptRequest(props._id, {
-                                trip_id: tempTrip_id,
-                              })
-                            }
-                          />
-                        </IconButton>
+                        <CancelIcon
+                          color="disabled"
+                          fontSize="large"
+                          onClick={() =>
+                            undoAcceptRequest(props._id, {
+                              trip_id: tempTrip_id,
+                            })
+                          }
+                        />
 
-                        <IconButton>
-                          <a href={smsLink}>
-                            <MessageIcon color="secondary" fontSize="large" />
-                          </a>
-                        </IconButton>
+                        <a href={smsLink}>
+                          <MessageIcon color="secondary" fontSize="large" />
+                        </a>
 
                         <ClickAwayListener onClickAway={handleClickAway}>
                           <span>
                             {open ? (
-                              <IconButton>
-                                <ExpandLess
-                                  fontSize="large"
-                                  onClick={handleClick}
-                                />
-                              </IconButton>
+                              // <IconButton>
+                              <ExpandLess
+                                fontSize="large"
+                                onClick={handleClick}
+                              />
                             ) : (
-                              <IconButton>
-                                <ExpandMore
-                                  fontSize="large"
-                                  onClick={handleClick}
-                                />
-                              </IconButton>
+                              // </IconButton>
+                              <ExpandMore
+                                fontSize="large"
+                                onClick={handleClick}
+                              />
                             )}
 
                             {open ? (

@@ -28,7 +28,7 @@ module.exports = {
   findMatchingRequests: function (req, res) {
     // load this in Requests Received page for driver req.body is an instance of 1 trip
     console.log(
-      "Run findMatchingRequests, Post, Trip Data, req.body= ",
+      "Run findMatchingRequests using Trip Data, req.body= ",
       req.body
     );
     db.Request.find({
@@ -37,7 +37,7 @@ module.exports = {
       from: req.body.from,
       to: req.body.to,
       seatsRequired: {
-        $lte: req.body.freeSeats,
+        $lte: req.body.freeSeats, // seatsRequired less than or equal to freeSeats 
       },
       departDate: req.body.departDate,
       user_id: {

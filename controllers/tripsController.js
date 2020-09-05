@@ -21,7 +21,7 @@ module.exports = {
 
   
   findById: function (req, res) {
-    console.log("Trip req ID", req.params.id);
+
     db.Trip.findById(req.params.id)
       .then((dbModel) => res.json(dbModel))
       .catch((err) => res.status(422).json(err));
@@ -36,7 +36,7 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   findMatchingTrips: function (req, res) {
-    console.log("findMatchingTrips rout hit",req.body);
+
     db.Trip.find({
       // Mandatory parameters
       from: req.body.from,
@@ -44,7 +44,7 @@ module.exports = {
       freeSeats: {
         $gte: req.body.freeSeats,
       },
-      departDate : req.body.departDate, // matches form same day
+      departDate : req.body.departDate, // matches by date
       user_id: { 
         $ne: req.user._id, // exclude my trips
       },
@@ -61,7 +61,7 @@ module.exports = {
     })
       .then(function (dbModel) {
         res.json(dbModel);
-        console.log("Result matches =", dbModel.length);
+        console.log("Trip matches =", dbModel.length);
       })
       .catch((err) => res.status(422).json(err));
   },

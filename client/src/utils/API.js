@@ -60,7 +60,7 @@ export default {
     updateRequest: function (id, requestData) {
       return axios.put("/api/requests/" + id, requestData);
     },
-    // Gets all matching requests
+    // Gets all matching requests for a trip
     findMatchingRequests: function (tripData) {
       return axios.post("/api/requests/matches", tripData);
     },
