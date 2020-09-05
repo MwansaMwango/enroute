@@ -17,6 +17,7 @@ import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -158,34 +159,38 @@ export default function InteractiveListMatches({
                         justify="center"
                         alignItems="center"
                       >
-                        <CancelIcon
-                          color="disabled"
-                          fontSize="large"
-                          onClick={() =>
-                            undoAcceptRequest(props._id, {
-                              trip_id: tempTrip_id,
-                            })
-                          }
-                        />
-
-                        <a href={smsLink}>
-                          <MessageIcon color="secondary" fontSize="large" />
-                        </a>
-
+                        <IconButton size="small">
+                          <CancelIcon
+                            color="disabled"
+                            fontSize="large"
+                            onClick={() =>
+                              undoAcceptRequest(props._id, {
+                                trip_id: tempTrip_id,
+                              })
+                            }
+                          />
+                        </IconButton>
+                        <IconButton size="small">
+                          <a href={smsLink}>
+                            <MessageIcon color="secondary" fontSize="large" />
+                          </a>
+                        </IconButton>
                         <ClickAwayListener onClickAway={handleClickAway}>
                           <span>
                             {open ? (
-                              // <IconButton>
-                              <ExpandLess
-                                fontSize="large"
-                                onClick={handleClick}
-                              />
+                              <IconButton size="small">
+                                <ExpandLess
+                                  fontSize="large"
+                                  onClick={handleClick}
+                                />
+                              </IconButton>
                             ) : (
-                              // </IconButton>
-                              <ExpandMore
-                                fontSize="large"
-                                onClick={handleClick}
-                              />
+                              <IconButton size="small">
+                                <ExpandMore
+                                  fontSize="large"
+                                  onClick={handleClick}
+                                />
+                              </IconButton>
                             )}
 
                             {open ? (

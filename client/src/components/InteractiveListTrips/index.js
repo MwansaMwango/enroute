@@ -16,6 +16,8 @@ import MyLocationIcon from "@material-ui/icons/MyLocation";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import TransitionsModalTrips from "../TransitionsModalTrips";
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 400, // limits display across very wide screens / desktops
@@ -33,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
       fontSize: theme.typography.pxToRem(15),
       fontWeight: theme.typography.fontWeightRegular,
     },
+  },
+  margin: {
+    margin: theme.spacing(1),
   },
 
   dropdown: {
