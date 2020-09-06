@@ -94,7 +94,7 @@ export default function InteractiveListMatches({
             <ListItem>
               <ListItemAvatar>
                 <Avatar>
-                  {props.status === "Confirmed" ? (
+                  {props.status === "Booked" ? (
                     <AccountBoxRoundedIcon /> // TODO adopt User's avator
                   ) : (
                     <EmojiPeopleRoundedIcon />
@@ -104,7 +104,7 @@ export default function InteractiveListMatches({
 
               <ListItemText
                 primary={
-                  props.status === "Confirmed" ? (
+                  props.status === "Booked" ? (
                     <b>
                       {" "}
                       {props.user_id.firstName +
@@ -116,7 +116,7 @@ export default function InteractiveListMatches({
                   )
                 }
                 secondary={
-                  props.status === "Confirmed" ? (
+                  props.status === "Booked" ? (
                     <a href={phoneLink}>
                       <Grid container alignItems="center">
                         {/* <PhoneIcon size="small" /> */}
@@ -154,7 +154,7 @@ export default function InteractiveListMatches({
                       </Button>
                     );
 
-                  case "Confirmed":
+                  case "Booked":
                     return (
                       <Grid
                         direction="row"

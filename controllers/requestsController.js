@@ -78,9 +78,9 @@ module.exports = {
       .then((dbModel) => {
         res.json(dbModel);
         db.Trip.findOneAndUpdate(
-          // bind request_id to trip record
+          // bind request_id to trip record and change trip status to "Booked"
           { _id: req.body.trip_id },
-          { request_id: req.params.id }
+          { request_id: req.params.id, status: "Booked" }
         ).then((dbModel) => {
           console.log("Updated trip record with request_id", dbModel);
         });
@@ -97,9 +97,9 @@ module.exports = {
       .then((dbModel) => {
         res.json(dbModel);
         db.Trip.findOneAndUpdate(
-          // bind request_id to trip record
+          // bind request_id to trip record and change trip status back to Posted
           { _id: tempTrip_id },
-          { request_id: null }
+          { request_id: null, status: "Posted" }
         ).then((dbModel) => {
           console.log("UndoAccept trip record with request_id", dbModel);
         });

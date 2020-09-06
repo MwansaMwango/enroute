@@ -18,7 +18,9 @@ import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
 import TransitionsModalTrips from "../TransitionsModalTrips";
 import PlayCircleFilledIcon from "@material-ui/icons/PlayCircleFilled";
 import API from "../../utils/API";
-import DoneAllIcon from '@material-ui/icons/DoneAll';
+import DoneAllIcon from "@material-ui/icons/DoneAll";
+import FlagIcon from "@material-ui/icons/Flag";
+import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -78,7 +80,7 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
   };
 
   const handleUpdateTripStatus = (newStatus) => {
-    props.status = newStatus
+    props.status = newStatus;
     console.log("trip data updated props", props);
     API.updateTrip(props._id, props)
       .then(function (res) {
@@ -87,7 +89,7 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
       })
       .catch((err) => console.log(err));
   };
- 
+
   const handleClickAway = (e) => {
     // TODO fix known bug of Muiselect triggering clickAwayListener
 
@@ -134,31 +136,41 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
               />
 
               <ListItemText primary="Status" secondary={props.status} />
-
-              {props.status === "Started" ? (
-                <IconButton size="small">
-                  <DoneAllIcon
-                    fontSize="large"
-                    onClick={handleUpdateTripStatus("Completed")}
-                  />
-                </IconButton>
-              ) : (
-                ""
-              )}
-
+              {/* TODO use set state for status or seperate if ternsry renders*/}
+              {/* {(() => { */}
               {props.status === "Booked" ? (
                 <IconButton size="small">
                   <PlayCircleFilledIcon
                     fontSize="large"
-                    onClick={handleUpdateTripStatus("Started")}
+                    onClick={() => {
+                      handleUpdateTripStatus("Started");
+                    }}
                   />
                 </IconButton>
+              ) : props.status === "Started" ? (
+                <IconButton size="small">
+                  <DoneAllIcon
+                    fontSize="large"
+                    onClick={() => {
+                      handleUpdateTripStatus("Completed");
+                    }}
+                  />
+                </IconButton>
+              ) : props.status === "Completed" ? (
+                
+                <ListItemText
+                    primary= {
+                      <IconButton size="small">
+                      <EmojiEventsIcon fontSize="medium" />
+                      </IconButton>
+                    }
+                    secondary="20Pts" // TODO - change from hard coded points to points determined by distance travelled etc 
+                />
               ) : (
                 <Link to={"/trips/" + props._id}>
                   <FindInPageIcon fontSize="large" />
                 </Link>
               )}
-              {/* <Divider variant="middle" /> */}
 
               <ClickAwayListener onClickAway={handleClickAway}>
                 <span>
