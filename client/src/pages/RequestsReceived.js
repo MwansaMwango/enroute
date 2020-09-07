@@ -12,21 +12,14 @@ import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Container, Col, Row } from "../components/Grid"; // removed container
 
-import {
-  makeStyles,
-  createMuiTheme,
-} from "@material-ui/core/styles";
-import {
-  Box,
-  Grid,
-} from "@material-ui/core/";
+import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import { Box, Grid } from "@material-ui/core/";
 
 import "./drive.css";
 
-
 import moment from "moment";
 import { useParams } from "react-router-dom";
-
+import NotificationCenter from "react-notification-center-component";
 
 function RequestsReceived({ checkNotificationStatus }) {
   // Setting our component's initial state
@@ -36,7 +29,6 @@ function RequestsReceived({ checkNotificationStatus }) {
   const [, setValue] = React.useState(0);
   const [page, setPage] = React.useState("ride");
   const [] = React.useState(false);
-
 
   const useStyles = makeStyles(() => ({
     root: {
@@ -85,13 +77,26 @@ function RequestsReceived({ checkNotificationStatus }) {
         findMatchingRequests(selectedTrip);
 
         //TODO run confirm action modal screen
-        //Send details of Driver to Ride Requestor - done in server
+        //Send details of Driver to Ride Requestor - done in ravenhub notification center'
+        sendAcceptBookingNotif(selectedTrip.user_id);
       })
 
       // .then(() => window.location.reload())
 
       .catch((err) => console.log(err));
   }
+
+  // Send Booking Confirmed Notification
+  function sendAcceptBookingNotif(subscriberId) {
+    // subscriberId = user_id i.e. driver id
+    console.log("selectedTrip = ", selectedTrip);
+    API.sendAcceptBookingNotif(subscriberId)
+      .then((res) => {
+        console.log("sendAcceptBookingNotif res = ", res);
+      })
+      .catch((err) => console.log(err));
+  }
+
   // Undo the accept matching request action
   function undoAcceptRequest(id, trip_idObject) {
     // request_id
@@ -135,6 +140,12 @@ function RequestsReceived({ checkNotificationStatus }) {
                 <h2>
                   {selectedTrip.from} - {selectedTrip.to}
                 </h2>
+                <NotificationCenter
+                  className="myCustomClass"
+                  appId="dahvfkvQhg" // retrieved from ravenhub.io account
+                  subscriberId={selectedTrip.user_id} // My user_id as a driver
+                />
+                ;
                 <h3>
                   {moment(selectedTrip.departDate).format("DD-MMM-YYYY")}{" "}
                   {selectedTrip.departTime}

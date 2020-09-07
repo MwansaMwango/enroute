@@ -19,14 +19,14 @@ import Nav from "./components/Nav";
 import NotificationContext from "./utils/NotificationContext";
 import MyTrips from "./pages/MyTrips"
 import NewsFeed from "./pages/NewsFeed";
-
+// import NotificationCenter from "react-notification-center-component";
 
 function App() {
 
   const [isNewNotification, setIsNewNotification] = useState();
 
   function checkNotificationStatus(status) {
-    if (status === "Confirmed") {
+    if (status === "Booked") {
       setIsNewNotification(1);
     } 
   }

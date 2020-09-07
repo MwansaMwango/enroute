@@ -164,7 +164,7 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
                       <EmojiEventsIcon fontSize="medium" />
                       </IconButton>
                     }
-                    secondary="20Pts" // TODO - change from hard coded points to points determined by distance travelled etc 
+                    secondary="20 Pts" // TODO - change from hard coded points to points determined by distance travelled etc 
                 />
               ) : (
                 <Link to={"/trips/" + props._id}>

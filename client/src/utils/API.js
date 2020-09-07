@@ -56,14 +56,14 @@ export default {
     return axios.post("/api/requests", requestData);
   },
 
-    // Update a request to the database
-    updateRequest: function (id, requestData) {
-      return axios.put("/api/requests/" + id, requestData);
-    },
-    // Gets all matching requests for a trip
-    findMatchingRequests: function (tripData) {
-      return axios.post("/api/requests/matches", tripData);
-    },
+  // Update a request to the database
+  updateRequest: function (id, requestData) {
+    return axios.put("/api/requests/" + id, requestData);
+  },
+  // Gets all matching requests for a trip
+  findMatchingRequests: function (tripData) {
+    return axios.post("/api/requests/matches", tripData);
+  },
 
   // Gets all requests
   getRequests: function () {
@@ -82,7 +82,7 @@ export default {
 
   // Accept the request with the given id
   acceptRequest: function (id, trip_idObject) {
-    return axios.put("/api/requests/accept/" + id, trip_idObject );
+    return axios.put("/api/requests/accept/" + id, trip_idObject);
   },
   // Cancel /undo the accepted request with the given id and update trip_id field
   undoAcceptRequest: function (id, trip_idObject) {
@@ -112,5 +112,21 @@ export default {
   // Gets all routes
   getRoutes: function () {
     return axios.get("/api/routes");
+  },
+  // -----------------Notification APIs------------------------
+  // Send Booking Accepted Notification
+  sendAcceptBookingNotif: function (subscriberId) { // takes in user_id
+    let endpoint =
+      "https://api.ravenhub.io/company/dahvfkvQhg/subscribers/" +
+      subscriberId +
+      "/events/NCEU6FZHKl";
+
+      return axios.post(
+      endpoint,
+      { priority: "Critical" },
+      {
+        headers: { "Content-type": "application/json" },
+      }
+    );
   },
 };
