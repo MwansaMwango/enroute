@@ -19,8 +19,7 @@ import Nav from "./components/Nav";
 import NotificationContext from "./utils/NotificationContext";
 import MyTrips from "./pages/MyTrips"
 import NewsFeed from "./pages/NewsFeed";
-// import NotificationCenter from "react-notification-center-component";
-
+import * as PusherPushNotifications from '@pusher/push-notifications-web'
 function App() {
 
   const [isNewNotification, setIsNewNotification] = useState();

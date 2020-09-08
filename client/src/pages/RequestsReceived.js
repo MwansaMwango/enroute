@@ -19,7 +19,7 @@ import "./drive.css";
 
 import moment from "moment";
 import { useParams } from "react-router-dom";
-import NotificationCenter from "react-notification-center-component";
+
 
 function RequestsReceived({ checkNotificationStatus }) {
   // Setting our component's initial state
@@ -140,12 +140,7 @@ function RequestsReceived({ checkNotificationStatus }) {
                 <h2>
                   {selectedTrip.from} - {selectedTrip.to}
                 </h2>
-                <NotificationCenter
-                  className="myCustomClass"
-                  appId="dahvfkvQhg" // retrieved from ravenhub.io account
-                  subscriberId={selectedTrip.user_id} // My user_id as a driver
-                />
-                ;
+               
                 <h3>
                   {moment(selectedTrip.departDate).format("DD-MMM-YYYY")}{" "}
                   {selectedTrip.departTime}

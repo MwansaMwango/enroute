@@ -58,6 +58,17 @@
     ></script> -->
     <!-- Materialize JS -->
     <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->
-    <script src="https://embed.ravenhub.io/js/app.js"></script>
+
+    <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+    <script>
+      const beamsClient = new PusherPushNotifications.Client({
+        instanceId: '6af2ffd6-7acf-4ff5-9099-45bd1624be39',
+      });
+    
+      beamsClient.start()
+        .then(() => beamsClient.addDeviceInterest('hello'))
+        .then(() => console.log('Successfully registered and subscribed!'))
+        .catch(console.error);
+    </script>
   </body>
 </html>
