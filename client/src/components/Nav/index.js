@@ -115,9 +115,9 @@ export default function Nav(props) {
   };
   const logout = () => {
     Axios.get("/api/auth/logout").then(() => {
+      beamsClient.stop().catch(console.error);
       window.location.href = "/";
     });
-    beamsClient.stop().catch(console.error);
   };
   const getUser = () => {
     Axios.get("/api/users/current-user")
