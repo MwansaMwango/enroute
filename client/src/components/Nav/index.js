@@ -20,6 +20,10 @@ import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
+const beamsClient = new PusherPushNotifications.Client({
+  instanceId: "6af2ffd6-7acf-4ff5-9099-45bd1624be39",
+});
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -113,6 +117,7 @@ export default function Nav(props) {
     Axios.get("/api/auth/logout").then(() => {
       window.location.href = "/";
     });
+    beamsClient.stop().catch(console.error);
   };
   const getUser = () => {
     Axios.get("/api/users/current-user")
@@ -288,20 +293,18 @@ export default function Nav(props) {
               </div>
             </Grid>
           ) : (
-   
-              <Grid
-                container
-                direction="row"
-                justify="flex-end"
-                alignItems="center"
-              >
-                <Typography variant="h6">
-                  <Link href="/login" color="inherit" underline="none">
-                    Login
-                  </Link>
-                </Typography>
-              </Grid>
-     
+            <Grid
+              container
+              direction="row"
+              justify="flex-end"
+              alignItems="center"
+            >
+              <Typography variant="h6">
+                <Link href="/login" color="inherit" underline="none">
+                  Login
+                </Link>
+              </Typography>
+            </Grid>
           )}
         </Toolbar>
       </AppBar>

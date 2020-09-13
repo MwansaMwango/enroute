@@ -1,7 +1,8 @@
+// This routes module is for location destinations and start times and not for api routers
 const router = require("express").Router();
 const routesController = require("../../controllers/routesController");
 
-// Matches with "/api/routes"
+// Matches with "/api/routes" 
 router.route("/")
   .get(routesController.findAll)
   .post(routesController.create);

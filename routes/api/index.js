@@ -5,11 +5,11 @@ const requestRoutes = require("./requests");
 const routeRoutes = require("./routes.js");
 const authRoutes = require("./auth.js");
 const userRoutes = require("./user.js");
+const pusherRoutes = require("./pusher.js");
 const isAuthenticated = require("../../middleware/isAuthenticated.js");
 
 // Auth  routes
 router.use("/auth", authRoutes);
-
 
 router.use(isAuthenticated);
 
@@ -24,6 +24,11 @@ router.use("/requests", requestRoutes);
 
 // Route  routes
 router.use("/routes", routeRoutes);
+
+// User routes
 router.use("/users", userRoutes);
+
+// Pusher routes
+router.use("/pusher", pusherRoutes);
 
 module.exports = router;

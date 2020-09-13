@@ -17,24 +17,26 @@ import RequestsReceived from "./pages/RequestsReceived";
 import MyRequests from "./pages/MyRequests";
 import Nav from "./components/Nav";
 import NotificationContext from "./utils/NotificationContext";
-import MyTrips from "./pages/MyTrips"
+import MyTrips from "./pages/MyTrips";
 import NewsFeed from "./pages/NewsFeed";
-import * as PusherPushNotifications from '@pusher/push-notifications-web'
-function App() {
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
+import Axios from "axios";
 
+function App() {
   const [isNewNotification, setIsNewNotification] = useState();
+  // const [currentUserId, setCurrentUser] = useState();
 
   function checkNotificationStatus(status) {
     if (status === "Booked") {
       setIsNewNotification(1);
-    } 
+    }
   }
 
   return (
     <Router>
       <Layout>
         <NotificationContext.Provider value={isNewNotification}>
-          <Nav notificationStatus={isNewNotification}/>
+          <Nav notificationStatus={isNewNotification} />
           <Switch>
             <Route exact path={["/", "/login"]}>
               <Login />
@@ -51,7 +53,9 @@ function App() {
               <MyRequests />
             </Route>
             <Route exact path="/trips/:id">
-              <RequestsReceived checkNotificationStatus={checkNotificationStatus} />
+              <RequestsReceived
+                checkNotificationStatus={checkNotificationStatus}
+              />
             </Route>
             <Route exact path="/requestsreceived">
               <RequestsReceived />
@@ -76,5 +80,3 @@ function App() {
 }
 
 export default App;
-
-

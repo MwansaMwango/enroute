@@ -5,12 +5,12 @@ const passport = require("passport");
 const MongoStore = require("connect-mongo")(session);
 const dotenv = require("dotenv");
 
+
 const express = require("express");
 const routes = require("./routes");
 const app = express();
 const PORT = process.env.PORT || 3001;
 dotenv.config({ path: ".env" });
-
 
 // Define middleware here
 app.use(express.urlencoded({ extended: true }));
@@ -44,7 +44,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 // Add routes, both API and view
 app.use(routes);

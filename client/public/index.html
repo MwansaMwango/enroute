@@ -37,37 +37,58 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
     />
 
-    <!-- <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/journal/bootstrap.min.css"
-    /> -->
-
     <title>Enroute</title>
   </head>
 
   <body>
     <noscript> You need to enable JavaScript to run this app. </noscript>
     <div id="root"></div>
-    <!-- <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
-    ></script> -->
-    <!-- Materialize JS -->
-    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.2/js/materialize.min.js"></script> -->
 
+    <!-- Import Pusher for Push notifications -->
     <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
+
+    <!-- Import Axios for API calls -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
     <script>
+      // Get current logged in user
+      const getUser = () => {
+        axios
+          .get("/api/users/current-user")
+          .then((res) => {
+            console.log("Current User ID", res.data.data._id);
+            currentUserId = res.data.data._id;
+            return true;
+          })
+          .catch((err) => {
+            console.log("Something went wrong");
+          });
+      };
+      getUser();
+
+      // Register client to pusher intance of app
       const beamsClient = new PusherPushNotifications.Client({
-        instanceId: '6af2ffd6-7acf-4ff5-9099-45bd1624be39',
+        instanceId: "6af2ffd6-7acf-4ff5-9099-45bd1624be39",
       });
-    
-      beamsClient.start()
-        .then(() => beamsClient.addDeviceInterest('hello'))
-        .then(() => console.log('Successfully registered and subscribed!'))
+      // Get beams token for authentication and register device
+      const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
+        url: "/api/pusher/beams-auth",
+      });
+
+      beamsClient
+        .start()
+        .then((beamsClient) => beamsClient.getDeviceId())
+        .then((deviceId) =>
+          console.log(
+            "Successfully registered with Beams. Device ID:",
+            deviceId
+          )
+        )
+        .then((req) => beamsClient.setUserId(currentUserId, beamsTokenProvider))
+        //    // .then(() => beamsClient.addDeviceInterest("hello"))
+        //    // .then(() => beamsClient.getDeviceInterests())
+        //    // .then((interests) => console.log("Current interests:", interests))
+
         .catch(console.error);
     </script>
   </body>
