@@ -13,6 +13,6 @@ PusherPushNotifications.onNotificationReceived = ({
   //   console.log("PushEvent", pushEvent);
   //   console.log("HandleNotification", handleNotification);
   // payload.notification.title = "A new title!";
-  // pushEvent.waitUntil(self.registration.showNotification('Auda Lee'));
+  pushEvent.waitUntil(self.registration.showNotification('Auda Lee'));
   pushEvent.waitUntil(handleNotification(payload));
 };
