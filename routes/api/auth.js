@@ -99,7 +99,7 @@ router.post("/login", (req, res, next) => {
 });
 
 router.get("/logout", (req, res) => {
-  // beamsClient.stop().catch(console.error); // Stop sending notifications to the browser, disassociate the browser from that user
+  beamsClient.stop().catch(console.error); // Stop sending notifications to the browser, disassociate the browser from that user
   req.logout();
   req.session.destroy((err) => {
     if (err) {
