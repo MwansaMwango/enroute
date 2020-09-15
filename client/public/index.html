@@ -19,11 +19,11 @@
       href="http://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
     />
-    <!-- Import Google Roboto Font -->
+    <!-- Import Google Roboto Font
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-    />
+    /> -->
     <!-- Import React Slick slick-carousel and slick-theme -->
     <link
       rel="stylesheet"
@@ -68,7 +68,8 @@
 
       // Register client to pusher intance of app
       const beamsClient = new PusherPushNotifications.Client({
-        instanceId: "6af2ffd6-7acf-4ff5-9099-45bd1624be39",
+        // instanceId: "6af2ffd6-7acf-4ff5-9099-45bd1624be39",
+        instanceId: "0bb3f3ca-f205-4863-a264-e0e2264bc4bf",
       });
       // Get beams token for authentication and register device
       const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
@@ -85,9 +86,9 @@
           )
         )
         .then((req) => beamsClient.setUserId(currentUserId, beamsTokenProvider))
-        //    // .then(() => beamsClient.addDeviceInterest("hello"))
-        //    // .then(() => beamsClient.getDeviceInterests())
-        //    // .then((interests) => console.log("Current interests:", interests))
+        //  .then(() => beamsClient.addDeviceInterest("hello"))
+        //  .then(() => beamsClient.getDeviceInterests())
+        //  .then((interests) => console.log("Current interests:", interests))
 
         .catch(console.error);
     </script>

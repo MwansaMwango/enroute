@@ -6,8 +6,10 @@ const router = express.Router();
 
 const PushNotifications = require("@pusher/push-notifications-server");
 const beamsClient = new PushNotifications({
-  instanceId: "6af2ffd6-7acf-4ff5-9099-45bd1624be39",
-  secretKey: "8B9AFA8838E2D7A271D34AF7407DF93B7F7514A1F80DDE49DB12AF8F845C4B3C",
+  // instanceId: "6af2ffd6-7acf-4ff5-9099-45bd1624be39",
+  // secretKey: "8B9AFA8838E2D7A271D34AF7407DF93B7F7514A1F80DDE49DB12AF8F845C4B3C",
+  instanceId: "0bb3f3ca-f205-4863-a264-e0e2264bc4bf",
+  secretKey: "7AAD3F24D5B9C2CDF0FF9093EE725E0D5270BD6B67ACD616CB77499FFE95E184",
 });
 
 router.post("/register", (req, res, next) => {

@@ -1,8 +1,10 @@
 const db = require("../models");
 const PushNotifications = require("@pusher/push-notifications-server");
 const beamsClient = new PushNotifications({
-  instanceId: "6af2ffd6-7acf-4ff5-9099-45bd1624be39",
-  secretKey: "8B9AFA8838E2D7A271D34AF7407DF93B7F7514A1F80DDE49DB12AF8F845C4B3C",
+  // instanceId: "6af2ffd6-7acf-4ff5-9099-45bd1624be39",
+  instanceId: "0bb3f3ca-f205-4863-a264-e0e2264bc4bf",
+  // secretKey: "8B9AFA8838E2D7A271D34AF7407DF93B7F7514A1F80DDE49DB12AF8F845C4B3C",
+  secretKey: "7AAD3F24D5B9C2CDF0FF9093EE725E0D5270BD6B67ACD616CB77499FFE95E184",
 });
 
 // Defining methods for the request controller
@@ -87,13 +89,12 @@ module.exports = {
           { _id: req.body.trip_id },
           { request_id: req.params.id, status: "Booked" }
         ).then((dbModel) => {
-          
           /*You should now be able to associate devices with users in your application. 
           This will allow you to send notifications to all devices belonging to a 
           particular user by publishing to their user ID. Use one of the Beams server 
           SDKs to publish to your users:
           */
-//May not be required?
+          //May not be required?
           beamsClient
             //   .publishToUsers(["user-001", "user-002"], { // specify your users
             .publishToUsers(["5f3901143505bf79fce1d50d"], {
@@ -125,7 +126,7 @@ module.exports = {
             .catch((error) => {
               console.error("Error:", error);
             });
-// end of beams pusher notification
+          // end of beams pusher notification
           console.log("Updated trip record with request_id", dbModel);
         });
       })
