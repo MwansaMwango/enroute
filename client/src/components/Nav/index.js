@@ -22,7 +22,7 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 const beamsClient = new PusherPushNotifications.Client({
-  instanceId: "6af2ffd6-7acf-4ff5-9099-45bd1624be39",
+  instanceId: "0bb3f3ca-f205-4863-a264-e0e2264bc4bf",
 });
 
 const useStyles = makeStyles((theme) => ({

@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser(process.env.SESSION_SECRET));
 
 // Enable cors
-app.use(cors());
+// app.use(cors());
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === "production") {

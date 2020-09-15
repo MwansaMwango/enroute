@@ -37,7 +37,7 @@ SDKs to publish to your users:
 
 beamsClient
   //   .publishToUsers(["user-001", "user-002"], { // specify your users
-  .publishToUsers(["5f3901143505bf79fce1d50d", "user-002"], {
+  .publishToUsers(["5f5364c6ac0d0f002aefcc0a", "user-002"], {
     // specify your users
     apns: {
       aps: {

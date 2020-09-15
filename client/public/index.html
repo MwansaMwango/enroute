@@ -43,12 +43,12 @@
   <body>
     <noscript> You need to enable JavaScript to run this app. </noscript>
     <div id="root"></div>
+    
+    <!-- Import Axios for API calls -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <!-- Import Pusher for Push notifications -->
     <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script>
-
-    <!-- Import Axios for API calls -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
       // Get current logged in user
@@ -78,19 +78,19 @@
 
       beamsClient
         .start()
-        .then((beamsClient) => beamsClient.getDeviceId())
-        .then((deviceId) =>
-          console.log(
-            "Successfully registered with Beams. Device ID:",
-            deviceId
-          )
-        )
+        // .then((beamsClient) => beamsClient.getDeviceId())
+        // .then((deviceId) =>
+        //   console.log(
+        //     "Successfully registered with Beams. Device ID:",
+        //     deviceId
+        //   )
+        // )
         .then((req) => beamsClient.setUserId(currentUserId, beamsTokenProvider))
         //  .then(() => beamsClient.addDeviceInterest("hello"))
         //  .then(() => beamsClient.getDeviceInterests())
         //  .then((interests) => console.log("Current interests:", interests))
 
-        .catch(console.error);
+        .catch(e => console.error('Could not authenticate with Beams:', e));
     </script>
   </body>
 </html>
