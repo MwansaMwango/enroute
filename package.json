@@ -43,6 +43,7 @@
     "mongoose": "^5.9.27",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
+    "pusher": "^3.0.1",
     "react-material-ui": "0.0.1",
     "react-materialize": "^3.9.2",
     "react-moment": "^0.9.7",
