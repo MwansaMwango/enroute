@@ -1,4 +1,4 @@
-importScripts("https://js.pusher.com/beams/service-worker.js");
+// importScripts("https://js.pusher.com/beams/service-worker.js");
 
 // You can now use the Service Worker SDK by calling
 // PusherPushNotifications.<METHOD_NAME>

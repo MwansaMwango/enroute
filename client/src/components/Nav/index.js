@@ -21,9 +21,9 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Grid from "@material-ui/core/Grid";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
-const beamsClient = new PusherPushNotifications.Client({
-  instanceId: "0bb3f3ca-f205-4863-a264-e0e2264bc4bf",
-});
+// const beamsClient = new PusherPushNotifications.Client({
+//   instanceId: "0bb3f3ca-f205-4863-a264-e0e2264bc4bf",
+// });
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -115,7 +115,7 @@ export default function Nav(props) {
   };
   const logout = () => {
     Axios.get("/api/auth/logout").then(() => {
-      beamsClient.stop().catch(console.error);
+      // beamsClient.stop().catch(console.error);
       window.location.href = "/";
     });
   };
