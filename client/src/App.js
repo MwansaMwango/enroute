@@ -21,6 +21,7 @@ import MyTrips from "./pages/MyTrips";
 import NewsFeed from "./pages/NewsFeed";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 import Axios from "axios";
+import Pusher from 'pusher-js';
 
 function App() {
   const [isNewNotification, setIsNewNotification] = useState();
@@ -31,6 +32,45 @@ function App() {
       setIsNewNotification(1);
     }
   }
+
+  // Get current logged in user
+  let currentUserId;
+  const getUser = () => {
+    Axios
+      .get("/api/users/current-user")
+      .then((res) => {
+        console.log("Current User ID", res.data.data._id);
+        currentUserId = res.data.data._id;
+        subscribeToPusherChannel(currentUserId);
+        return true;
+      })
+      .catch((err) => {
+        console.log("Something went wrong");
+      });
+  };
+  getUser();
+
+  // ---------------- CHANNELS ------------------ //
+  const subscribeToPusherChannel = (currentUserId) => {
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    const pusher = new Pusher("29fa452f5422eea823e5", {
+      cluster: "ap1",
+    });
+
+    const channel = pusher.subscribe("private-user-" + currentUserId);
+    channel.bind("request-booked", function (data) {
+      alert(
+        JSON.stringify(
+          "Good News! Booking Confirmed: " +
+            data.requestData.from +
+            " to " +
+            data.requestData.to
+        )
+      );
+    });
+  };
 
   return (
     <Router>

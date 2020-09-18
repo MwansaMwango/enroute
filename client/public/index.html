@@ -45,46 +45,46 @@
     <div id="root"></div>
     <!-- Import Pusher for Push notifications -->
     <!-- <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script> -->
-    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <!-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script> -->
 
     <!-- Import Axios for API calls -->
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
 
     <script>
-      // Get current logged in user
-      let currentUserId;
-      const getUser = () => {
-        axios
-          .get("/api/users/current-user")
-          .then((res) => {
-            console.log("Current User ID", res.data.data._id);
-            currentUserId = res.data.data._id;
-            subscribeToPusherChannel(currentUserId);
-            return true;
-          })
-          .catch((err) => {
-            console.log("Something went wrong");
-          });
-      };
-      getUser();
+      // // Get current logged in user
+      // let currentUserId;
+      // const getUser = () => {
+      //   axios
+      //     .get("/api/users/current-user")
+      //     .then((res) => {
+      //       console.log("Current User ID", res.data.data._id);
+      //       currentUserId = res.data.data._id;
+      //       subscribeToPusherChannel(currentUserId);
+      //       return true;
+      //     })
+      //     .catch((err) => {
+      //       console.log("Something went wrong");
+      //     });
+      // };
+      // getUser();
 
-      // ---------------- CHANNELS ------------------ //
-      const subscribeToPusherChannel = (currentUserId) => {
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
+      // // ---------------- CHANNELS ------------------ //
+      // const subscribeToPusherChannel = (currentUserId) => {
+      //   // Enable pusher logging - don't include this in production
+      //   Pusher.logToConsole = true;
 
-        const pusher = new Pusher("29fa452f5422eea823e5", {
-          cluster: "ap1",
-        });
+      //   const pusher = new Pusher("29fa452f5422eea823e5", {
+      //     cluster: "ap1",
+      //   });
 
-        const channel = pusher.subscribe("private-user-" + currentUserId);
-        channel.bind("request-booked", function (data) {
-          alert(JSON.stringify(
-          "Good News! Booking Confirmed: " +  
-          data.requestData.from + " to " + data.requestData.to 
-            ));
-        });
-      };
+      //   const channel = pusher.subscribe("private-user-" + currentUserId);
+      //   channel.bind("request-booked", function (data) {
+      //     alert(JSON.stringify(
+      //     "Good News! Booking Confirmed: " +  
+      //     data.requestData.from + " to " + data.requestData.to 
+      //       ));
+      //   });
+      // };
     </script>
   </body>
 </html>
