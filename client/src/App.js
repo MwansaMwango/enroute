@@ -50,7 +50,7 @@ function App() {
   };
   getUser();
 
-  // ---------------- CHANNELS ------------------ //
+  // ---------------- PUSHER CHANNELS ------------------ //
   const subscribeToPusherChannel = (currentUserId) => {
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
@@ -61,6 +61,7 @@ function App() {
 
     const channel = pusher.subscribe("private-user-" + currentUserId);
     channel.bind("request-booked", function (data) {
+      setIsNewNotification(1);
       alert(
         JSON.stringify(
           "Good News! Booking Confirmed: " +

@@ -73,7 +73,7 @@ function RequestsReceived({ checkNotificationStatus }) {
     API.acceptRequest(id, trip_idObject)
       .then((res) => {
         // console.log("Accepted Request res.data = ", res.data);
-        checkNotificationStatus(res.data.status);
+        // checkNotificationStatus("Booked");
         findMatchingRequests(selectedTrip);
 
         //TODO run confirm action modal screen

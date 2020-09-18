@@ -186,8 +186,8 @@ export default function Nav(props) {
           </MenuItem>
           <MenuItem>
             <IconButton
-              href="/ride"
-              aria-label="show 17 new notifications"
+              href="/myrequests"
+              aria-label="show 1 new notifications"
               color="inherit"
             >
               <Badge badgeContent={props.notificationStatus} color="secondary">
@@ -226,7 +226,7 @@ export default function Nav(props) {
           >
             <MenuIcon />
           </IconButton>
-          <MenuItem href="/"></MenuItem>
+          <MenuItem href="/Drive"></MenuItem>
           <div>
             <Typography className={classes.title} variant="h5" noWrap>
               Enroute
@@ -246,7 +246,7 @@ export default function Nav(props) {
                   <IconButton
                     aria-label="show 4 new mails"
                     color="inherit"
-                    href="/myTrips"
+                    href="/mytrips"
                   >
                     <Badge badgeContent={0} color="secondary">
                       <LocalTaxiRoundedIcon />
@@ -254,8 +254,8 @@ export default function Nav(props) {
                   </IconButton>
 
                   <IconButton
-                    href="/ride"
-                    aria-label="show 17 new notifications"
+                    href="/myrequests"
+                    aria-label="show 1 new notifications"
                     color="inherit"
                   >
                     <Badge
