@@ -48,17 +48,18 @@
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
     <!-- Import Axios for API calls -->
-    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
       // Get current logged in user
-      const currentUserId;
+      let currentUserId;
       const getUser = () => {
         axios
           .get("/api/users/current-user")
           .then((res) => {
             console.log("Current User ID", res.data.data._id);
             currentUserId = res.data.data._id;
+            subscribeToPusherChannel(currentUserId);
             return true;
           })
           .catch((err) => {
@@ -94,17 +95,20 @@
       //   .catch(e => console.error('Could not authenticate with Beams:', e));
 
       // ---------------- CHANNELS ------------------ //
-      // Enable pusher logging - don't include this in production
-      Pusher.logToConsole = true;
+      const subscribeToPusherChannel = (currentUserId) => {
 
-      var pusher = new Pusher("29fa452f5422eea823e5", {
-        cluster: "ap1",
-      });
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+        
+        var pusher = new Pusher("29fa452f5422eea823e5", {
+          cluster: "ap1",
+        });
 
       var channel = pusher.subscribe("private-user-" + currentUserId);
       channel.bind("request-booked", function (data) {
         alert(JSON.stringify(data));
       });
+    }
     </script>
   </body>
 </html>

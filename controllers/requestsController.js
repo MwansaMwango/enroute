@@ -89,12 +89,13 @@ module.exports = {
   acceptRequest: function (req, res) {
     req.body.status = "Booked"; // change status booking to booked
     req.body.driver_id = req.user.id; // attach driver id to request record
-    console.log("update hit...req.body = ", req.body);
+    console.log("Accept request...req.body = ", req.body);
 
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body) //only updates different fields
       .then((dbModel) => {
         res.json(dbModel);
         let requestorId = dbModel.user_id; // Get requestor ID
+        console.log("Requestor ID!!!!!!!!!!!!!!!!!!!!!!!!!",requestorId);
         db.Trip.findOneAndUpdate(
           // bind request_id to trip record and change trip status to "Booked"
           { _id: req.body.trip_id },
