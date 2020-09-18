@@ -15,8 +15,7 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import API from "../../utils/API";
 import TransitionsModalRequest from "../TransitionsModalRequest";
-import IconButton from '@material-ui/core/IconButton';
-
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,16 +62,17 @@ function generate(element) {
   );
 }
 
-export default function InteractiveListRequests({
-  props,
-  deleteRequest,
-  
-}) {
+export default function InteractiveListRequests({ props, deleteRequest }) {
   const classes = useStyles();
   console.log("List my requests props", props);
-
   const [open, setOpen] = React.useState(false);
-  let phoneLink = "tel:" + props.driver_id.phone;
+  
+  let phoneLink;
+  if (props.driver_id) {
+    phoneLink = "tel:" + props.driver_id.phone;
+  } else {
+    phoneLink = "tel:" + "" ;
+  }
 
   const handleClick = () => {
     setOpen((prev) => !prev);
@@ -147,7 +147,6 @@ export default function InteractiveListRequests({
                         justify="center"
                         alignItems="center"
                       >
-
                         <DeleteIcon
                           color="disabled"
                           fontSize="large"
