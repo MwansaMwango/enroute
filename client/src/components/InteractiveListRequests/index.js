@@ -140,7 +140,7 @@ export default function InteractiveListRequests({
                       </Grid>
                     );
 
-                  case "Confirmed":
+                  case "Booked":
                     return (
                       <Grid
                         direction="row"
