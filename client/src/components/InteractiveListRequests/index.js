@@ -69,10 +69,10 @@ export default function InteractiveListRequests({
   
 }) {
   const classes = useStyles();
- 
+  console.log("List my requests props", props);
 
   const [open, setOpen] = React.useState(false);
-  let phoneLink = "tel:" + "" || props.driver_id.phone;
+  let phoneLink = "tel:" + props.driver_id.phone;
 
   const handleClick = () => {
     setOpen((prev) => !prev);
