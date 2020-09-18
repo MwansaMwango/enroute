@@ -68,47 +68,23 @@
       };
       getUser();
 
-      // Register client to pusher intance of app
-      // const beamsClient = new PusherPushNotifications.Client({
-      //   instanceId: "6af2ffd6-7acf-4ff5-9099-45bd1624be39",
-      //   // instanceId: "0bb3f3ca-f205-4863-a264-e0e2264bc4bf",
-      // });
-      // // Get beams token for authentication and register device
-      // const beamsTokenProvider = new PusherPushNotifications.TokenProvider({
-      //   url: "/api/pusher/beams-auth",
-      // });
-
-      // beamsClient
-      //   .start()
-      //   .then((beamsClient) => beamsClient.getDeviceId())
-      //   .then((deviceId) =>
-      //     console.log(
-      //       "Successfully registered with Beams. Device ID:",
-      //       deviceId
-      //     )
-      //   )
-      //   .then((req) => beamsClient.setUserId(currentUserId, beamsTokenProvider))
-      //   //  .then(() => beamsClient.addDeviceInterest("hello"))
-      //   //  .then(() => beamsClient.getDeviceInterests())
-      //   //  .then((interests) => console.log("Current interests:", interests))
-
-      //   .catch(e => console.error('Could not authenticate with Beams:', e));
-
       // ---------------- CHANNELS ------------------ //
       const subscribeToPusherChannel = (currentUserId) => {
-
         // Enable pusher logging - don't include this in production
         Pusher.logToConsole = true;
-        
-        var pusher = new Pusher("29fa452f5422eea823e5", {
+
+        const pusher = new Pusher("29fa452f5422eea823e5", {
           cluster: "ap1",
         });
 
-      var channel = pusher.subscribe("private-user-" + currentUserId);
-      channel.bind("request-booked", function (data) {
-        alert(JSON.stringify(data));
-      });
-    }
+        const channel = pusher.subscribe("private-user-" + currentUserId);
+        channel.bind("request-booked", function (data) {
+          alert(JSON.stringify(
+          "Good News! Booking Confirmed: " +  
+          data.requestData.from + " to " + data.requestData.to 
+            ));
+        });
+      };
     </script>
   </body>
 </html>

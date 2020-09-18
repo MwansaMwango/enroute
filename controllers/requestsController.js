@@ -90,12 +90,14 @@ module.exports = {
     req.body.status = "Booked"; // change status booking to booked
     req.body.driver_id = req.user.id; // attach driver id to request record
     console.log("Accept request...req.body = ", req.body);
+   
 
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body) //only updates different fields
       .then((dbModel) => {
         res.json(dbModel);
+        let requestData = dbModel;
         let requestorId = dbModel.user_id; // Get requestor ID
-        console.log("Requestor ID!!!!!!!!!!!!!!!!!!!!!!!!!",requestorId);
+        console.log("Requestor ID", requestorId);
         db.Trip.findOneAndUpdate(
           // bind request_id to trip record and change trip status to "Booked"
           { _id: req.body.trip_id },
@@ -141,7 +143,8 @@ module.exports = {
           // // end of beams pusher notification
 
           //----- CHANNEL TRIGGER ---------
-          pusher.trigger('private-user-' + requestorId, 'request-booked', {"message": "Booking Accepted"});
+          // private channel names must start with 'private-'
+          pusher.trigger('private-user-' + requestorId, 'request-booked', {requestData});
 
           console.log("Updated trip record with request_id", dbModel);
         });
