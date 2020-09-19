@@ -10,7 +10,7 @@ import Switch from "@material-ui/core/Switch";
 import Jumbotron from "../components/Jumbotron";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 import API from "../utils/API";
-import SimpleSlider from "../components/SimpleSlider"
+import SimpleSlider from "../components/SimpleSlider";
 import { Container, Col, Row } from "../components/Grid"; // removed container
 import {
   makeStyles,
@@ -73,7 +73,7 @@ function Drive({ isEdit, tripData }) {
     container: {
       display: "flex",
       flexWrap: "wrap",
-      maxHeight: "90vw"
+      maxHeight: "90vw",
     },
     textField: {
       // marginLeft: theme.spacing(1),
@@ -84,7 +84,6 @@ function Drive({ isEdit, tripData }) {
     },
   }));
   const classes = useStyles();
-
 
   let uniqueRouteList = [];
 
@@ -120,22 +119,31 @@ function Drive({ isEdit, tripData }) {
   }
 
   // When the form is submitted, use the API.saveTrip method to save the trip data
- 
+
   function handleFormSubmit(event) {
     event.preventDefault();
     console.log("FormObject carryPackage= ", formObject.carryPackage);
     // if (formObject.from && formObject.to) {
     // From: and To: fields are mandatory.
-    API.saveTrip({
+    let submittedTripObj = {
       from: formObject.from,
       to: formObject.to,
-      departTime: formObject.time,
-      departDate: formObject.date,
-      freeSeats: formObject.freeSeats,
-      carryPackage: formObject.carryPackage,
-      tripNote: formObject.tripNote,
-    })
+      // departTime: formObject.time,
+      // departDate: formObject.date,
+      departTime:
+        moment(formObject.time).format("HH:mm") ||
+        moment(new Date(Date.now())).format("HH:mm"),
+      departDate:
+        moment(formObject.date).format("yyyy-MM-DD") ||
+        moment(new Date(Date.now())).format("yyyy-MM-DD"),
+      freeSeats: formObject.freeSeats || 1,
+      carryPackage: formObject.carryPackage || false,
+      tripNote: formObject.tripNote || "",
+    };
 
+    console.log("Submitted Object= ", submittedTripObj);
+
+    API.saveTrip(submittedTripObj)
       .then(() => alert(JSON.stringify("Trip has been saved")))
       .catch((err) => console.log(err));
   }
@@ -149,14 +157,14 @@ function Drive({ isEdit, tripData }) {
     let updatedTripData = {
       from: formObject.from || trip.from,
       to: formObject.to || trip.to,
-      departTime: formObject.time || trip.departTime,
-      departDate: formObject.date || trip.departDate,
+      departTime: moment(formObject.time).format("HH:mm") || trip.departTime,
+      departDate: moment(formObject.date).format("yyyy-MM-DD") || trip.departDate,
       carryPackage: formObject.hasPackage || carryPackage, // not a property of tripData
       tripNote: formObject.tripNote || trip.tripNote,
       freeSeats: formObject.freeSeats || trip.freeSeats,
     };
-    console.log("updatedTripData obj= ",updatedTripData);
-    API.updateTrip(trip._id, updatedTripData )
+    console.log("updatedTripData obj= ", updatedTripData);
+    API.updateTrip(trip._id, updatedTripData)
       .then(function (res) {
         alert(JSON.stringify("Updated trip details sent...", res.data));
         window.location.reload(); //refresh page to get updated request...TODO close modals
@@ -187,10 +195,9 @@ function Drive({ isEdit, tripData }) {
                 direction="row"
                 justify="center"
                 alignItems="center"
-                >
-               
+              >
                 <form className={classes.root}>
-                  <Grid >
+                  <Grid>
                     <TextField
                       id="from"
                       select
@@ -215,7 +222,7 @@ function Drive({ isEdit, tripData }) {
                       ))}
                     </TextField>
                   </Grid>
-                  <Grid >
+                  <Grid>
                     <TextField
                       id="to"
                       select
@@ -241,7 +248,7 @@ function Drive({ isEdit, tripData }) {
                     </TextField>
                   </Grid>
 
-                  <Grid >
+                  <Grid>
                     <TextField
                       id="departDate"
                       type="date"
@@ -264,16 +271,16 @@ function Drive({ isEdit, tripData }) {
                   </Grid>
                   <TextField
                     id="departTime"
+                    type="time"
+                    name="time"
                     label="Start Time"
                     defaultValue={
                       tripData
-                        ? tripData.departTime
+                        ? tripData.departTime // requires correct time format, display current time
                         : moment(new Date(Date.now())).format("HH:mm") // requires correct time format, display current time
                     }
                     variant="outlined"
                     onChange={handleInputChange}
-                    type="time"
-                    name="time"
                     helperText="Time you'll be leaving..."
                     InputLabelProps={
                       {
@@ -289,6 +296,7 @@ function Drive({ isEdit, tripData }) {
                       variant="outlined"
                       onChange={handleInputChange}
                       type="number"
+                      // defaultValue={tripData ? tripData.freeSeats : 1}
                       defaultValue={tripData ? tripData.freeSeats : 1}
                       name="freeSeats"
                       helperText="Number of seats available..."
@@ -328,7 +336,7 @@ function Drive({ isEdit, tripData }) {
                       label="Trip Note"
                       multiline
                       rows={2}
-                      defaultValue={tripData ? tripData.tripNote : ''}
+                      defaultValue={tripData ? tripData.tripNote : ""}
                       onChange={handleInputChange}
                       variant="outlined"
                       helperText="Enter note about your trip..."

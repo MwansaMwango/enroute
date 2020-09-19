@@ -66,12 +66,12 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
   const classes = useStyles();
   console.log("List my requests props", props);
   const [open, setOpen] = React.useState(false);
-  
+
   let phoneLink;
   if (props.driver_id) {
     phoneLink = "tel:" + props.driver_id.phone;
   } else {
-    phoneLink = "tel:" + "" ;
+    phoneLink = "tel:" + "";
   }
 
   const handleClick = () => {
@@ -133,6 +133,13 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
                         justify="center"
                         alignItems="center"
                       >
+                        <DeleteIcon
+                          color="disabled"
+                          fontSize="large"
+                          onClick={
+                            () => handleClickDeleteRequest() // TODO delete request
+                          }
+                        />
                         <TransitionsModalRequest
                           requestData={props}
                           editClicked={true}
@@ -147,14 +154,6 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
                         justify="center"
                         alignItems="center"
                       >
-                        <DeleteIcon
-                          color="disabled"
-                          fontSize="large"
-                          onClick={
-                            () => handleClickDeleteRequest() // TODO delete request
-                          }
-                        />
-
                         <a href={phoneLink}>
                           <PhoneIcon color="secondary" fontSize="large" />
                         </a>

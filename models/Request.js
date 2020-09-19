@@ -1,12 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+// const moment = require("moment");
 
 const RequestSchema = new Schema(
   {
     
     from: { type: String },
     to: { type: String },
-    departTime: { type: String },
+    departTime: {type: String},
+    // departTime: {type: String, default: moment(new Date(Date.now())).format("HH:mm")},// requires correct time format, display current time},
     departDate: { type: Date, default: new Date(Date.now()) },
     hasPackage: { type: Boolean, default: false },
     seatsRequired: { type: Number, default: 1 },

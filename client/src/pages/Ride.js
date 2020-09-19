@@ -15,9 +15,7 @@ import {
   ThemeProvider,
   createMuiTheme,
 } from "@material-ui/core/styles";
-import {
-  FormBtn,
-} from "../components/Form";
+import { FormBtn } from "../components/Form";
 import {
   Box,
   Grid,
@@ -31,7 +29,6 @@ import {
 import "./drive.css";
 import moment from "moment";
 
-
 function Ride({ isEdit, requestData }) {
   // set default value for requestData to empty object {}
   // Setting our component's initial state
@@ -42,8 +39,12 @@ function Ride({ isEdit, requestData }) {
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
   // set hasPackage & isTransportVehicle checkboxes to state of requestData in editMode else 'false' in normal mode
-  const [hasPackage, setHasPackage] = useState(requestData? requestData.hasPackage : false); 
-  const [isTransportVehicle, setIsTransportVehicle] = useState(requestData? requestData.isTransportVehicle : false);
+  const [hasPackage, setHasPackage] = useState(
+    requestData ? requestData.hasPackage : false
+  );
+  const [isTransportVehicle, setIsTransportVehicle] = useState(
+    requestData ? requestData.isTransportVehicle : false
+  );
 
   const theme = createMuiTheme({
     palette: {
@@ -72,7 +73,6 @@ function Ride({ isEdit, requestData }) {
         marginLeft: theme.spacing(5),
 
         width: "80%",
-     
       },
     },
     container: {
@@ -132,7 +132,7 @@ function Ride({ isEdit, requestData }) {
   }
 
   function handleHasPackageChange(e) {
-    const checked = e.target.checked 
+    const checked = e.target.checked;
     console.log("hasPackage checked:", checked);
     setHasPackage(checked); // sets DOM checkbox
     setFormObject({ ...formObject, hasPackage: checked }); // sets formObject
@@ -151,18 +151,28 @@ function Ride({ isEdit, requestData }) {
     event.preventDefault();
     alert("Processing request..."); // TODO use Modal instead of alert
     console.log("FormObject= ", formObject);
+
     // if (formObject.from && formObject.to) {
     // From: and To: fields are mandatory.
-    API.requestRide({
+    let submittedRequestObj = {
       from: formObject.from,
       to: formObject.to,
-      departTime: formObject.time,
-      departDate: formObject.date,
-      isTransportVehicle: formObject.isTransportVehicle,
-      hasPackage: formObject.hasPackage,
-      requestNote: formObject.requestNote,
-      seatsRequired: formObject.seatsRequired,
-    })
+      // departTime: formObject.time,
+      // departDate: formObject.date,
+      departTime:
+        moment(formObject.time).format("HH:mm") ||
+        moment(new Date(Date.now())).format("HH:mm"),
+      departDate:
+        moment(formObject.date).format("yyyy-MM-DD") ||
+        moment(new Date(Date.now())).format("yyyy-MM-DD"),
+      isTransportVehicle: formObject.isTransportVehicle || false,
+      hasPackage: formObject.hasPackage || false,
+      requestNote: formObject.requestNote || "",
+      seatsRequired: formObject.seatsRequired || 1,
+    };
+    console.log("Submitted Object= ", submittedRequestObj);
+
+    API.requestRide(submittedRequestObj)
       .then(function () {
         alert(JSON.stringify("Request sent..."));
       })
@@ -181,10 +191,12 @@ function Ride({ isEdit, requestData }) {
     API.updateRequest(request._id, {
       from: formObject.from || request.from,
       to: formObject.to || request.to,
-      departTime: formObject.time || request.departTime,
-      departDate: formObject.date || request.departDate,
-      isTransportVehicle:
-        formObject.isTransportVehicle || isTransportVehicle, // not a property of request
+      // departTime: formObject.time || request.departTime,
+      // departDate: formObject.date || request.departDate,
+      departTime: moment(formObject.time).format("HH:mm") || request.departTime,
+      departDate:
+        moment(formObject.date).format("yyyy-MM-DD") || request.departDate,
+      isTransportVehicle: formObject.isTransportVehicle || isTransportVehicle, // not a property of request
       hasPackage: formObject.hasPackage || hasPackage, // not a property of request
       requestNote: formObject.requestNote || request.requestNote,
       seatsRequired: formObject.seatsRequired || request.seatsRequired,
@@ -193,7 +205,6 @@ function Ride({ isEdit, requestData }) {
         alert(JSON.stringify("Updated Request details sent..."));
       })
       .then(function () {
-        checkMatchingTrips();
         window.location.reload(); //refresh page to get updated request
       })
       .catch((err) => console.log(err));
@@ -203,10 +214,12 @@ function Ride({ isEdit, requestData }) {
     API.findMatchingTrips({
       from: formObject.from || request.from,
       to: formObject.to || request.to,
-      departTime: formObject.time || request.departTime,
-      departDate: formObject.date || request.departDate,
-      carryPackage: formObject.hasPackage || request.hasPackage,
-      freeSeats: formObject.seatsRequired || request.seatsRequired,
+      departTime: moment(formObject.time).format("HH:mm") || request.departTime,
+      departDate:
+        moment(formObject.date).format("yyyy-MM-DD") || request.departDate,
+      // request? ECMA2020 checks if object exists to avoid undefined errors
+      carryPackage: formObject.hasPackage || request?.hasPackage,
+      freeSeats: formObject.seatsRequired || request?.seatsRequired,
     })
       .then(function (res) {
         alert(
@@ -245,11 +258,10 @@ function Ride({ isEdit, requestData }) {
                 <form className={classes.root}>
                   <Grid item>
                     <TextField
-                     
                       id="from"
                       select
                       label="From (required)"
-                      defaultValue={requestData ? requestData.from : null}
+                      defaultValue={requestData ? requestData.from : ""}
                       onChange={handleInputChange}
                       name="from"
                       helperText="Start location"
@@ -275,7 +287,7 @@ function Ride({ isEdit, requestData }) {
                       id="to"
                       select
                       label="To (required)"
-                      defaultValue={requestData ? requestData.to : null}
+                      defaultValue={requestData ? requestData.to : ""}
                       onChange={handleInputChange}
                       name="to"
                       helperText="Please select your end location"
@@ -319,6 +331,8 @@ function Ride({ isEdit, requestData }) {
 
                   <TextField
                     id="departTime"
+                    name="time"
+                    type="time"
                     label="Start Time"
                     variant="outlined"
                     defaultValue={
@@ -327,8 +341,6 @@ function Ride({ isEdit, requestData }) {
                         : moment(new Date(Date.now())).format("HH:mm") // requires correct time format, display current time
                     }
                     onChange={handleInputChange}
-                    type="time"
-                    name="time"
                     helperText="Time you'll be leaving..."
                     InputLabelProps={{
                       // removes the header from inside the input box
@@ -360,9 +372,7 @@ function Ride({ isEdit, requestData }) {
                     <TextField
                       id="requestNote"
                       label="Request Note"
-                      defaultValue={
-                        requestData ? requestData.requestNote : null
-                      }
+                      defaultValue={requestData ? requestData.requestNote : ""}
                       name="requestNote"
                       multiline
                       rows={1}
@@ -416,7 +426,9 @@ function Ride({ isEdit, requestData }) {
                   >
                     {" "}
                     <FormBtn
-                      disabled={!(formObject.from && formObject.to || requestData)} // enable form submit if to/from is filled or in edit mode
+                      disabled={
+                        !((formObject.from && formObject.to) || requestData)
+                      } // enable form submit if to/from is filled or in edit mode
                       onClick={
                         isEdit ? handleEditedFormSubmit : handleFormSubmit
                       }

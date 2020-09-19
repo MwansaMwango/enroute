@@ -136,7 +136,7 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
               />
 
               <ListItemText primary="Status" secondary={props.status} />
-              {/* TODO use set state for status or seperate if ternsry renders*/}
+              {/* TODO use set state for status or seperate if ternary renders*/}
               {/* {(() => { */}
               {props.status === "Booked" ? (
                 <IconButton size="small">

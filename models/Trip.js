@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+// const moment = require('moment');
 
 const TripSchema = new Schema({
   
   from: {type: String},
   to: {type: String},
-  departTime: {type: String }, //TODO combine date and time using moment.js
+  departTime: {type: String},
+  // departTime: {type: String, default: moment(new Date(Date.now())).format("HH:mm")},// requires correct time format, display current time},
   departDate: {type: Date, default: new Date(Date.now())},
   freeSeats: {type: Number, default: 1},
   tripNote: {type: String},

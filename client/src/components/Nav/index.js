@@ -115,7 +115,6 @@ export default function Nav(props) {
   };
   const logout = () => {
     Axios.get("/api/auth/logout").then(() => {
-      // beamsClient.stop().catch(console.error);
       window.location.href = "/";
     });
   };
@@ -124,8 +123,6 @@ export default function Nav(props) {
       .then((res) => {
         setCurrentUserFirstName(res.data.data.firstName);
         return true;
-
-        // sessionStorage.setItem('current-user', JSON.stringify(res.data.data))
       })
       .catch((err) => {
         console.log("Something went wrong");
