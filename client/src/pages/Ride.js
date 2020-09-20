@@ -127,9 +127,10 @@ function Ride({ isEdit, requestData }) {
 
   // Handles updating component state when the user types into the input field
   function handleInputChange(event) {
+    console.log("event=", event.target.value);
     const { name, value } = event.target;
     setFormObject({ ...formObject, [name]: value });
-   }
+  }
 
   function handleHasPackageChange(e) {
     const checked = e.target.checked;
@@ -150,7 +151,6 @@ function Ride({ isEdit, requestData }) {
   function handleFormSubmit(event) {
     event.preventDefault();
     alert("Processing request..."); // TODO use Modal instead of alert
-    
 
     // if (formObject.from && formObject.to) {
     // From: and To: fields are mandatory.
@@ -160,13 +160,14 @@ function Ride({ isEdit, requestData }) {
       // departTime: formObject.time,
       // departDate: formObject.date,
       departTime:
-        moment(formObject.time).format("HH:mm")|| moment(new Date(Date.now())).format("HH:mm"),
+        moment(formObject.time).format("HH:mm") ||
+        moment(new Date(Date.now())).format("HH:mm"),
       departDate:
         moment(formObject.date).format("yyyy-MM-DD") ||
         moment(new Date(Date.now())).format("yyyy-MM-DD"),
       isTransportVehicle: formObject.isTransportVehicle || false,
       hasPackage: formObject.hasPackage || false,
-      requestNote: formObject.requestNote || "",
+      requestNote: formObject.requestNote || "better",
       seatsRequired: formObject.seatsRequired || 1,
     };
 
@@ -185,27 +186,25 @@ function Ride({ isEdit, requestData }) {
   function handleEditedFormSubmit(event) {
     event.preventDefault();
     alert("Processing Updated ride details..."); // TODO use Modal instead of alert
-let submittedEditedRequestObj = 
-{
-  from: formObject.from || request.from,
-  to: formObject.to || request.to,
-  departTime: formObject.time || request.departTime,
-  // departDate: formObject.date || request.departDate,
-  // departTime: moment(formObject.time).format("HH:mm") || moment(request.departTime).format("HH:mm"),
-  departDate:
-    moment(formObject.date).format("yyyy-MM-DD") || request.departDate,
-  isTransportVehicle: formObject.isTransportVehicle || isTransportVehicle, // not a property of request
-  hasPackage: formObject.hasPackage || request.hasPackage, // not a property of request
-  requestNote: formObject.requestNote, //|| request.requestNote,
-  seatsRequired: formObject.seatsRequired //|| request.seatsRequired,
-};
+    let submittedEditedRequestObj = {
+      from: formObject.from || request.from,
+      to: formObject.to || request.to,
+      departTime: formObject.time || request.departTime,
+      // departDate: formObject.date || request.departDate,
+      // departTime: moment(formObject.time).format("HH:mm") || moment(request.departTime).format("HH:mm"),
+      departDate:
+        moment(formObject.date).format("yyyy-MM-DD") || request.departDate,
+      isTransportVehicle: formObject.isTransportVehicle || isTransportVehicle, // not a property of request
+      hasPackage: formObject.hasPackage || request.hasPackage, // not a property of request
+      requestNote: formObject.requestNote, //|| request.requestNote,
+      seatsRequired: formObject.seatsRequired, //|| request.seatsRequired,
+    };
     console.log("Request = ", request, "formObject = ", formObject);
-    console.log("Edited submitted request obj = ",  submittedEditedRequestObj 
-    );
-    API.updateRequest(request._id,submittedEditedRequestObj )
+    console.log("Edited submitted request obj = ", submittedEditedRequestObj);
+    API.updateRequest(request._id, submittedEditedRequestObj)
       .then(function () {
         alert(JSON.stringify("Updated Request details sent..."));
-        checkMatchingTrips() ;
+        checkMatchingTrips();
       })
       .then(function () {
         //window.location.reload(); //refresh page to get updated request
@@ -319,9 +318,9 @@ let submittedEditedRequestObj =
                       label="Start Date"
                       defaultValue={
                         requestData
-                        // ? moment(requestData.departDate).format("yyyy-MM-DD") // needs correct date format
-                        ? requestData.departDate // needs correct date format
-                        : moment(new Date(Date.now())).format("yyyy-MM-DD") // show current  date by default
+                          ? moment(requestData.departDate).format("yyyy-MM-DD") // needs correct date format
+                          : //? requestData.departDate // needs correct date format
+                            moment(new Date(Date.now())).format("yyyy-MM-DD") // show current  date by default
                       }
                       variant="outlined"
                       onChange={handleInputChange}
@@ -341,8 +340,8 @@ let submittedEditedRequestObj =
                     variant="outlined"
                     defaultValue={
                       requestData
-                        // ? moment(requestData.departTime).format("HH:mm")
-                        ? requestData.departTime
+                        ? // ? moment(requestData.departTime).format("HH:mm")
+                          requestData.departTime
                         : moment(new Date(Date.now())).format("HH:mm") // requires correct time format, display current time
                     }
                     onChange={handleInputChange}
@@ -381,6 +380,7 @@ let submittedEditedRequestObj =
                       name="requestNote"
                       multiline
                       rows={2}
+                      onChange={handleInputChange}
                       variant="outlined"
                       helperText="Enter other details of your request..."
                       InputProps={{
