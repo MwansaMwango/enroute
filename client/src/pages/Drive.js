@@ -256,7 +256,8 @@ function Drive({ isEdit, tripData }) {
                       label="Start Date"
                       defaultValue={
                         tripData
-                          ? moment(tripData.departDate).format("yyyy-MM-DD") // needs correct date format
+                          // ? moment(tripData.departDate).format("yyyy-MM-DD") // needs correct date format
+                          ? tripData.departDate // needs correct date format
                           : moment(new Date(Date.now())).format("yyyy-MM-DD") // show current  date by default
                       }
                       variant="outlined"

@@ -36,7 +36,7 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
   findMatchingTrips: function (req, res) {
-
+    console.log("Trip request body!!!!!!!!!!!!!!!!!", req.body)
     db.Trip.find({
       // Mandatory parameters
       from: req.body.from,
