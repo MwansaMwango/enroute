@@ -42,22 +42,23 @@ module.exports = {
       from: req.body.from,
       to: req.body.to,
       freeSeats: {
-        $gte: req.body.freeSeats,
+        $gte: req.body.seatsRequired, // freeSeats greater than or equal to seatsRequired
       },
       departDate : req.body.departDate, // matches by date
       user_id: { 
         $ne: req.user._id, // exclude my trips
       },
       // Optional parameters
-      $or: [
-        {
-          // departDate: ISODate("2020-08-10T16:00:00.000Z"),
-          // departDate: req.body.departDate, // TODO Matching by Date and Time using Moment
-        },
-        {
-          carryPackage: req.body.carryPackage,
-        }
-      ]
+      // $or: 
+      // [
+      //   {
+      //     // departDate: ISODate("2020-08-10T16:00:00.000Z"),
+      //     // departDate: req.body.departDate, // TODO Matching by Date and Time using Moment
+      //   },
+      //   {
+      //     carryPackage: req.body.carryPackage,
+      //   }
+      // ]
     })
       .then(function (dbModel) {
         res.json(dbModel);

@@ -167,8 +167,8 @@ function Ride({ isEdit, requestData }) {
         moment(new Date(Date.now())).format("yyyy-MM-DD"),
       isTransportVehicle: formObject.isTransportVehicle || false,
       hasPackage: formObject.hasPackage || false,
-      requestNote: formObject.requestNote || "better",
-      seatsRequired: formObject.seatsRequired || 1,
+      requestNote: formObject.requestNote || "",
+      seatsRequired: formObject.seatsRequired
     };
 
     console.log("Submitted Object= ", submittedRequestObj);
@@ -177,7 +177,7 @@ function Ride({ isEdit, requestData }) {
         alert(JSON.stringify("Request sent..."));
       })
       .then(function () {
-        checkMatchingTrips();
+        checkMatchingTrips(submittedRequestObj);
       })
       .catch((err) => console.log(err));
   }
@@ -190,39 +190,44 @@ function Ride({ isEdit, requestData }) {
       from: formObject.from || request.from,
       to: formObject.to || request.to,
       departTime: formObject.time || request.departTime,
-      // departDate: formObject.date || request.departDate,
+      departDate: formObject.date ? // check required due to default value reverting to today's date
+        moment(formObject.date).format("yyyy-MM-DD") :  moment(request.departDate).format("yyyy-MM-DD"),
       // departTime: moment(formObject.time).format("HH:mm") || moment(request.departTime).format("HH:mm"),
-      departDate:
-        moment(formObject.date).format("yyyy-MM-DD") || request.departDate,
+
+      // moment(formObject?.date).format("yyyy-MM-DD") || moment(request.departDate).format("yyyy-MM-DD") ,
       isTransportVehicle: formObject.isTransportVehicle || isTransportVehicle, // not a property of request
       hasPackage: formObject.hasPackage || request.hasPackage, // not a property of request
-      requestNote: formObject.requestNote, //|| request.requestNote,
-      seatsRequired: formObject.seatsRequired, //|| request.seatsRequired,
+      requestNote: formObject.requestNote || request.requestNote,
+      seatsRequired: formObject.seatsRequired || request.seatsRequired,
     };
     console.log("Request = ", request, "formObject = ", formObject);
     console.log("Edited submitted request obj = ", submittedEditedRequestObj);
+
     API.updateRequest(request._id, submittedEditedRequestObj)
       .then(function () {
         alert(JSON.stringify("Updated Request details sent..."));
-        checkMatchingTrips();
+        checkMatchingTrips(submittedEditedRequestObj);
       })
       .then(function () {
-        //window.location.reload(); //refresh page to get updated request
+        window.location.reload(); //refresh page to get updated request
       })
       .catch((err) => console.log(err));
   }
 
-  function checkMatchingTrips() {
-    API.findMatchingTrips({
-      from: formObject.from || request.from,
-      to: formObject.to || request.to,
-      departTime: moment(formObject.time).format("HH:mm") || request.departTime,
-      departDate:
-        moment(formObject.date).format("yyyy-MM-DD") || request.departDate,
-      // request? ECMA2020 checks if object exists to avoid undefined errors
-      carryPackage: formObject.hasPackage || request?.hasPackage,
-      freeSeats: formObject.seatsRequired || request?.seatsRequired,
-    })
+  function checkMatchingTrips(requestObjtoMatch) {
+    // let requestObjtoMatch = {
+    //   from: formObject.from || request.from,
+    //   to: formObject.to || request.to,
+    //   departTime: moment(formObject.time).format("HH:mm") || request.departTime,
+    //   departDate: formObject.date ? // check required due to default value reverting to today's date
+    //     moment(formObject.date).format("yyyy-MM-DD") :  moment(request.departDate).format("yyyy-MM-DD"),
+    //   // moment(formObject.date).format("yyyy-MM-DD") || request.departDate,
+    //   // request? ECMA2020 checks if object exists to avoid undefined errors
+    //   hasPackage: formObject.hasPackage || request?.hasPackage,
+    //   seatsRequired: formObject.seatsRequired || request?.seatsRequired,
+    // };
+    console.log("requestObjtoMatch", requestObjtoMatch);
+    API.findMatchingTrips(requestObjtoMatch)
       .then(function (res) {
         alert(
           res.data.length +
@@ -319,8 +324,7 @@ function Ride({ isEdit, requestData }) {
                       defaultValue={
                         requestData
                           ? moment(requestData.departDate).format("yyyy-MM-DD") // needs correct date format
-                          : //? requestData.departDate // needs correct date format
-                            moment(new Date(Date.now())).format("yyyy-MM-DD") // show current  date by default
+                          : moment(new Date(Date.now())).format("yyyy-MM-DD") // show current  date by default
                       }
                       variant="outlined"
                       onChange={handleInputChange}
