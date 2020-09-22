@@ -24,6 +24,7 @@ import * as PusherPushNotifications from "@pusher/push-notifications-web";
 // const beamsClient = new PusherPushNotifications.Client({
 //   instanceId: "0bb3f3ca-f205-4863-a264-e0e2264bc4bf",
 // });
+import { ReactComponent as DriveLogo } from '../../assets/steering-wheel.svg'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -147,7 +148,7 @@ export default function Nav(props) {
           onClose={handleMenuClose}
         >
           <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-          <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+          {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
           <MenuItem onClick={logout}>Logout</MenuItem>
         </Menu>
       ) : (
@@ -213,7 +214,7 @@ export default function Nav(props) {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" style={{ backgroundColor: "#022222" }}>
+      <AppBar position="static" style={{ backgroundColor: "#022222" }}>   {/* dark theme */}
         <Toolbar>
           <IconButton
             edge="start"
@@ -221,7 +222,8 @@ export default function Nav(props) {
             color="inherit"
             aria-label="open drawer"
           >
-            <MenuIcon />
+            {/* <MenuIcon /> */}
+            <DriveLogo name="wifi" width="2rem" fill="#ffff" />
           </IconButton>
           <MenuItem href="/Drive"></MenuItem>
           <div>
