@@ -18,7 +18,7 @@ export default function SimpleSlider(feedList) {
   };
   return (
     <div>
-      <Typography variant="h3" gutterTop style={{ display: "flex", justifyContent: "center" }}> Newsfeed</Typography>
+      <Typography variant="h4" gutterTop style={{ display: "flex", justifyContent: "center" }}>Newsfeed</Typography>
 
       <Slider {...settings}>
         <div>

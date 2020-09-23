@@ -29,16 +29,12 @@ import {
 import "./drive.css";
 import moment from "moment";
 
-function NewsFeed({ isEdit, tripData }) {
+function NewsFeed({ isEdit }) {
   // Setting our component's initial state
-  console.log("isEditMode =", isEdit, "tripData = ", tripData);
-  const [trip] = useState(tripData);
+
   const [routes, setRoutes] = useState([]);
   const [feedList, setFeedList] = useState([]);
-  const [formObject, setFormObject] = useState({});
-  const [carryPackage, setCarryPackage] = useState(
-    tripData ? tripData.carryPackage : false
-  );
+
 
   const theme = createMuiTheme({
     palette: {
@@ -74,7 +70,7 @@ function NewsFeed({ isEdit, tripData }) {
     container: {
       display: "flex",
       flexWrap: "wrap",
-      maxHeight: "90vw",
+      maxHeight: "90vh",
     },
     textField: {
       // marginLeft: theme.spacing(1),
@@ -117,64 +113,7 @@ function NewsFeed({ isEdit, tripData }) {
         })
         .catch((err) => console.log(err));
     }
-  // Handles updating component state when the user types into the input field
-  function handleInputChange(event) {
-    const { name, value } = event.target;
-    setFormObject({ ...formObject, [name]: value });
-  }
-
-  function handleCarryPackageChange(event) {
-    const checked = event.target.checked;
-    console.log("carryPackage checked:", checked);
-    setCarryPackage(checked); // sets DOM checkbox
-    setFormObject({ ...formObject, carryPackage: checked }); // sets formObject
-  }
-
-  // When the form is submitted, use the API.saveTrip method to save the trip data
-
-  function handleFormSubmit(event) {
-    event.preventDefault();
-    console.log("FormObject carryPackage= ", formObject.carryPackage);
-    // if (formObject.from && formObject.to) {
-    // From: and To: fields are mandatory.
-    API.saveTrip({
-      from: formObject.from,
-      to: formObject.to,
-      departTime: formObject.time,
-      departDate: formObject.date,
-      freeSeats: formObject.freeSeats,
-      carryPackage: formObject.carryPackage,
-      tripNote: formObject.tripNote,
-    })
-
-      .then(() => alert(JSON.stringify("Trip has been saved")))
-      .catch((err) => console.log(err));
-  }
-
-  // Handle edit trip details
-  function handleEditedFormSubmit(event) {
-    event.preventDefault();
-    alert("Processing Updated trip details..."); // TODO use Modal instead of alert
-
-    console.log("Trip = ", trip, "formObject note = ", formObject);
-    let updatedTripData = {
-      from: formObject.from || trip.from,
-      to: formObject.to || trip.to,
-      departTime: formObject.time || trip.departTime,
-      departDate: formObject.date || trip.departDate,
-      carryPackage: formObject.hasPackage || carryPackage, // not a property of tripData
-      tripNote: formObject.tripNote || trip.tripNote,
-      freeSeats: formObject.freeSeats || trip.freeSeats,
-    };
-    console.log("updatedTripData obj= ", updatedTripData);
-    API.updateTrip(trip._id, updatedTripData)
-      .then(function (res) {
-        alert(JSON.stringify("Updated trip details sent...", res.data));
-        window.location.reload(); //refresh page to get updated request...TODO close modals
-      })
-      .catch((err) => console.log(err));
-  }
-
+ 
   return (
     <Box
       style={{

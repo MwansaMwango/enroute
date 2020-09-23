@@ -26,7 +26,7 @@ export default function ImgMediaCard() {
         <CardMedia
           component="img"
           alt="Card Media"
-          height="250"
+          height="180vh"
           image="https://images.unsplash.com/photo-1484704849700-f032a568e944?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
           title="Card Media Title"
         />
@@ -44,14 +44,14 @@ export default function ImgMediaCard() {
           </Grid>
           <Grid container justify="flex-start" alignItems="center" spacing={3}>
             <Avatar
-              alt="Remy Sharp"
+              alt="James Horner"
               src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
             />
             {/* Grid item under Grid container spacing={?} allows some spacing */}
             <Grid item>
               <Typography
                 display="block"
-                variant="subtitle1"
+                variant="h6"
                 // variant="overline"
                 // variant="subtitle2"
                 // variant="body1"
@@ -60,16 +60,16 @@ export default function ImgMediaCard() {
                 // variant="caption"
          
                 color="textSecondary"
-                component="h5"
+                component="h6"
               >
                 James Horner
               </Typography>
-              <Typography variant="caption" color="textSecondary" component="p">
+              <Typography variant="button" color="textSecondary" component="p">
                 Project Engineer
               </Typography>
             </Grid>
           </Grid>
-          <Typography variant="h6" color="textSecondary" component="h6">
+          <Typography variant="body1" color="textSecondary" component="h6">
             Just redeemed new headphones for 250 points...
           </Typography>
         </CardContent>

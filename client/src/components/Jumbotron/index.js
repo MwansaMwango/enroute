@@ -19,9 +19,10 @@ function Jumbotron({ children }) {
             https://images.unsplash.com/photo-1560532806-dbb46d88b494?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)
 
             `,
-          backgroundSize: "cover", // '100%' scales full image unlike 'cover'
+          backgroundSize: "cover", // '100%' scales full image unlike 'cover' test
         backgroundRepeat: "no-repeat",
       }}
+
       className="jumbotron"
     >
       {children}
