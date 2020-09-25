@@ -168,7 +168,7 @@ function Ride({ isEdit, requestData }) {
       isTransportVehicle: formObject.isTransportVehicle || false,
       hasPackage: formObject.hasPackage || false,
       requestNote: formObject.requestNote || "",
-      seatsRequired: formObject.seatsRequired
+      seatsRequired: formObject.seatsRequired,
     };
 
     console.log("Submitted Object= ", submittedRequestObj);
@@ -190,8 +190,9 @@ function Ride({ isEdit, requestData }) {
       from: formObject.from || request.from,
       to: formObject.to || request.to,
       departTime: formObject.time || request.departTime,
-      departDate: formObject.date ? // check required due to default value reverting to today's date
-        moment(formObject.date).format("yyyy-MM-DD") :  moment(request.departDate).format("yyyy-MM-DD"),
+      departDate: formObject.date // check required due to default value reverting to today's date
+        ? moment(formObject.date).format("yyyy-MM-DD")
+        : moment(request.departDate).format("yyyy-MM-DD"),
       // departTime: moment(formObject.time).format("HH:mm") || moment(request.departTime).format("HH:mm"),
 
       // moment(formObject?.date).format("yyyy-MM-DD") || moment(request.departDate).format("yyyy-MM-DD") ,
@@ -335,7 +336,6 @@ function Ride({ isEdit, requestData }) {
                       }}
                     />
                   </Grid>
-
                   <TextField
                     id="departTime"
                     name="time"
@@ -355,6 +355,7 @@ function Ride({ isEdit, requestData }) {
                       shrink: true,
                     }}
                   />
+
 
                   <Grid item>
                     <TextField
@@ -435,9 +436,10 @@ function Ride({ isEdit, requestData }) {
                   >
                     {" "}
                     <FormBtn
+                      // enable form submit if to/from is filled or in edit mode
                       disabled={
                         !((formObject.from && formObject.to) || requestData)
-                      } // enable form submit if to/from is filled or in edit mode
+                      }
                       onClick={
                         isEdit ? handleEditedFormSubmit : handleFormSubmit
                       }

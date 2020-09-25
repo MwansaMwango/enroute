@@ -24,7 +24,7 @@ import * as PusherPushNotifications from "@pusher/push-notifications-web";
 // const beamsClient = new PusherPushNotifications.Client({
 //   instanceId: "0bb3f3ca-f205-4863-a264-e0e2264bc4bf",
 // });
-import { ReactComponent as DriveLogo } from '../../assets/steering-wheel.svg'
+import { ReactComponent as DriveLogo } from "../../assets/steering-wheel.svg";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -214,23 +214,32 @@ export default function Nav(props) {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" style={{ backgroundColor: "#022222" }}>   {/* dark theme */}
+      <AppBar position="static" style={{ backgroundColor: "#022222" }}>
+        {" "}
+        {/* dark theme */}
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
+          <MenuItem >
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer"
+              href="/Drive"
+            >
+              {/* <MenuIcon /> */}
+              <DriveLogo name="wifi" width="2rem" fill="#ffff" />
+            </IconButton>
+          </MenuItem>
+          <Grid
+            container
+            direction="row"
+            justify="flex-start"
+            alignItems="center"
           >
-            {/* <MenuIcon /> */}
-            <DriveLogo name="wifi" width="2rem" fill="#ffff" />
-          </IconButton>
-          <MenuItem href="/Drive"></MenuItem>
-          <div>
             <Typography className={classes.title} variant="h5" noWrap>
               Enroute
             </Typography>
-          </div>
+          </Grid>
 
           {currentUserFirstName ? (
             <Grid

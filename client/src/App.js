@@ -21,7 +21,7 @@ import MyTrips from "./pages/MyTrips";
 import NewsFeed from "./pages/NewsFeed";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 import Axios from "axios";
-import Pusher from 'pusher-js';
+import Pusher from "pusher-js";
 
 function App() {
   const [isNewNotification, setIsNewNotification] = useState();
@@ -36,8 +36,7 @@ function App() {
   // Get current logged in user
   let currentUserId;
   const getUser = () => {
-    Axios
-      .get("/api/users/current-user")
+    Axios.get("/api/users/current-user")
       .then((res) => {
         console.log("Current User ID", res.data.data._id);
         currentUserId = res.data.data._id;

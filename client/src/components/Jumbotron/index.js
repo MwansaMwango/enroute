@@ -4,12 +4,14 @@ function Jumbotron({ children }) {
   return (
     <div
       style={{
-        height: "12vh",
+        // height: "12vh",
         clear: "both",
         paddingTop: "1rem",
+        paddingBottom: "1rem",
         fontSize: "1rem",
         textAlign: "center",
         color: "white",
+        marginBottom: "10px",
         
         // https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&h=250&q=80)
         // https://images.unsplash.com/photo-1533027052290-2b4ece075c42?ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80

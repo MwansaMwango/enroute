@@ -55,23 +55,7 @@ function Drive({ isEdit, tripData }) {
         contrastText: "#000",
       },
     },
-    typography: {
-      fontFamily: [
-        "Oswald",
-        "-apple-system",
-        "BlinkMacSystemFont",
-        '"Segoe UI"',
-        "Roboto",
-        '"Helvetica Neue"',
-        "Arial",
-        "sans-serif",
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(","),
-    },
   });
-  console.log("Typography", theme.typography);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -80,6 +64,9 @@ function Drive({ isEdit, tripData }) {
       },
       "& .MuiTextField-root": {
         margin: theme.spacing(1),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
+        width: "100%",
       },
       "& .MuiInputBase-root": {
         borderRadius: 20,
@@ -88,16 +75,17 @@ function Drive({ isEdit, tripData }) {
       container: {
         display: "flex",
         flexWrap: "wrap",
-        maxHeight: "90vh",
+        // maxHeight: "90vh",
       },
     },
     textField: {
       // marginLeft: theme.spacing(1),
       // marginRight: theme.spacing(1),
 
-      maxWidth: "50vw",
+      maxWidth: "40%",
     },
   }));
+
   const classes = useStyles();
 
   let uniqueRouteList = [];
@@ -191,233 +179,252 @@ function Drive({ isEdit, tripData }) {
   return (
     <Box
       style={{
-        paddingBottom: "50px", // required for bottom navigation
+        paddingBottom: "50px",
       }}
     >
       <Container fluid maxWidth="100vw">
         <ThemeProvider theme={theme}>
-          {isEdit ? null : (
-            <Jumbotron>
-              <Typography variant="h4" component="h4" color="primary">
-                Drive
-                <LocalTaxiIcon fontSize="large" />
-              </Typography>
-            </Jumbotron>
-          )}
-          <form className={classes.root}>
-            <div>
+          <Row>
+            <Col size="md-12">
+              {isEdit ? null : (
+                <Jumbotron>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                >
+                  <Typography variant="h5" component="h5" color="primary">
+                    Drive
+                    <LocalTaxiIcon fontSize="small" />
+                  </Typography>
+                </Grid>
+                 </Jumbotron>
+              )}
               <Grid
                 container
                 direction="row"
                 justify="center"
                 alignItems="center"
               >
-                <TextField
-                  id="from"
-                  select
-                  label="From (required)"
-                  defaultValue={tripData ? tripData.from : ""}
-                  onChange={handleInputChange}
-                  name="from"
-                  // helperText="Start location"
-                  variant="outlined"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment>
-                        <MyLocationIcon color="primary" />
-                      </InputAdornment>
-                    ),
-                  }}
-                  style={{ width: "90vw" }}
-                >
-                  {routes.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                <form className={classes.root}>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <TextField
+                      id="from"
+                      select
+                      label="From (required)"
+                      defaultValue={tripData ? tripData.from : ""}
+                      onChange={handleInputChange}
+                      name="from"
+                      // helperText="Start location"
+                      variant="outlined"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment>
+                            <MyLocationIcon color="primary" />
+                          </InputAdornment>
+                        ),
+                      }}
+                    >
+                      {routes.map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <TextField
+                      id="to"
+                      select
+                      label="To (required)"
+                      defaultValue={tripData ? tripData.to : ""}
+                      onChange={handleInputChange}
+                      name="to"
+                      // helperText="Please select your end location"
+                      variant="outlined"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment>
+                            <LocationOnIcon color="primary" />
+                          </InputAdornment>
+                        ),
+                      }}
+                      // style={{ maxWidth: "90vw", minWidth: "90%"}}
+                    >
+                      {routes.map((option) => (
+                        <MenuItem key={option} value={option}>
+                          {option}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Grid>
+                  {/* </div> */}
+
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between" // required due to textfield maxwidth = 40%
+                    alignItems="center"
+                  >
+                    <TextField
+                      id="departDate"
+                      type="date"
+                      name="date"
+                      label="Start Date"
+                      className={classes.textField}
+                      defaultValue={
+                        tripData
+                          ? moment(tripData.departDate).format("yyyy-MM-DD") // needs correct date format
+                          : moment(new Date(Date.now())).format("yyyy-MM-DD") // show current  date by default
+                      }
+                      variant="outlined"
+                      onChange={handleInputChange}
+                      // helperText="Date you'll be leaving..."
+                      InputLabelProps={{
+                        // removes the header from inside the input box
+                        shrink: true,
+                      }}
+                    />
+
+                    <TextField
+                      id="departTime"
+                      type="time"
+                      name="time"
+                      label="Start Time"
+                      className={classes.textField}
+                      defaultValue={
+                        tripData
+                          ? tripData.departTime // requires correct time format, display current time
+                          : moment(new Date(Date.now())).format("HH:mm") // requires correct time format, display current time
+                      }
+                      variant="outlined"
+                      onChange={handleInputChange}
+                      // helperText="Time you'll be leaving..."
+                      InputLabelProps={{
+                        // removes the header from inside the input box
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+                  {/* </div>
+
+                {/* <div> */}
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="center"
+                  >
+                    <TextField
+                      id="outlined-basic"
+                      label="Free Seats?"
+                      variant="outlined"
+                      onChange={handleInputChange}
+                      type="number"
+                      className={classes.textField}
+                      // style={{ width: "30vw" }}
+                      defaultValue={tripData ? tripData.freeSeats : 1}
+                      name="freeSeats"
+                      // helperText="Number of seats available..."
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment>
+                            <AirlineSeatReclineNormalIcon color="primary" />
+                          </InputAdornment>
+                        ),
+                      }}
+                    />
+                    <span>
+                    <LocalMallIcon color="primary" />
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={carryPackage}
+                          onChange={handleCarryPackageChange}
+                          name="carryPackage"
+                        />
+                      }
+                      labelPlacement="top"
+                      label="Package?"
+                    ></FormControlLabel>
+                    </span>
+                  </Grid>
+                  {/* </div> */}
+
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <TextField
+                      id="tripNote"
+                      name="tripNote"
+                      label="Trip Note"
+                      multiline
+                      // rows={2}
+                      defaultValue={tripData ? tripData.tripNote : ""}
+                      onChange={handleInputChange}
+                      variant="outlined"
+                      // style={{ width: "90vw" }}
+                      // helperText="Enter note about your trip..."
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment>
+                            <SpeakerNotesIcon color="primary" />
+                          </InputAdornment>
+                        ),
+                        shrink: true,
+                      }}
+                    />
+                  </Grid>
+
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-around"
+                    alignItems="center"
+                  >
+                    <FormBtn
+                      // enable form submit if to/from is filled or in edit mode
+                      disabled={
+                        !((formObject.from && formObject.to) || tripData)
+                      }
+                      onClick={
+                        isEdit ? handleEditedFormSubmit : handleFormSubmit
+                      }
+                    >
+                      {isEdit ? "Update Trip" : "Post Trip"}
+                    </FormBtn>
+                  </Grid>
+
+                  <div
+                    style={{
+                      position: "fixed",
+                      left: "0",
+                      bottom: "0",
+                      width: "100%",
+                      height: "50px",
+                      textAlign: "center",
+                    }}
+                  >
+                    {isEdit ? null : <SimpleBottomNavigation />}
+                  </div>
+                </form>
               </Grid>
-
-              <Grid
-                container
-                direction="row"
-                justify="center"
-                alignItems="center"
-              >
-                <TextField
-                  id="to"
-                  select
-                  label="To (required)"
-                  defaultValue={tripData ? tripData.to : ""}
-                  onChange={handleInputChange}
-                  name="to"
-                  // helperText="Please select your end location"
-                  variant="outlined"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment>
-                        <LocationOnIcon color="primary" />
-                      </InputAdornment>
-                    ),
-                  }}
-                  style={{ width: "90vw" }}
-                >
-                  {routes.map((option) => (
-                    <MenuItem key={option} value={option}>
-                      {option}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </Grid>
-            </div>
-            <div>
-              <Grid
-                container
-                direction="row"
-                justify="space-around" // required due to textfield maxwidth = 50vw
-                alignItems="center"
-              >
-                <TextField
-                  id="departDate"
-                  type="date"
-                  name="date"
-                  label="Start Date"
-                  className={classes.textField}
-                  defaultValue={
-                    tripData
-                      ? moment(tripData.departDate).format("yyyy-MM-DD") // needs correct date format
-                      : // ? tripData.departDate // needs correct date format
-                        moment(new Date(Date.now())).format("yyyy-MM-DD") // show current  date by default
-                  }
-                  variant="outlined"
-                  onChange={handleInputChange}
-                  // helperText="Date you'll be leaving..."
-                  InputLabelProps={
-                    {
-                      // removes the header from inside the input box
-                    }
-                  }
-                />
-
-                <TextField
-                  id="departTime"
-                  type="time"
-                  name="time"
-                  label="Start Time"
-                  defaultValue={
-                    tripData
-                      ? tripData.departTime // requires correct time format, display current time
-                      : moment(new Date(Date.now())).format("HH:mm") // requires correct time format, display current time
-                  }
-                  variant="outlined"
-                  onChange={handleInputChange}
-                  // helperText="Time you'll be leaving..."
-                  InputLabelProps={
-                    {
-                      // removes the header from inside the input box
-                    }
-                  }
-                />
-              </Grid>
-            </div>
-
-            <div>
-              <Grid
-                container
-                direction="row"
-                justify="space-around"
-                alignItems="center"
-              >
-                <TextField
-                  id="outlined-basic"
-                  label="Free Seats?"
-                  variant="outlined"
-                  onChange={handleInputChange}
-                  type="number"
-                  className={classes.textField}
-                  defaultValue={tripData ? tripData.freeSeats : 1}
-                  name="freeSeats"
-                  // helperText="Number of seats available..."
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment>
-                        <AirlineSeatReclineNormalIcon color="primary" />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <span>
-                  <LocalMallIcon color="primary" />
-                  <FormControlLabel
-                    control={
-                      <Switch
-                        checked={carryPackage}
-                        onChange={handleCarryPackageChange}
-                        name="carryPackage"
-                      />
-                    }
-                    labelPlacement="top"
-                    label="Package?"
-                  ></FormControlLabel>
-                </span>
-              </Grid>
-            </div>
-
-            <Grid
-              container
-              direction="row"
-              justify="center"
-              alignItems="center"
-            >
-              <TextField
-                id="tripNote"
-                name="tripNote"
-                label="Trip Note"
-                multiline
-                // rows={2}
-                defaultValue={tripData ? tripData.tripNote : ""}
-                onChange={handleInputChange}
-                variant="outlined"
-                style={{ width: "90vw" }}
-                // helperText="Enter note about your trip..."
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment>
-                      <SpeakerNotesIcon color="primary" />
-                    </InputAdornment>
-                  ),
-                }}
-              />
-            </Grid>
-
-            <Grid
-              container
-              direction="row"
-              justify="space-around"
-              alignItems="center"
-            >
-              <FormBtn
-                // enable form submit if to/from is filled or in edit mode
-                disabled={!((formObject.from && formObject.to) || tripData)}
-                onClick={isEdit ? handleEditedFormSubmit : handleFormSubmit}
-              >
-                {isEdit ? "Update Trip" : "Post Trip"}
-              </FormBtn>
-            </Grid>
-
-            <div
-              style={{
-                position: "fixed",
-                left: "0",
-                bottom: "0",
-                width: "100%",
-                height: "50px",
-                textAlign: "center",
-              }}
-            >
-              {isEdit ? null : <SimpleBottomNavigation />}
-            </div>
-          </form>
+            </Col>
+          </Row>
         </ThemeProvider>
       </Container>
     </Box>
