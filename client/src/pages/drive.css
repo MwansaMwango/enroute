@@ -15,6 +15,7 @@
         height: 100%;
         margin: 0;
         padding: 0;
+        /* background: darkslategray; // for dark theme */
       }
       
       .btn-large {
@@ -27,7 +28,7 @@
       }
       
       .container {
-        background: white;
+        /* background: white; */
         padding: 20px 25px;
         border: 5px solid rgba(0, 0, 0, 0.6);
         -webkit-background-clip: padding-box; /* for Safari */

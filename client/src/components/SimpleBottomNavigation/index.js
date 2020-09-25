@@ -10,39 +10,61 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import MessageIcon from "@material-ui/icons/Message";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import { Grid } from "@material-ui/core/";
+import AppBar from "@material-ui/core/AppBar";
+import createSpacing from "@material-ui/core/styles/createSpacing";
+
+const useStyles = makeStyles({
+  root: {
+    width: "100%",
+    "& .MuiBottomNavigationAction-root": {
+      margin: "0",
+      padding: "0",
+    },
+  },
+});
 
 export default function SimpleBottomNavigation() {
+  const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
   return (
-    <BottomNavigation
-      value={value}
-      onChange={(event, newValue) => {
-        setValue(newValue);
-      }}
-      showLabels
-    >
-      <BottomNavigationAction
-        label="Drive"
-        icon={<LocalTaxiIcon />}
-        href="/drive"
-      />
+    <AppBar position="fixed" color="primary" style={{ top: "auto", bottom: 0 }}>
+      <BottomNavigation
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        showLabels
+        className={classes.root}
+      >
+        <BottomNavigationAction
+          label="Drive"
+          icon={<LocalTaxiIcon />}
+          href="/drive"
+        />
 
-      <BottomNavigationAction
-        label="My Trips"
-        icon={<PersonPinCircleIcon />}
-        href="/myTrips"
-      />
-      <BottomNavigationAction
-        label="My Requests"
-        icon={<AirlineSeatReclineNormalIcon />}
-        href="/myrequests"
-      />
-      <BottomNavigationAction
-        label="Newsfeed"
-        icon={<MessageIcon />}
-        href="/newsfeed"
-      />
-    </BottomNavigation>
+        <BottomNavigationAction
+          label="My Trips"
+          icon={<PersonPinCircleIcon />}
+          href="/myTrips"
+        />
+        <BottomNavigationAction
+          label="Ride"
+          icon={<EmojiPeopleRoundedIcon />}
+          href="/ride"
+        />
+        <BottomNavigationAction
+          label="My Requests"
+          icon={<AirlineSeatReclineNormalIcon />}
+          href="/myrequests"
+        />
+        <BottomNavigationAction
+          label="News"
+          icon={<MessageIcon />}
+          href="/newsfeed"
+        />
+      </BottomNavigation>
+    </AppBar>
   );
 }

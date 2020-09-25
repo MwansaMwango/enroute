@@ -1,8 +1,12 @@
 import React from "react";
 
+
+
+
 function Jumbotron({ children }) {
   return (
     <div
+
       style={{
         // height: "12vh",
         clear: "both",
@@ -27,6 +31,7 @@ function Jumbotron({ children }) {
 
       className="jumbotron"
     >
+ 
       {children}
     </div>
   );

@@ -54,13 +54,18 @@ function Drive({ isEdit, tripData }) {
         dark: "#168387",
         contrastText: "#000",
       },
+      // type: 'dark', // dark theme
+
     },
+
+
   });
 
   const useStyles = makeStyles((theme) => ({
     root: {
       "& > svg": {
         margin: theme.spacing(1),
+       
       },
       "& .MuiTextField-root": {
         margin: theme.spacing(1),
@@ -70,7 +75,14 @@ function Drive({ isEdit, tripData }) {
       },
       "& .MuiInputBase-root": {
         borderRadius: 20,
+        
       },
+      "& .MuiFormControlLabel-label": {
+        // color: "#fff", // for dark theme
+       
+      },
+
+      
 
       container: {
         display: "flex",
@@ -82,8 +94,12 @@ function Drive({ isEdit, tripData }) {
       // marginLeft: theme.spacing(1),
       // marginRight: theme.spacing(1),
 
-      maxWidth: "40%",
+      maxWidth: "50%",
+   
     },
+    typography: {
+
+    }
   }));
 
   const classes = useStyles();
@@ -285,8 +301,8 @@ function Drive({ isEdit, tripData }) {
                       className={classes.textField}
                       defaultValue={
                         tripData
-                          ? moment(tripData.departDate).format("yyyy-MM-DD") // needs correct date format
-                          : moment(new Date(Date.now())).format("yyyy-MM-DD") // show current  date by default
+                          ? moment(tripData.departDate).format("yyyy/MM/DD") // needs correct date format
+                          : moment(new Date(Date.now())).format("yy-MM-DD") // show current  date by default
                       }
                       variant="outlined"
                       onChange={handleInputChange}
@@ -302,7 +318,8 @@ function Drive({ isEdit, tripData }) {
                       type="time"
                       name="time"
                       label="Start Time"
-                      className={classes.textField}
+                      // className={classes.textField}
+                      style={{ maxWidth: "30%"}}
                       defaultValue={
                         tripData
                           ? tripData.departTime // requires correct time format, display current time
@@ -348,13 +365,15 @@ function Drive({ isEdit, tripData }) {
                     <span>
                     <LocalMallIcon color="primary" />
                     <FormControlLabel
+                
                       control={
                         <Switch
                           checked={carryPackage}
                           onChange={handleCarryPackageChange}
                           name="carryPackage"
-                        />
-                      }
+                          />
+                        }
+                   
                       labelPlacement="top"
                       label="Package?"
                     ></FormControlLabel>
@@ -409,7 +428,12 @@ function Drive({ isEdit, tripData }) {
                     </FormBtn>
                   </Grid>
 
-                  <div
+                  {/* <div
+                    // container
+                    // direction="row"
+                    // justify="space-around"
+                    // alignItems="center"
+                  
                     style={{
                       position: "fixed",
                       left: "0",
@@ -418,9 +442,9 @@ function Drive({ isEdit, tripData }) {
                       height: "50px",
                       textAlign: "center",
                     }}
-                  >
-                    {isEdit ? null : <SimpleBottomNavigation />}
-                  </div>
+                  > */}
+                    {isEdit ? null : <SimpleBottomNavigation  />}
+                  {/* </div> */}
                 </form>
               </Grid>
             </Col>
