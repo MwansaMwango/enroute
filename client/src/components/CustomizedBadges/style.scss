@@ -1,0 +1,37 @@
+
+[class*="floatEffect-"] {
+  // margin-left: 10px;
+  width: 90vw;
+  // box-shadow: 1px 2px 6px 2px #000
+}
+.floatEffect-1 {
+  // @include floatEffect(50px,#E94336);
+  animation: float 2.0s cubic-bezier(.1,.1,.88,.88) infinite;
+  transform: rotateZ(-45deg);
+  // animation: float 3.1s ease-in-out forwards
+}
+.floatEffect-2 {
+  // @include floatEffect(30px,#F6B32C);
+  animation: float 2.2s cubic-bezier(.1,.1,.88,.88) infinite;
+  transform: rotateZ(-45deg);
+}
+
+.floatEffect-3 {
+  // @include floatEffect(70px,#49A25D);
+  animation: float 2.4s cubic-bezier(.1,.1,.88,.88) infinite;
+}
+.floatEffect-4 {
+  // @include floatEffect(40px,#4183F1);
+  animation: float 2.6s cubic-bezier(.1,.1,.88,.88) infinite;
+}
+@keyframes float {
+  0% {
+    transform: translate(0,0);
+  }
+  50% {
+    transform: translate(0,4px);
+  }
+  100% {
+    transform: translate(0,0);
+  }
+}

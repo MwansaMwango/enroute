@@ -47,7 +47,7 @@ export default function SimpleBottomNavigation() {
         <BottomNavigationAction
           label="My Trips"
           icon={<PersonPinCircleIcon />}
-          href="/myTrips"
+          href="/mytrips"
         />
         <BottomNavigationAction
           label="Ride"

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
+import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
@@ -29,7 +30,9 @@ import {
 import Typography from "@material-ui/core/Typography";
 import "./drive.css";
 import moment from "moment";
-
+import MyResponsiveBar from "../components/MyResponsiveBar";
+import CustomizedBadges from "../components/CustomizedBadges";
+import Image from "material-ui-image";
 function Drive({ isEdit, tripData }) {
   // Setting our component's initial state
   console.log("isEditMode =", isEdit, "tripData = ", tripData);
@@ -55,17 +58,13 @@ function Drive({ isEdit, tripData }) {
         contrastText: "#000",
       },
       // type: 'dark', // dark theme
-
     },
-
-
   });
 
   const useStyles = makeStyles((theme) => ({
     root: {
       "& > svg": {
         margin: theme.spacing(1),
-       
       },
       "& .MuiTextField-root": {
         margin: theme.spacing(1),
@@ -75,19 +74,14 @@ function Drive({ isEdit, tripData }) {
       },
       "& .MuiInputBase-root": {
         borderRadius: 20,
-        
       },
       "& .MuiFormControlLabel-label": {
         // color: "#fff", // for dark theme
-       
       },
-
-      
 
       container: {
         display: "flex",
         flexWrap: "wrap",
-        // maxHeight: "90vh",
       },
     },
     textField: {
@@ -95,11 +89,38 @@ function Drive({ isEdit, tripData }) {
       // marginRight: theme.spacing(1),
 
       maxWidth: "50%",
-   
     },
-    typography: {
+    locationTxt: { transform: "rotateZ(-45deg)" },
+    mapWrapper: {
+      position: "relative",
+      width: "100%",
+      display: "inline-block" /* Make the width of box same as image */,
+    },
+    img: {
+      // position: "relative",
+      width: "100%",
+    },
+    positionYnd: {
+      position: "absolute",
+      // z-index: 999;
+      margin: "0 auto",
+      left: 0,
+      right: 0,
+      top: "10%" /* Adjust this value to move the positioned div up and down */,
+      textAlign: "center",
+      width: "75%" /* Set the width of the positioned div left and right*/,
+    },
 
-    }
+    positionMAC: {
+      position: "absolute",
+      // z-index: 999;
+      margin: "0 auto",
+      left: 0,
+      right: 0,
+      top: "10%" /* Adjust this value to move the positioned div up and down */,
+      textAlign: "center",
+      width: "75%" /* Set the width of the positioned div left and right*/,
+    },
   }));
 
   const classes = useStyles();
@@ -204,19 +225,49 @@ function Drive({ isEdit, tripData }) {
             <Col size="md-12">
               {isEdit ? null : (
                 <Jumbotron>
-                <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="center"
-                >
-                  <Typography variant="h5" component="h5" color="primary">
-                    Drive
-                    <LocalTaxiIcon fontSize="small" />
-                  </Typography>
-                </Grid>
-                 </Jumbotron>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Typography variant="h5" component="h5" color="primary">
+                      Drive
+                      <LocalTaxiIcon fontSize="small" />
+                    </Typography>
+                  </Grid>
+                </Jumbotron>
               )}
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+              >
+                <Col size="md-12">
+                  <div className={classes.mapWrapper}>
+                    <img
+                      src={require("../assets/route-map.svg")}
+                      alt=""
+                      className={classes.img}
+                    />
+                    <div className={classes.positionYnd}>
+                      <CustomizedBadges fromLocation="BMT" totalRequests={3} />
+                      <Typography
+                        variant="p"
+                        component="p"
+                        color="primary"
+                        className={classes.locationTxt}
+                      >
+                        Belmont
+                      </Typography>
+                    </div>
+                  </div>
+                </Col>
+              </Grid>
+
+              {/* <MyResponsiveBar /> */}
+
               <Grid
                 container
                 direction="row"
@@ -254,6 +305,17 @@ function Drive({ isEdit, tripData }) {
                       ))}
                     </TextField>
                   </Grid>
+                  <span
+                    style={{
+                      borderLeft: "2px solid #E64500",
+                      height: "45px",
+                      position: "relative",
+                      left: "10%",
+                      top: 0,
+                      zIndex: 100,
+                    }}
+                  ></span>
+
                   <Grid
                     container
                     direction="row"
@@ -319,7 +381,7 @@ function Drive({ isEdit, tripData }) {
                       name="time"
                       label="Start Time"
                       // className={classes.textField}
-                      style={{ maxWidth: "30%"}}
+                      style={{ maxWidth: "30%" }}
                       defaultValue={
                         tripData
                           ? tripData.departTime // requires correct time format, display current time
@@ -363,20 +425,18 @@ function Drive({ isEdit, tripData }) {
                       }}
                     />
                     <span>
-                    <LocalMallIcon color="primary" />
-                    <FormControlLabel
-                
-                      control={
-                        <Switch
-                          checked={carryPackage}
-                          onChange={handleCarryPackageChange}
-                          name="carryPackage"
+                      <LocalMallIcon color="primary" />
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={carryPackage}
+                            onChange={handleCarryPackageChange}
+                            name="carryPackage"
                           />
                         }
-                   
-                      labelPlacement="top"
-                      label="Package?"
-                    ></FormControlLabel>
+                        labelPlacement="top"
+                        label="Package?"
+                      ></FormControlLabel>
                     </span>
                   </Grid>
                   {/* </div> */}
@@ -443,7 +503,7 @@ function Drive({ isEdit, tripData }) {
                       textAlign: "center",
                     }}
                   > */}
-                    {isEdit ? null : <SimpleBottomNavigation  />}
+                  {isEdit ? null : <SimpleBottomNavigation />}
                   {/* </div> */}
                 </form>
               </Grid>

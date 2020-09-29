@@ -1,134 +1,147 @@
 /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
-       #map {
-        padding: 20px 25px;
-        border: 5px solid rgba(0, 0, 0, 0.6);
-        border-radius: 15px;
-        min-height: 300px;
-        width: 100%;
-        box-sizing: border-box;
-        position: relative;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        /* background: darkslategray; // for dark theme */
-      }
-      
-      .btn-large {
-        border-radius: 15px;
-      }
-      
-      #logo {
-        max-width: 250px;
-        margin-top: 8px;
-      }
-      
-      .container {
-        /* background: white; */
-        padding: 20px 25px;
-        border: 5px solid rgba(0, 0, 0, 0.6);
-        -webkit-background-clip: padding-box; /* for Safari */
-        background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
-        border-radius: 15px;
-        height: auto;
-      }
-      
-      #menuBtn {
-        width: 400px;
-      }
-      
-      tr {
-        border-style: none;
-      }
-      
-      #noborder {
-        border-bottom: 0px none white;
-      }
-      
-      body {
-        /* background-image: url(../img/roadMap.jpg); */
+#map {
+  padding: 20px 25px;
+  border: 5px solid rgba(0, 0, 0, 0.6);
+  border-radius: 15px;
+  min-height: 300px;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+/* Optional: Makes the sample page fill the window. */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /* background: darkslategray; // for dark theme */
+}
+
+.btn-large {
+  border-radius: 15px;
+}
+
+#logo {
+  max-width: 250px;
+  margin-top: 8px;
+}
+
+.container {
+  /* background: white; */
+  padding: 20px 25px;
+  border: 5px solid rgba(0, 0, 0, 0.6);
+  -webkit-background-clip: padding-box; /* for Safari */
+  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
+  border-radius: 15px;
+  height: auto;
+}
+
+#menuBtn {
+  width: 400px;
+}
+
+tr {
+  border-style: none;
+}
+
+#noborder {
+  border-bottom: 0px none white;
+}
+
+body {
+  /* background-image: url(../img/roadMap.jpg); */
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  font-family: var(--mainFont);
+}
+/* img {
+  display: flex;
+  justify-content: center;
+ 
+} */
+.bg-map {
+  /* position: relative; */
+  /* display: block; */
+  width: 90vw;
+  background-image: url("../assets/route-map.svg");
+        /* height: 100%; */
+
         background-position: center center;
         background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-        font-family: var(--mainFont);
-      }
-      
-      .spacer {
-        padding-top: 5%;
-      }
-      .page-footer {
-        max-height: fit-content;
-        padding-top: 0%;
-        display: inline-block;
-        background: rgba(0, 0, 0, 0.6);
-        font: white;
-      }
-      
-      #signupFrmBtn {
-        border-radius: 15px;
-      }
-      
-      .btn-large {
-        border-radius: 15px;
-      }
-      
-      nav .nav-wrapper {
-        position: relative;
-        height: 100%;
-        padding-top: 0%;
-        background: rgba(0, 0, 0, 0.6);
-        font: white;
-      }
-      
-      .btn-default {
-        margin-top: 5px;
-        border-radius: 15px;
-        width:90%
-      }
-      
-      tr.hidden,tr.hidden>td {
-        line-height:1.2em;
-        margin: 3px;
-        padding:0px 5px;
-      }
-      
-      
-      
-      .requestDetailsHdr {
-        font-size: 1.2rem;
-        text-align: left;
-      }
-      
-      td.datalabel,td.data {
-        margin:5px;
-        padding:5px;
-        font: 0.7rem;
-      }
-      td.datalabel {
-        color: teal
-      }
-      
-      
-      row.map_contents{
-        align-content: center;
-        
-      }
-      
-      #right-panel select {
-        font-size: 1.5rem;
-        background-color: rgb(149, 202, 200);
-        border-radius: 15px;
-        
-      }
-      
-      #directions-panel {
-        margin-top: 10px;
-        padding: 10px;
-        overflow: scroll;
-        height: 10vh;
-      }
+        background-attachment: local scroll;
+   background-size: contain; 
+}
+.spacer {
+  padding-top: 5%;
+}
+.page-footer {
+  max-height: fit-content;
+  padding-top: 0%;
+  display: inline-block;
+  background: rgba(0, 0, 0, 0.6);
+  font: white;
+}
+
+#signupFrmBtn {
+  border-radius: 15px;
+}
+
+.btn-large {
+  border-radius: 15px;
+}
+
+nav .nav-wrapper {
+  position: relative;
+  height: 100%;
+  padding-top: 0%;
+  background: rgba(0, 0, 0, 0.6);
+  font: white;
+}
+
+.btn-default {
+  margin-top: 5px;
+  border-radius: 15px;
+  width: 90%;
+}
+
+tr.hidden,
+tr.hidden > td {
+  line-height: 1.2em;
+  margin: 3px;
+  padding: 0px 5px;
+}
+
+.requestDetailsHdr {
+  font-size: 1.2rem;
+  text-align: left;
+}
+
+td.datalabel,
+td.data {
+  margin: 5px;
+  padding: 5px;
+  font: 0.7rem;
+}
+td.datalabel {
+  color: teal;
+}
+
+row.map_contents {
+  align-content: center;
+}
+
+#right-panel select {
+  font-size: 1.5rem;
+  background-color: rgb(149, 202, 200);
+  border-radius: 15px;
+}
+
+#directions-panel {
+  margin-top: 10px;
+  padding: 10px;
+  overflow: scroll;
+  height: 10vh;
+}
