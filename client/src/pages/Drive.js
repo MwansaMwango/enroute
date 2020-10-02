@@ -95,31 +95,84 @@ function Drive({ isEdit, tripData }) {
       position: "relative",
       width: "100%",
       display: "inline-block" /* Make the width of box same as image */,
+      fontSize: "3.5vw",
     },
     img: {
       // position: "relative",
       width: "100%",
+      paddingBottom: "10%", // allows for location texts
+      paddingTop: "10%", // allows for location texts
     },
-    positionYnd: {
+    positionNED: {
+      position: "absolute",
+      // z-index: 999;
+      margin: "0 auto",
+      left: "-65%", // Horizontal adjstment
+      right: 0,
+      top: "0%" /* Adjust this value to move the positioned div up and down */,
+      textAlign: "center",
+      width: "100%" /* Set the width of the positioned div left and right*/,
+    },
+    positionPER: {
+      position: "absolute",
+      // z-index: 999;
+      margin: "0 auto",
+      left: "-30%", // Horizontal adjstment
+      right: 0,
+      top: "0%" /* Adjust this value to move the positioned div up and down */,
+      textAlign: "center",
+      width: "100%" /* Set the width of the positioned div left and right*/,
+    },
+    positionVIC: {
       position: "absolute",
       // z-index: 999;
       margin: "0 auto",
       left: 0,
       right: 0,
-      top: "10%" /* Adjust this value to move the positioned div up and down */,
+      top: "0%" /* Adjust this value to move the positioned div up and down */,
       textAlign: "center",
-      width: "75%" /* Set the width of the positioned div left and right*/,
+      width: "100%" /* Set the width of the positioned div left and right*/,
+    },
+    positionBMT: {
+      position: "absolute",
+      // z-index: 999;
+      margin: "0 auto",
+      left: "15%",
+      right: 0,
+      top: "20%" /* Adjust this value to move the positioned div up and down */,
+      textAlign: "center",
+      width: "100%" /* Set the width of the positioned div left and right*/,
     },
 
-    positionMAC: {
+    positionMTY: {
       position: "absolute",
       // z-index: 999;
       margin: "0 auto",
-      left: 0,
+      left: "30%",
       right: 0,
-      top: "10%" /* Adjust this value to move the positioned div up and down */,
+      top: "20%" /* Adjust this value to move the positioned div up and down */,
       textAlign: "center",
-      width: "75%" /* Set the width of the positioned div left and right*/,
+      width: "100%" /* Set the width of the positioned div left and right*/,
+    },
+    positionSTR: {
+      position: "absolute",
+      // z-index: 999;
+      margin: "0 auto",
+      left: "40%",
+      right: 0,
+      top: "0%" /* Adjust this value to move the positioned div up and down */,
+      textAlign: "center",
+      width: "100%" /* Set the width of the positioned div left and right*/,
+    },
+    positionJND: {
+      position: "absolute",
+      // z-index: 999;
+      margin: "0 auto",
+      left: "50%",
+      right: 0,
+      top: "0%" /* Adjust this value to move the positioned div up and down */,
+      textAlign: "center",
+      width: "100%" /* Set the width of the positioned div left and right*/,
     },
   }));
 
@@ -251,16 +304,26 @@ function Drive({ isEdit, tripData }) {
                       alt=""
                       className={classes.img}
                     />
-                    <div className={classes.positionYnd}>
-                      <CustomizedBadges fromLocation="BMT" totalRequests={3} />
-                      <Typography
-                        variant="p"
-                        component="p"
-                        color="primary"
-                        className={classes.locationTxt}
-                      >
-                        Belmont
-                      </Typography>
+                    <div className={classes.positionNED}>
+                      <CustomizedBadges fromLocation="NED" totalRequests={1} />
+                    </div>
+                    <div className={classes.positionPER}>
+                      <CustomizedBadges fromLocation="PER" totalRequests={2} />
+                    </div>
+                    <div className={classes.positionVIC}>
+                      <CustomizedBadges fromLocation="VIC" totalRequests={3} />
+                    </div>
+                    <div className={classes.positionBMT}>
+                      <CustomizedBadges fromLocation="BMT" totalRequests={4} />
+                    </div>
+                    <div className={classes.positionMTY}>
+                      <CustomizedBadges fromLocation="MTY" totalRequests={5} />
+                    </div>
+                    <div className={classes.positionSTR}>
+                      <CustomizedBadges fromLocation="STR" totalRequests={6} />
+                    </div>
+                    <div className={classes.positionJND}>
+                      <CustomizedBadges fromLocation="JND" totalRequests={7} />
                     </div>
                   </div>
                 </Col>
