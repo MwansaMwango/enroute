@@ -85,9 +85,6 @@ function Drive({ isEdit, tripData }) {
       },
     },
     textField: {
-      // marginLeft: theme.spacing(1),
-      // marginRight: theme.spacing(1),
-
       maxWidth: "50%",
     },
     locationTxt: { transform: "rotateZ(-45deg)" },
@@ -98,81 +95,61 @@ function Drive({ isEdit, tripData }) {
       fontSize: "3.5vw",
     },
     img: {
-      // position: "relative",
-      width: "100%",
-      paddingBottom: "10%", // allows for location texts
+      width: "90%",
+      textAlign: "center",
+      // paddingBottom: "0%", // allows for location texts
       paddingTop: "10%", // allows for location texts
+    
     },
     positionNED: {
       position: "absolute",
-      // z-index: 999;
-      margin: "0 auto",
-      left: "-65%", // Horizontal adjstment
-      right: 0,
-      top: "0%" /* Adjust this value to move the positioned div up and down */,
-      textAlign: "center",
-      width: "100%" /* Set the width of the positioned div left and right*/,
+
+      left: "8%", // Horizontal adjstment
+
+      top: "5%" /* Adjust this value to move the positioned div up and down */,
     },
     positionPER: {
       position: "absolute",
-      // z-index: 999;
-      margin: "0 auto",
-      left: "-30%", // Horizontal adjstment
-      right: 0,
-      top: "0%" /* Adjust this value to move the positioned div up and down */,
-      textAlign: "center",
-      width: "100%" /* Set the width of the positioned div left and right*/,
+
+      left: "22%", // Horizontal adjstment
+
+      top: "5%" /* Adjust this value to move the positioned div up and down */,
     },
     positionVIC: {
       position: "absolute",
-      // z-index: 999;
-      margin: "0 auto",
-      left: 0,
-      right: 0,
-      top: "0%" /* Adjust this value to move the positioned div up and down */,
-      textAlign: "center",
-      width: "100%" /* Set the width of the positioned div left and right*/,
+
+      left: "37%",
+
+      top: "5%" /* Adjust this value to move the positioned div up and down */,
     },
     positionBMT: {
       position: "absolute",
-      // z-index: 999;
-      margin: "0 auto",
-      left: "15%",
-      right: 0,
-      top: "20%" /* Adjust this value to move the positioned div up and down */,
-      textAlign: "center",
-      width: "100%" /* Set the width of the positioned div left and right*/,
+
+      left: "48%",
+
+      top: "30%" /* Adjust this value to move the positioned div up and down */,
     },
 
     positionMTY: {
       position: "absolute",
-      // z-index: 999;
-      margin: "0 auto",
-      left: "30%",
-      right: 0,
-      top: "20%" /* Adjust this value to move the positioned div up and down */,
-      textAlign: "center",
-      width: "100%" /* Set the width of the positioned div left and right*/,
+
+      left: "62%",
+
+      top: "30%" /* Adjust this value to move the positioned div up and down */,
     },
     positionSTR: {
       position: "absolute",
-      // z-index: 999;
-      margin: "0 auto",
-      left: "40%",
-      right: 0,
-      top: "0%" /* Adjust this value to move the positioned div up and down */,
-      textAlign: "center",
-      width: "100%" /* Set the width of the positioned div left and right*/,
+
+      left: "73%",
+
+      top: "5%" /* Adjust this value to move the positioned div up and down */,
     },
     positionJND: {
       position: "absolute",
-      // z-index: 999;
-      margin: "0 auto",
-      left: "50%",
-      right: 0,
-      top: "0%" /* Adjust this value to move the positioned div up and down */,
-      textAlign: "center",
-      width: "100%" /* Set the width of the positioned div left and right*/,
+
+      left: "83%",
+
+      top: "5%" /* Adjust this value to move the positioned div up and down */,
     },
   }));
 

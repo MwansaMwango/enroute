@@ -27,7 +27,7 @@ const useStyles = makeStyles({
 const StyledBadge = withStyles((theme) => ({
   badge: {
     fontSize: "3vw",
-    right: 5,
+    right: 0,
     top: 10,
     border: `0.2vw solid ${theme.palette.background.paper}`,
     padding: "1.7vw 1vw",
@@ -56,7 +56,7 @@ export default function CustomizedBadges(props) {
 
         <IconButton aria-label="ride">
           <StyledBadge badgeContent={props.totalRequests} color="secondary">
-            <EmojiPeopleRoundedIcon style={{ fontSize: "8vw" }} />
+            <EmojiPeopleRoundedIcon style={{ fontSize: "6vw" }} />
           </StyledBadge>
         </IconButton>
       </Typography>
