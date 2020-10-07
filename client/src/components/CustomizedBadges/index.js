@@ -56,7 +56,7 @@ export default function CustomizedBadges(props) {
 
         <IconButton aria-label="ride">
           <StyledBadge badgeContent={props.totalRequests} color="secondary">
-            <EmojiPeopleRoundedIcon style={{ fontSize: "6vw" }} />
+            <EmojiPeopleRoundedIcon style={{ fontSize: "7vw" }} />
           </StyledBadge>
         </IconButton>
       </Typography>

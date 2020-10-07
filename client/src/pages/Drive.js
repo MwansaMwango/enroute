@@ -93,39 +93,39 @@ function Drive({ isEdit, tripData }) {
       width: "100%",
       display: "inline-block" /* Make the width of box same as image */,
       fontSize: "3.5vw",
+      textAlign: "center",
     },
     img: {
       width: "90%",
-      textAlign: "center",
-      // paddingBottom: "0%", // allows for location texts
       paddingTop: "10%", // allows for location texts
+      // paddingBottom: "0%", // allows for location texts
     
     },
     positionNED: {
       position: "absolute",
 
-      left: "8%", // Horizontal adjstment
+      left: "10%", // Horizontal adjstment
 
-      top: "5%" /* Adjust this value to move the positioned div up and down */,
+      top: "4%" /* Adjust this value to move the positioned div up and down */,
     },
     positionPER: {
       position: "absolute",
 
-      left: "22%", // Horizontal adjstment
+      left: "25%", // Horizontal adjstment
 
-      top: "5%" /* Adjust this value to move the positioned div up and down */,
+      top: "4%" /* Adjust this value to move the positioned div up and down */,
     },
     positionVIC: {
       position: "absolute",
 
-      left: "37%",
+      left: "40%",
 
-      top: "5%" /* Adjust this value to move the positioned div up and down */,
+      top: "4%" /* Adjust this value to move the positioned div up and down */,
     },
     positionBMT: {
       position: "absolute",
 
-      left: "48%",
+      left: "52%",
 
       top: "30%" /* Adjust this value to move the positioned div up and down */,
     },
@@ -133,23 +133,23 @@ function Drive({ isEdit, tripData }) {
     positionMTY: {
       position: "absolute",
 
-      left: "62%",
+      left: "65%",
 
       top: "30%" /* Adjust this value to move the positioned div up and down */,
     },
     positionSTR: {
       position: "absolute",
 
-      left: "73%",
+      left: "75%",
 
-      top: "5%" /* Adjust this value to move the positioned div up and down */,
+      top: "4%" /* Adjust this value to move the positioned div up and down */,
     },
     positionJND: {
       position: "absolute",
 
-      left: "83%",
+      left: "85%",
 
-      top: "5%" /* Adjust this value to move the positioned div up and down */,
+      top: "4%" /* Adjust this value to move the positioned div up and down */,
     },
   }));
 
