@@ -7,6 +7,7 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import LocalMallIcon from "@material-ui/icons/LocalMall";
 import AirlineSeatReclineNormalIcon from "@material-ui/icons/AirlineSeatReclineNormal";
 import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
+import EventIcon from "@material-ui/icons/Event";
 import Switch from "@material-ui/core/Switch";
 import Jumbotron from "../components/Jumbotron";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
@@ -99,7 +100,13 @@ function Drive({ isEdit, tripData }) {
       width: "90%",
       paddingTop: "10%", // allows for location texts
       // paddingBottom: "0%", // allows for location texts
-    
+    },
+    positionToday: {
+      // fontSize: "1.2rem",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center", // aligns with icon
+      // top: "-4%" /* Adjust this value to move the positioned div up and down */,
     },
     positionNED: {
       position: "absolute",
@@ -262,8 +269,8 @@ function Drive({ isEdit, tripData }) {
                     alignItems="center"
                   >
                     <Typography variant="h5" component="h5" color="primary">
-                      Drive
                       <LocalTaxiIcon fontSize="small" />
+                      Drive
                     </Typography>
                   </Grid>
                 </Jumbotron>
@@ -275,6 +282,16 @@ function Drive({ isEdit, tripData }) {
                 alignItems="center"
               >
                 <Col size="md-12">
+                  <Typography
+                    variant="overline"
+                    component="h5"
+                    color="primary"
+                    className={classes.positionToday}
+                  >
+                    Requests Today
+                    <EventIcon fontSize="small" />
+                    <b>{moment().format("Mo MMM YY")}</b>
+                  </Typography>
                   <div className={classes.mapWrapper}>
                     <img
                       src={require("../assets/route-map.svg")}
@@ -305,8 +322,6 @@ function Drive({ isEdit, tripData }) {
                   </div>
                 </Col>
               </Grid>
-
-              {/* <MyResponsiveBar /> */}
 
               <Grid
                 container
