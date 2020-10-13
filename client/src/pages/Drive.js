@@ -40,6 +40,7 @@ function Drive({ isEdit, tripData }) {
   const [trip] = useState(tripData);
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
+  const [counts, setCountsObject] = useState({}); // stores count of ride requests for each location
   const [carryPackage, setCarryPackage] = useState(
     tripData ? tripData.carryPackage : false
   );
@@ -168,8 +169,8 @@ function Drive({ isEdit, tripData }) {
 
   // TODO Initialise and Load Requests from database, to be displayed on map
   useEffect(() => {
-    loadRoutes();
     loadTodaysRequests();
+    loadRoutes();
   }, []);
 
   function loadTodaysRequests() {
@@ -180,11 +181,22 @@ function Drive({ isEdit, tripData }) {
         res.data.map((request) => {
           todaysRequestsList.push(request.from);
         });
+        countOccurrences(todaysRequestsList);
         console.log("Todays requets", todaysRequestsList);
+        console.log("Counts = ", counts);
       })
       .catch((err) => console.log(err));
   }
-  
+
+  // counts number of ride requests from each location
+  function countOccurrences(arr) {
+    for (let i = 0; i < arr.length; i++) {
+      let num = arr[i];
+      counts[num] = counts[num] ? counts[num] + 1 : 1;
+    }
+    setCountsObject(counts);
+  }
+
   function loadRoutes() {
     let routeList = [];
 
@@ -308,33 +320,92 @@ function Drive({ isEdit, tripData }) {
                     <EventIcon fontSize="small" />
                     <b>{moment().format("Do MMM YY")}</b>
                   </Typography>
+
+                  {/* Render map */}
+
                   <div className={classes.mapWrapper}>
                     <img
                       src={require("../assets/route-map.svg")}
-                      alt=""
+                      alt="Loading map..."
                       className={classes.img}
                     />
-                    <div className={classes.positionNED}>
-                      <CustomizedBadges fromLocation="NED" totalRequests={1} />
-                    </div>
-                    <div className={classes.positionPER}>
-                      <CustomizedBadges fromLocation="PER" totalRequests={2} />
-                    </div>
-                    <div className={classes.positionVIC}>
-                      <CustomizedBadges fromLocation="VIC" totalRequests={3} />
-                    </div>
-                    <div className={classes.positionBMT}>
-                      <CustomizedBadges fromLocation="BMT" totalRequests={4} />
-                    </div>
-                    <div className={classes.positionMTY}>
-                      <CustomizedBadges fromLocation="MTY" totalRequests={5} />
-                    </div>
-                    <div className={classes.positionSTR}>
-                      <CustomizedBadges fromLocation="STR" totalRequests={6} />
-                    </div>
-                    <div className={classes.positionJND}>
-                      <CustomizedBadges fromLocation="JND" totalRequests={7} />
-                    </div>
+
+                    {Object.keys(counts).map((key, index) => {
+                      switch (key) {
+                        case "Nedlands":
+                          console.log(key);
+                          return (
+                            <div className={classes.positionNED} key={index}>
+                              <CustomizedBadges
+                                fromLocation="NED"
+                                totalRequests={counts[key]}
+                              />
+                            </div>
+                          );
+                        case "Perth":
+                          console.log(key);
+                          return (
+                            <div className={classes.positionPER} key={index}>
+                              <CustomizedBadges
+                                fromLocation="PER"
+                                totalRequests={counts[key]}
+                              />
+                            </div>
+                          );
+                        case "Victoria Park":
+                          return (
+                            <div
+                              item
+                              className={classes.positionVIC}
+                              key={index}
+                            >
+                              <CustomizedBadges
+                                fromLocation="VIC"
+                                totalRequests={counts[key]}
+                              />
+                            </div>
+                          );
+                        case "Belmont":
+                          return (
+                            <div className={classes.positionBMT} key={index}>
+                              <CustomizedBadges
+                                fromLocation="BMT"
+                                totalRequests={counts[key]}
+                              />
+                            </div>
+                          );
+                        case "Mount Lawley":
+                          return (
+                            <div className={classes.positionMTY} key={index}>
+                              <CustomizedBadges
+                                fromLocation="MTY"
+                                totalRequests={counts[key]}
+                              />
+                            </div>
+                          );
+                        case "Stirling":
+                          console.log("Stirling count=", counts[key]);
+                          return (
+                            <div className={classes.positionSTR} key={index}>
+                              <CustomizedBadges
+                                fromLocation="STR"
+                                totalRequests={counts[key]}
+                              />
+                            </div>
+                          );
+                        case "Joondalup":
+                          return (
+                            <div className={classes.positionJND} key={index}>
+                              <CustomizedBadges
+                                fromLocation="JND"
+                                totalRequests={counts[key]}
+                              />
+                            </div>
+                          );
+                        default:
+                          return null;
+                      } // switch end
+                    })}
                   </div>
                 </Col>
               </Grid>
@@ -418,7 +489,6 @@ function Drive({ isEdit, tripData }) {
                       ))}
                     </TextField>
                   </Grid>
-                  {/* </div> */}
 
                   <Grid
                     container
@@ -467,9 +537,7 @@ function Drive({ isEdit, tripData }) {
                       }}
                     />
                   </Grid>
-                  {/* </div>
 
-                {/* <div> */}
                   <Grid
                     container
                     direction="row"
@@ -510,7 +578,6 @@ function Drive({ isEdit, tripData }) {
                       ></FormControlLabel>
                     </span>
                   </Grid>
-                  {/* </div> */}
 
                   <Grid
                     container
@@ -559,23 +626,7 @@ function Drive({ isEdit, tripData }) {
                     </FormBtn>
                   </Grid>
 
-                  {/* <div
-                    // container
-                    // direction="row"
-                    // justify="space-around"
-                    // alignItems="center"
-                  
-                    style={{
-                      position: "fixed",
-                      left: "0",
-                      bottom: "0",
-                      width: "100%",
-                      height: "50px",
-                      textAlign: "center",
-                    }}
-                  > */}
                   {isEdit ? null : <SimpleBottomNavigation />}
-                  {/* </div> */}
                 </form>
               </Grid>
             </Col>
