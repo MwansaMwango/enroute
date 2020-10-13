@@ -75,6 +75,8 @@ function Drive({ isEdit, tripData }) {
       },
       "& .MuiInputBase-root": {
         borderRadius: 20,
+        // borderStyle: 'solid',
+        // borderWidth: '4px'
       },
       "& .MuiFormControlLabel-label": {
         // color: "#fff", // for dark theme
@@ -164,11 +166,25 @@ function Drive({ isEdit, tripData }) {
 
   let uniqueRouteList = [];
 
-  // TODO Initialise and Load Requests from database, to be displayed in newfeed
+  // TODO Initialise and Load Requests from database, to be displayed on map
   useEffect(() => {
     loadRoutes();
+    loadTodaysRequests();
   }, []);
 
+  function loadTodaysRequests() {
+    let todaysRequestsList = [];
+
+    API.getTodaysRequests()
+      .then(function (res) {
+        res.data.map((request) => {
+          todaysRequestsList.push(request.from);
+        });
+        console.log("Todays requets", todaysRequestsList);
+      })
+      .catch((err) => console.log(err));
+  }
+  
   function loadRoutes() {
     let routeList = [];
 
@@ -290,7 +306,7 @@ function Drive({ isEdit, tripData }) {
                   >
                     Requests Today
                     <EventIcon fontSize="small" />
-                    <b>{moment().format("Mo MMM YY")}</b>
+                    <b>{moment().format("Do MMM YY")}</b>
                   </Typography>
                   <div className={classes.mapWrapper}>
                     <img

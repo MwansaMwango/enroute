@@ -77,6 +77,10 @@ export default {
   deleteRequest: function (id) {
     return axios.delete("/api/requests/" + id);
   },
+  // Get todays requests
+  getTodaysRequests: function () {
+    return axios.get("/api/requests/today");
+  },
 
   // ------------------Requests Received APIs ----------------------------
 

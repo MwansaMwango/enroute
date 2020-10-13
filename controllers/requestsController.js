@@ -1,21 +1,14 @@
 const db = require("../models");
 const PushNotifications = require("@pusher/push-notifications-server");
-// const beamsClient = new PushNotifications({
-//   // instanceId: "6af2ffd6-7acf-4ff5-9099-45bd1624be39",
-//   // secretKey: "8B9AFA8838E2D7A271D34AF7407DF93B7F7514A1F80DDE49DB12AF8F845C4B3C",
-//   instanceId: "0bb3f3ca-f205-4863-a264-e0e2264bc4bf",
-//   secretKey: "7AAD3F24D5B9C2CDF0FF9093EE725E0D5270BD6B67ACD616CB77499FFE95E184",
-// });
-const Pusher = require('pusher');
+const Pusher = require("pusher");
+const moment = require("moment");
 
 const pusher = new Pusher({
-  appId : "1074079",
-  key : "29fa452f5422eea823e5",
-  secret : "b3dc2da01e2b37e2c517",
-  cluster : "ap1"
+  appId: "1074079",
+  key: "29fa452f5422eea823e5",
+  secret: "b3dc2da01e2b37e2c517",
+  cluster: "ap1",
 });
-
-
 
 // Defining methods for the request controller
 module.exports = {
@@ -80,6 +73,33 @@ module.exports = {
       .catch((err) => res.status(422).json(err));
   },
 
+  findTodaysRequests: function (req, res) {
+    // db.Request.aggregate([
+    //   {
+    //     $match: {
+    //       departDate: moment(),
+    //       user_id: {
+    //         $ne: req.user._id, // exclude my requests
+    //       },
+    //     },
+    //   },
+    //   { $group: { from: "$from", count: { $sum: 1 } } }
+    // ])
+
+      db.Request.find({
+        departDate: moment().format("yy-MM-DD"), //must be formatted accordingly
+        user_id: {
+          $ne: req.user._id, // exclude my requests
+        },
+      })
+      .then((dbModel) => {
+        res.json(dbModel);
+        console.log("Find todays requests hit dbmodel=", dbModel);
+      })
+
+      .catch((err) => res.status(422).json(err));
+  },
+
   update: function (req, res) {
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body)
       .then((dbModel) => res.json(dbModel))
@@ -90,7 +110,6 @@ module.exports = {
     req.body.status = "Booked"; // change status booking to booked
     req.body.driver_id = req.user.id; // attach driver id to request record
     console.log("Accept request...req.body = ", req.body);
-   
 
     db.Request.findOneAndUpdate({ _id: req.params.id }, req.body) //only updates different fields
       .then((dbModel) => {
@@ -103,9 +122,9 @@ module.exports = {
           { _id: req.body.trip_id },
           { request_id: req.params.id, status: "Booked" }
         ).then((dbModel) => {
-          // /*You should now be able to associate devices with users in your application. 
-          // This will allow you to send notifications to all devices belonging to a 
-          // particular user by publishing to their user ID. Use one of the Beams server 
+          // /*You should now be able to associate devices with users in your application.
+          // This will allow you to send notifications to all devices belonging to a
+          // particular user by publishing to their user ID. Use one of the Beams server
           // SDKs to publish to your users:
           // */
           // //May not be required?
@@ -144,7 +163,9 @@ module.exports = {
 
           //----- CHANNEL TRIGGER ---------
           // private channel names must start with 'private-'
-          pusher.trigger('private-user-' + requestorId, 'request-booked', {requestData});
+          pusher.trigger("private-user-" + requestorId, "request-booked", {
+            requestData,
+          });
 
           console.log("Updated trip record with request_id", dbModel);
         });
