@@ -76,11 +76,12 @@ function Drive({ isEdit, tripData }) {
       },
       "& .MuiInputBase-root": {
         borderRadius: 20,
+
         // borderStyle: 'solid',
-        // borderWidth: '4px'
+        // borderWidth: '1px',
       },
       "& .MuiFormControlLabel-label": {
-        // color: "#fff", // for dark theme
+        //color: "#fff", // for dark theme
       },
 
       container: {
@@ -296,8 +297,8 @@ function Drive({ isEdit, tripData }) {
                     justify="center"
                     alignItems="center"
                   >
-                    <Typography variant="h5" component="h5" color="primary">
-                      <LocalTaxiIcon fontSize="small" />
+                    <Typography variant="h5" color="primary">
+                      <LocalTaxiIcon fontSize="1rem" />
                       Drive
                     </Typography>
                   </Grid>
@@ -312,11 +313,11 @@ function Drive({ isEdit, tripData }) {
                 <Col size="md-12">
                   <Typography
                     variant="overline"
-                    component="h5"
+                    component="h6"
                     color="primary"
                     className={classes.positionToday}
                   >
-                    Requests Today
+                    Riders Today
                     <EventIcon fontSize="small" />
                     <b>{moment().format("Do MMM YY")}</b>
                   </Typography>
@@ -447,16 +448,6 @@ function Drive({ isEdit, tripData }) {
                       ))}
                     </TextField>
                   </Grid>
-                  <span
-                    style={{
-                      borderLeft: "2px solid #E64500",
-                      height: "45px",
-                      position: "relative",
-                      left: "10%",
-                      top: 0,
-                      zIndex: 100,
-                    }}
-                  ></span>
 
                   <Grid
                     container
@@ -545,7 +536,7 @@ function Drive({ isEdit, tripData }) {
                     alignItems="center"
                   >
                     <TextField
-                      id="outlined-basic"
+                      id="freeSeats"
                       label="Free Seats?"
                       variant="outlined"
                       onChange={handleInputChange}
@@ -574,7 +565,7 @@ function Drive({ isEdit, tripData }) {
                           />
                         }
                         labelPlacement="top"
-                        label="Package?"
+                        label="Parcel?"
                       ></FormControlLabel>
                     </span>
                   </Grid>

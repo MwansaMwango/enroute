@@ -203,7 +203,7 @@ export default function Nav(props) {
             >
               <AccountCircle />
             </IconButton>
-            <p>Profile</p>
+            <p>{currentUserFirstName}'s Profile</p>
           </MenuItem>
         </Menu>
       ) : (
