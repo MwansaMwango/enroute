@@ -76,15 +76,19 @@ function Drive({ isEdit, tripData }) {
         width: "100%",
         
       },
-      "& .MuiInputBase-root": {
+      "& .MuiInputBase-root ": {
         borderRadius: "20px",
         backgroundColor: "white",
-        opacity: "90%,"
+        opacity: "90%",
+        filter: 'drop-shadow(5px 5px 5px rgba(0,0,0,0.3))',
         // borderStyle: 'solid',
         // borderWidth: '1px',
       },
       "& .MuiFormControlLabel-label": {
         // color: "#fff", // for dark theme
+        opacity: "90%",
+        filter: 'drop-shadow(5px 5px 5px rgba(0,0,0,0.3))',
+      
       },
 
       container: {
@@ -609,7 +613,7 @@ function Drive({ isEdit, tripData }) {
                     justify="space-around"
                     alignItems="center"
                   >
-                    <FormBtn
+                    <FormBtn className={classes.root}
                       // enable form submit if to/from is filled or in edit mode
                       disabled={
                         !((formObject.from && formObject.to) || tripData)
