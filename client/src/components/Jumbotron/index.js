@@ -15,7 +15,13 @@ function Jumbotron({ children }) {
         fontSize: "1.2rem",
         textAlign: "center",
         color: "white",
-        
+        backgroundColor: '#FAD961',
+        backgroundImage: 'linear-gradient(0deg, #FAD961 0%, #e64500 100%)',
+           
+        // borderStyle: 'solid',
+        // borderSize: '2px',
+        // borderColor: '25px',
+        borderRadius: '0 0 50px 50px',
         // marginBottom: "10px",
         
         // https://images.unsplash.com/photo-1493238792000-8113da705763?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&h=250&q=80)

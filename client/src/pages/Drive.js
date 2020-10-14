@@ -34,6 +34,7 @@ import moment from "moment";
 import MyResponsiveBar from "../components/MyResponsiveBar";
 import CustomizedBadges from "../components/CustomizedBadges";
 import Image from "material-ui-image";
+
 function Drive({ isEdit, tripData }) {
   // Setting our component's initial state
   console.log("isEditMode =", isEdit, "tripData = ", tripData);
@@ -73,15 +74,17 @@ function Drive({ isEdit, tripData }) {
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
         width: "100%",
+        
       },
       "& .MuiInputBase-root": {
-        borderRadius: 20,
-
+        borderRadius: "20px",
+        backgroundColor: "white",
+        opacity: "90%,"
         // borderStyle: 'solid',
         // borderWidth: '1px',
       },
       "& .MuiFormControlLabel-label": {
-        //color: "#fff", // for dark theme
+        // color: "#fff", // for dark theme
       },
 
       container: {
@@ -297,7 +300,7 @@ function Drive({ isEdit, tripData }) {
                     justify="center"
                     alignItems="center"
                   >
-                    <Typography variant="h5" color="primary">
+                    <Typography variant="h5" color={theme.palette.primary.light}>
                       <LocalTaxiIcon fontSize="1rem" />
                       Drive
                     </Typography>
@@ -431,14 +434,15 @@ function Drive({ isEdit, tripData }) {
                       defaultValue={tripData ? tripData.from : ""}
                       onChange={handleInputChange}
                       name="from"
-                      // helperText="Start location"
+                      // helperText="Required"
                       variant="outlined"
                       InputProps={{
                         startAdornment: (
                           <InputAdornment>
-                            <MyLocationIcon color="primary" />
+                            <MyLocationIcon color="primary" position="start"/>
                           </InputAdornment>
                         ),
+                        shrink: true,
                       }}
                     >
                       {routes.map((option) => (
@@ -462,14 +466,15 @@ function Drive({ isEdit, tripData }) {
                       defaultValue={tripData ? tripData.to : ""}
                       onChange={handleInputChange}
                       name="to"
-                      // helperText="Please select your end location"
+                      // helperText="Required"
                       variant="outlined"
                       InputProps={{
                         startAdornment: (
-                          <InputAdornment>
+                          <InputAdornment position="start">
                             <LocationOnIcon color="primary" />
                           </InputAdornment>
                         ),
+                        shrink: true,
                       }}
                       // style={{ maxWidth: "90vw", minWidth: "90%"}}
                     >

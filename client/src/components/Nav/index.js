@@ -29,6 +29,7 @@ import { ReactComponent as DriveLogo } from "../../assets/steering-wheel.svg";
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
+
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -39,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
     },
   },
+
   // search: {
   //   position: 'relative',
   //   borderRadius: theme.shape.borderRadius,
@@ -65,6 +67,10 @@ const useStyles = makeStyles((theme) => ({
   // },
   inputRoot: {
     color: "inherit",
+    backgroundColor: '#FAD961',
+    backgroundImage: 'linear-gradient(90deg, #FAD961 0%, #F76B1C 100%)',
+    backgroundSize: "cover", // '100%' scales full image unlike 'cover' test
+    backgroundRepeat: "no-repeat",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -211,10 +217,10 @@ export default function Nav(props) {
       )}
     </div>
   );
-
+ 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" style={{ backgroundColor: "#022222" }}>
+      <AppBar position="static" >
         {" "}
         {/* dark theme */}
         <Toolbar>

@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
+import { fade, makeStyles } from "@material-ui/core/styles";
 import Books from "./pages/Books";
 import Layout from "./pages/Layout";
 import Detail from "./pages/Detail";
@@ -72,10 +73,37 @@ function App() {
     });
   };
 
+  const useStyles = makeStyles((theme) => ({
+    bgImage: {
+      // clear: "both",
+      position: "fixed",
+      width: "100vw",
+      height: "100vh",
+      filter: "brightness(1.08)",
+      top: '5%',
+      zIndex: -1,
+      // filter: "blur(1px)", 
+      // filter: "sepia(15%)",
+      // filter: "opacity(70%)",
+      // filter: "invert(100%)", //good for dark them
+      // filter: "grayscale(100%)",
+      // filter: "contrast(110%)",
+   
+    },
+  }));
+
+  const classes = useStyles();
+
   return (
     <Router>
-      <Layout>
+      <Layout >
         <NotificationContext.Provider value={isNewNotification}>
+          <img
+            src={require("../src/assets/map2-grey.png")}
+            alt="Loading map..."
+            className={classes.bgImage}
+          />
+          
           <Nav notificationStatus={isNewNotification} />
           <Switch>
             <Route exact path={["/", "/login"]}>
