@@ -75,7 +75,7 @@ function App() {
 
   const useStyles = makeStyles((theme) => ({
     bgImage: {
-      clear: "both",
+      // clear: "both",
       position: "fixed",
       width: "100vw",
       height: "100vh",

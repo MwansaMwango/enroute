@@ -79,14 +79,15 @@ function Drive({ isEdit, tripData }) {
         borderRadius: "20px",
         backgroundColor: "white",
         opacity: "90%",
-        filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))",
+        filter: "drop-shadow(3px 3px 3px rgba(240,100,0.3))",
         // borderStyle: 'solid',
         // borderWidth: '1px',
       },
       "& .MuiFormControlLabel-label": {
         // color: "#fff", // for dark theme
         opacity: "90%",
-        filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))",
+        // filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))",
+        // filter: "drop-shadow(3px 3px 3px rgba(240,100,0.3))",
       },
 
       container: {
@@ -287,7 +288,7 @@ function Drive({ isEdit, tripData }) {
   return (
     <Box
       style={{
-        paddingBottom: "20%",
+        paddingBottom: "20%", // ensures content is not hidden by footer
       }}
     >
       <Container fluid maxWidth="100vw">
@@ -611,7 +612,6 @@ function Drive({ isEdit, tripData }) {
                     alignItems="center"
                   >
                     <FormBtn
-                      // className={classes.root}
                       // enable form submit if to/from is filled or in edit mode
                       disabled={
                         !((formObject.from && formObject.to) || tripData)

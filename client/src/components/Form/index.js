@@ -47,7 +47,7 @@ export function FormBtn(props) {
       {...props}
       variant="contained"
       color="primary"
-      style={{minWidth:"30vw",  borderRadius: "20px",  filter: 'drop-shadow(5px 5px 5px rgba(0,0,0,0.3))',}}
+      style={{fontSize: "1.2rem" , padding: "1rem 0", minWidth:"90%",  borderRadius: "5rem",  filter: 'drop-shadow(5px 5px 5px rgba(0,0,0,0.3))',}}
     >
       {props.children}
     </Button>
