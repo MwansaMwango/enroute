@@ -287,7 +287,7 @@ function Drive({ isEdit, tripData }) {
   return (
     <Box
       style={{
-        paddingBottom: "50px",
+        paddingBottom: "20%",
       }}
     >
       <Container fluid maxWidth="100vw">
