@@ -9,11 +9,11 @@ function Jumbotron({ children }) {
 
       style={{
         // height: "12vh",
-        clear: "both",
+        // clear: "both",
         paddingTop: "10px",
         paddingBottom: "5px",
         fontSize: "1.2rem",
-        textAlign: "center",
+        // textAlign: "center",
         color: "white",
         backgroundColor: '#FAD961',
         backgroundImage: 'linear-gradient(0deg, #FAD961 0%, #e64500 100%)',
@@ -32,7 +32,7 @@ function Jumbotron({ children }) {
         //     https://images.unsplash.com/photo-1560532806-dbb46d88b494?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80)
 
         //     `,
-          backgroundSize: "cover", // '100%' scales full image unlike 'cover' test
+          // backgroundSize: "cover", // '100%' scales full image unlike 'cover' test
         backgroundRepeat: "no-repeat",
       }}
 

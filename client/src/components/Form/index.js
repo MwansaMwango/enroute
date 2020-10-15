@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     "& > *": {
       margin: theme.spacing(1),
       width: "25ch",
+      
     },
   },
 }));
@@ -46,7 +47,7 @@ export function FormBtn(props) {
       {...props}
       variant="contained"
       color="primary"
-      style={{minWidth:"30vw"}}
+      style={{minWidth:"30vw",  borderRadius: "20px",  filter: 'drop-shadow(5px 5px 5px rgba(0,0,0,0.3))',}}
     >
       {props.children}
     </Button>

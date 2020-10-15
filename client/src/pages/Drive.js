@@ -74,21 +74,19 @@ function Drive({ isEdit, tripData }) {
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
         width: "100%",
-        
       },
       "& .MuiInputBase-root ": {
         borderRadius: "20px",
         backgroundColor: "white",
         opacity: "90%",
-        filter: 'drop-shadow(5px 5px 5px rgba(0,0,0,0.3))',
+        filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))",
         // borderStyle: 'solid',
         // borderWidth: '1px',
       },
       "& .MuiFormControlLabel-label": {
         // color: "#fff", // for dark theme
         opacity: "90%",
-        filter: 'drop-shadow(5px 5px 5px rgba(0,0,0,0.3))',
-      
+        filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))",
       },
 
       container: {
@@ -304,118 +302,116 @@ function Drive({ isEdit, tripData }) {
                     justify="center"
                     alignItems="center"
                   >
-                    <Typography variant="h5" color={theme.palette.primary.light}>
+                    <Typography
+                      variant="h5"
+                      color={theme.palette.primary.light}
+                    >
                       <LocalTaxiIcon fontSize="1rem" />
                       Drive
                     </Typography>
                   </Grid>
                 </Jumbotron>
               )}
+
               <Grid
                 container
                 direction="row"
                 justify="center"
                 alignItems="center"
               >
-                <Col size="md-12">
-                  <Typography
-                    variant="overline"
-                    component="h6"
-                    color="primary"
-                    className={classes.positionToday}
-                  >
-                    Riders Today
-                    <EventIcon fontSize="small" />
-                    <b>{moment().format("Do MMM YY")}</b>
-                  </Typography>
+                <Typography
+                  variant="overline"
+                  component="h6"
+                  color="primary"
+                  className={classes.positionToday}
+                >
+                  Riders Today
+                  <EventIcon fontSize="small" />
+                  <b>{moment().format("Do MMM YY")}</b>
+                </Typography>
 
-                  {/* Render map */}
+                {/* Render map */}
 
-                  <div className={classes.mapWrapper}>
-                    <img
-                      src={require("../assets/route-map.svg")}
-                      alt="Loading map..."
-                      className={classes.img}
-                    />
+                <div className={classes.mapWrapper}>
+                  <img
+                    src={require("../assets/route-map.svg")}
+                    alt="Loading map..."
+                    className={classes.img}
+                  />
 
-                    {Object.keys(counts).map((key, index) => {
-                      switch (key) {
-                        case "Nedlands":
-                          console.log(key);
-                          return (
-                            <div className={classes.positionNED} key={index}>
-                              <CustomizedBadges
-                                fromLocation="NED"
-                                totalRequests={counts[key]}
-                              />
-                            </div>
-                          );
-                        case "Perth":
-                          console.log(key);
-                          return (
-                            <div className={classes.positionPER} key={index}>
-                              <CustomizedBadges
-                                fromLocation="PER"
-                                totalRequests={counts[key]}
-                              />
-                            </div>
-                          );
-                        case "Victoria Park":
-                          return (
-                            <div
-                              item
-                              className={classes.positionVIC}
-                              key={index}
-                            >
-                              <CustomizedBadges
-                                fromLocation="VIC"
-                                totalRequests={counts[key]}
-                              />
-                            </div>
-                          );
-                        case "Belmont":
-                          return (
-                            <div className={classes.positionBMT} key={index}>
-                              <CustomizedBadges
-                                fromLocation="BMT"
-                                totalRequests={counts[key]}
-                              />
-                            </div>
-                          );
-                        case "Mount Lawley":
-                          return (
-                            <div className={classes.positionMTY} key={index}>
-                              <CustomizedBadges
-                                fromLocation="MTY"
-                                totalRequests={counts[key]}
-                              />
-                            </div>
-                          );
-                        case "Stirling":
-                          console.log("Stirling count=", counts[key]);
-                          return (
-                            <div className={classes.positionSTR} key={index}>
-                              <CustomizedBadges
-                                fromLocation="STR"
-                                totalRequests={counts[key]}
-                              />
-                            </div>
-                          );
-                        case "Joondalup":
-                          return (
-                            <div className={classes.positionJND} key={index}>
-                              <CustomizedBadges
-                                fromLocation="JND"
-                                totalRequests={counts[key]}
-                              />
-                            </div>
-                          );
-                        default:
-                          return null;
-                      } // switch end
-                    })}
-                  </div>
-                </Col>
+                  {Object.keys(counts).map((key, index) => {
+                    switch (key) {
+                      case "Nedlands":
+                        console.log(key);
+                        return (
+                          <div className={classes.positionNED} key={index}>
+                            <CustomizedBadges
+                              fromLocation="NED"
+                              totalRequests={counts[key]}
+                            />
+                          </div>
+                        );
+                      case "Perth":
+                        console.log(key);
+                        return (
+                          <div className={classes.positionPER} key={index}>
+                            <CustomizedBadges
+                              fromLocation="PER"
+                              totalRequests={counts[key]}
+                            />
+                          </div>
+                        );
+                      case "Victoria Park":
+                        return (
+                          <div item className={classes.positionVIC} key={index}>
+                            <CustomizedBadges
+                              fromLocation="VIC"
+                              totalRequests={counts[key]}
+                            />
+                          </div>
+                        );
+                      case "Belmont":
+                        return (
+                          <div className={classes.positionBMT} key={index}>
+                            <CustomizedBadges
+                              fromLocation="BMT"
+                              totalRequests={counts[key]}
+                            />
+                          </div>
+                        );
+                      case "Mount Lawley":
+                        return (
+                          <div className={classes.positionMTY} key={index}>
+                            <CustomizedBadges
+                              fromLocation="MTY"
+                              totalRequests={counts[key]}
+                            />
+                          </div>
+                        );
+                      case "Stirling":
+                        console.log("Stirling count=", counts[key]);
+                        return (
+                          <div className={classes.positionSTR} key={index}>
+                            <CustomizedBadges
+                              fromLocation="STR"
+                              totalRequests={counts[key]}
+                            />
+                          </div>
+                        );
+                      case "Joondalup":
+                        return (
+                          <div className={classes.positionJND} key={index}>
+                            <CustomizedBadges
+                              fromLocation="JND"
+                              totalRequests={counts[key]}
+                            />
+                          </div>
+                        );
+                      default:
+                        return null;
+                    } // switch end
+                  })}
+                </div>
               </Grid>
 
               <Grid
@@ -442,8 +438,8 @@ function Drive({ isEdit, tripData }) {
                       variant="outlined"
                       InputProps={{
                         startAdornment: (
-                          <InputAdornment>
-                            <MyLocationIcon color="primary" position="start"/>
+                          <InputAdornment position="start">
+                            <MyLocationIcon color="primary" />
                           </InputAdornment>
                         ),
                         shrink: true,
@@ -604,6 +600,7 @@ function Drive({ isEdit, tripData }) {
                         ),
                         shrink: true,
                       }}
+                      style={{ marginBottom: "1rem" }}
                     />
                   </Grid>
 
@@ -613,7 +610,8 @@ function Drive({ isEdit, tripData }) {
                     justify="space-around"
                     alignItems="center"
                   >
-                    <FormBtn className={classes.root}
+                    <FormBtn
+                      // className={classes.root}
                       // enable form submit if to/from is filled or in edit mode
                       disabled={
                         !((formObject.from && formObject.to) || tripData)
