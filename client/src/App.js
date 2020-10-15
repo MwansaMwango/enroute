@@ -23,6 +23,7 @@ import NewsFeed from "./pages/NewsFeed";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 import Axios from "axios";
 import Pusher from "pusher-js";
+import './app.css';
 
 function App() {
   const [isNewNotification, setIsNewNotification] = useState();

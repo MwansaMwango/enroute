@@ -18,6 +18,7 @@ import {
   makeStyles,
   ThemeProvider,
   createMuiTheme,
+  CssBaseline,
 } from "@material-ui/core/styles";
 import { FormBtn } from "../components/Form";
 import {
@@ -34,6 +35,8 @@ import moment from "moment";
 import MyResponsiveBar from "../components/MyResponsiveBar";
 import CustomizedBadges from "../components/CustomizedBadges";
 import Image from "material-ui-image";
+
+import "fontsource-montserrat/500.css";
 
 function Drive({ isEdit, tripData }) {
   // Setting our component's initial state
@@ -61,6 +64,16 @@ function Drive({ isEdit, tripData }) {
         contrastText: "#000",
       },
       // type: 'dark', // dark theme
+      typography: {
+        fontFamily: "Montserrat",
+      },
+      // overrides: {
+      //   MuiCssBaseline: {
+      //     '@global': {
+      //       '@font-face': ['Montserrat'],
+      //     },
+      //   },
+      // },
     },
   });
 
@@ -80,9 +93,14 @@ function Drive({ isEdit, tripData }) {
         backgroundColor: "white",
         opacity: "90%",
         filter: "drop-shadow(3px 3px 3px rgba(240,100,0.3))",
-        // borderStyle: 'solid',
-        // borderWidth: '1px',
+        fontFamily: "Montserrat",
+        fontWeight: "bold",
+        fontSize: "1rem",
       },
+      "& .MuiSelect-root ": {
+        fontSize: "1.2rem",
+      },
+      
       "& .MuiFormControlLabel-label": {
         // color: "#fff", // for dark theme
         opacity: "90%",
@@ -98,6 +116,10 @@ function Drive({ isEdit, tripData }) {
     textField: {
       maxWidth: "50%",
     },
+    typography: {
+      fontFamily: "Montserrat",
+    },
+
     locationTxt: { transform: "rotateZ(-45deg)" },
     mapWrapper: {
       position: "relative",

@@ -12,7 +12,7 @@ function Jumbotron({ children }) {
         color: "white",
         backgroundColor: "#FAD961",
         backgroundImage: "linear-gradient(0deg, #FAD961 0%, #e64500 100%)",
-
+        alignItems: "center",
         // borderStyle: 'solid',
         // borderSize: '2px',
         // borderColor: '25px',
