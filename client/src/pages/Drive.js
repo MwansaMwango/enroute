@@ -54,7 +54,7 @@ function Drive({ isEdit, tripData }) {
       primary: {
         light: "#FF9057",
         main: "#E64500",
-        dark: "#022222",
+        dark: "#259CBB",
         contrastText: "#fff",
       },
       secondary: {
@@ -94,13 +94,12 @@ function Drive({ isEdit, tripData }) {
         opacity: "90%",
         filter: "drop-shadow(3px 3px 3px rgba(240,100,0.3))",
         fontFamily: "Montserrat",
-        fontWeight: "bold",
+        // fontWeight: "medium",
         fontSize: "1rem",
       },
       "& .MuiSelect-root ": {
         fontSize: "1.2rem",
       },
-      
       "& .MuiFormControlLabel-label": {
         // color: "#fff", // for dark theme
         opacity: "90%",
