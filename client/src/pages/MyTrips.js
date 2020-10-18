@@ -26,7 +26,7 @@ function MyTrips() {
   // Setting our component's initial state
   const [myTrips, setMyTrips] = useState([]);
 
-  const [, setMatchingRequests] = useState([]);
+  const [matchingRequests, setMatchingRequests] = useState([]);
 
 
   const useStyles = makeStyles(() => ({
@@ -48,14 +48,11 @@ function MyTrips() {
   function loadMyTrips() {
     API.getTrips() // Get My Trips
       .then((res) => {
-        console.log("All my Trips ", res.data);
+        // console.log("All my Trips ", res.data);
         setMyTrips(res.data);
-
-        console.log("getMatchList called");
-        res.data.map((trip) => {
-          console.log("Trip in All Trips = ", trip);
-          findMatchingRequests(trip);
-        });
+        // res.data.map((trip) => {
+        //   findMatchingRequests(trip);
+        // });
         
       })
       .catch((err) => console.log(err));
@@ -70,14 +67,14 @@ function MyTrips() {
   }
 
   // Find matching Requests using Trip Data
-  function findMatchingRequests(tripData) {
-    API.findMatchingRequests(tripData)
-      .then(function (res) {
-        setMatchingRequests(res.data);
-        // console.log("Returned matching requests ", res.data);
-      })
-      .catch((err) => console.log(err));
-  }
+  // function findMatchingRequests(tripData) {
+  //   API.findMatchingRequests(tripData)
+  //     .then(function (res) {
+  //       setMatchingRequests(res.data);
+  //       // console.log("Returned matching requests ", res.data);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }
 
   // Update the accept matching request action
   function updateTrip(id, tripData) {

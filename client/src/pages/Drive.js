@@ -209,6 +209,16 @@ function Drive({ isEdit, tripData }) {
       .catch((err) => console.log(err));
   }
 
+  // Find matching Requests using Trip Data
+  function findMatchingRequests(tripData) {
+    API.findMatchingRequests(tripData)
+      .then(function (res) {
+        // setMatchingRequests(res.data);
+        // console.log("Returned matching requests ", res.data);
+      })
+      .catch((err) => console.log(err));
+  }
+
   // counts number of ride requests from each location
   function countOccurrences(arr) {
     for (let i = 0; i < arr.length; i++) {
@@ -270,7 +280,10 @@ function Drive({ isEdit, tripData }) {
     console.log("Submitted Object= ", submittedTripObj);
 
     API.saveTrip(submittedTripObj)
-      .then(() => alert(JSON.stringify("Trip has been saved")))
+      .then((res) => {
+        alert(JSON.stringify("Trip has been saved. Searching for matching requests..."));
+        window.location.href = "/trips/" + res.data._id; // goto requests received matching this trip
+      })
       .catch((err) => console.log(err));
   }
 
