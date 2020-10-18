@@ -17,7 +17,13 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: theme.spacing(1),
+  },
+  img: {
+    display: 'block',
+    margin: "0 auto",
+    width: "50%",
+    // padding: "30px",
   },
 }));
 
@@ -62,7 +68,14 @@ export default function TransitionsModalTrips({ editClicked, tripData }) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">Update your Trip Details</h2>
+            <img
+              className={classes.img}
+              src={require("../../assets/edit.svg")}
+              alt="Edit details..."
+            />
+            <h2 style={{ textAlign: "center" }} id="transition-modal-title">
+              Update your Trip Details
+            </h2>
             <p id="transition-modal-description">
               <Drive isEdit={true} tripData={tripData} />
             </p>
