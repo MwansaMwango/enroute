@@ -39,6 +39,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
+    padding: 0,
+    margin: 0
   },
 
   // search: {
@@ -100,7 +102,7 @@ export default function Nav(props) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [currentUserFirstName, setCurrentUserFirstName] = React.useState(null);
+  const [currentUserFullName, setCurrentUserFullName] = React.useState(null);
   console.log("props.notificationStatus = ", props);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -128,7 +130,7 @@ export default function Nav(props) {
   const getUser = () => {
     Axios.get("/api/users/current-user")
       .then((res) => {
-        setCurrentUserFirstName(res.data.data.firstName);
+        setCurrentUserFullName(res.data.data.firstName +' '+ res.data.data.lastName);
         return true;
       })
       .catch((err) => {
@@ -143,7 +145,7 @@ export default function Nav(props) {
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <div>
-      {currentUserFirstName ? (
+      {currentUserFullName ? (
         <Menu
           anchorEl={anchorEl}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -166,7 +168,7 @@ export default function Nav(props) {
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <div>
-      {currentUserFirstName ? (
+      {currentUserFullName ? (
         <Menu
           anchorEl={mobileMoreAnchorEl}
           anchorOrigin={{ vertical: "top", horizontal: "right" }}
@@ -209,7 +211,7 @@ export default function Nav(props) {
             >
               <AccountCircle />
             </IconButton>
-            <p>{currentUserFirstName}'s Profile</p>
+            <p>{currentUserFullName}</p>
           </MenuItem>
         </Menu>
       ) : (
@@ -242,12 +244,12 @@ export default function Nav(props) {
             justify="flex-start"
             alignItems="center"
           >
-            <Typography className={classes.title} variant="h5" noWrap>
-              Enroute
+            <Typography className={classes.title} variant="h4" noWrap>
+              Enroute 
             </Typography>
           </Grid>
 
-          {currentUserFirstName ? (
+          {currentUserFullName ? (
             <Grid
               container
               direction="row"
@@ -290,7 +292,7 @@ export default function Nav(props) {
                   >
                     <AccountCircle />
                     {getUser()}
-                    {currentUserFirstName}
+                    {currentUserFullName}
                   </IconButton>
                 </div>
                 <div className={classes.sectionMobile}>

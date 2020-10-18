@@ -80,7 +80,7 @@ function App() {
       position: "fixed",
       width: "100vw",
       height: "100vh",
-      filter: "brightness(1.08)",
+      filter: "brightness(1.05)",
       top: '5%',
       zIndex: -1,
       // filter: "blur(1px)", 

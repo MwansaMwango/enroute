@@ -13,7 +13,7 @@ import Jumbotron from "../components/Jumbotron";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 import API from "../utils/API";
 import SimpleSlider from "../components/SimpleSlider";
-import { Container, Col, Row } from "../components/Grid"; 
+import { Container, Col, Row } from "../components/Grid";
 import {
   makeStyles,
   ThemeProvider,
@@ -63,9 +63,9 @@ function Drive({ isEdit, tripData }) {
         contrastText: "#000",
       },
       // type: 'dark', // dark theme
-      // typography: {
-      //   fontFamily: "Montserrat",
-      // },
+      typography: {
+        fontFamily: "Montserrat",
+      },
     },
   });
 
@@ -111,7 +111,7 @@ function Drive({ isEdit, tripData }) {
     // typography: {
     //   fontFamily: "Montserrat",
     // },
-    // Map Section 
+    // Map Section
     locationTxt: { transform: "rotateZ(-45deg)" },
     mapWrapper: {
       position: "relative",
@@ -123,13 +123,13 @@ function Drive({ isEdit, tripData }) {
     img: {
       width: "90%",
       paddingTop: "10%", // allows for location texts
-   
     },
     positionToday: {
       fontSize: "1rem",
       display: "flex",
       justifyContent: "center",
       alignItems: "center", // aligns with icon
+      fontFamily: "Montserrat",
       // top: "-4%" /* Adjust this value to move the positioned div up and down */,
     },
     positionNED: {
