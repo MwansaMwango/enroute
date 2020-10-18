@@ -22,8 +22,8 @@ const useStyles = makeStyles((theme) => ({
   img: {
     display: 'block',
     margin: "0 auto",
-    width: "50%",
-    // padding: "30px",
+    maxWidth: "40%",
+
   },
 }));
 
@@ -74,7 +74,7 @@ export default function TransitionsModalTrips({ editClicked, tripData }) {
               alt="Edit details..."
             />
             <h2 style={{ textAlign: "center" }} id="transition-modal-title">
-              Update your Trip Details
+              Update your Trip details
             </h2>
             <p id="transition-modal-description">
               <Drive isEdit={true} tripData={tripData} />

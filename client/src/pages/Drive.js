@@ -441,7 +441,7 @@ function Drive({ isEdit, tripData }) {
                     </div>
                   </Grid>
                 </div>
-              )} 
+              )}
               {/* end of editmode */}
               <Grid
                 container
@@ -529,8 +529,8 @@ function Drive({ isEdit, tripData }) {
                       className={classes.textField}
                       defaultValue={
                         tripData
-                          ? moment(tripData.departDate).format("yyyy/MM/DD") // needs correct date format
-                          : moment(new Date(Date.now())).format("yy-MM-DD") // show current  date by default
+                          ? moment(tripData.departDate).format("yyyy-MM-DD") // needs correct date format
+                          : moment().format("yyyy-MM-DD") // show current  date by default
                       }
                       variant="outlined"
                       onChange={handleInputChange}
@@ -551,7 +551,7 @@ function Drive({ isEdit, tripData }) {
                       defaultValue={
                         tripData
                           ? tripData.departTime // requires correct time format, display current time
-                          : moment(new Date(Date.now())).format("HH:mm") // requires correct time format, display current time
+                          : moment().format("HH:mm") // requires correct time format, display current time
                       }
                       variant="outlined"
                       onChange={handleInputChange}
