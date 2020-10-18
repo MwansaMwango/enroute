@@ -13,7 +13,7 @@ import Jumbotron from "../components/Jumbotron";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 import API from "../utils/API";
 import SimpleSlider from "../components/SimpleSlider";
-import { Container, Col, Row } from "../components/Grid"; // removed container
+import { Container, Col, Row } from "../components/Grid"; 
 import {
   makeStyles,
   ThemeProvider,
@@ -25,7 +25,6 @@ import {
   Box,
   Grid,
   TextField,
-  // Container,
   MenuItem,
   FormControlLabel,
 } from "@material-ui/core/";
@@ -64,15 +63,8 @@ function Drive({ isEdit, tripData }) {
         contrastText: "#000",
       },
       // type: 'dark', // dark theme
-      typography: {
-        fontFamily: "Montserrat",
-      },
-      // overrides: {
-      //   MuiCssBaseline: {
-      //     '@global': {
-      //       '@font-face': ['Montserrat'],
-      //     },
-      //   },
+      // typography: {
+      //   fontFamily: "Montserrat",
       // },
     },
   });
@@ -94,15 +86,16 @@ function Drive({ isEdit, tripData }) {
         opacity: "90%",
         filter: "drop-shadow(3px 3px 3px rgba(240,100,0.3))",
         fontFamily: "Montserrat",
-        // fontWeight: "medium",
         fontSize: "1rem",
+        // fontWeight: "medium",
       },
       "& .MuiSelect-root ": {
-        fontSize: "1.2rem",
+        fontSize: "1.2rem", // enlarges to and from fields
       },
       "& .MuiFormControlLabel-label": {
-        // color: "#fff", // for dark theme
         opacity: "90%",
+        fontFamily: "Montserrat",
+        // color: "#fff", // for dark theme
         // filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))",
         // filter: "drop-shadow(3px 3px 3px rgba(240,100,0.3))",
       },
@@ -115,10 +108,10 @@ function Drive({ isEdit, tripData }) {
     textField: {
       maxWidth: "50%",
     },
-    typography: {
-      fontFamily: "Montserrat",
-    },
-
+    // typography: {
+    //   fontFamily: "Montserrat",
+    // },
+    // Map Section 
     locationTxt: { transform: "rotateZ(-45deg)" },
     mapWrapper: {
       position: "relative",
@@ -130,10 +123,10 @@ function Drive({ isEdit, tripData }) {
     img: {
       width: "90%",
       paddingTop: "10%", // allows for location texts
-      // paddingBottom: "0%", // allows for location texts
+   
     },
     positionToday: {
-      // fontSize: "1.2rem",
+      fontSize: "1rem",
       display: "flex",
       justifyContent: "center",
       alignItems: "center", // aligns with icon
@@ -343,7 +336,7 @@ function Drive({ isEdit, tripData }) {
               >
                 <Typography
                   variant="overline"
-                  component="h6"
+                  component="h5"
                   color="primary"
                   className={classes.positionToday}
                 >

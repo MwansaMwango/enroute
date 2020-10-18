@@ -60,7 +60,7 @@ export default function SimpleBottomNavigation() {
           href="/myrequests"
         />
         <BottomNavigationAction
-          label="News"
+          label="Feed"
           icon={<MessageIcon />}
           href="/newsfeed"
         />
