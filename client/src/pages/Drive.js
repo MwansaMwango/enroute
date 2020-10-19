@@ -34,7 +34,7 @@ import moment from "moment";
 import MyResponsiveBar from "../components/MyResponsiveBar";
 import CustomizedBadges from "../components/CustomizedBadges";
 import Image from "material-ui-image";
-
+import AlertDialog from "../components/AlertDialog";
 import "fontsource-montserrat/500.css";
 
 function Drive({ isEdit, tripData }) {
@@ -43,6 +43,7 @@ function Drive({ isEdit, tripData }) {
   const [trip] = useState(tripData);
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
+  const [alertDialogOpen, setAlertDialogOpen] = useState(false);
   const [counts, setCountsObject] = useState({}); // stores count of ride requests for each location
   const [carryPackage, setCarryPackage] = useState(
     tripData ? tripData.carryPackage : false
@@ -243,6 +244,9 @@ function Drive({ isEdit, tripData }) {
     setCarryPackage(checked); // sets DOM checkbox
     setFormObject({ ...formObject, carryPackage: checked }); // sets formObject
   }
+  function handleOpenAlertDialog() {
+    setAlertDialogOpen(true);
+  }
 
   // When the form is submitted, use the API.saveTrip method to save the trip data
 
@@ -268,15 +272,19 @@ function Drive({ isEdit, tripData }) {
     };
 
     console.log("Submitted Object= ", submittedTripObj);
-
+let savedTrip = {};
     API.saveTrip(submittedTripObj)
       .then((res) => {
-        alert(
-          JSON.stringify(
-            "Trip has been saved. Searching for matching requests..."
-          )
-        );
-        window.location.href = "/trips/" + res.data._id; // goto requests received matching this trip
+        // alert(
+        //   JSON.stringify(
+        //     "Trip has been saved. Searching for matching requests..."
+        //   )
+        // );
+        savedTrip = res.data;
+        handleOpenAlertDialog();
+              })
+      .then((res) => {
+        window.location.href = "/trips/" + savedTrip._id; // goto requests received matching this trip
       })
       .catch((err) => console.log(err));
   }
@@ -310,13 +318,28 @@ function Drive({ isEdit, tripData }) {
   return (
     <Box
       style={{
-        paddingBottom: "20%", // ensures content is not hidden by footer
+        paddingBottom: "90px", // ensures content is not hidden by footer
       }}
     >
       <Container fluid maxWidth="100vw">
         <ThemeProvider theme={theme}>
           <Row>
             <Col size="md-12">
+              {alertDialogOpen ? (
+                <AlertDialog
+                  props={{
+                    dialogOpen: alertDialogOpen,
+                    btnOpenTxt: "Post Trip",
+                    dialogTitle: "Your Trip has been saved.",
+                    dialogContentTxt: "Searching for matching requests...",
+                    btnOKTxt: "OK",
+                    btnCancelTxt: "CANCEL",
+                  }}
+                />
+              ) : null}
+          
+         
+
               {isEdit ? null : (
                 <div>
                   <Jumbotron>
