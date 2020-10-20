@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -7,47 +7,44 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-export default function AlertDialog({props}) {
-  const [open, setOpen] = React.useState(props.dialogOpen);
-  console.log("Alert props ", props.dialogOpen, props);
+export default function AlertDialog(props) {
+  console.log("Alert props ", props);
 
-  
-  // const handleClickOpen = () => {
-  //     setOpen(props.dialogOpen);
-   // };
-  
-  
-  
-  const handleClose = () => {
-    setOpen(false);
-  };
- 
   return (
-    <div  >
+    <div>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         Open alert dialog {props.btnOpenTxt}
       </Button> */}
-    
+
       <Dialog
-        open={open}
-        onClose={handleClose}
+        open={true}
+        onClose={props.handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        
+        style={{ textAlign: "center" }}
       >
-        <DialogTitle id="alert-dialog-title">{props.dialogTitle}</DialogTitle>
-        <DialogContent>
+        <img
+          style={{
+            display: "block",
+            margin: "0 auto",
+            maxWidth: "30%",
+            paddingTop: "30px",
+          }}
+          src={require("../../assets/undraw-confirmed.svg")}
+          alt="Edit details..."
+        />
+        <strong>
+          <DialogTitle id="alert-dialog-title">{props.dialogTitle}</DialogTitle>
+        </strong>
+        <DialogContent style={{ textAlign: "center" }}>
           <DialogContentText id="alert-dialog-description">
             {props.dialogContentTxt}
           </DialogContentText>
-          <CircularProgress color="primary" />
+          {/* <CircularProgress color="primary" /> */}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={props.handleClose} color="primary">
             {props.btnOKTxt}
-          </Button>
-          <Button onClick={handleClose} color="primary" autoFocus>
-            {props.btnCancelTxt}
           </Button>
         </DialogActions>
       </Dialog>

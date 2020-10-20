@@ -43,11 +43,11 @@ function Drive({ isEdit, tripData }) {
   const [trip] = useState(tripData);
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
-  const [alertDialogOpen, setAlertDialogOpen] = useState(false);
   const [counts, setCountsObject] = useState({}); // stores count of ride requests for each location
   const [carryPackage, setCarryPackage] = useState(
     tripData ? tripData.carryPackage : false
   );
+  const [alertDialogOpen, setAlertDialogOpen] = useState(false);
 
   const theme = createMuiTheme({
     palette: {
@@ -189,6 +189,8 @@ function Drive({ isEdit, tripData }) {
 
   let uniqueRouteList = [];
 
+  let savedTrip = {};
+
   // TODO Initialise and Load Requests from database, to be displayed on map
   useEffect(() => {
     loadTodaysRequests();
@@ -245,7 +247,14 @@ function Drive({ isEdit, tripData }) {
     setFormObject({ ...formObject, carryPackage: checked }); // sets formObject
   }
   function handleOpenAlertDialog() {
+    console.log("handleOpenAlertDialog called");
     setAlertDialogOpen(true);
+  }
+
+  function handleCloseAlertDialog() {
+    console.log("handleCloseAlertDialog called");
+    setAlertDialogOpen(false);
+    window.location.href = "/trips/" + savedTrip._id; // goto requests received matching this trip
   }
 
   // When the form is submitted, use the API.saveTrip method to save the trip data
@@ -272,19 +281,11 @@ function Drive({ isEdit, tripData }) {
     };
 
     console.log("Submitted Object= ", submittedTripObj);
-let savedTrip = {};
+    
     API.saveTrip(submittedTripObj)
       .then((res) => {
-        // alert(
-        //   JSON.stringify(
-        //     "Trip has been saved. Searching for matching requests..."
-        //   )
-        // );
         savedTrip = res.data;
         handleOpenAlertDialog();
-              })
-      .then((res) => {
-        window.location.href = "/trips/" + savedTrip._id; // goto requests received matching this trip
       })
       .catch((err) => console.log(err));
   }
@@ -308,9 +309,9 @@ let savedTrip = {};
     console.log("updatedTripData obj= ", updatedTripData);
     API.updateTrip(trip._id, updatedTripData)
       .then(function (res) {
-        alert(JSON.stringify("Updated trip details sent...", res.data));
-        window.location.href = "/trips/" + res.data._id; // goto requests received matching this trip
-        // window.location.reload(); //refresh page to get updated request...TODO close modals
+        savedTrip = res.data;
+        handleOpenAlertDialog(); 
+
       })
       .catch((err) => console.log(err));
   }
@@ -327,18 +328,14 @@ let savedTrip = {};
             <Col size="md-12">
               {alertDialogOpen ? (
                 <AlertDialog
-                  props={{
-                    dialogOpen: alertDialogOpen,
-                    btnOpenTxt: "Post Trip",
-                    dialogTitle: "Your Trip has been saved.",
-                    dialogContentTxt: "Searching for matching requests...",
-                    btnOKTxt: "OK",
-                    btnCancelTxt: "CANCEL",
-                  }}
+                  dialogOpen={true}
+                  btnOpenTxt="Post Trip"
+                  dialogTitle="Your Trip has been saved."
+                  dialogContentTxt="Next step, search for riders..."
+                  btnOKTxt="Search"
+                  handleClose={handleCloseAlertDialog}
                 />
-              ) : null}
-          
-         
+              ) : null }
 
               {isEdit ? null : (
                 <div>
