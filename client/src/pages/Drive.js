@@ -48,6 +48,7 @@ function Drive({ isEdit, tripData }) {
     tripData ? tripData.carryPackage : false
   );
   const [alertDialogOpen, setAlertDialogOpen] = useState(false);
+  const [savedTrip, setSavedTrip] = useState({});
 
   const theme = createMuiTheme({
     palette: {
@@ -189,9 +190,7 @@ function Drive({ isEdit, tripData }) {
 
   let uniqueRouteList = [];
 
-  let savedTrip = {};
-
-  // TODO Initialise and Load Requests from database, to be displayed on map
+ // TODO Initialise and Load Requests from database, to be displayed on map
   useEffect(() => {
     loadTodaysRequests();
     loadRoutes();
@@ -250,10 +249,11 @@ function Drive({ isEdit, tripData }) {
     console.log("handleOpenAlertDialog called");
     setAlertDialogOpen(true);
   }
-
+ 
   function handleCloseAlertDialog() {
     console.log("handleCloseAlertDialog called");
     setAlertDialogOpen(false);
+    console.log("SavedTrip in handleClose", savedTrip);
     window.location.href = "/trips/" + savedTrip._id; // goto requests received matching this trip
   }
 
@@ -281,10 +281,12 @@ function Drive({ isEdit, tripData }) {
     };
 
     console.log("Submitted Object= ", submittedTripObj);
-    
+
     API.saveTrip(submittedTripObj)
       .then((res) => {
-        savedTrip = res.data;
+        let responseData = res.data;
+        setSavedTrip(responseData);
+        console.log("Saved Trip Response", savedTrip._id);
         handleOpenAlertDialog();
       })
       .catch((err) => console.log(err));
@@ -309,11 +311,10 @@ function Drive({ isEdit, tripData }) {
     console.log("updatedTripData obj= ", updatedTripData);
     API.updateTrip(trip._id, updatedTripData)
       .then(function (res) {
-        savedTrip = res.data;
         handleOpenAlertDialog(); 
-
       })
       .catch((err) => console.log(err));
+      
   }
 
   return (
@@ -335,7 +336,7 @@ function Drive({ isEdit, tripData }) {
                   btnOKTxt="Search"
                   handleClose={handleCloseAlertDialog}
                 />
-              ) : null }
+              ) : null}
 
               {isEdit ? null : (
                 <div>
