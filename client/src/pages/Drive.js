@@ -12,13 +12,12 @@ import Switch from "@material-ui/core/Switch";
 import Jumbotron from "../components/Jumbotron";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 import API from "../utils/API";
-import SimpleSlider from "../components/SimpleSlider";
+
 import { Container, Col, Row } from "../components/Grid";
 import {
   makeStyles,
   ThemeProvider,
   createMuiTheme,
-  CssBaseline,
 } from "@material-ui/core/styles";
 import { FormBtn } from "../components/Form";
 import {
@@ -31,7 +30,6 @@ import {
 import Typography from "@material-ui/core/Typography";
 import "./drive.css";
 import moment from "moment";
-import MyResponsiveBar from "../components/MyResponsiveBar";
 import CustomizedBadges from "../components/CustomizedBadges";
 import Image from "material-ui-image";
 import AlertDialog from "../components/AlertDialog";
@@ -110,14 +108,13 @@ function Drive({ isEdit, tripData }) {
     textField: {
       maxWidth: "50%",
     },
-    // typography: {
-    //   fontFamily: "Montserrat",
-    // },
+
     // Map Section
     locationTxt: { transform: "rotateZ(-45deg)" },
     mapWrapper: {
       position: "relative",
-      width: "100%",
+      maxWidth: "100%",
+      height: "30%",
       display: "inline-block" /* Make the width of box same as image */,
       fontSize: "3.5vw",
       textAlign: "center",
@@ -126,13 +123,8 @@ function Drive({ isEdit, tripData }) {
       width: "90%",
       paddingTop: "10%", // allows for location texts
     },
-    positionToday: {
-      fontSize: "1rem",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center", // aligns with icon
-      fontFamily: "Montserrat",
-      // top: "-4%" /* Adjust this value to move the positioned div up and down */,
+    positionToday: { // Display Todays Date
+      fontSize: "1.1rem",
     },
     positionNED: {
       position: "absolute",
@@ -190,7 +182,7 @@ function Drive({ isEdit, tripData }) {
 
   let uniqueRouteList = [];
 
- // TODO Initialise and Load Requests from database, to be displayed on map
+  // TODO Initialise and Load Requests from database, to be displayed on map
   useEffect(() => {
     loadTodaysRequests();
     loadRoutes();
@@ -246,14 +238,11 @@ function Drive({ isEdit, tripData }) {
     setFormObject({ ...formObject, carryPackage: checked }); // sets formObject
   }
   function handleOpenAlertDialog() {
-    console.log("handleOpenAlertDialog called");
     setAlertDialogOpen(true);
   }
- 
+
   function handleCloseAlertDialog() {
-    console.log("handleCloseAlertDialog called");
     setAlertDialogOpen(false);
-    console.log("SavedTrip in handleClose", savedTrip);
     window.location.href = "/trips/" + savedTrip._id; // goto requests received matching this trip
   }
 
@@ -261,14 +250,11 @@ function Drive({ isEdit, tripData }) {
 
   function handleFormSubmit(event) {
     event.preventDefault();
-    console.log("FormObject carryPackage= ", formObject.carryPackage);
     // if (formObject.from && formObject.to) {
     // From: and To: fields are mandatory.
     let submittedTripObj = {
       from: formObject.from,
       to: formObject.to,
-      // departTime: formObject.time,
-      // departDate: formObject.date,
       departTime:
         moment(formObject.time).format("HH:mm") ||
         moment(new Date(Date.now())).format("HH:mm"),
@@ -311,10 +297,9 @@ function Drive({ isEdit, tripData }) {
     console.log("updatedTripData obj= ", updatedTripData);
     API.updateTrip(trip._id, updatedTripData)
       .then(function (res) {
-        handleOpenAlertDialog(); 
+        handleOpenAlertDialog();
       })
       .catch((err) => console.log(err));
-      
   }
 
   return (
@@ -363,16 +348,23 @@ function Drive({ isEdit, tripData }) {
                     justify="center"
                     alignItems="center"
                   >
-                    <Typography
-                      variant="overline"
-                      component="h5"
-                      color="primary"
-                      className={classes.positionToday}
-                    >
-                      Riders Today
-                      <EventIcon fontSize="small" />
-                      <b>{moment().format("Do MMM YY")}</b>
-                    </Typography>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                      <Typography
+                        variant="overline"
+                        component="h5"
+                        color="primary"
+                        className={classes.positionToday}
+                      >
+                        Riders Today
+                        <EventIcon fontSize="small" />
+                        <b>{moment().format("Do MMM YY")}</b>
+                      </Typography>
+                    </Grid>
 
                     {/* Render map */}
 
@@ -427,7 +419,7 @@ function Drive({ isEdit, tripData }) {
                                 />
                               </div>
                             );
-                          case "Mount Lawley":
+                          case "Mt. Lawley":
                             return (
                               <div className={classes.positionMTY} key={index}>
                                 <CustomizedBadges
