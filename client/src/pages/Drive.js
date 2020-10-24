@@ -31,9 +31,7 @@ import Typography from "@material-ui/core/Typography";
 import "./drive.css";
 import moment from "moment";
 import CustomizedBadges from "../components/CustomizedBadges";
-import Image from "material-ui-image";
 import AlertDialog from "../components/AlertDialog";
-import "fontsource-montserrat/500.css";
 
 function Drive({ isEdit, tripData }) {
   // Setting our component's initial state

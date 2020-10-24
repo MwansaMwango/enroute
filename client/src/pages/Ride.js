@@ -20,7 +20,6 @@ import {
   Box,
   Grid,
   TextField,
-  // Container,
   MenuItem,
   Checkbox,
   FormControlLabel,
@@ -28,23 +27,28 @@ import {
 
 import "./drive.css";
 import moment from "moment";
+import CustomizedBadges from "../components/CustomizedBadges";
+import AlertDialog from "../components/AlertDialog";
 
 function Ride({ isEdit, requestData }) {
   // set default value for requestData to empty object {}
   // Setting our component's initial state
 
-  const [, setTrip] = useState([]);
+  const [trip, setTrip] = useState([]);
   const [request, setRequest] = useState(requestData);
   const [, setMatches] = useState([]);
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
   // set hasPackage & isTransportVehicle checkboxes to state of requestData in editMode else 'false' in normal mode
+  const [counts, setCountsObject] = useState({}); // stores count of ride requests for each location
   const [hasPackage, setHasPackage] = useState(
     requestData ? requestData.hasPackage : false
   );
   const [isTransportVehicle, setIsTransportVehicle] = useState(
     requestData ? requestData.isTransportVehicle : false
   );
+  const [alertDialogOpen, setAlertDialogOpen] = useState(false);
+  const [savedRequest, setSavedRequest] = useState({});
 
   const theme = createMuiTheme({
     palette: {
@@ -60,6 +64,10 @@ function Ride({ isEdit, requestData }) {
         dark: "#168387",
         contrastText: "#000",
       },
+      // type: 'dark', // dark theme
+      typography: {
+        fontFamily: "Montserrat",
+      },
     },
   });
 
@@ -70,9 +78,29 @@ function Ride({ isEdit, requestData }) {
       },
       "& .MuiTextField-root": {
         margin: theme.spacing(2),
-        marginLeft: theme.spacing(5),
+        marginLeft: theme.spacing(2),
+        marginRight: theme.spacing(2),
+        width: "100%",
+      },
+      "& .MuiInputBase-root ": {
+        borderRadius: "20px",
+        backgroundColor: "white",
+        opacity: "90%",
+        filter: "drop-shadow(3px 3px 3px rgba(240,100,0.3))",
+        fontFamily: "Montserrat",
+        fontSize: "1rem",
+        // fontWeight: "medium",
+      },
 
-        width: "80%",
+      "& .MuiSelect-root ": {
+        fontSize: "1.2rem", // enlarges to and from fields
+      },
+      "& .MuiFormControlLabel-label": {
+        opacity: "90%",
+        fontFamily: "Montserrat",
+        // color: "#fff", // for dark theme
+        // filter: "drop-shadow(5px 5px 5px rgba(0,0,0,0.3))",
+        // filter: "drop-shadow(3px 3px 3px rgba(240,100,0.3))",
       },
     },
     container: {
@@ -80,15 +108,77 @@ function Ride({ isEdit, requestData }) {
       flexWrap: "wrap",
     },
     textField: {
-      // marginLeft: theme.spacing(1),
-      // marginRight: theme.spacing(1),
-      margin: theme.spacing(2),
-
-      maxWidth: "100%",
+      maxWidth: "50%",
     },
-    // marginTop: {
-    //   marginTop: theme.spacing(5)
-    // }
+
+    // Map Section
+    locationTxt: { transform: "rotateZ(-45deg)" },
+    mapWrapper: {
+      position: "relative",
+      maxWidth: "100%",
+      height: "30%",
+      display: "inline-block" /* Make the width of box same as image */,
+      fontSize: "3.5vw",
+      textAlign: "center",
+    },
+    img: {
+      width: "90%",
+      paddingTop: "10%", // allows for location texts
+    },
+    positionToday: {
+      // Display Todays Date
+      fontSize: "1.1rem",
+    },
+    positionNED: {
+      position: "absolute",
+
+      left: "10%", // Horizontal adjstment
+
+      top: "4%" /* Adjust this value to move the positioned div up and down */,
+    },
+    positionPER: {
+      position: "absolute",
+
+      left: "25%", // Horizontal adjstment
+
+      top: "4%" /* Adjust this value to move the positioned div up and down */,
+    },
+    positionVIC: {
+      position: "absolute",
+
+      left: "40%",
+
+      top: "4%" /* Adjust this value to move the positioned div up and down */,
+    },
+    positionBMT: {
+      position: "absolute",
+
+      left: "52%",
+
+      top: "30%" /* Adjust this value to move the positioned div up and down */,
+    },
+
+    positionMTY: {
+      position: "absolute",
+
+      left: "65%",
+
+      top: "30%" /* Adjust this value to move the positioned div up and down */,
+    },
+    positionSTR: {
+      position: "absolute",
+
+      left: "75%",
+
+      top: "4%" /* Adjust this value to move the positioned div up and down */,
+    },
+    positionJND: {
+      position: "absolute",
+
+      left: "85%",
+
+      top: "4%" /* Adjust this value to move the positioned div up and down */,
+    },
   }));
   const classes = useStyles();
 
@@ -96,15 +186,33 @@ function Ride({ isEdit, requestData }) {
 
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
   useEffect(() => {
-    loadTrips();
+    loadTodaysTrips();
     loadRoutes();
   }, []);
 
   // TODO Loads relevant trips with status !== 'complete' and sets them to trips
-  function loadTrips() {
+  function loadTodaysTrips() {
+    let todaysTripList = [];
+
     API.getTrips()
-      .then((res) => setTrip(res.data))
+      .then(function (res) {
+        res.data.map((trip) => {
+          todaysTripList.push(trip.from);
+        });
+        countOccurrences(todaysTripList);
+        console.log("Todays Trips", todaysTripList);
+        console.log("Counts = ", counts);
+      })
       .catch((err) => console.log(err));
+  }
+
+  // counts number of driver trips from each location
+  function countOccurrences(arr) {
+    for (let i = 0; i < arr.length; i++) {
+      let num = arr[i];
+      counts[num] = counts[num] ? counts[num] + 1 : 1;
+    }
+    setCountsObject(counts);
   }
 
   // TODO Loads relevant Requests with status = 'complete' and sets them to requests
@@ -146,19 +254,26 @@ function Ride({ isEdit, requestData }) {
     setFormObject({ ...formObject, isTransportVehicle: checked }); // sets formObject
   }
 
+  function handleOpenAlertDialog() {
+    setAlertDialogOpen(true);
+  }
+
+  function handleCloseAlertDialog() {
+    setAlertDialogOpen(false);
+    window.location.href = "/myrequests/" // goto my requests 
+  }
+
   // When the form is submitted, use the API.requestRide method to save the trip data
   // Then check matching trips from the database
   function handleFormSubmit(event) {
     event.preventDefault();
-    alert("Processing request..."); // TODO use Modal instead of alert
+    // alert("Processing request..."); // TODO use Modal instead of alert
 
     // if (formObject.from && formObject.to) {
     // From: and To: fields are mandatory.
     let submittedRequestObj = {
       from: formObject.from,
       to: formObject.to,
-      // departTime: formObject.time,
-      // departDate: formObject.date,
       departTime:
         moment(formObject.time).format("HH:mm") ||
         moment(new Date(Date.now())).format("HH:mm"),
@@ -172,9 +287,13 @@ function Ride({ isEdit, requestData }) {
     };
 
     console.log("Submitted Object= ", submittedRequestObj);
+
     API.requestRide(submittedRequestObj)
-      .then(function () {
-        alert(JSON.stringify("Request sent..."));
+      .then((res) => {
+        let responseData = res.data;
+        setSavedRequest(responseData);
+        console.log("Saved Request Response", savedRequest._id);
+        // handleOpenAlertDialog();
       })
       .then(function () {
         checkMatchingTrips(submittedRequestObj);
@@ -185,7 +304,7 @@ function Ride({ isEdit, requestData }) {
   // check matching trips from database
   function handleEditedFormSubmit(event) {
     event.preventDefault();
-    alert("Processing Updated ride details..."); // TODO use Modal instead of alert
+    // alert("Processing Updated ride details..."); // TODO use Modal instead of alert
     let submittedEditedRequestObj = {
       from: formObject.from || request.from,
       to: formObject.to || request.to,
@@ -206,7 +325,7 @@ function Ride({ isEdit, requestData }) {
 
     API.updateRequest(request._id, submittedEditedRequestObj)
       .then(function () {
-        alert(JSON.stringify("Updated Request details sent..."));
+        // alert(JSON.stringify("Updated Request details sent..."));
         checkMatchingTrips(submittedEditedRequestObj);
       })
       .then(function () {
@@ -216,25 +335,14 @@ function Ride({ isEdit, requestData }) {
   }
 
   function checkMatchingTrips(requestObjtoMatch) {
-    // let requestObjtoMatch = {
-    //   from: formObject.from || request.from,
-    //   to: formObject.to || request.to,
-    //   departTime: moment(formObject.time).format("HH:mm") || request.departTime,
-    //   departDate: formObject.date ? // check required due to default value reverting to today's date
-    //     moment(formObject.date).format("yyyy-MM-DD") :  moment(request.departDate).format("yyyy-MM-DD"),
-    //   // moment(formObject.date).format("yyyy-MM-DD") || request.departDate,
-    //   // request? ECMA2020 checks if object exists to avoid undefined errors
-    //   hasPackage: formObject.hasPackage || request?.hasPackage,
-    //   seatsRequired: formObject.seatsRequired || request?.seatsRequired,
-    // };
-    console.log("requestObjtoMatch", requestObjtoMatch);
-    API.findMatchingTrips(requestObjtoMatch)
+      API.findMatchingTrips(requestObjtoMatch)
       .then(function (res) {
         alert(
           res.data.length +
             " Matching trip(s) found. You will be notified once a driver confirms."
         );
         setMatches(res.data);
+        handleOpenAlertDialog();
       })
       .catch((err) => console.log(err));
   }
@@ -249,6 +357,17 @@ function Ride({ isEdit, requestData }) {
         <ThemeProvider theme={theme}>
           <Row>
             <Col size="md-12">
+            {alertDialogOpen ? (
+                <AlertDialog
+                  dialogOpen={true}
+                  btnOpenTxt="Post Ride Request"
+                  dialogTitle="Your Request has been saved."
+                  dialogContentTxt="Next step, search for drivers..."
+                  btnOKTxt="Search"
+                  handleClose={handleCloseAlertDialog}
+                />
+              ) : null}
+
               {isEdit ? null : (
                 <Jumbotron color={theme.palette.primary.main}>
                   <h1>
@@ -355,7 +474,6 @@ function Ride({ isEdit, requestData }) {
                       shrink: true,
                     }}
                   />
-
 
                   <Grid item>
                     <TextField
