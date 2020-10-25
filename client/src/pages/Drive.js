@@ -256,10 +256,10 @@ function Drive({ isEdit, tripData }) {
       to: formObject.to,
       departTime:
         moment(formObject.time).format("HH:mm") ||
-        moment(new Date(Date.now())).format("HH:mm"),
+        moment().format("HH:mm"),
       departDate:
         moment(formObject.date).format("yyyy-MM-DD") ||
-        moment(new Date(Date.now())).format("yyyy-MM-DD"),
+        moment().format("yyyy-MM-DD"),
       freeSeats: formObject.freeSeats || 1,
       carryPackage: formObject.carryPackage || false,
       tripNote: formObject.tripNote || "",
@@ -452,7 +452,7 @@ function Drive({ isEdit, tripData }) {
                 </div>
               )}
               {/* end of editmode */}
-              
+
               <Grid
                 container
                 direction="row"

@@ -31,6 +31,7 @@ import "./drive.css";
 import moment from "moment";
 import CustomizedBadges from "../components/CustomizedBadges";
 import AlertDialog from "../components/AlertDialog";
+import { ReactComponent as DriveLogo } from "../assets/steering-wheel.svg";
 
 function Ride({ isEdit, requestData }) {
   // set default value for requestData to empty object {}
@@ -79,7 +80,7 @@ function Ride({ isEdit, requestData }) {
         margin: theme.spacing(2),
       },
       "& .MuiTextField-root": {
-        margin: theme.spacing(2),
+        margin: theme.spacing(1),
         marginLeft: theme.spacing(2),
         marginRight: theme.spacing(2),
         width: "100%",
@@ -627,7 +628,7 @@ function Ride({ isEdit, requestData }) {
                   <Grid
                     container
                     direction="row"
-                    justify="space-around"
+                    justify="space-between"
                     alignItems="center"
                   >
                     <TextField
@@ -649,9 +650,25 @@ function Ride({ isEdit, requestData }) {
                         ),
                       }}
                     />
-                    <span>
-                      <span>
-                        <LocalMallIcon color="primary" />
+
+                    <Grid
+                      container
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
+                    >
+                    {/* <div> */}
+                      <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                      >
+                        <LocalMallIcon
+                          color="primary"
+                          stlye={{ padding: "4rem" }}
+                        />
+
                         <FormControlLabel
                           control={
                             <Switch
@@ -662,20 +679,33 @@ function Ride({ isEdit, requestData }) {
                           }
                           label="Parcel?"
                         />
-                      </span>
+                      {/* </Grid> */}
 
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={isTransportVehicle}
-                            onChange={handleIsTransportVehicleChange}
-                            name="isTransportVehicle"
-                            inputProps={{ "aria-label": "primary checkbox" }}
-                          />
-                        }
-                        label="Drive vehicle"
-                      />
-                    </span>
+                      {/* <Grid
+                        container
+                        direction="row"
+                        justify="flex-end"
+                        alignItems="center"
+                      > */}
+                        <DriveLogo
+                          name="driveLogo"
+                          width="1.8rem"
+                          fill="#E64500"
+                        />
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={isTransportVehicle}
+                              onChange={handleIsTransportVehicleChange}
+                              name="isTransportVehicle"
+                              inputProps={{ "aria-label": "primary checkbox" }}
+                            />
+                          }
+                          label="Drive vehicle"
+                        />
+                      </Grid>
+                    {/* </div> */}
+                    </Grid>
                   </Grid>
 
                   <Grid
