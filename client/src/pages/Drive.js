@@ -452,6 +452,7 @@ function Drive({ isEdit, tripData }) {
                 </div>
               )}
               {/* end of editmode */}
+              
               <Grid
                 container
                 direction="row"

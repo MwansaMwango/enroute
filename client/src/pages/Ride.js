@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import MyLocationIcon from "@material-ui/icons/MyLocation";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
+import LocalMallIcon from "@material-ui/icons/LocalMall";
 import SpeakerNotesIcon from "@material-ui/icons/SpeakerNotes";
 import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
 import AirlineSeatReclineNormalIcon from "@material-ui/icons/AirlineSeatReclineNormal";
+import EventIcon from "@material-ui/icons/Event";
 import Switch from "@material-ui/core/Switch";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 import Jumbotron from "../components/Jumbotron";
@@ -24,7 +26,7 @@ import {
   Checkbox,
   FormControlLabel,
 } from "@material-ui/core/";
-
+import Typography from "@material-ui/core/Typography";
 import "./drive.css";
 import moment from "moment";
 import CustomizedBadges from "../components/CustomizedBadges";
@@ -343,7 +345,7 @@ function Ride({ isEdit, requestData }) {
         //   res.data.length +
         //     " Matching trip(s) found. You will be notified once a driver confirms."
         // );
-        let responseData = res.data.length // get number of elements in array
+        let responseData = res.data.length; // get number of elements in array
         setMatches(responseData);
 
         // handleOpenAlertDialog();
@@ -376,13 +378,135 @@ function Ride({ isEdit, requestData }) {
               ) : null}
 
               {isEdit ? null : (
-                <Jumbotron color={theme.palette.primary.main}>
-                  <h1>
-                    Ride
-                    <EmojiPeopleRoundedIcon fontSize="large" />
-                  </h1>
-                </Jumbotron>
+                <div>
+                  <Jumbotron>
+                    <Grid
+                      container
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
+                    >
+                      <EmojiPeopleRoundedIcon fontSize="large" />
+                      <Typography variant="outline" component="h3">
+                        Ride
+                      </Typography>
+                    </Grid>
+                  </Jumbotron>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <Grid
+                      container
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
+                    >
+                      <Typography
+                        variant="overline"
+                        component="h5"
+                        color="primary"
+                        className={classes.positionToday}
+                      >
+                        Drivers Today
+                        <EventIcon fontSize="small" />
+                        <b>{moment().format("Do MMM YY")}</b>
+                      </Typography>
+                    </Grid>
+
+                    {/* Render map */}
+
+                    <div className={classes.mapWrapper}>
+                      <img
+                        src={require("../assets/route-map.svg")}
+                        alt="Loading map..."
+                        className={classes.img}
+                      />
+
+                      {Object.keys(counts).map((key, index) => {
+                        switch (key) {
+                          case "Nedlands":
+                            console.log(key);
+                            return (
+                              <div className={classes.positionNED} key={index}>
+                                <CustomizedBadges
+                                  fromLocation="NED"
+                                  totalRequests={counts[key]}
+                                />
+                              </div>
+                            );
+                          case "Perth":
+                            console.log(key);
+                            return (
+                              <div className={classes.positionPER} key={index}>
+                                <CustomizedBadges
+                                  fromLocation="PER"
+                                  totalRequests={counts[key]}
+                                />
+                              </div>
+                            );
+                          case "Victoria Park":
+                            return (
+                              <div
+                                item
+                                className={classes.positionVIC}
+                                key={index}
+                              >
+                                <CustomizedBadges
+                                  fromLocation="VIC"
+                                  totalRequests={counts[key]}
+                                />
+                              </div>
+                            );
+                          case "Belmont":
+                            return (
+                              <div className={classes.positionBMT} key={index}>
+                                <CustomizedBadges
+                                  fromLocation="BMT"
+                                  totalRequests={counts[key]}
+                                />
+                              </div>
+                            );
+                          case "Mt. Lawley":
+                            return (
+                              <div className={classes.positionMTY} key={index}>
+                                <CustomizedBadges
+                                  fromLocation="MTY"
+                                  totalRequests={counts[key]}
+                                />
+                              </div>
+                            );
+                          case "Stirling":
+                            console.log("Stirling count=", counts[key]);
+                            return (
+                              <div className={classes.positionSTR} key={index}>
+                                <CustomizedBadges
+                                  fromLocation="STR"
+                                  totalRequests={counts[key]}
+                                />
+                              </div>
+                            );
+                          case "Joondalup":
+                            return (
+                              <div className={classes.positionJND} key={index}>
+                                <CustomizedBadges
+                                  fromLocation="JND"
+                                  totalRequests={counts[key]}
+                                />
+                              </div>
+                            );
+                          default:
+                            return null;
+                        } // switch end
+                      })}
+                    </div>
+                  </Grid>
+                </div>
               )}
+              {/* end of editmode */}
+
               <Grid
                 container
                 direction="row"
@@ -390,7 +514,12 @@ function Ride({ isEdit, requestData }) {
                 alignItems="center"
               >
                 <form className={classes.root}>
-                  <Grid item>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
                     <TextField
                       id="from"
                       select
@@ -398,14 +527,14 @@ function Ride({ isEdit, requestData }) {
                       defaultValue={requestData ? requestData.from : ""}
                       onChange={handleInputChange}
                       name="from"
-                      helperText="Start location"
                       variant="outlined"
                       InputProps={{
                         startAdornment: (
-                          <InputAdornment>
+                          <InputAdornment position="start">
                             <MyLocationIcon color="primary" />
                           </InputAdornment>
                         ),
+                        shrink: true,
                       }}
                     >
                       {routes.map((option) => (
@@ -416,7 +545,12 @@ function Ride({ isEdit, requestData }) {
                     </TextField>
                   </Grid>
 
-                  <Grid item>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
                     <TextField
                       id="to"
                       select
@@ -424,14 +558,15 @@ function Ride({ isEdit, requestData }) {
                       defaultValue={requestData ? requestData.to : ""}
                       onChange={handleInputChange}
                       name="to"
-                      helperText="Please select your end location"
+                      // helperText="Please select your end location"
                       variant="outlined"
                       InputProps={{
                         startAdornment: (
-                          <InputAdornment>
+                          <InputAdornment position="start">
                             <LocationOnIcon color="primary" />
                           </InputAdornment>
                         ),
+                        shrink: true,
                       }}
                     >
                       {routes.map((option) => (
@@ -442,56 +577,70 @@ function Ride({ isEdit, requestData }) {
                     </TextField>
                   </Grid>
 
-                  <Grid item>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between" // required due to textfield maxwidth = 40%
+                    alignItems="center"
+                  >
                     <TextField
                       id="departDate"
                       type="date"
                       name="date"
                       label="Start Date"
+                      className={classes.textField}
                       defaultValue={
                         requestData
                           ? moment(requestData.departDate).format("yyyy-MM-DD") // needs correct date format
-                          : moment(new Date(Date.now())).format("yyyy-MM-DD") // show current  date by default
+                          : moment().format("yyyy-MM-DD") // show current  date by default
                       }
                       variant="outlined"
                       onChange={handleInputChange}
-                      helperText="Date you'll be leaving..."
+                      InputLabelProps={{
+                        // removes the header from inside the input box
+                        shrink: true,
+                      }}
+                    />
+
+                    <TextField
+                      id="departTime"
+                      name="time"
+                      type="time"
+                      label="Start Time"
+                      style={{ maxWidth: "30%" }}
+                      variant="outlined"
+                      defaultValue={
+                        requestData
+                          ? // ? moment(requestData.departTime).format("HH:mm")
+                            requestData.departTime
+                          : moment().format("HH:mm") // requires correct time format, display current time
+                      }
+                      onChange={handleInputChange}
+                      // helperText="Time you'll be leaving..."
                       InputLabelProps={{
                         // removes the header from inside the input box
                         shrink: true,
                       }}
                     />
                   </Grid>
-                  <TextField
-                    id="departTime"
-                    name="time"
-                    type="time"
-                    label="Start Time"
-                    variant="outlined"
-                    defaultValue={
-                      requestData
-                        ? // ? moment(requestData.departTime).format("HH:mm")
-                          requestData.departTime
-                        : moment(new Date(Date.now())).format("HH:mm") // requires correct time format, display current time
-                    }
-                    onChange={handleInputChange}
-                    helperText="Time you'll be leaving..."
-                    InputLabelProps={{
-                      // removes the header from inside the input box
-                      shrink: true,
-                    }}
-                  />
 
-                  <Grid item>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-around"
+                    alignItems="center"
+                  >
                     <TextField
                       id="seatsRequired"
-                      label="Seats Required?"
+                      label="Seats required?"
                       variant="outlined"
+                      // className={classes.textField}
+                      // style={{ maxWidth: "30%" }}
                       defaultValue={requestData ? requestData.seatsRequired : 1}
                       onChange={handleInputChange}
                       type="number"
                       name="seatsRequired"
-                      helperText="Number of seats required..."
+                      // helperText="Number of seats required..."
                       InputProps={{
                         endAdornment: (
                           <InputAdornment>
@@ -500,19 +649,51 @@ function Ride({ isEdit, requestData }) {
                         ),
                       }}
                     />
+                    <span>
+                      <span>
+                        <LocalMallIcon color="primary" />
+                        <FormControlLabel
+                          control={
+                            <Switch
+                              checked={hasPackage}
+                              onChange={handleHasPackageChange}
+                              name="hasPackage"
+                            />
+                          }
+                          label="Parcel?"
+                        />
+                      </span>
+
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={isTransportVehicle}
+                            onChange={handleIsTransportVehicleChange}
+                            name="isTransportVehicle"
+                            inputProps={{ "aria-label": "primary checkbox" }}
+                          />
+                        }
+                        label="Drive vehicle"
+                      />
+                    </span>
                   </Grid>
 
-                  <Grid item>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
                     <TextField
                       id="requestNote"
                       label="Request Note"
                       defaultValue={requestData ? requestData.requestNote : ""}
                       name="requestNote"
                       multiline
-                      rows={2}
+                      // rows={2}
                       onChange={handleInputChange}
                       variant="outlined"
-                      helperText="Enter other details of your request..."
+                      // helperText="Enter other details of your request..."
                       InputProps={{
                         endAdornment: (
                           <InputAdornment>
@@ -521,6 +702,7 @@ function Ride({ isEdit, requestData }) {
                         ),
                         shrink: true,
                       }}
+                      style={{ marginBottom: "1rem" }}
                     />
                   </Grid>
 
@@ -530,36 +712,6 @@ function Ride({ isEdit, requestData }) {
                     justify="space-around"
                     alignItems="center"
                   >
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={hasPackage}
-                          onChange={handleHasPackageChange}
-                          name="hasPackage"
-                        />
-                      }
-                      label="Send a parcel?"
-                    ></FormControlLabel>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={isTransportVehicle}
-                          onChange={handleIsTransportVehicleChange}
-                          name="isTransportVehicle"
-                          inputProps={{ "aria-label": "primary checkbox" }}
-                        />
-                      }
-                      label="Drive vehicle"
-                    />
-                  </Grid>
-
-                  <Grid
-                    container
-                    direction="row"
-                    justify="space-around"
-                    alignItems="center"
-                  >
-                    {" "}
                     <FormBtn
                       // enable form submit if to/from is filled or in edit mode
                       disabled={
@@ -572,18 +724,7 @@ function Ride({ isEdit, requestData }) {
                       {isEdit ? "Update Ride" : "Request Ride"}
                     </FormBtn>
                   </Grid>
-                  <div
-                    style={{
-                      position: "fixed",
-                      left: "0",
-                      bottom: "0",
-                      width: "90%",
-                      height: "50px",
-                      textAlign: "center",
-                    }}
-                  >
-                    {isEdit ? null : <SimpleBottomNavigation />}
-                  </div>
+                  {isEdit ? null : <SimpleBottomNavigation />}
                 </form>
               </Grid>
             </Col>
