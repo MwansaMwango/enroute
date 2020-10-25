@@ -121,8 +121,9 @@ function Drive({ isEdit, tripData }) {
       width: "90%",
       paddingTop: "10%", // allows for location texts
     },
-    positionToday: { // Display Todays Date
-      fontSize: "1.1rem",
+    positionToday: {
+      // Display Todays Date
+      fontSize: "1rem",
     },
     positionNED: {
       position: "absolute",
@@ -330,11 +331,8 @@ function Drive({ isEdit, tripData }) {
                       justify="center"
                       alignItems="center"
                     >
-                      <Typography
-                        variant="h5"
-                        color={theme.palette.primary.light}
-                      >
                         <LocalTaxiIcon fontSize="1rem" />
+                      <Typography variant="outline" component="h3">
                         Drive
                       </Typography>
                     </Grid>
@@ -346,12 +344,12 @@ function Drive({ isEdit, tripData }) {
                     justify="center"
                     alignItems="center"
                   >
-                  <Grid
-                    container
-                    direction="row"
-                    justify="center"
-                    alignItems="center"
-                  >
+                    <Grid
+                      container
+                      direction="row"
+                      justify="center"
+                      alignItems="center"
+                    >
                       <Typography
                         variant="overline"
                         component="h5"

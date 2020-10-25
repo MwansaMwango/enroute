@@ -36,7 +36,7 @@ function Ride({ isEdit, requestData }) {
 
   const [trip, setTrip] = useState([]);
   const [request, setRequest] = useState(requestData);
-  const [, setMatches] = useState([]);
+  const [matches, setMatches] = useState([]);
   const [routes, setRoutes] = useState([]);
   const [formObject, setFormObject] = useState({});
   // set hasPackage & isTransportVehicle checkboxes to state of requestData in editMode else 'false' in normal mode
@@ -260,7 +260,8 @@ function Ride({ isEdit, requestData }) {
 
   function handleCloseAlertDialog() {
     setAlertDialogOpen(false);
-    window.location.href = "/myrequests/" // goto my requests 
+
+    window.location.href = "/myrequests/"; // goto my requests
   }
 
   // When the form is submitted, use the API.requestRide method to save the trip data
@@ -297,6 +298,7 @@ function Ride({ isEdit, requestData }) {
       })
       .then(function () {
         checkMatchingTrips(submittedRequestObj);
+        handleOpenAlertDialog();
       })
       .catch((err) => console.log(err));
   }
@@ -335,14 +337,16 @@ function Ride({ isEdit, requestData }) {
   }
 
   function checkMatchingTrips(requestObjtoMatch) {
-      API.findMatchingTrips(requestObjtoMatch)
+    API.findMatchingTrips(requestObjtoMatch)
       .then(function (res) {
-        alert(
-          res.data.length +
-            " Matching trip(s) found. You will be notified once a driver confirms."
-        );
-        setMatches(res.data);
-        handleOpenAlertDialog();
+        // alert(
+        //   res.data.length +
+        //     " Matching trip(s) found. You will be notified once a driver confirms."
+        // );
+        let responseData = res.data.length // get number of elements in array
+        setMatches(responseData);
+
+        // handleOpenAlertDialog();
       })
       .catch((err) => console.log(err));
   }
@@ -350,20 +354,23 @@ function Ride({ isEdit, requestData }) {
   return (
     <Box
       style={{
-        paddingBottom: "50px",
+        paddingBottom: "90px",
       }}
     >
       <Container fluid maxWidth="100vw">
         <ThemeProvider theme={theme}>
           <Row>
             <Col size="md-12">
-            {alertDialogOpen ? (
+              {alertDialogOpen ? (
                 <AlertDialog
                   dialogOpen={true}
                   btnOpenTxt="Post Ride Request"
                   dialogTitle="Your Request has been saved."
-                  dialogContentTxt="Next step, search for drivers..."
-                  btnOKTxt="Search"
+                  dialogContentTxt={
+                    matches +
+                    " Matching trip(s) found. You'll be notified when a driver accepts."
+                  }
+                  btnOKTxt="OK"
                   handleClose={handleCloseAlertDialog}
                 />
               ) : null}
