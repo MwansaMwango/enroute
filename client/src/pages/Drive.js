@@ -315,7 +315,7 @@ function Drive({ isEdit, tripData }) {
                 <AlertDialog
                   dialogOpen={true}
                   btnOpenTxt="Post Trip"
-                  dialogTitle="Your Trip has been saved."
+                  dialogTitle="Your Trip has been posted."
                   dialogContentTxt="Next step, search for riders..."
                   btnOKTxt="Search"
                   handleClose={handleCloseAlertDialog}
@@ -333,7 +333,7 @@ function Drive({ isEdit, tripData }) {
                     >
                         <LocalTaxiIcon fontSize="1rem" />
                       <Typography variant="outline" component="h3">
-                        Drive
+                        Drive - New Trip
                       </Typography>
                     </Grid>
                   </Jumbotron>

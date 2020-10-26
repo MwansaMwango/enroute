@@ -9,7 +9,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function AlertDialog(props) {
   console.log("Alert props ", props);
-
+  console.log("matches dialog", props.dialogContentTxtMatches  )
   return (
     <div>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -23,21 +23,40 @@ export default function AlertDialog(props) {
         aria-describedby="alert-dialog-description"
         style={{ textAlign: "center" }}
       >
-        <img
-          style={{
-            display: "block",
-            margin: "0 auto",
-            maxWidth: "30%",
-            paddingTop: "30px",
-          }}
-          src={require("../../assets/undraw-confirmed.svg")}
-          alt="Edit details..."
-        />
+        {
+          
+           (props.dialogContentTxtMatches >= 0) ? ( // Ride request sent
+            <img
+              style={{
+                display: "block",
+                margin: "0 auto",
+                maxWidth: "30%",
+                paddingTop: "30px",
+              }}
+              src={require("../../assets/undraw-sent.svg")}
+              alt="Sent..."
+            />
+          ) : ( // Trip posted
+            <img
+              style={{
+                display: "block",
+                margin: "0 auto",
+                maxWidth: "30%",
+                paddingTop: "30px",
+              }}
+              src={require("../../assets/undraw-confirmed.svg")}
+              alt="Edit details..."
+            />
+       
+          )}
         <strong>
           <DialogTitle id="alert-dialog-title">{props.dialogTitle}</DialogTitle>
         </strong>
         <DialogContent style={{ textAlign: "center" }}>
           <DialogContentText id="alert-dialog-description">
+            <strong style={{ fontSize: "2rem", color: "#E64500" }}>
+              {props.dialogContentTxtMatches}
+            </strong>
             {props.dialogContentTxt}
           </DialogContentText>
           {/* <CircularProgress color="primary" /> */}

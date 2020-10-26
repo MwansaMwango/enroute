@@ -368,11 +368,9 @@ function Ride({ isEdit, requestData }) {
                 <AlertDialog
                   dialogOpen={true}
                   btnOpenTxt="Post Ride Request"
-                  dialogTitle="Your Request has been saved."
-                  dialogContentTxt={
-                    matches +
-                    " Matching trip(s) found. You'll be notified when a driver accepts."
-                  }
+                  dialogTitle="Ride request sent..."
+                  dialogContentTxt=" Matching driver(s) found. You'll be notified when a driver accepts."
+                  dialogContentTxtMatches={ matches }
                   btnOKTxt="OK"
                   handleClose={handleCloseAlertDialog}
                 />
@@ -389,7 +387,7 @@ function Ride({ isEdit, requestData }) {
                     >
                       <EmojiPeopleRoundedIcon fontSize="large" />
                       <Typography variant="outline" component="h3">
-                        Ride
+                        Ride - New Request
                       </Typography>
                     </Grid>
                   </Jumbotron>
