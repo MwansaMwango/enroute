@@ -67,6 +67,7 @@ module.exports = {
       })
       .catch((err) => res.status(422).json(err));
   },
+  
   findTodaysTrips: function (req, res) {
       db.Trip.find({
         departDate: moment().format("yy-MM-DD"), //must be formatted accordingly

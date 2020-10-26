@@ -369,7 +369,7 @@ function Ride({ isEdit, requestData }) {
                   btnOpenTxt="Post Ride Request"
                   dialogTitle="Ride request sent..."
                   dialogContentTxt=" Matching driver(s) found. You'll be notified when a driver accepts."
-                  dialogContentTxtMatches={ matches }
+                  dialogContentTxtMatches={matches}
                   btnOKTxt="OK"
                   handleClose={handleCloseAlertDialog}
                 />
@@ -609,8 +609,7 @@ function Ride({ isEdit, requestData }) {
                       variant="outlined"
                       defaultValue={
                         requestData
-                          ? // ? moment(requestData.departTime).format("HH:mm")
-                            requestData.departTime
+                          ? requestData.departTime
                           : moment().format("HH:mm") // requires correct time format, display current time
                       }
                       onChange={handleInputChange}
@@ -625,7 +624,7 @@ function Ride({ isEdit, requestData }) {
                   <Grid
                     container
                     direction="row"
-                    justify="space-between"
+                    justify="center"
                     alignItems="center"
                   >
                     <TextField
@@ -633,7 +632,7 @@ function Ride({ isEdit, requestData }) {
                       label="Seats required?"
                       variant="outlined"
                       // className={classes.textField}
-                      // style={{ maxWidth: "30%" }}
+                      // style={{ maxWidth: "50%" }}
                       defaultValue={requestData ? requestData.seatsRequired : 1}
                       onChange={handleInputChange}
                       type="number"
@@ -647,24 +646,22 @@ function Ride({ isEdit, requestData }) {
                         ),
                       }}
                     />
+                  </Grid>
 
-                    <Grid
-                      container
-                      direction="row"
-                      justify="center"
-                      alignItems="center"
-                    >
-                    {/* <div> */}
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-around"
+                    alignItems="center"
+                  >
+                    <div>
                       <Grid
                         container
                         direction="row"
                         justify="center"
                         alignItems="center"
                       >
-                        <LocalMallIcon
-                          color="primary"
-                          stlye={{ padding: "4rem" }}
-                        />
+                        <LocalMallIcon color="primary" />
 
                         <FormControlLabel
                           control={
@@ -676,14 +673,16 @@ function Ride({ isEdit, requestData }) {
                           }
                           label="Parcel?"
                         />
-                      {/* </Grid> */}
+                      </Grid>
+                    </div>
 
-                      {/* <Grid
+                    <div>
+                      <Grid
                         container
                         direction="row"
-                        justify="flex-end"
+                        justify="center"
                         alignItems="center"
-                      > */}
+                      >
                         <DriveLogo
                           name="driveLogo"
                           width="1.8rem"
@@ -701,9 +700,10 @@ function Ride({ isEdit, requestData }) {
                           label="Drive vehicle"
                         />
                       </Grid>
+                    </div>
                     {/* </div> */}
-                    </Grid>
                   </Grid>
+                  {/* </Grid> */}
 
                   <Grid
                     container

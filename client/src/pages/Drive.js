@@ -255,8 +255,7 @@ function Drive({ isEdit, tripData }) {
       from: formObject.from,
       to: formObject.to,
       departTime:
-        moment(formObject.time).format("HH:mm") ||
-        moment().format("HH:mm"),
+        moment(formObject.time).format("HH:mm") || moment().format("HH:mm"),
       departDate:
         moment(formObject.date).format("yyyy-MM-DD") ||
         moment().format("yyyy-MM-DD"),
@@ -331,7 +330,7 @@ function Drive({ isEdit, tripData }) {
                       justify="center"
                       alignItems="center"
                     >
-                        <LocalTaxiIcon fontSize="1rem" />
+                      <LocalTaxiIcon fontSize="large" />
                       <Typography variant="outline" component="h3">
                         Drive - New Trip
                       </Typography>
@@ -522,7 +521,6 @@ function Drive({ isEdit, tripData }) {
                         ),
                         shrink: true,
                       }}
-                      // style={{ maxWidth: "90vw", minWidth: "90%"}}
                     >
                       {routes.map((option) => (
                         <MenuItem key={option} value={option}>
@@ -563,7 +561,6 @@ function Drive({ isEdit, tripData }) {
                       type="time"
                       name="time"
                       label="Start Time"
-                      // className={classes.textField}
                       style={{ maxWidth: "30%" }}
                       defaultValue={
                         tripData
