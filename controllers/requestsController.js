@@ -74,18 +74,6 @@ module.exports = {
   },
 
   findTodaysRequests: function (req, res) {
-    // db.Request.aggregate([
-    //   {
-    //     $match: {
-    //       departDate: moment(),
-    //       user_id: {
-    //         $ne: req.user._id, // exclude my requests
-    //       },
-    //     },
-    //   },
-    //   { $group: { from: "$from", count: { $sum: 1 } } }
-    // ])
-
       db.Request.find({
         departDate: moment().format("yy-MM-DD"), //must be formatted accordingly
         user_id: {

@@ -56,7 +56,10 @@ export default function CustomizedBadges(props) {
 
         <IconButton aria-label="ride">
           <StyledBadge badgeContent={props.totalRequests} color="secondary">
-            <EmojiPeopleRoundedIcon style={{ fontSize: "7vw" }} />
+            {(props.persona === "driver")? //display 'riderman' icon if driver
+            (<EmojiPeopleRoundedIcon style={{ fontSize: "7vw" }} />):(
+              <LocalTaxiIcon style={{ fontSize: "7vw" }} /> //else display taxi icon if rider
+            )}
           </StyledBadge>
         </IconButton>
       </Typography>

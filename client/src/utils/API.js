@@ -49,6 +49,10 @@ export default {
   updateTrip: function (id, tripData) {
     return axios.put("/api/trips/" + id, tripData);
   },
+    // Get todays trips
+    getTodaysTrips: function () {
+      return axios.get("/api/trips/today");
+    },
 
   // ------------------Request Made APIs ----------------------------
   // Posts a request to the database

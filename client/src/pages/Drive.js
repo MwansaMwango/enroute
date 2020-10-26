@@ -380,6 +380,7 @@ function Drive({ isEdit, tripData }) {
                                 <CustomizedBadges
                                   fromLocation="NED"
                                   totalRequests={counts[key]}
+                                  persona="driver"
                                 />
                               </div>
                             );
@@ -390,6 +391,7 @@ function Drive({ isEdit, tripData }) {
                                 <CustomizedBadges
                                   fromLocation="PER"
                                   totalRequests={counts[key]}
+                                  persona="driver"
                                 />
                               </div>
                             );
@@ -403,6 +405,7 @@ function Drive({ isEdit, tripData }) {
                                 <CustomizedBadges
                                   fromLocation="VIC"
                                   totalRequests={counts[key]}
+                                  persona="driver"
                                 />
                               </div>
                             );
@@ -412,6 +415,7 @@ function Drive({ isEdit, tripData }) {
                                 <CustomizedBadges
                                   fromLocation="BMT"
                                   totalRequests={counts[key]}
+                                  persona="driver"
                                 />
                               </div>
                             );
@@ -421,6 +425,7 @@ function Drive({ isEdit, tripData }) {
                                 <CustomizedBadges
                                   fromLocation="MTY"
                                   totalRequests={counts[key]}
+                                  persona="driver"
                                 />
                               </div>
                             );
@@ -431,6 +436,7 @@ function Drive({ isEdit, tripData }) {
                                 <CustomizedBadges
                                   fromLocation="STR"
                                   totalRequests={counts[key]}
+                                  persona="driver"
                                 />
                               </div>
                             );
@@ -440,6 +446,7 @@ function Drive({ isEdit, tripData }) {
                                 <CustomizedBadges
                                   fromLocation="JND"
                                   totalRequests={counts[key]}
+                                  persona="driver"
                                 />
                               </div>
                             );

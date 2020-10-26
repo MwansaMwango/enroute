@@ -197,7 +197,7 @@ function Ride({ isEdit, requestData }) {
   function loadTodaysTrips() {
     let todaysTripList = [];
 
-    API.getTrips()
+    API.getTodaysTrips()
       .then(function (res) {
         res.data.map((trip) => {
           todaysTripList.push(trip.from);
@@ -263,7 +263,6 @@ function Ride({ isEdit, requestData }) {
 
   function handleCloseAlertDialog() {
     setAlertDialogOpen(false);
-
     window.location.href = "/myrequests/"; // goto my requests
   }
 

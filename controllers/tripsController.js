@@ -1,4 +1,5 @@
 const db = require("../models");
+const moment = require("moment");
 
 module.exports = {
 
@@ -66,7 +67,20 @@ module.exports = {
       })
       .catch((err) => res.status(422).json(err));
   },
-  
+  findTodaysTrips: function (req, res) {
+      db.Trip.find({
+        departDate: moment().format("yy-MM-DD"), //must be formatted accordingly
+        user_id: {
+          $ne: req.user._id, // exclude my requests
+        },
+      })
+      .then((dbModel) => {
+        res.json(dbModel);
+        console.log("Find todays trips hit dbmodel=", dbModel);
+      })
+
+      .catch((err) => res.status(422).json(err));
+  },
   update: function (req, res) {
     db.Trip.findOneAndUpdate({ _id: req.params.id }, req.body) // only updates fields that are defined in the req,body, otherwise no change in DB
       .then((dbModel) => res.json(dbModel))
