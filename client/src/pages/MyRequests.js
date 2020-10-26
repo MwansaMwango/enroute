@@ -20,10 +20,9 @@ import Popper from "@material-ui/core/Popper";
 // import Alert from "@material-ui/lab/Alert";
 import Switch from "@material-ui/core/Switch";
 import InteractiveListTrips from "../components/InteractiveListTrips";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import RestoreIcon from "@material-ui/icons/Restore";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
@@ -178,35 +177,7 @@ function MyRequests() {
                   textAlign: "center",
                 }}
               >
-                <BottomNavigation
-                  value={page}
-                  onChange={(event, newValue) => {
-                    setPage(newValue);
-                  }}
-                  showLabels
-                  // className={classes.root}
-                >
-                  <BottomNavigationAction
-                    label="Ride"
-                    icon={<EmojiPeopleRoundedIcon />}
-                    href="/ride"
-                  />
-                  <BottomNavigationAction
-                    label="Drive"
-                    icon={<LocalTaxiIcon />}
-                    href="/drive"
-                  />
-                  <BottomNavigationAction
-                    label="My Trips"
-                    icon={<PersonPinCircleIcon />}
-                    href="/myTrips"
-                  />
-                  <BottomNavigationAction
-                    label="Newsfeed"
-                    icon={<MessageIcon />}
-                    href="/newsfeed"
-                  />
-                </BottomNavigation>
+            <SimpleBottomNavigation />
               </div>
             </Grid>
           </Col>

@@ -33,6 +33,7 @@ import moment from "moment";
 import CustomizedBadges from "../components/CustomizedBadges";
 import AlertDialog from "../components/AlertDialog";
 
+
 function Drive({ isEdit, tripData }) {
   // Setting our component's initial state
   console.log("isEditMode =", isEdit, "tripData = ", tripData);
@@ -666,7 +667,7 @@ function Drive({ isEdit, tripData }) {
                     </FormBtn>
                   </Grid>
 
-                  {isEdit ? null : <SimpleBottomNavigation />}
+                  {isEdit ? null : <SimpleBottomNavigation/>}
                 </form>
               </Grid>
             </Col>

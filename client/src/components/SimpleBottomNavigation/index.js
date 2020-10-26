@@ -12,7 +12,7 @@ import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import { Grid } from "@material-ui/core/";
 import AppBar from "@material-ui/core/AppBar";
-import createSpacing from "@material-ui/core/styles/createSpacing";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -25,44 +25,56 @@ const useStyles = makeStyles({
 });
 
 export default function SimpleBottomNavigation() {
+ 
+  const history = useHistory();
+  let currentPage = history.location.pathname;
+  const [value, setValue] = React.useState(currentPage);
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
+  
   return (
     <AppBar position="fixed" color="primary" style={{ top: "auto", bottom: 0 }}>
       <BottomNavigation
         value={value}
         onChange={(event, newValue) => {
+          history.push(newValue);
           setValue(newValue);
-        }}
+         }}
         showLabels
         className={classes.root}
       >
         <BottomNavigationAction
           label="Drive"
           icon={<LocalTaxiIcon />}
-          href="/drive"
+          // href="/drive"
+          value="/drive"
         />
 
         <BottomNavigationAction
           label="My Trips"
           icon={<PersonPinCircleIcon />}
-          href="/mytrips"
+          // href="/mytrips"
+          value="/mytrips"
         />
+
         <BottomNavigationAction
           label="Ride"
           icon={<EmojiPeopleRoundedIcon />}
-          href="/ride"
+          // href="/ride"
+          value="/ride"
         />
+
         <BottomNavigationAction
           label="My Requests"
           icon={<AirlineSeatReclineNormalIcon />}
-          href="/myrequests"
+          // href="/myrequests"
+          value="/myrequests"
         />
+
         <BottomNavigationAction
           label="Feed"
           icon={<MessageIcon />}
-          href="/newsfeed"
+          // href="/newsfeed"
+          value="/newsfeed"
         />
       </BottomNavigation>
     </AppBar>

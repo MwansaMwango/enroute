@@ -5,11 +5,10 @@ import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
 import MessageIcon from "@material-ui/icons/Message";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import InteractiveListTrips from "../components/InteractiveListTrips";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Container, Col, Row } from "../components/Grid"; // removed container
+import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 
 import {
   makeStyles,
@@ -141,34 +140,7 @@ function MyTrips() {
                   textAlign: "center",
                 }}
               >
-                <BottomNavigation
-                  value={page}
-                  onChange={(event, newValue) => {
-                    setPage(newValue);
-                  }}
-                  showLabels
-                  // className={classes.root}
-                >
-                  <BottomNavigationAction
-                    label="Ride"
-                    icon={<EmojiPeopleRoundedIcon />}
-                    href="/ride"
-                  />
-                  <BottomNavigationAction
-                    label="Drive"
-                    icon={<LocalTaxiIcon />}
-                    href="/drive"
-                  />
-                  <BottomNavigationAction
-                    label="Newsfeed"
-                    icon={<MessageIcon />}
-                    href="/newsfeed"
-                  />
-                  <BottomNavigationAction
-                    label="Points(future)"
-                    icon={<EmojiEventsIcon />}
-                  />
-                </BottomNavigation>
+               <SimpleBottomNavigation />
               </div>
             </Grid>
           </Col>
