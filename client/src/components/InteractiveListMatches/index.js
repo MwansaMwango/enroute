@@ -55,6 +55,14 @@ const useStyles = makeStyles((theme) => ({
   title: {
     margin: theme.spacing(4, 0, 2),
   },
+  small: {
+    width: theme.spacing(3),
+    height: theme.spacing(3),
+  },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
 }));
 
 function generate(element) {
@@ -93,13 +101,15 @@ export default function InteractiveListMatches({
           <div className={classes.root}>
             <ListItem>
               <ListItemAvatar>
-                <Avatar>
-                  {props.status === "Booked" ? (
-                    <AccountBoxRoundedIcon /> // TODO adopt User's avator
-                  ) : (
+                {props.status === "Booked" ? (
+                  <Avatar src={require("../../assets/avatar-mine-worker.png")} className={classes.large}/>
+                ) : (
+                  // <AccountBoxRoundedIcon /> // TODO adopt User's avator
+
+                  <Avatar>
                     <EmojiPeopleRoundedIcon />
-                  )}
-                </Avatar>
+                  </Avatar>
+                )}
               </ListItemAvatar>
 
               <ListItemText
