@@ -121,7 +121,7 @@ export default {
   getRoutes: function () {
     return axios.get("/api/routes");
   },
-  // -----------------Notification APIs------------------------
+  // -----------------Real-time Notification APIs------------------------
   // Send Booking Accepted Notification
   sendAcceptBookingNotif: function (subscriberId) { // takes in user_id
     let endpoint =

@@ -286,7 +286,7 @@ function Ride({ isEdit, requestData }) {
       isTransportVehicle: formObject.isTransportVehicle || false,
       hasPackage: formObject.hasPackage || false,
       requestNote: formObject.requestNote || "",
-      seatsRequired: formObject.seatsRequired,
+      seatsRequired: formObject.seatsRequired || 1,
     };
 
     console.log("Submitted Object= ", submittedRequestObj);
@@ -296,7 +296,7 @@ function Ride({ isEdit, requestData }) {
         let responseData = res.data;
         setSavedRequest(responseData);
         console.log("Saved Request Response", savedRequest._id);
-        // handleOpenAlertDialog();
+       
       })
       .then(function () {
         checkMatchingTrips(submittedRequestObj);
@@ -341,14 +341,8 @@ function Ride({ isEdit, requestData }) {
   function checkMatchingTrips(requestObjtoMatch) {
     API.findMatchingTrips(requestObjtoMatch)
       .then(function (res) {
-        // alert(
-        //   res.data.length +
-        //     " Matching trip(s) found. You will be notified once a driver confirms."
-        // );
         let responseData = res.data.length; // get number of elements in array
         setMatches(responseData);
-
-        // handleOpenAlertDialog();
       })
       .catch((err) => console.log(err));
   }

@@ -4,7 +4,6 @@ import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
 import PersonPinCircleIcon from "@material-ui/icons/PersonPinCircle";
 import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
 import MessageIcon from "@material-ui/icons/Message";
-// import Alert from "@material-ui/lab/Alert";
 import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import InteractiveListMatches from "../components/InteractiveListMatches";
@@ -20,15 +19,33 @@ import "./drive.css";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 
-
 function RequestsReceived({ checkNotificationStatus }) {
   // Setting our component's initial state
   const [selectedTrip, setSelectedTrip] = useState({});
-  // const [tempTrip, setTempTrip] = useState();
   const [matchingRequests, setMatchingRequests] = useState([]);
   const [, setValue] = React.useState(0);
   const [page, setPage] = React.useState("ride");
-  const [] = React.useState(false);
+
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        light: "#FF9057",
+        main: "#E64500",
+        dark: "#259CBB",
+        contrastText: "#fff",
+      },
+      secondary: {
+        light: "#78849E",
+        main: "#259CBB",
+        dark: "#168387",
+        contrastText: "#000",
+      },
+      // type: 'dark', // dark theme
+      typography: {
+        fontFamily: "Montserrat",
+      },
+    },
+  });
 
   const useStyles = makeStyles(() => ({
     root: {
@@ -51,8 +68,7 @@ function RequestsReceived({ checkNotificationStatus }) {
   function getMatchesbyTripId(id) {
     API.getTrip(id)
       .then((res) => {
-        console.log("getTrip res = ", res.data);
-        findMatchingRequests(res.data);
+        findMatchingRequests(res.data); // use trip data to find matching requests
         setSelectedTrip(res.data);
       })
       .catch((err) => console.log(err));
@@ -63,7 +79,6 @@ function RequestsReceived({ checkNotificationStatus }) {
     API.findMatchingRequests(tripData)
       .then((res) => {
         setMatchingRequests(res.data);
-        console.log("Matching request res.data = ", res.data);
       })
       .catch((err) => console.log(err));
   }
@@ -72,24 +87,18 @@ function RequestsReceived({ checkNotificationStatus }) {
   function acceptRequest(id, trip_idObject) {
     API.acceptRequest(id, trip_idObject)
       .then((res) => {
-        // console.log("Accepted Request res.data = ", res.data);
-        // checkNotificationStatus("Booked");
         findMatchingRequests(selectedTrip);
-
         //TODO run confirm action modal screen
         //Send details of Driver to Ride Requestor - done in ravenhub notification center'
         sendAcceptBookingNotif(selectedTrip.user_id);
       })
-
       // .then(() => window.location.reload())
-
       .catch((err) => console.log(err));
   }
 
   // Send Booking Confirmed Notification
   function sendAcceptBookingNotif(subscriberId) {
     // subscriberId = user_id i.e. driver id
-    console.log("selectedTrip = ", selectedTrip);
     API.sendAcceptBookingNotif(subscriberId)
       .then((res) => {
         console.log("sendAcceptBookingNotif res = ", res);
@@ -140,7 +149,7 @@ function RequestsReceived({ checkNotificationStatus }) {
                 <h2>
                   {selectedTrip.from} - {selectedTrip.to}
                 </h2>
-               
+
                 <h3>
                   {moment(selectedTrip.departDate).format("DD-MMM-YYYY")}{" "}
                   {selectedTrip.departTime}
