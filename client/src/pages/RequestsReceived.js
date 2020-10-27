@@ -89,20 +89,8 @@ function RequestsReceived({ checkNotificationStatus }) {
       .then((res) => {
         findMatchingRequests(selectedTrip);
         //TODO run confirm action modal screen
-        //Send details of Driver to Ride Requestor - done in ravenhub notification center'
-        sendAcceptBookingNotif(selectedTrip.user_id);
       })
       // .then(() => window.location.reload())
-      .catch((err) => console.log(err));
-  }
-
-  // Send Booking Confirmed Notification
-  function sendAcceptBookingNotif(subscriberId) {
-    // subscriberId = user_id i.e. driver id
-    API.sendAcceptBookingNotif(subscriberId)
-      .then((res) => {
-        console.log("sendAcceptBookingNotif res = ", res);
-      })
       .catch((err) => console.log(err));
   }
 

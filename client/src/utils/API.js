@@ -121,20 +121,4 @@ export default {
   getRoutes: function () {
     return axios.get("/api/routes");
   },
-  // -----------------Real-time Notification APIs------------------------
-  // Send Booking Accepted Notification
-  sendAcceptBookingNotif: function (subscriberId) { // takes in user_id
-    let endpoint =
-      "https://api.ravenhub.io/company/dahvfkvQhg/subscribers/" +
-      subscriberId +
-      "/events/NCEU6FZHKl";
-
-      return axios.post(
-      endpoint,
-      { priority: "Critical" },
-      {
-        headers: { "Content-type": "application/json" },
-      }
-    );
-  },
 };
