@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Link from "@material-ui/core/Link";
 import Axios from "axios";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import {
+  makeStyles,
+  ThemeProvider,
+  createMuiTheme,
+} from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -26,77 +30,99 @@ import * as PusherPushNotifications from "@pusher/push-notifications-web";
 // });
 import { ReactComponent as DriveLogo } from "../../assets/steering-wheel.svg";
 
-const useStyles = makeStyles((theme) => ({
-  grow: {
-    flexGrow: 1,
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: "#FF9057",
+      main: "#E64500",
+      dark: "#259CBB",
+      contrastText: "#fff",
+    },
+    secondary: {
+      light: "#78849E",
+      main: "#259CBB",
+      dark: "#168387",
+      contrastText: "#000",
+    },
+    // type: 'dark', // dark theme
+    typography: {
+      fontFamily: "Montserrat",
+    },
+  },
+});
 
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    // display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "block",
+const useStyles = makeStyles((theme) => {
+  return ({
+    grow: {
+      flexGrow: 1,
     },
-    padding: 0,
-    margin: 0
-  },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      // display: "none",
+      [theme.breakpoints.up("sm")]: {
+        display: "block",
+      },
+      padding: 0,
+      margin: 0,
+    },
 
-  // search: {
-  //   position: 'relative',
-  //   borderRadius: theme.shape.borderRadius,
-  //   backgroundColor: fade(theme.palette.common.white, 0.15),
-  //   '&:hover': {
-  //     backgroundColor: fade(theme.palette.common.white, 0.25),
-  //   },
-  //   marginRight: theme.spacing(2),
-  //   marginLeft: 0,
-  //   width: '100%',
-  //   [theme.breakpoints.up('sm')]: {
-  //     marginLeft: theme.spacing(3),
-  //     width: 'auto',
-  //   },
-  // },
-  // searchIcon: {
-  //   padding: theme.spacing(0, 2),
-  //   height: '100%',
-  //   position: 'absolute',
-  //   pointerEvents: 'none',
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-  inputRoot: {
-    color: "inherit",
-    backgroundColor: '#FAD961',
-    backgroundImage: 'linear-gradient(90deg, #FAD961 0%, #F76B1C 100%)',
-    backgroundSize: "cover", // '100%' scales full image unlike 'cover' test
-    backgroundRepeat: "no-repeat",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
+    // search: {
+    //   position: 'relative',
+    //   borderRadius: theme.shape.borderRadius,
+    //   backgroundColor: fade(theme.palette.common.white, 0.15),
+    //   '&:hover': {
+    //     backgroundColor: fade(theme.palette.common.white, 0.25),
+    //   },
+    //   marginRight: theme.spacing(2),
+    //   marginLeft: 0,
+    //   width: '100%',
+    //   [theme.breakpoints.up('sm')]: {
+    //     marginLeft: theme.spacing(3),
+    //     width: 'auto',
+    //   },
+    // },
+    // searchIcon: {
+    //   padding: theme.spacing(0, 2),
+    //   height: '100%',
+    //   position: 'absolute',
+    //   pointerEvents: 'none',
+    //   display: 'flex',
+    //   alignItems: 'center',
+    //   justifyContent: 'center',
+    // },
+    inputRoot: {
+      color: "inherit",
+      backgroundColor: "#FAD961",
+      backgroundImage: "linear-gradient(90deg, #FAD961 0%, #F76B1C 100%)",
+      backgroundSize: "cover",
+      backgroundRepeat: "no-repeat",
     },
-  },
-  sectionDesktop: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "flex",
+    inputInput: {
+      padding: theme.spacing(1, 1, 1, 0),
+      // vertical padding + font size from searchIcon
+      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+      transition: theme.transitions.create("width"),
+      width: "100%",
+      [theme.breakpoints.up("md")]: {
+        width: "20ch",
+      },
     },
-  },
-  sectionMobile: {
-    display: "flex",
-    [theme.breakpoints.up("md")]: {
+    sectionDesktop: {
       display: "none",
+      [theme.breakpoints.up("md")]: {
+        display: "flex",
+      },
     },
-  },
-}));
+    sectionMobile: {
+      display: "flex",
+      [theme.breakpoints.up("md")]: {
+        display: "none",
+      },
+    },
+  });
+});
 
 export default function Nav(props) {
   const classes = useStyles();
@@ -130,7 +156,9 @@ export default function Nav(props) {
   const getUser = () => {
     Axios.get("/api/users/current-user")
       .then((res) => {
-        setCurrentUserFullName(res.data.data.firstName +' '+ res.data.data.lastName);
+        setCurrentUserFullName(
+          res.data.data.firstName + " " + res.data.data.lastName
+        );
         return true;
       })
       .catch((err) => {
@@ -219,113 +247,115 @@ export default function Nav(props) {
       )}
     </div>
   );
- 
+
   return (
     <div className={classes.grow}>
-      <AppBar position="static" >
-        {" "}
-        {/* dark theme */}
-        <Toolbar>
-          <MenuItem >
-            <IconButton
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="open drawer"
-              href="/Drive"
-            >
-              {/* <MenuIcon /> */}
-              <DriveLogo name="wifi" width="2rem" fill="#ffff" />
-            </IconButton>
-          </MenuItem>
-          <Grid
-            container
-            direction="row"
-            justify="flex-start"
-            alignItems="center"
-          >
-            <Typography className={classes.title} variant="h4" noWrap>
-              Enroute 
-            </Typography>
-          </Grid>
-
-          {currentUserFullName ? (
+      <ThemeProvider theme={theme}>
+        <AppBar position="static">
+          {" "}
+          {/* dark theme */}
+          <Toolbar>
+            <MenuItem>
+              <IconButton
+                edge="start"
+                className={classes.menuButton}
+                color="inherit"
+                aria-label="open drawer"
+                href="/Drive"
+              >
+                {/* <MenuIcon /> */}
+                <DriveLogo name="wifi" width="2rem" fill="#ffff" />
+              </IconButton>
+            </MenuItem>
             <Grid
               container
               direction="row"
-              justify="flex-end"
+              justify="flex-start"
               alignItems="center"
             >
-              <div>
-                <div className={classes.grow} />
-                <div className={classes.sectionDesktop}>
-                  <IconButton
-                    aria-label="show 4 new mails"
-                    color="inherit"
-                    href="/mytrips"
-                  >
-                    <Badge badgeContent={0} color="secondary">
-                      <LocalTaxiRoundedIcon />
-                    </Badge>
-                  </IconButton>
-
-                  <IconButton
-                    href="/myrequests"
-                    aria-label="show 1 new notifications"
-                    color="inherit"
-                  >
-                    <Badge
-                      badgeContent={props.notificationStatus}
-                      color="secondary"
-                    >
-                      <EmojiPeopleRoundedIcon />
-                    </Badge>
-                  </IconButton>
-
-                  <IconButton
-                    edge="end"
-                    aria-label="account of current user"
-                    aria-controls={menuId}
-                    aria-haspopup="true"
-                    onClick={handleProfileMenuOpen}
-                    color="inherit"
-                  >
-                    <AccountCircle />
-                    {getUser()}
-                    {currentUserFullName}
-                  </IconButton>
-                </div>
-                <div className={classes.sectionMobile}>
-                  <IconButton
-                    aria-label="show more"
-                    aria-controls={mobileMenuId}
-                    aria-haspopup="true"
-                    onClick={handleMobileMenuOpen}
-                    color="inherit"
-                  >
-                    <MoreIcon />
-                  </IconButton>
-                </div>
-              </div>
-            </Grid>
-          ) : (
-            <Grid
-              container
-              direction="row"
-              justify="flex-end"
-              alignItems="center"
-            >
-              <Typography variant="h6">
-                <Link href="/login" color="inherit" underline="none">
-                  Login
-                </Link>
+              <Typography className={classes.title} variant="h4" noWrap>
+                Enroute
               </Typography>
             </Grid>
-          )}
-        </Toolbar>
-      </AppBar>
+
+            {currentUserFullName ? (
+              <Grid
+                container
+                direction="row"
+                justify="flex-end"
+                alignItems="center"
+              >
+                <div>
+                  <div className={classes.grow} />
+                  <div className={classes.sectionDesktop}>
+                    <IconButton
+                      aria-label="show 4 new mails"
+                      color="inherit"
+                      href="/mytrips"
+                    >
+                      <Badge badgeContent={0} color="secondary">
+                        <LocalTaxiRoundedIcon />
+                      </Badge>
+                    </IconButton>
+
+                    <IconButton
+                      href="/myrequests"
+                      aria-label="show 1 new notifications"
+                      color="inherit"
+                    >
+                      <Badge
+                        badgeContent={props.notificationStatus}
+                        color="secondary"
+                      >
+                        <EmojiPeopleRoundedIcon />
+                      </Badge>
+                    </IconButton>
+
+                    <IconButton
+                      edge="end"
+                      aria-label="account of current user"
+                      aria-controls={menuId}
+                      aria-haspopup="true"
+                      onClick={handleProfileMenuOpen}
+                      color="inherit"
+                    >
+                      <AccountCircle />
+                      {getUser()}
+                      {currentUserFullName}
+                    </IconButton>
+                  </div>
+                  <div className={classes.sectionMobile}>
+                    <IconButton
+                      aria-label="show more"
+                      aria-controls={mobileMenuId}
+                      aria-haspopup="true"
+                      onClick={handleMobileMenuOpen}
+                      color="inherit"
+                    >
+                      <MoreIcon />
+                    </IconButton>
+                  </div>
+                </div>
+              </Grid>
+            ) : (
+              <Grid
+                container
+                direction="row"
+                justify="flex-end"
+                alignItems="center"
+              >
+                <Typography variant="h6">
+                  <Link href="/login" color="inherit" underline="none">
+                    Login
+                  </Link>
+                </Typography>
+              </Grid>
+            )}
+          </Toolbar>
+        </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      </ThemeProvider>
     </div>
   );
 }

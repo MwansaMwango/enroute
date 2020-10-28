@@ -10,21 +10,27 @@ import InteractiveListMatches from "../components/InteractiveListMatches";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Container, Col, Row } from "../components/Grid"; // removed container
-
-import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import {
+  makeStyles,
+  ThemeProvider,
+  createMuiTheme,
+} from "@material-ui/core/styles";
 import { Box, Grid } from "@material-ui/core/";
 
 import "./drive.css";
 
 import moment from "moment";
 import { useParams } from "react-router-dom";
+import AlertDialog from "../components/AlertDialog";
 
 function RequestsReceived({ checkNotificationStatus }) {
   // Setting our component's initial state
   const [selectedTrip, setSelectedTrip] = useState({});
   const [matchingRequests, setMatchingRequests] = useState([]);
-  const [, setValue] = React.useState(0);
   const [page, setPage] = React.useState("ride");
+  const [alertDialogOpen, setAlertDialogOpen] = useState(false);
+  const [alertMsg, setAlertMsg] = React.useState();
 
   const theme = createMuiTheme({
     palette: {
@@ -47,7 +53,7 @@ function RequestsReceived({ checkNotificationStatus }) {
     },
   });
 
-  const useStyles = makeStyles(() => ({
+  const useStyles = makeStyles((theme) => ({
     root: {
       container: {
         // display: "flex",
@@ -56,6 +62,8 @@ function RequestsReceived({ checkNotificationStatus }) {
       },
     },
   }));
+
+  const classes = useStyles();
 
   // When this component mounts, grab the trip with the _id of props.match.params.id
   // e.g. localhost:3000/trips/599dcb67f0f16317844583fc
@@ -78,7 +86,7 @@ function RequestsReceived({ checkNotificationStatus }) {
   function findMatchingRequests(tripData) {
     API.findMatchingRequests(tripData)
       .then((res) => {
-        setMatchingRequests(res.data);
+        setMatchingRequests(res.data); // re-renders matching requests
       })
       .catch((err) => console.log(err));
   }
@@ -87,10 +95,10 @@ function RequestsReceived({ checkNotificationStatus }) {
   function acceptRequest(id, trip_idObject) {
     API.acceptRequest(id, trip_idObject)
       .then((res) => {
-        findMatchingRequests(selectedTrip);
-        //TODO run confirm action modal screen
+        setAlertMsg("accept");
+        handleOpenAlertDialog();
+        findMatchingRequests(selectedTrip); //re-renders matching requests
       })
-      // .then(() => window.location.reload())
       .catch((err) => console.log(err));
   }
 
@@ -100,138 +108,167 @@ function RequestsReceived({ checkNotificationStatus }) {
     console.log("id = ", id, "trip_idObject = ", trip_idObject);
     API.undoAcceptRequest(id, trip_idObject)
       .then(() => {
+        setAlertMsg("cancel");
+        handleOpenAlertDialog();
         findMatchingRequests(selectedTrip);
       })
       .catch((err) => console.log(err));
   }
 
-  // // Decline a matching request from the loaded list with a given id, then reloads matching requests from the db
-  // function declineRequest(id) {
-  //   API.declineRequest(id)
-  //     .then((res) => loadMyTrips())
-  //     .catch((err) => console.log(err));
-  // }
+  function handleOpenAlertDialog() {
+    setAlertDialogOpen(true);
+  }
 
-  // // Handles updating component state when the user types into the input field
-  // function handleInputChange(event) {
-  //   const { name, value } = event.target;
-  //   setFormObject({ ...formObject, [name]: value });
-  // }
+  function handleCloseAlertDialog() {
+    setAlertDialogOpen(false);
+  }
 
   return (
     <Box
       style={{
-        paddingBottom: "50px",
+        paddingBottom: "90px", // ensures content is not hidden by footer
       }}
     >
-      <Container fluid maxWidth="md">
-        <Row>
-          <Col size="md-12">
-            <Jumbotron>
-              <h1>
-                Requests Received <NotificationsActiveIcon fontSize="large" />
-              </h1>
-            </Jumbotron>
-            <Grid container justify="center" alignItems="center">
-              <div>
-                <h2>
-                  {selectedTrip.from} - {selectedTrip.to}
-                </h2>
+      <Container fluid maxWidth="100vw">
+          <Row>
+        <ThemeProvider theme={theme}>
+            <Col size="md-12">
+              {alertDialogOpen && alertMsg === "accept" ? (
+                <AlertDialog
+                  dialogOpen={true}
+                  btnOpenTxt="accept"
+                  dialogTitle="Booking Confirmed"
+                  dialogContentTxt="Notification sent to requestor"
+                  btnOKTxt="OK"
+                  handleClose={handleCloseAlertDialog}
+                />
+              ) : alertDialogOpen && alertMsg === "cancel" ? (
+                <AlertDialog
+                  dialogOpen={true}
+                  btnOpenTxt="cancel"
+                  dialogTitle="Booking Cancelled"
+                  dialogContentTxt="Notification sent to requestor"
+                  btnOKTxt="OK"
+                  handleClose={handleCloseAlertDialog}
+                />
+              ) : null}
+             
+                <Jumbotron>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                  >
+                    <NotificationsActiveIcon fontSize="large" />
+                    <Typography variant="outline" component="h3">
+                      Drive - Requests Received
+                    </Typography>
+                  </Grid>
+                </Jumbotron>
+              
 
-                <h3>
-                  {moment(selectedTrip.departDate).format("DD-MMM-YYYY")}{" "}
-                  {selectedTrip.departTime}
-                </h3>
-                <h4>
-                  {matchingRequests.length} Matching ride request(s) for this
-                  trip!
-                </h4>
-              </div>
-            </Grid>
-
-            {matchingRequests.length ? (
-              <Grid
-                container
-                justify="center"
-                alignItems="center"
-                direction="column"
-              >
-                {/* <List> */}
-                {matchingRequests.map((match) => (
-                  <div>
-                    <InteractiveListMatches
-                      {...(match.trip_id = selectedTrip._id)} // spread syntax - bind trip_id to the matched request
-                      props={match}
-                      undoAcceptRequest={undoAcceptRequest}
-                      acceptRequest={acceptRequest}
-                    />
-                  </div>
-                ))}
-                {/* </List> */}
-              </Grid>
-            ) : (
-              <Grid
-                container
-                direction="row"
-                justify="space-evenly"
-                alignItems="center"
-              >
+              <Grid container justify="center" alignItems="center">
                 <div>
+                  <h2>
+                    {selectedTrip.from} - {selectedTrip.to}
+                  </h2>
+
+                  <h3>
+                    {moment(selectedTrip.departDate).format("DD-MMM-YYYY")}{" "}
+                    {selectedTrip.departTime}
+                  </h3>
                   <h4>
-                    Hang in there...😁 <br />
-                    Someone will evetually request a ride!
+                    {matchingRequests.length} Matching ride request(s) for this
+                    trip!
                   </h4>
-                  <br />
                 </div>
               </Grid>
-            )}
 
-            <div
-              style={{
-                position: "fixed",
-                left: "0",
-                bottom: "0",
-                height: "50px",
-                width: "100%",
-                maxWidth: "100%",
-                textAlign: "center",
-              }}
-            >
-              <BottomNavigation
-                value={page}
-                onChange={(event, newValue) => {
-                  setPage(newValue);
-                }}
-                showLabels
+              {matchingRequests.length ? (
+                <Grid
+                  container
+                  justify="center"
+                  alignItems="center"
+                  direction="column"
+                >
+                  {/* <List> */}
+                  {matchingRequests.map((match) => (
+                    <div>
+                      <InteractiveListMatches
+                        {...(match.trip_id = selectedTrip._id)} // spread syntax - bind trip_id to the matched request
+                        props={match}
+                        undoAcceptRequest={undoAcceptRequest}
+                        acceptRequest={acceptRequest}
+                      />
+                    </div>
+                  ))}
+                  {/* </List> */}
+                </Grid>
+              ) : (
+                <Grid
+                  container
+                  direction="row"
+                  justify="space-evenly"
+                  alignItems="center"
+                >
+                  <div>
+                    <h4>
+                      Hang in there...😁 <br />
+                      Someone will evetually request a ride!
+                    </h4>
+                    <br />
+                  </div>
+                </Grid>
+              )}
+
+              <div
                 style={{
-                  paddingRight: "30px", // TODO fix padding
+                  position: "fixed",
+                  left: "0",
+                  bottom: "0",
+                  height: "50px",
+                  width: "100%",
+                  maxWidth: "100%",
+                  textAlign: "center",
                 }}
               >
-                <BottomNavigationAction
-                  label="Ride"
-                  icon={<EmojiPeopleRoundedIcon />}
-                  href="/ride"
-                />
-                <BottomNavigationAction
-                  label="My Trips"
-                  icon={<PersonPinCircleIcon />}
-                  href="/myTrips"
-                />
-                <BottomNavigationAction
-                  label="Drive"
-                  icon={<LocalTaxiIcon />}
-                  href="/drive"
-                />
-                <BottomNavigationAction
-                  label="Newsfeed"
-                  icon={<MessageIcon />}
-                  href="/newsfeed"
-                />
-              </BottomNavigation>
-              <br />
-            </div>
-          </Col>
-        </Row>
+                <BottomNavigation
+                  value={page}
+                  onChange={(event, newValue) => {
+                    setPage(newValue);
+                  }}
+                  showLabels
+                  style={{
+                    paddingRight: "30px", // TODO fix padding
+                  }}
+                >
+                  <BottomNavigationAction
+                    label="Ride"
+                    icon={<EmojiPeopleRoundedIcon />}
+                    href="/ride"
+                  />
+                  <BottomNavigationAction
+                    label="My Trips"
+                    icon={<PersonPinCircleIcon />}
+                    href="/myTrips"
+                  />
+                  <BottomNavigationAction
+                    label="Drive"
+                    icon={<LocalTaxiIcon />}
+                    href="/drive"
+                  />
+                  <BottomNavigationAction
+                    label="Newsfeed"
+                    icon={<MessageIcon />}
+                    href="/newsfeed"
+                  />
+                </BottomNavigation>
+                <br />
+              </div>
+            </Col>
+        </ThemeProvider>
+          </Row>
       </Container>
     </Box>
   );

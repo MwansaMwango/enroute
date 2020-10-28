@@ -9,7 +9,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function AlertDialog(props) {
   console.log("Alert props ", props);
-  console.log("matches dialog", props.dialogContentTxtMatches  )
+  console.log("matches dialog", props.dialogContentTxtMatches);
   return (
     <div>
       {/* <Button variant="outlined" color="primary" onClick={handleClickOpen}>
@@ -23,32 +23,41 @@ export default function AlertDialog(props) {
         aria-describedby="alert-dialog-description"
         style={{ textAlign: "center" }}
       >
-        {
-          
-           (props.dialogContentTxtMatches >= 0) ? ( // Ride request sent
-            <img
-              style={{
-                display: "block",
-                margin: "0 auto",
-                maxWidth: "30%",
-                paddingTop: "30px",
-              }}
-              src={require("../../assets/undraw-sent.svg")}
-              alt="Sent..."
-            />
-          ) : ( // Trip posted
-            <img
-              style={{
-                display: "block",
-                margin: "0 auto",
-                maxWidth: "30%",
-                paddingTop: "30px",
-              }}
-              src={require("../../assets/undraw-confirmed.svg")}
-              alt="Edit details..."
-            />
-       
-          )}
+        {props.dialogContentTxtMatches >= 0 ? ( // Ride request sent
+          <img
+            style={{
+              display: "block",
+              margin: "0 auto",
+              maxWidth: "30%",
+              paddingTop: "30px",
+            }}
+            src={require("../../assets/undraw-sent.svg")}
+            alt="Sent..."
+          />
+        ) : props.btnOpenTxt === "cancel" ? ( // cancel booking
+          <img
+            style={{
+              display: "block",
+              margin: "0 auto",
+              maxWidth: "30%",
+              paddingTop: "30px",
+            }}
+            src={require("../../assets/undraw-cancel.svg")}
+            alt="Cancel..."
+          />
+        ) : (
+          // Trip posted
+          <img
+            style={{
+              display: "block",
+              margin: "0 auto",
+              maxWidth: "30%",
+              paddingTop: "30px",
+            }}
+            src={require("../../assets/undraw-confirmed.svg")}
+            alt="Edit details..."
+          />
+        )}
         <strong>
           <DialogTitle id="alert-dialog-title">{props.dialogTitle}</DialogTitle>
         </strong>
