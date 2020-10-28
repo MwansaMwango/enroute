@@ -4,8 +4,7 @@ import LocalTaxiIcon from "@material-ui/icons/LocalTaxi";
 import PersonPinCircleIcon from "@material-ui/icons/PersonPinCircle";
 import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
 import MessageIcon from "@material-ui/icons/Message";
-import BottomNavigation from "@material-ui/core/BottomNavigation";
-import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 import InteractiveListMatches from "../components/InteractiveListMatches";
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
@@ -60,6 +59,9 @@ function RequestsReceived({ checkNotificationStatus }) {
         // flexWrap: "wrap",
         width: "90vw",
       },
+    },
+    img: {
+      maxWidth: "250px",
     },
   }));
 
@@ -129,9 +131,9 @@ function RequestsReceived({ checkNotificationStatus }) {
         paddingBottom: "90px", // ensures content is not hidden by footer
       }}
     >
-      <Container fluid maxWidth="100vw">
+      <ThemeProvider theme={theme}>
+        <Container fluid maxWidth="100vw">
           <Row>
-        <ThemeProvider theme={theme}>
             <Col size="md-12">
               {alertDialogOpen && alertMsg === "accept" ? (
                 <AlertDialog
@@ -152,21 +154,20 @@ function RequestsReceived({ checkNotificationStatus }) {
                   handleClose={handleCloseAlertDialog}
                 />
               ) : null}
-             
-                <Jumbotron>
-                  <Grid
-                    container
-                    direction="row"
-                    justify="center"
-                    alignItems="center"
-                  >
-                    <NotificationsActiveIcon fontSize="large" />
-                    <Typography variant="outline" component="h3">
-                      Drive - Requests Received
-                    </Typography>
-                  </Grid>
-                </Jumbotron>
-              
+
+              <Jumbotron>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                >
+                  <NotificationsActiveIcon fontSize="large" />
+                  <Typography variant="outline" component="h3">
+                    Drive - Requests Received
+                  </Typography>
+                </Grid>
+              </Jumbotron>
 
               <Grid container justify="center" alignItems="center">
                 <div>
@@ -208,68 +209,25 @@ function RequestsReceived({ checkNotificationStatus }) {
               ) : (
                 <Grid
                   container
-                  direction="row"
-                  justify="space-evenly"
+                  direction="column"
+                  justify="center"
                   alignItems="center"
                 >
-                  <div>
-                    <h4>
-                      Hang in there...😁 <br />
-                      Someone will evetually request a ride!
-                    </h4>
-                    <br />
-                  </div>
+                  <img
+                    src={require("../assets/undraw-waiting.svg")}
+                    className={classes.img}
+                  />
+                  <Typography variant="h6" style={{textAlign:"center"}}>
+                    Hang in there! 😁 <br />
+                    Someone will request a ride, eventually.
+                  </Typography>
                 </Grid>
               )}
-
-              <div
-                style={{
-                  position: "fixed",
-                  left: "0",
-                  bottom: "0",
-                  height: "50px",
-                  width: "100%",
-                  maxWidth: "100%",
-                  textAlign: "center",
-                }}
-              >
-                <BottomNavigation
-                  value={page}
-                  onChange={(event, newValue) => {
-                    setPage(newValue);
-                  }}
-                  showLabels
-                  style={{
-                    paddingRight: "30px", // TODO fix padding
-                  }}
-                >
-                  <BottomNavigationAction
-                    label="Ride"
-                    icon={<EmojiPeopleRoundedIcon />}
-                    href="/ride"
-                  />
-                  <BottomNavigationAction
-                    label="My Trips"
-                    icon={<PersonPinCircleIcon />}
-                    href="/myTrips"
-                  />
-                  <BottomNavigationAction
-                    label="Drive"
-                    icon={<LocalTaxiIcon />}
-                    href="/drive"
-                  />
-                  <BottomNavigationAction
-                    label="Newsfeed"
-                    icon={<MessageIcon />}
-                    href="/newsfeed"
-                  />
-                </BottomNavigation>
-                <br />
-              </div>
+              <SimpleBottomNavigation /> 
             </Col>
-        </ThemeProvider>
           </Row>
-      </Container>
+        </Container>
+      </ThemeProvider>
     </Box>
   );
 }
