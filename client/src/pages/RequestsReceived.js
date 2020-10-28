@@ -7,6 +7,7 @@ import MessageIcon from "@material-ui/icons/Message";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 import InteractiveListMatches from "../components/InteractiveListMatches";
 import Jumbotron from "../components/Jumbotron";
+import  TripCardHeader from "../components/TripCardHeader";
 import API from "../utils/API";
 import { Container, Col, Row } from "../components/Grid"; // removed container
 import Typography from "@material-ui/core/Typography";
@@ -61,7 +62,7 @@ function RequestsReceived({ checkNotificationStatus }) {
       },
     },
     img: {
-      maxWidth: "250px",
+      maxWidth: "200px",
     },
   }));
 
@@ -169,8 +170,10 @@ function RequestsReceived({ checkNotificationStatus }) {
                 </Grid>
               </Jumbotron>
 
-              <Grid container justify="center" alignItems="center">
-                <div>
+
+              <Grid container direction="column" justify="center" alignItems="center">
+              <TripCardHeader selectedTripData={selectedTrip} matches={matchingRequests.length}/> 
+                {/* <div>
                   <h2>
                     {selectedTrip.from} - {selectedTrip.to}
                   </h2>
@@ -183,9 +186,9 @@ function RequestsReceived({ checkNotificationStatus }) {
                     {matchingRequests.length} Matching ride request(s) for this
                     trip!
                   </h4>
-                </div>
+                </div> */}
               </Grid>
-
+              
               {matchingRequests.length ? (
                 <Grid
                   container
@@ -217,7 +220,7 @@ function RequestsReceived({ checkNotificationStatus }) {
                     src={require("../assets/undraw-waiting.svg")}
                     className={classes.img}
                   />
-                  <Typography variant="h6" style={{textAlign:"center"}}>
+                  <Typography variant="body1" style={{textAlign:"center"}}>
                     Hang in there! 😁 <br />
                     Someone will request a ride, eventually.
                   </Typography>
