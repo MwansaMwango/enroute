@@ -19,7 +19,8 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import IconButton from "@material-ui/core/IconButton";
-
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     border: `2px solid ${theme.palette.divider}`,
     borderRadius: theme.spacing(3),
     backgroundColor: "white",
-    boxShadow: "0px 5px 5px #8888",
+    boxShadow: "5px 5px 5px #8888",
 
     "& svg": {
       margin: theme.spacing(0.25),
@@ -152,7 +153,7 @@ export default function InteractiveListMatches({
                 primary={moment(props.departDate).format("DD MMM")}
                 secondary={props.departTime}
               />
-              {/* <Divider variant="middle" /> */}
+              {/* Dynamic Action Buttons */}
               {(() => {
                 switch (props.status) {
                   case "Pending":
@@ -247,6 +248,9 @@ export default function InteractiveListMatches({
                 }
               })()}
             </ListItem>
+            <ListItemText primary="Seats"/>
+            <ListItemText primary="Notes"/>
+            <ListItemText primary="Parcel"/>
           </div>
         )}
       </Grid>

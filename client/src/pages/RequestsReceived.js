@@ -7,7 +7,7 @@ import MessageIcon from "@material-ui/icons/Message";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 import InteractiveListMatches from "../components/InteractiveListMatches";
 import Jumbotron from "../components/Jumbotron";
-import  TripCardHeader from "../components/TripCardHeader";
+import TripCardHeader from "../components/TripCardHeader";
 import API from "../utils/API";
 import { Container, Col, Row } from "../components/Grid"; // removed container
 import Typography from "@material-ui/core/Typography";
@@ -23,6 +23,9 @@ import "./drive.css";
 import moment from "moment";
 import { useParams } from "react-router-dom";
 import AlertDialog from "../components/AlertDialog";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
 
 function RequestsReceived({ checkNotificationStatus }) {
   // Setting our component's initial state
@@ -61,9 +64,22 @@ function RequestsReceived({ checkNotificationStatus }) {
         width: "90vw",
       },
     },
-    img: {
-      maxWidth: "200px",
+    cardStyle: {
+      "& .MuiCardMedia-img": { // css specific selector for image
+        height: '100px',
+        width: '100%',
+        objectFit: 'contain'
+      },
+      maxWidth: 345,
+      margin: "10px 0px 10px 0px",
+      borderRadius: 20,
+      pointerEvents: "none", // remove click options from card
+ 
     },
+    typography: {
+      fontFamily: "Montserrat",
+    },
+
   }));
 
   const classes = useStyles();
@@ -170,25 +186,18 @@ function RequestsReceived({ checkNotificationStatus }) {
                 </Grid>
               </Jumbotron>
 
-
-              <Grid container direction="column" justify="center" alignItems="center">
-              <TripCardHeader selectedTripData={selectedTrip} matches={matchingRequests.length}/> 
-                {/* <div>
-                  <h2>
-                    {selectedTrip.from} - {selectedTrip.to}
-                  </h2>
-
-                  <h3>
-                    {moment(selectedTrip.departDate).format("DD-MMM-YYYY")}{" "}
-                    {selectedTrip.departTime}
-                  </h3>
-                  <h4>
-                    {matchingRequests.length} Matching ride request(s) for this
-                    trip!
-                  </h4>
-                </div> */}
+              <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+              >
+                <TripCardHeader
+                  selectedTripData={selectedTrip}
+                  matches={matchingRequests.length}
+                />
               </Grid>
-              
+
               {matchingRequests.length ? (
                 <Grid
                   container
@@ -196,7 +205,6 @@ function RequestsReceived({ checkNotificationStatus }) {
                   alignItems="center"
                   direction="column"
                 >
-                  {/* <List> */}
                   {matchingRequests.map((match) => (
                     <div>
                       <InteractiveListMatches
@@ -204,10 +212,10 @@ function RequestsReceived({ checkNotificationStatus }) {
                         props={match}
                         undoAcceptRequest={undoAcceptRequest}
                         acceptRequest={acceptRequest}
+                        className={classes.typography}
                       />
                     </div>
                   ))}
-                  {/* </List> */}
                 </Grid>
               ) : (
                 <Grid
@@ -216,17 +224,30 @@ function RequestsReceived({ checkNotificationStatus }) {
                   justify="center"
                   alignItems="center"
                 >
-                  <img
-                    src={require("../assets/undraw-waiting.svg")}
-                    className={classes.img}
-                  />
-                  <Typography variant="body1" style={{textAlign:"center"}}>
-                    Hang in there! 😁 <br />
-                    Someone will request a ride, eventually.
-                  </Typography>
+                  {/* <div {{ backgroundColor: "white", maxWidth: "100%", borderRadius: 20, boxShadow: "5px 5px 5px #8888"}}> */}
+                  <Card className={classes.cardStyle} raised={true}>
+                    <CardContent>
+                      <CardMedia
+                        component="img"
+                        alt="Card Media"
+                        height="100"
+                        title="Card Media Title"
+                        image={require("../assets/undraw-waiting.svg")}
+                      ></CardMedia>
+                      <Typography
+                        className={classes.typography}
+                        variant="body1"
+                        style={{ textAlign: "center" }}
+                        component="p"
+                      >
+                        Hang in there! 😁 <br />
+                        Someone will request a ride, eventually...
+                      </Typography>
+                    </CardContent>
+                  </Card>
                 </Grid>
               )}
-              <SimpleBottomNavigation /> 
+              <SimpleBottomNavigation />
             </Col>
           </Row>
         </Container>
