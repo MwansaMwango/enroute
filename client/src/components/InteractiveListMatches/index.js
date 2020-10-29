@@ -20,14 +20,16 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import IconButton from "@material-ui/core/IconButton";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 400, // limits display across very wide screens / desktops
     minWidth: 280,
     width: "95vw",
     border: `2px solid ${theme.palette.divider}`,
-    borderRadius: theme.shape.borderRadius,
     borderRadius: theme.spacing(3),
+    backgroundColor: "white",
+    boxShadow: "0px 5px 5px #8888",
 
     "& svg": {
       margin: theme.spacing(0.25),
@@ -36,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
     heading: {
       fontSize: theme.typography.pxToRem(15),
       fontWeight: theme.typography.fontWeightRegular,
+      fontFamily: "Montserrat",
     },
   },
 
@@ -44,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     top: 60,
     right: 0,
     left: 0,
-    zIndex: 1,
+    zIndex: 10,
     border: "1px solid",
     padding: theme.spacing(2),
     backgroundColor: theme.palette.background.paper,
@@ -95,6 +98,7 @@ export default function InteractiveListMatches({
   };
 
   return (
+
     <List>
       <Grid container justify="center" direction="column" alignItems="center">
         {generate(
@@ -112,8 +116,10 @@ export default function InteractiveListMatches({
                 )}
               </ListItemAvatar>
 
-              <ListItemText
-                primary={
+              <ListItemText className={classes.heading}
+                primary=
+                
+                {
                   props.status === "Booked" ? (
                     <b>
                       {" "}
@@ -245,5 +251,6 @@ export default function InteractiveListMatches({
         )}
       </Grid>
     </List>
+
   );
 }

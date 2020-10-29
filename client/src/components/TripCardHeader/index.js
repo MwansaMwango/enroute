@@ -16,9 +16,12 @@ import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 400,
-  marginTop: 10,
+    maxWidth: 345,
+  margin: "10px 0px 10px 0px",
+  borderRadius: 20,
+  pointerEvents: 'none', // remove click options from card
   },
+
   typography: {
     fontFamily: "Montserrat",
   },
@@ -36,7 +39,7 @@ export default function TripCardHeader(props) {
           component="img"
           alt="Card Media"
           height="200vw"
-          maxWidth= "400px"
+    
           image={require("../../assets/undraw-navigator.svg")}
           title="Card Media Title"
         />
