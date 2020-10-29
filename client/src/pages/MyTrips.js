@@ -76,11 +76,7 @@ function MyTrips() {
   function loadMyTrips() {
     API.getTrips() // Get My Trips
       .then((res) => {
-        // console.log("All my Trips ", res.data);
         setMyTrips(res.data);
-        // res.data.map((trip) => {
-        //   findMatchingRequests(trip);
-        // });
       })
       .catch((err) => console.log(err));
   }
@@ -123,7 +119,7 @@ function MyTrips() {
         paddingBottom: "50px",
       }}
     >
-      <Container fluid maxWidth="md">
+      <Container fluid maxWidth="100vw">
         <ThemeProvider theme={theme}>
           <Row>
             <Col size="md-12">

@@ -28,13 +28,12 @@ import {
 } from "@material-ui/core/";
 import "./drive.css";
 import moment from "moment";
+import Typography from "@material-ui/core/Typography";
 
 function NewsFeed({ isEdit }) {
   // Setting our component's initial state
 
-  const [routes, setRoutes] = useState([]);
   const [feedList, setFeedList] = useState([]);
-
 
   const theme = createMuiTheme({
     palette: {
@@ -49,6 +48,10 @@ function NewsFeed({ isEdit }) {
         main: "#259CBB",
         dark: "#168387",
         contrastText: "#000",
+      },
+      // type: 'dark', // dark theme
+      typography: {
+        fontFamily: "Montserrat",
       },
     },
   });
@@ -73,72 +76,55 @@ function NewsFeed({ isEdit }) {
       maxHeight: "90vh",
     },
     textField: {
-      // marginLeft: theme.spacing(1),
-      // marginRight: theme.spacing(1),
       margin: theme.spacing(2),
-
       maxWidth: "100%",
     },
   }));
   const classes = useStyles();
 
-  let uniqueRouteList = [];
 
   // TODO Initialise and Load Requests from database, to be displayed in newfeed
   useEffect(() => {
-    loadRoutes();
-    loadNewsfeedList(); // TODO change to webscrapper API to get rewards
+    loadNewsfeedList(); // TODO change to webscrapper API to get rewards points
   }, []);
 
-  function loadRoutes() {
-    let routeList = [];
-
-    API.getRoutes()
-      .then(function (res) {
-        res.data.map((route) => {
-          routeList.push(route.from, route.to);
-        });
-        uniqueRouteList = [...new Set(routeList)]; // removes duplicate elements in array
-        setRoutes(uniqueRouteList);
+  // TODO Loads recent trips with user_id = 'userId' and sets them to feedList
+  function loadNewsfeedList() {
+    API.getTripsCompleted() // Get my trips with status = "Complete"
+      .then((res) => {
+        setFeedList(res.data);
+        console.log("Feedlist", res.data);
       })
       .catch((err) => console.log(err));
   }
 
-    // TODO Loads recent trips with user_id = 'userId' and sets them to feedList
-    function loadNewsfeedList() {
-      API.getTripsCompleted() // Get my trips with status = "Complete"
-        .then((res) => {
-          setFeedList(res.data);
-          console.log("Feedlist", res.data);
-        })
-        .catch((err) => console.log(err));
-    }
- 
   return (
     <Box
       style={{
-        paddingBottom: "50px",
+        paddingBottom: "90px",
       }}
     >
       <Container fluid maxWidth="100vw">
         <ThemeProvider theme={theme}>
           <Row>
             <Col size="md-12">
+              <Jumbotron>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                >
+                  <SpeakerNotesIcon fontSize="large" />
+                  <Typography variant="outline" component="h3">
+                    Feed
+                  </Typography>
+                </Grid>
+              </Jumbotron>
               <Grid item>
                 <SimpleSlider props={feedList} />
               </Grid>
-              <div
-                style={{
-                  position: "fixed",
-                  left: "0",
-                  bottom: "0",
-                  width: "90%",
-                  height: "50px",
-                  textAlign: "center",
-                }}
-              >
-                {isEdit ? null : <SimpleBottomNavigation />}
-              </div>
+              <SimpleBottomNavigation />
             </Col>
           </Row>
         </ThemeProvider>

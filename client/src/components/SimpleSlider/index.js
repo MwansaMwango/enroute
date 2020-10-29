@@ -4,13 +4,14 @@ import { Grid } from "@material-ui/core/";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
 import "../../../node_modules/slick-carousel/slick/slick.css";
 import ImgMediaCard from "../ImgMediaCard";
+import ImgMediaCardStats from "../ImgMediaCardStats";
 import Typography from "@material-ui/core/Typography";
 
 export default function SimpleSlider(feedList) {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1000,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
@@ -18,8 +19,6 @@ export default function SimpleSlider(feedList) {
   };
   return (
     <div>
-      <Typography variant="h4" gutterTop style={{ display: "flex", justifyContent: "center" }}>Newsfeed</Typography>
-
       <Slider {...settings}>
         <div>
           <h3 style={{ display: "flex", justifyContent: "center" }}>
@@ -28,7 +27,7 @@ export default function SimpleSlider(feedList) {
         </div>
         <div>
           <h3 style={{ display: "flex", justifyContent: "center" }}>
-            <ImgMediaCard feed={feedList[1]} />
+            <ImgMediaCardStats feed={feedList[1]} />
           </h3>
         </div>
         <div>
@@ -36,7 +35,7 @@ export default function SimpleSlider(feedList) {
             <ImgMediaCard feed={feedList[2]} />
           </h3>
         </div>
-        <div>
+        {/* <div>
           <h3 style={{ display: "flex", justifyContent: "center" }}>
             <ImgMediaCard feed={feedList[3]} />
           </h3>
@@ -45,7 +44,7 @@ export default function SimpleSlider(feedList) {
           <h3 style={{ display: "flex", justifyContent: "center" }}>
             <ImgMediaCard feed={feedList[4]} />
           </h3>
-        </div>
+        </div> */}
       </Slider>
     </div>
   );

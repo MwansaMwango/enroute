@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ImgMediaCard(feed) {
+export default function ImgMediaCardStats(feed) {
   const classes = useStyles();
 
   return (
@@ -26,30 +26,29 @@ export default function ImgMediaCard(feed) {
         <CardMedia
           component="img"
           alt="Card Media"
-          height="180vh"
-          image="https://images.unsplash.com/photo-1484704849700-f032a568e944?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80"
-      
+          height="90%"
+          image={require("../../assets/stats1.svg")}
           title="Card Media Title"
         />
         <CardContent>
-            <Typography   display="block" variant="caption" component="h4">
-              HEADPHONES
+            <Typography   display="block" variant="caption" component="h3" color="primary">
+              MY STATS
             </Typography>
-          <Grid container justify="flex-end" alignItems="flex-end">
+          {/* <Grid container justify="flex-end" alignItems="flex-end">
             <Typography variant="h2" component="h2" color="primary">
               250 
             </Typography>
             <Typography variant="h4" component="h4">
               PTS
             </Typography>
-          </Grid>
-          <Grid container justify="flex-start" alignItems="center" spacing={3}>
+          </Grid> */}
+          {/* <Grid container justify="flex-start" alignItems="center" spacing={3}>
             <Avatar
               alt="James Horner"
               src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80"
-            />
+            /> */}
             {/* Grid item under Grid container spacing={?} allows some spacing */}
-            <Grid item>
+            {/* <Grid item>
               <Typography
                 display="block"
                 variant="h6"
@@ -68,23 +67,23 @@ export default function ImgMediaCard(feed) {
               <Typography variant="button" color="textSecondary" component="p">
                 Project Engineer
               </Typography>
-            </Grid>
-          </Grid>
-          <Typography variant="body1" color="textSecondary" component="h6">
+            </Grid> */}
+          {/* </Grid> */}
+          {/* <Typography variant="body1" color="textSecondary" component="h6">
             Just redeemed new headphones for 250 points...
-          </Typography>
+          </Typography> */}
         </CardContent>
       </CardActionArea>
-      <CardActions>
+      {/* <CardActions>
         <Grid container justify="flex-end" alignItems="center">
           <Button size="small" color="primary">
-            View Product
+            Learn more
           </Button>
           {/* <Button size="small" color="primary">
             Learn More
           </Button> */}
-        </Grid>
-      </CardActions>
+        {/* </Grid> */}
+      {/* </CardActions> */}
     </Card>
   );
 }

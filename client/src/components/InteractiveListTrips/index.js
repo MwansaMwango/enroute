@@ -33,13 +33,12 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "5px 5px 5px #8888",
 
     "& svg": {
-      margin: theme.spacing(0.1)
+      margin: theme.spacing(0.1),
     },
 
-      "& .MuiIconButton-root": {
-        padding: "0"
-      },
-    
+    "& .MuiIconButton-root": {
+      padding: "0",
+    },
   },
 
   dropdown: {
@@ -122,9 +121,13 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
                 }
                 secondary={
                   <Grid container alignItems="center">
-                      <LocationOnIcon color="primary" />
-                    <Typography className={classes.typography} variant="p" component="p">
-                    {props.to}
+                    <LocationOnIcon color="primary" />
+                    <Typography
+                      className={classes.typography}
+                      variant="p"
+                      component="p"
+                    >
+                      {props.to}
                     </Typography>
                   </Grid>
                 }
@@ -132,12 +135,21 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
 
               <ListItemText
                 primary={
-                  <Typography className={classes.typography} variant="p" component="p" style={{fontSize:"0.8rem"}}>
+                  <Typography
+                    className={classes.typography}
+                    variant="p"
+                    component="p"
+                    style={{ fontSize: "0.8rem" }}
+                  >
                     {moment(props.departDate).format("DD MMM")}
                   </Typography>
                 }
                 secondary={
-                  <Typography className={classes.typography} variant="p" style={{fontSize:"0.8rem"}}>
+                  <Typography
+                    className={classes.typography}
+                    variant="p"
+                    style={{ fontSize: "0.8rem" }}
+                  >
                     {props.departTime}
                   </Typography>
                 }
@@ -145,10 +157,14 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
 
               <ListItemText
                 primary={
-                  <Typography className={classes.typography} >Status</Typography>
+                  <Typography className={classes.typography}>Status</Typography>
                 }
                 secondary={
-                  <Typography className={classes.typography} style={{fontSize:"0.7rem"}} color="secondary">
+                  <Typography
+                    className={classes.typography}
+                    style={{ fontSize: "0.7rem" }}
+                    color="secondary"
+                  >
                     {props.status}
                   </Typography>
                 }
@@ -162,7 +178,6 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
                     color="secondary"
                     onClick={() => {
                       handleUpdateTripStatus("Started");
-                      
                     }}
                   />
                 </IconButton>
@@ -247,9 +262,7 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
                           <br />
                         </Typography>
                       </div>
-                    ) : (
-                      ""
-                    )}
+                    ) : null}
                   </Grid>
                 </span>
               </ClickAwayListener>
