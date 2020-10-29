@@ -9,32 +9,61 @@ import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Container, Col, Row } from "../components/Grid"; // removed container
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
-
 import {
   makeStyles,
+  ThemeProvider,
   createMuiTheme,
 } from "@material-ui/core/styles";
-import {
-  Box,
-  Grid,
-} from "@material-ui/core/";
+import { Box, Grid } from "@material-ui/core/";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Typography from "@material-ui/core/Typography";
 
 import "./drive.css";
 
 function MyTrips() {
   // Setting our component's initial state
   const [myTrips, setMyTrips] = useState([]);
-
   const [matchingRequests, setMatchingRequests] = useState([]);
 
-
-  const useStyles = makeStyles(() => ({
-    root: {
-      container: {
-          width: "90vw",
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        light: "#FF9057",
+        main: "#E64500",
+        dark: "#022222",
+        contrastText: "#fff",
+      },
+      secondary: {
+        light: "#78849E",
+        main: "#259CBB",
+        dark: "#168387",
+        contrastText: "#000",
+      },
+      // type: 'dark', // dark theme
+      typography: {
+        fontFamily: "Montserrat",
       },
     },
+  });
+
+  const useStyles = makeStyles((theme) => ({
+    cardStyle: {
+      "& .MuiCardMedia-img": {
+        // css specific selector for image
+        height: "100px",
+        width: "100%",
+        objectFit: "contain",
+      },
+      maxWidth: 345,
+      margin: "10px 0px 10px 0px",
+      borderRadius: 20,
+      pointerEvents: "none", // remove click options from card
+    },
   }));
+
+  const classes = useStyles();
 
   const [, setValue] = React.useState(0);
   const [page, setPage] = React.useState("ride");
@@ -52,7 +81,6 @@ function MyTrips() {
         // res.data.map((trip) => {
         //   findMatchingRequests(trip);
         // });
-        
       })
       .catch((err) => console.log(err));
   }
@@ -96,24 +124,32 @@ function MyTrips() {
       }}
     >
       <Container fluid maxWidth="md">
-        <Row>
-          <Col size="md-12">
-            <Jumbotron>
-              <h1>
-                My Trips <PersonPinCircleIcon fontSize="large" />
-              </h1>
-            </Jumbotron>
-            <br />
-            {myTrips.length ? (
-              <Grid
-                container
-                justify="center"
-                alignItems="center"
-                direction="column"
-              >
-         
+        <ThemeProvider theme={theme}>
+          <Row>
+            <Col size="md-12">
+              <Jumbotron>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                >
+                  <PersonPinCircleIcon fontSize="large" />
+                  <Typography variant="outline" component="h3">
+                    Drive - My Trips
+                  </Typography>
+                </Grid>
+              </Jumbotron>
+              <br />
+              {myTrips.length ? (
+                <Grid
+                  container
+                  justify="center"
+                  alignItems="center"
+                  direction="column"
+                >
                   {myTrips.map((trip) => (
-                    <div>
+                    <div key={trip._id}>
                       <InteractiveListTrips
                         props={trip}
                         deleteTrip={deleteTrip}
@@ -121,30 +157,42 @@ function MyTrips() {
                       />
                     </div>
                   ))}
-   
-              </Grid>
-            ) : (
-              <Grid container justify="center" alignItems="space-around">
-                <h3>
-                  No trips yet. Register your next trip to start earning points.
-                </h3>
-              </Grid>
-            )}
-            <Grid direction="row" justify="center" alignItems="center">
-              <div
-                style={{
-                  position: "fixed",
-                  left: "0",
-                  bottom: "0",
-                  width: "90%",
-                  textAlign: "center",
-                }}
-              >
-               <SimpleBottomNavigation />
-              </div>
-            </Grid>
-          </Col>
-        </Row>
+                </Grid>
+              ) : (
+                <Grid
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                >
+                  {/* <div {{ backgroundColor: "white", maxWidth: "100%", borderRadius: 20, boxShadow: "5px 5px 5px #8888"}}> */}
+                  <Card className={classes.cardStyle} raised={true}>
+                    <CardContent>
+                      <CardMedia
+                        component="img"
+                        alt="Card Media"
+                        height="100"
+                        title="Card Media Title"
+                        image={require("../assets/undraw-waiting.svg")}
+                      ></CardMedia>
+                      <Typography
+                        className={classes.typography}
+                        variant="body1"
+                        style={{ textAlign: "center" }}
+                        component="p"
+                      >
+                        No trips posted yet.
+                        <br />
+                        Post your first trip! 😁
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              )}
+              <SimpleBottomNavigation />
+            </Col>
+          </Row>
+        </ThemeProvider>
       </Container>
     </Box>
   );

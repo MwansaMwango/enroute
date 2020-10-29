@@ -24,24 +24,22 @@ import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 400, // limits display across very wide screens / desktops
+    maxWidth: 345, // limits display across very wide screens / desktops
     minWidth: 280,
     width: "95vw",
     border: `2px solid ${theme.palette.divider}`,
-    borderRadius: theme.shape.borderRadius,
     borderRadius: theme.spacing(3),
+    backgroundColor: "white",
+    boxShadow: "5px 5px 5px #8888",
 
     "& svg": {
-      margin: theme.spacing(0.25),
-      "& hr": {},
+      margin: theme.spacing(0.1)
     },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
-    },
-  },
-  margin: {
-    margin: theme.spacing(1),
+
+      "& .MuiIconButton-root": {
+        padding: "0"
+      },
+    
   },
 
   dropdown: {
@@ -59,6 +57,14 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     margin: theme.spacing(4, 0, 2),
+  },
+  large: {
+    width: theme.spacing(5),
+    height: theme.spacing(5),
+  },
+  typography: {
+    fontFamily: "Montserrat",
+    // fontSize: "0.8rem"
   },
 }));
 
@@ -92,10 +98,8 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
 
   const handleClickAway = (e) => {
     // TODO fix known bug of Muiselect triggering clickAwayListener
-
     if (e.target) {
       e.target.focus();
-
       return;
     }
     setOpen(false);
@@ -107,68 +111,83 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
         {generate(
           <div className={classes.root}>
             <ListItem>
-              {/* <ListItemAvatar>
-                <Avatar>
-                  <LocalTaxiRoundedIcon />
-                </Avatar>
-              </ListItemAvatar> */}
-
-              {/* <Divider variant="middle" /> */}
-
               <ListItemText
                 primary={
                   <Grid container alignItems="center">
-                    <MyLocationIcon />
-                    {props.from}
+                    <MyLocationIcon color="primary" fontSize="1rem" />
+                    <Typography className={classes.typography} variant="p">
+                      {props.from}
+                    </Typography>
                   </Grid>
                 }
                 secondary={
                   <Grid container alignItems="center">
-                    <LocationOnIcon />
+                      <LocationOnIcon color="primary" />
+                    <Typography className={classes.typography} variant="p" component="p">
                     {props.to}
+                    </Typography>
                   </Grid>
                 }
               />
 
               <ListItemText
-                primary={moment(props.departDate).format("DD MMM")}
-                secondary={props.departTime}
+                primary={
+                  <Typography className={classes.typography} variant="p" component="p" style={{fontSize:"0.8rem"}}>
+                    {moment(props.departDate).format("DD MMM")}
+                  </Typography>
+                }
+                secondary={
+                  <Typography className={classes.typography} variant="p" style={{fontSize:"0.8rem"}}>
+                    {props.departTime}
+                  </Typography>
+                }
               />
 
-              <ListItemText primary="Status" secondary={props.status} />
+              <ListItemText
+                primary={
+                  <Typography className={classes.typography} >Status</Typography>
+                }
+                secondary={
+                  <Typography className={classes.typography} style={{fontSize:"0.7rem"}} color="secondary">
+                    {props.status}
+                  </Typography>
+                }
+              />
               {/* TODO use set state for status or seperate if ternary renders*/}
-              {/* {(() => { */}
+
               {props.status === "Booked" ? (
                 <IconButton size="small">
                   <PlayCircleFilledIcon
-                    fontSize="large"
+                    fontSize="medium"
+                    color="secondary"
                     onClick={() => {
                       handleUpdateTripStatus("Started");
+                      
                     }}
                   />
                 </IconButton>
               ) : props.status === "Started" ? (
                 <IconButton size="small">
                   <DoneAllIcon
-                    fontSize="large"
+                    fontSize="medium"
+                    color="dark"
                     onClick={() => {
                       handleUpdateTripStatus("Completed");
                     }}
                   />
                 </IconButton>
               ) : props.status === "Completed" ? (
-                
                 <ListItemText
-                    primary= {
-                      <IconButton size="small">
-                      <EmojiEventsIcon fontSize="medium" />
-                      </IconButton>
-                    }
-                    secondary="20 Pts" // TODO - change from hard coded points to points determined by distance travelled etc 
+                  primary={
+                    <IconButton size="small">
+                      <EmojiEventsIcon fontSize="medium" color="light" />
+                    </IconButton>
+                  }
+                  secondary="10Pts" // TODO - change from hard coded points to points determined by distance travelled etc
                 />
               ) : (
                 <Link to={"/trips/" + props._id}>
-                  <FindInPageIcon fontSize="large" />
+                  <FindInPageIcon fontSize="large" color="secondary" />
                 </Link>
               )}
 
@@ -177,25 +196,25 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
                   <Grid direction="row" justify="center" alignItems="center">
                     {open ? (
                       <IconButton>
-                        <ExpandLess fontSize="large" onClick={handleClick} />
+                        <ExpandLess fontSize="medium" onClick={handleClick} />
                       </IconButton>
                     ) : (
                       <IconButton>
-                        <ExpandMore fontSize="large" onClick={handleClick} />
+                        <ExpandMore fontSize="medium" onClick={handleClick} />
                       </IconButton>
                     )}
                     {open ? (
                       <div className={classes.dropdown}>
-                        <Typography>
+                        <Typography className={classes.typography}>
                           <Grid
                             direction="row"
                             container
                             justify="space-between"
                             alignItems="center"
                           >
-                            <h3>
-                              <b>Other Details</b>
-                            </h3>
+                            <Typography className={classes.typography}>
+                              <strong>More Details</strong>
+                            </Typography>
                             {/*TODO Link to edit trip data*/}
 
                             <TransitionsModalTrips
@@ -215,16 +234,7 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
                           </Grid>
                           <hr />
                           Trip note:{" "}
-                          {props.tripNote ? (
-                            <Typography
-                              fontStyle="oblique"
-                              fontFamily="Monospace"
-                            >
-                              {props.tripNote}{" "}
-                            </Typography>
-                          ) : (
-                            "None"
-                          )}{" "}
+                          {props.tripNote ? props.tripNote + " " : "None"}{" "}
                           <br />
                           Free seats:{" "}
                           {props.freeSeats

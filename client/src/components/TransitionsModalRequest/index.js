@@ -75,7 +75,7 @@ export default function TransitionsModalRequest({ editClicked, requestData }) {
         <Fade in={open}>
           <div className={classes.paper}>
             <h2 id="transition-modal-title">Update Ride Details</h2>
-            
+            {/* TODO edit ride page formating */}
               <Ride
                 isEdit={true}
                 requestData={requestData}

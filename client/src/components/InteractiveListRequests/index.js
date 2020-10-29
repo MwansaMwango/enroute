@@ -99,8 +99,7 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
                   <Grid container alignItems="center">
                     <MyLocationIcon color="primary" />
                     <Typography
-                      // variant="p"
-                      // component="h5"
+              
                       className={classes.typography}
                     >
                       {props.from}
@@ -111,8 +110,7 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
                   <Grid container alignItems="center">
                     <LocationOnIcon color="primary" />
                     <Typography
-                      // variant="p"
-                      // component="h5"
+                
                       className={classes.typography}
                     >
                       {props.to}
@@ -126,8 +124,7 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
               <ListItemText
                 primary={
                   <Typography
-                    // variant="p"
-                    // component="h5"
+          
                     className={classes.typography}
                   >
                     {moment(props.departDate).format("DD MMM")}
@@ -175,6 +172,7 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
                         <TransitionsModalRequest
                           requestData={props}
                           editClicked={true}
+                        
                         />
                       </Grid>
                     );

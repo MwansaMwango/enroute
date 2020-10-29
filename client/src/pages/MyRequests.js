@@ -63,7 +63,6 @@ function MyRequests() {
   const [requests, setRequests] = useState([]);
   const [value, setValue] = React.useState(0);
   const [routes, setRoutes] = useState([]);
-
   const [formObject, setFormObject] = useState({});
   const [page, setPage] = React.useState("ride");
 
@@ -163,15 +162,6 @@ function MyRequests() {
         <ThemeProvider theme={theme}>
           <Row>
             <Col size="md-12">
-              {/* {alertDialogOpen ? (
-                <AlertDialog
-                  dialogOpen={true}
-                  btnOpenTxt="Post Ride Request"
-                  dialogTitle="Ride request sent..."
-                  dialogContentTxt=" Matching driver(s) found. You'll be notified when a driver accepts."
-                  btnOKTxt="OK"
-            />
-              ) : null} */}
               <Jumbotron>
                 <Grid
                   container
@@ -185,7 +175,6 @@ function MyRequests() {
                   </Typography>
                 </Grid>
               </Jumbotron>
-
               <br />
               {requests.length ? (
                 <Grid
