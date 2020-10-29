@@ -15,16 +15,20 @@ import MessageIcon from "@material-ui/icons/Message";
 import PhoneIcon from "@material-ui/icons/Phone";
 import moment from "moment";
 import EmojiPeopleRoundedIcon from "@material-ui/icons/EmojiPeopleRounded";
+import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import IconButton from "@material-ui/core/IconButton";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import AirlineSeatReclineNormalIcon from "@material-ui/icons/AirlineSeatReclineNormal";
+import EventIcon from "@material-ui/icons/Event";
+import ScheduleIcon from "@material-ui/icons/Schedule";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 400, // limits display across very wide screens / desktops
+    maxWidth: 345, // limits display across very wide screens / desktops
     minWidth: 280,
     width: "95vw",
     border: `2px solid ${theme.palette.divider}`,
@@ -33,13 +37,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "5px 5px 5px #8888",
 
     "& svg": {
-      margin: theme.spacing(0.25),
+      margin: theme.spacing(0.1),
       "& hr": {},
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
-      fontFamily: "Montserrat",
     },
   },
 
@@ -64,8 +63,12 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(3),
   },
   large: {
-    width: theme.spacing(7),
-    height: theme.spacing(7),
+    width: theme.spacing(6),
+    height: theme.spacing(6),
+    // border: "1px solid grey",
+  },
+  typography: {
+    fontFamily: "Montserrat",
   },
 }));
 
@@ -99,7 +102,6 @@ export default function InteractiveListMatches({
   };
 
   return (
-
     <List>
       <Grid container justify="center" direction="column" alignItems="center">
         {generate(
@@ -107,53 +109,93 @@ export default function InteractiveListMatches({
             <ListItem>
               <ListItemAvatar>
                 {props.status === "Booked" ? (
-                  <Avatar src={require("../../assets/avatar-mine-worker.png")} className={classes.large}/>
+                  <Avatar
+                    src={require("../../assets/avatar-mine-worker.png")}
+                    className={classes.large}
+                  />
                 ) : (
                   // <AccountBoxRoundedIcon /> // TODO adopt User's avator
 
-                  <Avatar>
+                  <Avatar className={classes.large}>
                     <EmojiPeopleRoundedIcon />
                   </Avatar>
                 )}
               </ListItemAvatar>
 
-              <ListItemText className={classes.heading}
-                primary=
-                
-                {
-                  props.status === "Booked" ? (
-                    <b>
-                      {" "}
-                      {props.user_id.firstName +
-                        " " +
-                        props.user_id.lastName}{" "}
-                    </b>
-                  ) : (
-                    "1 Rider"
-                  )
+              <ListItemText
+                style={{ marginRight: "5px" }}
+                primary={
+                  <Typography
+                    variant="p"
+                    component="h5"
+                    classes={classes.typography}
+                  >
+                    {props.status === "Booked"
+                      ? " " + props.user_id.firstName
+                      : "1 Rider"}
+                  </Typography>
                 }
                 secondary={
-                  props.status === "Booked" ? (
-                    <a href={phoneLink}>
-                      <Grid container alignItems="center">
-                        {/* <PhoneIcon size="small" /> */}
-                        {props.user_id.phone}
-                      </Grid>
-                    </a>
-                  ) : (
-                    props.status
-                  )
+                  // <Typography classes={classes.typography}>
+                  //   {props.status === "Booked" ? (
+                  //     <a href={phoneLink}>
+                  //       <Grid container alignItems="center">
+                  //         {/* <PhoneIcon size="small" /> */}
+                  //         {props.user_id.phone}
+                  //       </Grid>
+                  //     </a>
+                  //   ) : (
+                  //     props.status
+                  //   )}
+                  // </Typography>
+                  <Typography
+                    variant="p"
+                    component="h5"
+                    classes={classes.typography}
+                  >
+                    {props.status === "Booked" ? props.user_id.lastName : ""}
+                  </Typography>
                 }
               />
-              {/* <Divider variant="middle" /> */}
+     
+     <div style={{marginRight: 5}}>
+                <ListItemText
+                  primary={
+                    <Grid container alignItems="center">
+                      <EmojiEventsIcon color="primary" />
+                    </Grid>
+                  }
+                  secondary={
+                    <Grid container alignItems="center">
+                      10pts
+                    </Grid>
+                  }
+                />
+  </div>
+                <div style={{marginRight: 5}}>
 
-              <ListItemText primary="Pts" secondary="10" />
+                <ListItemText
+                  primary={
+                    <Grid container alignItems="center">
+                      <ScheduleIcon color="primary" />
+                    </Grid>
+                  }
+                  secondary={
+                    <Grid container alignItems="center">
+                      {props.departTime}
+                    </Grid>
+                  }
+                  />
+                  </div>
+               
+           
+              {/* <ListItemText
+                primary={<AirlineSeatReclineNormalIcon color="primary" />}
+                secondary={props.seatsRequired}
+              /> */}
 
-              <ListItemText
-                primary={moment(props.departDate).format("DD MMM")}
-                secondary={props.departTime}
-              />
               {/* Dynamic Action Buttons */}
+
               {(() => {
                 switch (props.status) {
                   case "Pending":
@@ -165,19 +207,31 @@ export default function InteractiveListMatches({
                           acceptRequest(props._id, { trip_id: tempTrip_id });
                         }}
                         startIcon={<CheckCircleIcon />}
-                        fontSize=""
                       >
                         Accept
                       </Button>
                     );
+                }
+              })()}
 
+              {/* </ListItem> */}
+
+              {/* <ListItemText
+                primary={<AirlineSeatReclineNormalIcon color="primary" />}
+                secondary={props.seatsRequired}
+              /> */}
+
+              {(() => {
+                switch (props.status) {
                   case "Booked":
                     return (
-                      <Grid
-                        direction="row"
-                        justify="center"
-                        alignItems="center"
-                      >
+                      // <Grid
+                      // container
+                      //   direction="row"
+                      //   justify="center"
+                      //   alignItems="center"
+                      // >
+                      <div>
                         <IconButton size="small">
                           <CancelIcon
                             color="disabled"
@@ -190,10 +244,15 @@ export default function InteractiveListMatches({
                           />
                         </IconButton>
                         <IconButton size="small">
-                          <a href={smsLink}>
-                            <MessageIcon color="secondary" fontSize="large" />
+                          <a href={phoneLink}>
+                            <PhoneIcon color="secondary" fontSize="large" />
                           </a>
                         </IconButton>
+                        {/* <IconButton size="small">
+                            <a href={smsLink}>
+                              <MessageIcon color="secondary" fontSize="large" />
+                            </a>
+                          </IconButton> */}
                         <ClickAwayListener onClickAway={handleClickAway}>
                           <span>
                             {open ? (
@@ -217,7 +276,7 @@ export default function InteractiveListMatches({
                                 {/* Click me, I will stay visible until you click
                                 outside. */}
                                 <Typography>
-                                  <strong>Other Details</strong>
+                                  <strong>More details</strong>
                                   <hr />
                                   Request Note:{" "}
                                   {props.requestNote ? (
@@ -243,18 +302,15 @@ export default function InteractiveListMatches({
                             ) : null}
                           </span>
                         </ClickAwayListener>
-                      </Grid>
+                        {/* </Grid> */}
+                      </div>
                     );
                 }
               })()}
             </ListItem>
-            <ListItemText primary="Seats"/>
-            <ListItemText primary="Notes"/>
-            <ListItemText primary="Parcel"/>
           </div>
         )}
       </Grid>
     </List>
-
   );
 }

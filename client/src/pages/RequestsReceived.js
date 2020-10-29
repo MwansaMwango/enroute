@@ -59,8 +59,6 @@ function RequestsReceived({ checkNotificationStatus }) {
   const useStyles = makeStyles((theme) => ({
     root: {
       container: {
-        // display: "flex",
-        // flexWrap: "wrap",
         width: "90vw",
       },
     },
