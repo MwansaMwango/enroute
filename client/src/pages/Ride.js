@@ -497,7 +497,7 @@ function Ride({ isEdit, requestData }) {
                   </Grid>
                 </div>
               )}
-              {/* end of editmode */}
+              {/* end of non-edit mode */}
 
               <Grid
                 container

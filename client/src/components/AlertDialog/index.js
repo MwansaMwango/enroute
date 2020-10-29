@@ -28,7 +28,7 @@ export default function AlertDialog(props) {
             style={{
               display: "block",
               margin: "0 auto",
-              maxWidth: "30%",
+              maxWidth: "345px",
               paddingTop: "30px",
             }}
             src={require("../../assets/undraw-sent.svg")}
@@ -39,7 +39,7 @@ export default function AlertDialog(props) {
             style={{
               display: "block",
               margin: "0 auto",
-              maxWidth: "30%",
+              maxWidth: "345px",
               paddingTop: "30px",
             }}
             src={require("../../assets/undraw-cancel.svg")}
@@ -51,7 +51,7 @@ export default function AlertDialog(props) {
             style={{
               display: "block",
               margin: "0 auto",
-              maxWidth: "30%",
+              maxWidth: "345px",
               paddingTop: "30px",
             }}
             src={require("../../assets/undraw-confirmed.svg")}

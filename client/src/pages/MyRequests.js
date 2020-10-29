@@ -17,18 +17,15 @@ import MessageIcon from "@material-ui/icons/Message";
 import FormGroup from "@material-ui/core/FormGroup";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import Popper from "@material-ui/core/Popper";
-// import Alert from "@material-ui/lab/Alert";
 import Switch from "@material-ui/core/Switch";
 import InteractiveListTrips from "../components/InteractiveListTrips";
 import RestoreIcon from "@material-ui/icons/Restore";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
-
 import Jumbotron from "../components/Jumbotron";
 import API from "../utils/API";
 import { Link } from "react-router-dom";
 import { Container, Col, Row } from "../components/Grid"; // removed container
-
 import {
   makeStyles,
   ThemeProvider,
@@ -45,21 +42,21 @@ import {
   Box,
   Grid,
   TextField,
-  // Container,
   MenuItem,
   Button,
   Checkbox,
   FormControlLabel,
 } from "@material-ui/core/";
-
 import "./drive.css";
-
 import { List, ListItem } from "../components/List"; //
-
 import DeclineBtn from "../components/DeclineBtn"; //
-
 import moment from "moment";
 import InteractiveListRequests from "../components/InteractiveListRequests";
+import AlertDialog from "../components/AlertDialog";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+import Typography from "@material-ui/core/Typography";
 
 function MyRequests() {
   // Setting our component's initial state
@@ -70,11 +67,39 @@ function MyRequests() {
   const [formObject, setFormObject] = useState({});
   const [page, setPage] = React.useState("ride");
 
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      container: {
-        width: "90vw",
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        light: "#FF9057",
+        main: "#E64500",
+        dark: "#022222",
+        contrastText: "#fff",
       },
+      secondary: {
+        light: "#78849E",
+        main: "#259CBB",
+        dark: "#168387",
+        contrastText: "#000",
+      },
+      // type: 'dark', // dark theme
+      typography: {
+        fontFamily: "Montserrat",
+      },
+    },
+  });
+
+  const useStyles = makeStyles((theme) => ({
+    cardStyle: {
+      "& .MuiCardMedia-img": {
+        // css specific selector for image
+        height: "100px",
+        width: "100%",
+        objectFit: "contain",
+      },
+      maxWidth: 345,
+      margin: "10px 0px 10px 0px",
+      borderRadius: 20,
+      pointerEvents: "none", // remove click options from card
     },
   }));
 
@@ -95,7 +120,6 @@ function MyRequests() {
     API.getRequests() // Get my requests
       .then((res) => {
         setRequests(res.data);
-        console.log("loadMyRequests", res.data);
       })
       .catch((err) => console.log(err));
   }
@@ -132,56 +156,90 @@ function MyRequests() {
   return (
     <Box
       style={{
-        paddingBottom: "50px",
+        paddingBottom: "90px",
       }}
     >
-      <Container fluid>
-        <Row>
-          <Col size="md-12">
-            <Jumbotron>
-              <h1>
-                My Requests <EmojiPeopleRoundedIcon fontSize="large" />
-              </h1>
-            </Jumbotron>
-            <br />
-            {requests.length ? (
-              <Grid
-                ontainer
-                justify="center"
-                alignItems="center"
-                direction="column"
-              >
-                {requests.map((request) => (
-                  <div key={request._id}>
-                    <InteractiveListRequests
-                      props={request}
-                      deleteRequest={deleteRequest}
-                      editRequest={editRequest}
-                    />
-                  </div>
-                ))}
+      <Container fluid maxWidth="100vw">
+        <ThemeProvider theme={theme}>
+          <Row>
+            <Col size="md-12">
+              {/* {alertDialogOpen ? (
+                <AlertDialog
+                  dialogOpen={true}
+                  btnOpenTxt="Post Ride Request"
+                  dialogTitle="Ride request sent..."
+                  dialogContentTxt=" Matching driver(s) found. You'll be notified when a driver accepts."
+                  btnOKTxt="OK"
+            />
+              ) : null} */}
+              <Jumbotron>
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center"
+                >
+                  <EmojiPeopleRoundedIcon fontSize="large" />
+                  <Typography variant="outline" component="h3">
+                    Ride - My Requests
+                  </Typography>
+                </Grid>
+              </Jumbotron>
+
+              <br />
+              {requests.length ? (
+                <Grid
+                  ontainer
+                  justify="center"
+                  alignItems="center"
+                  direction="column"
+                >
+                  {requests.map((request) => (
+                    <div key={request._id}>
+                      <InteractiveListRequests
+                        props={request}
+                        deleteRequest={deleteRequest}
+                        editRequest={editRequest}
+                      />
+                    </div>
+                  ))}
+                </Grid>
+              ) : (
+                <Grid
+                  container
+                  direction="column"
+                  justify="center"
+                  alignItems="center"
+                >
+                  {/* <div {{ backgroundColor: "white", maxWidth: "100%", borderRadius: 20, boxShadow: "5px 5px 5px #8888"}}> */}
+                  <Card className={classes.cardStyle} raised={true}>
+                    <CardContent>
+                      <CardMedia
+                        component="img"
+                        alt="Card Media"
+                        height="100"
+                        title="Card Media Title"
+                        image={require("../assets/undraw-waiting.svg")}
+                      ></CardMedia>
+                      <Typography
+                        className={classes.typography}
+                        variant="body1"
+                        style={{ textAlign: "center" }}
+                        component="p"
+                      >
+                        No ride requests created <br />
+                        Request your first ride! 😁
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              )}
+              <Grid driection="row" justify="center" alignItems="center">
+                <SimpleBottomNavigation />
               </Grid>
-            ) : (
-              <Grid container justify="space-around" alignItems="center">
-                <h3>No ride requests created.</h3>
-              </Grid>
-            )}
-            <Grid driection="row" justify="center" alignItems="center">
-              <div
-                style={{
-                  position: "fixed",
-                  left: "0",
-                  bottom: "0",
-                  height: "50px",
-                  width: "90%",
-                  textAlign: "center",
-                }}
-              >
-            <SimpleBottomNavigation />
-              </div>
-            </Grid>
-          </Col>
-        </Row>
+            </Col>
+          </Row>
+        </ThemeProvider>
       </Container>
     </Box>
   );

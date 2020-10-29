@@ -6,7 +6,7 @@ import { Button } from "@material-ui/core";
 function DeleteBtn(props) {
   return (
     <Button
-    style= {{"background": "grey", "color": "white", "margin":"10px"}}
+    style= {{"background": "grey", "color": "white"}}
       variant="contained"
 
       color="primary"

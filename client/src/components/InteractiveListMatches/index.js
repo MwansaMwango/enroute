@@ -58,14 +58,10 @@ const useStyles = makeStyles((theme) => ({
   title: {
     margin: theme.spacing(4, 0, 2),
   },
-  small: {
-    width: theme.spacing(3),
-    height: theme.spacing(3),
-  },
+
   large: {
-    width: theme.spacing(6),
-    height: theme.spacing(6),
-    // border: "1px solid grey",
+    width: theme.spacing(5),
+    height: theme.spacing(5),
   },
   typography: {
     fontFamily: "Montserrat",
@@ -86,8 +82,6 @@ export default function InteractiveListMatches({
   acceptRequest,
 }) {
   const classes = useStyles();
-  const [] = React.useState(false);
-  const [] = React.useState(true);
   const [open, setOpen] = React.useState(false);
   let phoneLink = "tel:" + props.user_id.phone;
   let smsLink = "sms:" + props.user_id.phone;
@@ -136,18 +130,6 @@ export default function InteractiveListMatches({
                   </Typography>
                 }
                 secondary={
-                  // <Typography classes={classes.typography}>
-                  //   {props.status === "Booked" ? (
-                  //     <a href={phoneLink}>
-                  //       <Grid container alignItems="center">
-                  //         {/* <PhoneIcon size="small" /> */}
-                  //         {props.user_id.phone}
-                  //       </Grid>
-                  //     </a>
-                  //   ) : (
-                  //     props.status
-                  //   )}
-                  // </Typography>
                   <Typography
                     variant="p"
                     component="h5"
@@ -157,8 +139,8 @@ export default function InteractiveListMatches({
                   </Typography>
                 }
               />
-     
-     <div style={{marginRight: 5}}>
+
+              <div style={{ marginRight: 5 }}>
                 <ListItemText
                   primary={
                     <Grid container alignItems="center">
@@ -171,9 +153,8 @@ export default function InteractiveListMatches({
                     </Grid>
                   }
                 />
-  </div>
-                <div style={{marginRight: 5}}>
-
+              </div>
+              <div style={{ marginRight: 5 }}>
                 <ListItemText
                   primary={
                     <Grid container alignItems="center">
@@ -185,10 +166,9 @@ export default function InteractiveListMatches({
                       {props.departTime}
                     </Grid>
                   }
-                  />
-                  </div>
-               
-           
+                />
+              </div>
+
               {/* <ListItemText
                 primary={<AirlineSeatReclineNormalIcon color="primary" />}
                 secondary={props.seatsRequired}

@@ -1,11 +1,15 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import Button from "@material-ui/core/Button";
 import EditIcon from "@material-ui/icons/Edit";
-import Ride from "../../pages/Ride"
+import Ride from "../../pages/Ride";
+import {
+  makeStyles,
+  ThemeProvider,
+  createMuiTheme,
+} from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   modal: {
@@ -18,11 +22,13 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
+    maxWidth: 300
   },
+
 }));
 
 export default function TransitionsModalRequest({ editClicked, requestData }) {
-  console.log("props in modal =", requestData)
+  console.log("props in modal =", requestData);
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
@@ -43,7 +49,13 @@ export default function TransitionsModalRequest({ editClicked, requestData }) {
           handleOpen();
         }}
         startIcon={<EditIcon />}
-        fontSize="large"
+        // fontSize="large"
+        style={{
+          width: "100px",
+          marginBottom: "5px",
+          padding: "2px",
+          borderRadius: "20px",
+        }}
       >
         EDIT
       </Button>
@@ -62,10 +74,16 @@ export default function TransitionsModalRequest({ editClicked, requestData }) {
       >
         <Fade in={open}>
           <div className={classes.paper}>
-            <h2 id="transition-modal-title">Update your Ride Details</h2>
-            <p id="transition-modal-description">
-            <Ride isEdit = {true} requestData = {requestData} />
-            </p>
+            <h2 id="transition-modal-title">Update Ride Details</h2>
+            
+              <Ride
+                isEdit={true}
+                requestData={requestData}
+           
+
+              />
+            {/* <p id="transition-modal-description">
+            </p> */}
           </div>
         </Fade>
       </Modal>

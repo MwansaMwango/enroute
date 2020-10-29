@@ -16,23 +16,21 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import API from "../../utils/API";
 import TransitionsModalRequest from "../TransitionsModalRequest";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: 400, // limits display across very wide screens / desktops
+    maxWidth: 345, // limits display across very wide screens / desktops
     minWidth: 280,
     width: "95vw",
     border: `2px solid ${theme.palette.divider}`,
-    borderRadius: theme.shape.borderRadius,
     borderRadius: theme.spacing(3),
+    backgroundColor: "white",
+    boxShadow: "5px 5px 5px #8888",
 
     "& svg": {
-      margin: theme.spacing(0.25),
+      margin: theme.spacing(0.1),
       "& hr": {},
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      fontWeight: theme.typography.fontWeightRegular,
     },
   },
 
@@ -52,6 +50,13 @@ const useStyles = makeStyles((theme) => ({
   title: {
     margin: theme.spacing(4, 0, 2),
   },
+  large: {
+    width: theme.spacing(5),
+    height: theme.spacing(5),
+  },
+  typography: {
+    fontFamily: "Montserrat",
+  },
 }));
 
 function generate(element) {
@@ -64,9 +69,7 @@ function generate(element) {
 
 export default function InteractiveListRequests({ props, deleteRequest }) {
   const classes = useStyles();
-  console.log("List my requests props", props);
   const [open, setOpen] = React.useState(false);
-
   let phoneLink;
   if (props.driver_id) {
     phoneLink = "tel:" + props.driver_id.phone;
@@ -91,27 +94,29 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
         {generate(
           <div className={classes.root}>
             <ListItem>
-              {/* <ListItemAvatar>
-                <Avatar>
-                  {props.status === "Confirmed" ? (
-                    <AccountBoxRoundedIcon /> // TODO adopt Drivers avator
-                  ) : (
-                    <EmojiPeopleRoundedIcon />
-                  )}
-                </Avatar>
-              </ListItemAvatar> */}
-
               <ListItemText
                 primary={
                   <Grid container alignItems="center">
-                    <MyLocationIcon />
-                    {props.from}
+                    <MyLocationIcon color="primary" />
+                    <Typography
+                      // variant="p"
+                      // component="h5"
+                      className={classes.typography}
+                    >
+                      {props.from}
+                    </Typography>
                   </Grid>
                 }
                 secondary={
                   <Grid container alignItems="center">
-                    <LocationOnIcon />
-                    {props.to}
+                    <LocationOnIcon color="primary" />
+                    <Typography
+                      // variant="p"
+                      // component="h5"
+                      className={classes.typography}
+                    >
+                      {props.to}
+                    </Typography>
                   </Grid>
                 }
               />
@@ -119,11 +124,26 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
               {/* <ListItemText primary="Status" secondary={props.status} /> */}
 
               <ListItemText
-                primary={moment(props.departDate).format("DD MMM")}
-                secondary={props.departTime}
+                primary={
+                  <Typography
+                    // variant="p"
+                    // component="h5"
+                    className={classes.typography}
+                  >
+                    {moment(props.departDate).format("DD MMM")}
+                  </Typography>
+                }
+                secondary={
+                  <Typography
+                    // variant="p"
+                    // component="h5"
+                    className={classes.typography}
+                  >
+                    {props.departTime}
+                  </Typography>
+                }
               />
 
-              {/* <Divider variant="middle" /> */}
               {(() => {
                 switch (props.status) {
                   case "Pending":
@@ -133,13 +153,25 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
                         justify="center"
                         alignItems="center"
                       >
-                        <DeleteIcon
+                        <Button
+                          variant="contained"
+                          onClick={
+                            () => handleClickDeleteRequest() // TODO delete request modal
+                          }
+                          startIcon={<DeleteIcon color="disabled" />}
+                          style={{width: "100px", marginBottom: "5px", padding: "2px", borderRadius: "20px"}}
+                        >
+                          DELETE
+                        </Button>
+
+                        {/* <DeleteIcon
                           color="disabled"
                           fontSize="large"
                           onClick={
-                            () => handleClickDeleteRequest() // TODO delete request
+                            () => handleClickDeleteRequest() // TODO delete request modal
                           }
-                        />
+                        /> */}
+
                         <TransitionsModalRequest
                           requestData={props}
                           editClicked={true}
@@ -176,14 +208,14 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
                               <div className={classes.dropdown}>
                                 {/* Click me, I will stay visible until you click
                                 outside. */}
-                                <Typography>
-                                  <strong>Other Details</strong>
+                                <Typography className={classes.typography}>
+                                  <strong>More Details</strong>
                                   <hr />
                                   Request Note:{" "}
                                   {props.requestNote ? (
                                     <Typography
                                       fontStyle="oblique"
-                                      fontFamily="Monospace"
+                                      className={classes.typography}
                                     >
                                       {props.requestNote}{" "}
                                     </Typography>
