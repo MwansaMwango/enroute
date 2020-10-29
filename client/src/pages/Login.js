@@ -87,11 +87,11 @@ function Login() {
     <Box 
       style={{
           position: "fixed",
-      
-        backgroundImage: ` linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("https://images.unsplash.com/photo-1482029255085-35a4a48b7084?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=50")
-        `,
-        backgroundSize: "cover",
+  
+          backgroundImage: ` linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+          url("https://images.unsplash.com/photo-1482029255085-35a4a48b7084?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=50")
+          `,
+          backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         height: "100vh",
         width: "100vw",
