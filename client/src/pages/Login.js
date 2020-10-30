@@ -16,9 +16,11 @@ import LockIcon from "@material-ui/icons/Lock";
 import Typography from "@material-ui/core/Typography";
 import axios from "axios";
 
+
 const useStyles = makeStyles({
   root: {
     maxWidth: "100%",
+
   },
 
   media: {
@@ -26,6 +28,14 @@ const useStyles = makeStyles({
   },
   error: {
     color: "#EF5350",
+  },
+  img: {
+    maxWidth: "50%",
+    padding: 10,
+  },
+  typography: {
+    fontFamily: "Montserrat",
+    color: "#E64500"
   },
 });
 
@@ -97,11 +107,12 @@ function Login() {
         width: "100vw",
       }}
     >
-      <Box>
+
         <Container maxWidth="xs">
           <Card style={{ marginTop: 50 }} className={classes.root}>
-            <Grid container justify="center">
-              <h1>Welcome</h1>
+            <Grid container direction="column" justify="center" alignItems="center" >
+              <img src={require("../assets/undraw-map-welcome.svg")} className={classes.img}/>
+              <Typography variant="h4" className={classes.typography} >Welcome</Typography>
             </Grid>
             <CardContent>
               <form onSubmit={onSubmit}>
@@ -112,7 +123,7 @@ function Login() {
                   alignItems="center"
                 >
                   <Grid item>
-                    <AccountCircle />
+                    <AccountCircle color="primary" />
                   </Grid>
                   <Grid item>
                     <TextField
@@ -130,7 +141,7 @@ function Login() {
                   alignItems="center"
                 >
                   <Grid item>
-                    <LockIcon />
+                    <LockIcon color="primary"/>
                   </Grid>
                   <Grid item>
                     <TextField
@@ -148,7 +159,7 @@ function Login() {
                   <Typography
                     className={classes.error}
                     key={error}
-                    variant="overline"
+                    variant="caption"
                     display="block"
                     gutterBottom
                   >
@@ -159,23 +170,23 @@ function Login() {
             </CardContent>
             <CardActions>
               <Grid container justify="flex-end" alignItems="flex-end">
-                <Button onClick={onSubmit} size="small" color="primary">
+                <Button onClick={onSubmit} size="small"  className={classes.typography}>
                   Login
                 </Button>
 
                 <Button
                   onClick={() => history.push("/register")}
                   size="small"
-                  color="primary"
+                  className={classes.typography}
                 >
-                  Register
+                  SignUp
                 </Button>
               </Grid>
             </CardActions>
           </Card>
         </Container>
       </Box>
-    </Box>
+ 
   );
 }
 

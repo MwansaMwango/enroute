@@ -11,7 +11,7 @@ import Jumbotron from "../components/Jumbotron";
 import SimpleBottomNavigation from "../components/SimpleBottomNavigation";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import API from "../utils/API";
-import { Container, Col, Row } from "../components/Grid"; // removed container
+import { Container, Col, Row } from "../components/Grid"; 
 import {
   makeStyles,
   ThemeProvider,
