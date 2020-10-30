@@ -114,7 +114,7 @@ function Login() {
               <img src={require("../assets/undraw-map-welcome.svg")} className={classes.img}/>
               <Typography variant="h4" className={classes.typography} >Welcome</Typography>
             </Grid>
-            <CardContent>
+            <CardContent className={classes.typography}>
               <form onSubmit={onSubmit}>
                 <Grid
                   container
@@ -123,7 +123,7 @@ function Login() {
                   alignItems="center"
                 >
                   <Grid item>
-                    <AccountCircle color="primary" />
+                    <AccountCircle />
                   </Grid>
                   <Grid item>
                     <TextField
@@ -141,7 +141,7 @@ function Login() {
                   alignItems="center"
                 >
                   <Grid item>
-                    <LockIcon color="primary"/>
+                    <LockIcon />
                   </Grid>
                   <Grid item>
                     <TextField

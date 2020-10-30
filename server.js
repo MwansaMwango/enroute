@@ -31,25 +31,6 @@ if (process.env.NODE_ENV === "production") {
 // Connect to the Mongo DB
 connectDb();
 
-// const Pusher = require('pusher');
-
-// const pusher = new Pusher({
-//   appId : "1074079",
-//   key : "29fa452f5422eea823e5",
-//   secret : "b3dc2da01e2b37e2c517",
-//   cluster : "ap1",
-//   useTLS: true
-// });
-
-// app.post("/pusher/auth", function (req, res) {
-//   console.log("channel auth hit!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-//   const socketId = req.body.socket_id;
-//   const channel = req.body.channel_name;
-//   const auth = pusher.authenticate(socketId, channel);
-//   res.send(auth);
-  
-// });
-
 app.use(
   session({
     resave: true,
@@ -60,7 +41,8 @@ app.use(
       maxAge: 1209600000,
     }, // two weeks in milliseconds
     store: new MongoStore({
-      url: process.env.MONGODB_URI,
+      // url: process.env.MONGODB_URI,
+      url: process.env.DB_URI,
       autoReconnect: true,
     }),
   })
