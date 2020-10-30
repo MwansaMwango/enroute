@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import RequestsReceived from "./pages/RequestsReceived";
 import MyRequests from "./pages/MyRequests";
+import Profile from "./pages/Profile";
 import Nav from "./components/Nav";
 import NotificationContext from "./utils/NotificationContext";
 import MyTrips from "./pages/MyTrips";
@@ -24,6 +25,7 @@ import * as PusherPushNotifications from "@pusher/push-notifications-web";
 import Axios from "axios";
 import Pusher from "pusher-js";
 import './app.css';
+
 
 function App() {
   const [isNewNotification, setIsNewNotification] = useState();
@@ -117,6 +119,7 @@ function App() {
               <MyTrips />
             </Route>
             <Route exact path="/register" component={Register} />
+            <Route exact path="/profile" component={Profile} />
             <Route exact path="/newsfeed" component={NewsFeed} />
             <Route exact path="/myrequests">
               <MyRequests />

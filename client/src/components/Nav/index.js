@@ -30,6 +30,7 @@ import * as PusherPushNotifications from "@pusher/push-notifications-web";
 // });
 import { ReactComponent as DriveLogo } from "../../assets/steering-wheel.svg";
 
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -135,7 +136,7 @@ export default function Nav(props) {
   useEffect(() => {
     getUser();
   }, []);
-
+  const history = useHistory();
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -147,6 +148,11 @@ export default function Nav(props) {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+    history.push("/profile") 
+  };
+  const handleMenuCloseGotoProfile = () => {
+    setAnchorEl(null);
+    history.push("/profile") 
   };
   const logout = () => {
     Axios.get("/api/auth/logout").then(() => {
@@ -183,7 +189,7 @@ export default function Nav(props) {
           open={isMenuOpen}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+          <MenuItem  onClick={handleMenuClose} >Profile</MenuItem>
           {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
           <MenuItem onClick={logout}>Logout</MenuItem>
         </Menu>
@@ -215,8 +221,8 @@ export default function Nav(props) {
               <Badge badgeContent={0} color="secondary">
                 <LocalTaxiRoundedIcon />
               </Badge>
-            </IconButton>
             <p>Trip Notifications</p>
+            </IconButton>
           </MenuItem>
           <MenuItem>
             <IconButton
@@ -227,8 +233,8 @@ export default function Nav(props) {
               <Badge badgeContent={props.notificationStatus} color="secondary">
                 <EmojiPeopleRoundedIcon />
               </Badge>
-            </IconButton>
             <p>Ride Notifications</p>
+            </IconButton>
           </MenuItem>
           <MenuItem onClick={handleProfileMenuOpen}>
             <IconButton
@@ -236,10 +242,11 @@ export default function Nav(props) {
               aria-controls="primary-search-account-menu"
               aria-haspopup="true"
               color="inherit"
+            
             >
               <AccountCircle />
-            </IconButton>
             <p>{currentUserFullName}</p>
+            </IconButton>
           </MenuItem>
         </Menu>
       ) : (
@@ -318,6 +325,7 @@ export default function Nav(props) {
                       aria-haspopup="true"
                       onClick={handleProfileMenuOpen}
                       color="inherit"
+                      
                     >
                       <AccountCircle />
                       {getUser()}
