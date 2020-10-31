@@ -174,7 +174,7 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
               {props.status === "Booked" ? (
                 <IconButton size="small">
                   <PlayCircleFilledIcon
-                    fontSize="medium"
+                    fontSize="large"
                     color="secondary"
                     onClick={() => {
                       handleUpdateTripStatus("Started");
@@ -184,7 +184,7 @@ export default function InteractiveListTrips({ props, deleteTrip }) {
               ) : props.status === "Started" ? (
                 <IconButton size="small">
                   <DoneAllIcon
-                    fontSize="medium"
+                    fontSize="large"
                     color="dark"
                     onClick={() => {
                       handleUpdateTripStatus("Completed");

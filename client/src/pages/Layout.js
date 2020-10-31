@@ -36,10 +36,10 @@ export default function Layout(props) {
           alignItems="center"
           alignContent="center"
           wrap="nowrap"
-          style={{marginTop: "50vh"}}
+          style={{marginTop: "50vh", color:"#E64500"}}
         >
           Loading....<br/>
-          <CircularProgress color="primary" />
+          <CircularProgress  />
         </Grid>
       ) : (
         props.children
