@@ -36,9 +36,9 @@ export default function Layout(props) {
           alignItems="center"
           alignContent="center"
           wrap="nowrap"
-          style={{marginTop: "50vh", color:"#E64500"}}
+          style={{marginTop: "50vh", color:"#E64500", fontSize:"1.2rem"}}
         >
-          Loading....<br/>
+          Loading...<br/>
           <CircularProgress  />
         </Grid>
       ) : (

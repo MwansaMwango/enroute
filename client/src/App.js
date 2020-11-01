@@ -24,12 +24,14 @@ import NewsFeed from "./pages/NewsFeed";
 import * as PusherPushNotifications from "@pusher/push-notifications-web";
 import Axios from "axios";
 import Pusher from "pusher-js";
-import './app.css';
-
+import "./app.css";
+import AlertDialog from "./components/AlertDialog";
 
 function App() {
   const [isNewNotification, setIsNewNotification] = useState();
   // const [currentUserId, setCurrentUser] = useState();
+  const [alertDialogOpen, setAlertDialogOpen] = useState(false);
+  const [requestData, setRequestData] = useState({});
 
   function checkNotificationStatus(status) {
     if (status === "Booked") {
@@ -53,29 +55,27 @@ function App() {
   };
   getUser();
 
+  function handleCloseAlertDialog() {
+    setAlertDialogOpen(false);
+  }
   // ---------------- PUSHER CHANNELS ------------------ //
   const subscribeToPusherChannel = (currentUserId) => {
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
 
-    const pusher = new Pusher("29fa452f5422eea823e5", {
+    const pusher = new Pusher("29fa452f5422eea823e5", { // unique app id
       cluster: "ap1",
     });
 
     const channel = pusher.subscribe("private-user-" + currentUserId);
-    channel.bind("request-booked", function (data) {
+    
+    // Ride Request Accepted
+    channel.bind("request-booked", function (data) { // request-book triggered in server when status is changed from "posted" to "booked"
       setIsNewNotification(1);
-      alert(
-        JSON.stringify(
-          "Good News! Booking Confirmed: " +
-            data.requestData.from +
-            " to " +
-            data.requestData.to
-        )
-      );
+      setAlertDialogOpen(true);
+      setRequestData(data.requestData);
     });
   };
-
   const useStyles = makeStyles((theme) => ({
     bgImage: {
       // clear: "both",
@@ -83,15 +83,14 @@ function App() {
       width: "100vw",
       height: "100vh",
       filter: "brightness(1.05)",
-      top: '5%',
+      top: "5%",
       zIndex: -1,
-      // filter: "blur(1px)", 
+      // filter: "blur(1px)",
       // filter: "sepia(15%)",
       // filter: "opacity(70%)",
       // filter: "invert(100%)", //good for dark them
       // filter: "grayscale(100%)",
       // filter: "contrast(110%)",
-   
     },
   }));
 
@@ -99,17 +98,32 @@ function App() {
 
   return (
     <Router>
-      <Layout >
+      <Layout>
         <NotificationContext.Provider value={isNewNotification}>
           <img
             src={require("../src/assets/map2-grey.png")}
             alt="Loading map..."
             className={classes.bgImage}
           />
-          
           <Nav notificationStatus={isNewNotification} />
+          {alertDialogOpen ? (
+          <AlertDialog
+            dialogOpen={true}
+            btnOpenTxt="requestBooked"
+            dialogTitle="Booking Confirmed"
+            dialogContentTxt={
+              "A Driver accepted your ride request from " +
+              requestData.from +
+              " to " +
+              requestData.to
+            }
+            btnOKTxt="OK"
+            handleClose={handleCloseAlertDialog}
+          />):null
+          }
           <Switch>
-            <Route exact path={["/", "/login"]}>
+            <Route exact path
+            ={["/", "/login"]}>
               <Login />
             </Route>
             <Route exact path="/drive">

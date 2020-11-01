@@ -5,7 +5,6 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import CircularProgress from "@material-ui/core/CircularProgress";
 
 export default function AlertDialog(props) {
   console.log("Alert props ", props);
@@ -28,7 +27,7 @@ export default function AlertDialog(props) {
             style={{
               display: "block",
               margin: "0 auto",
-              maxWidth: "345px",
+              maxWidth: "150px",
               paddingTop: "30px",
             }}
             src={require("../../assets/undraw-sent.svg")}
@@ -39,19 +38,31 @@ export default function AlertDialog(props) {
             style={{
               display: "block",
               margin: "0 auto",
-              maxWidth: "345px",
+              maxWidth: "150px",
               paddingTop: "30px",
             }}
             src={require("../../assets/undraw-cancel.svg")}
             alt="Cancel..."
           />
+          ) : props.btnOpenTxt === "requestBooked" ? ( // cancel booking
+            <img
+              style={{
+                display: "block",
+                margin: "0 auto",
+                maxWidth: "150px",
+                paddingTop: "30px",
+              }}
+              src={require("../../assets/undraw-request-booked.svg")}
+              alt="Booked..."
+            />
+    
         ) : (
           // Trip posted
           <img
             style={{
               display: "block",
               margin: "0 auto",
-              maxWidth: "345px",
+              maxWidth: "150px",
               paddingTop: "30px",
             }}
             src={require("../../assets/undraw-confirmed.svg")}

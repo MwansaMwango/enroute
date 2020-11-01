@@ -115,40 +115,7 @@ module.exports = {
           // particular user by publishing to their user ID. Use one of the Beams server
           // SDKs to publish to your users:
           // */
-          // //May not be required?
-          // beamsClient
-          //   //   .publishToUsers(["user-001", "user-002"], { // specify your users
-          //   .publishToUsers(["5f3901143505bf79fce1d50d"], {
-          //     // specify your users
-          //     apns: {
-          //       aps: {
-          //         alert: {
-          //           title: "Hello",
-          //           body: "Request Accepted!",
-          //         },
-          //       },
-          //     },
-          //     fcm: {
-          //       notification: {
-          //         title: "Hello",
-          //         body: "Request Accepted!",
-          //       },
-          //     },
-          //     web: {
-          //       notification: {
-          //         title: "Hello",
-          //         body: "Request Accepted!",
-          //       },
-          //     },
-          //   })
-          //   .then((publishResponse) => {
-          //     console.log("Just published:", publishResponse.publishId);
-          //   })
-          //   .catch((error) => {
-          //     console.error("Error:", error);
-          //   });
-          // // end of beams pusher notification
-
+   
           //----- CHANNEL TRIGGER ---------
           // private channel names must start with 'private-'
           pusher.trigger("private-user-" + requestorId, "request-booked", {

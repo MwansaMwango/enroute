@@ -22,9 +22,8 @@ const useStyles = makeStyles((theme) => ({
     border: "2px solid #000",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
-    maxWidth: 300
+    maxWidth: 300,
   },
-
 }));
 
 export default function TransitionsModalRequest({ editClicked, requestData }) {
@@ -76,12 +75,7 @@ export default function TransitionsModalRequest({ editClicked, requestData }) {
           <div className={classes.paper}>
             <h2 id="transition-modal-title">Update Ride Details</h2>
             {/* TODO edit ride page formating */}
-              <Ride
-                isEdit={true}
-                requestData={requestData}
-           
-
-              />
+            <Ride isEdit={true} requestData={requestData} />
             {/* <p id="transition-modal-description">
             </p> */}
           </div>

@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.shape.borderRadius,
     borderRadius: theme.spacing(3),
     overflowWrap: "breakWord",
+    fontFamily: "Montserrat",
   },
   title: {
     margin: theme.spacing(4, 0, 2),
@@ -262,7 +263,7 @@ export default function InteractiveListMatches({
                                   {props.requestNote ? (
                                     <Typography
                                       fontStyle="oblique"
-                                      fontFamily="Monospace"
+                                     
                                     >
                                       {props.requestNote}{" "}
                                     </Typography>

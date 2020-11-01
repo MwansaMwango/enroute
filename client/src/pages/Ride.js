@@ -77,7 +77,7 @@ function Ride({ isEdit, requestData }) {
   const useStyles = makeStyles((theme) => ({
     root: {
       "& > svg": {
-        margin: theme.spacing(2),
+        margin: theme.spacing(1),
       },
       "& .MuiTextField-root": {
         margin: theme.spacing(1),
@@ -296,7 +296,6 @@ function Ride({ isEdit, requestData }) {
         let responseData = res.data;
         setSavedRequest(responseData);
         console.log("Saved Request Response", savedRequest._id);
-       
       })
       .then(function () {
         checkMatchingTrips(submittedRequestObj);
@@ -348,13 +347,13 @@ function Ride({ isEdit, requestData }) {
   }
 
   return (
-    <Box
-      style={{
-        paddingBottom: "90px",
-      }}
-    >
-      <Container fluid maxWidth="100vw">
-        <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
+      <Box
+        style={{
+          paddingBottom: "90px",
+        }}
+      >
+        <Container fluid maxWidth="100vw">
           <Row>
             <Col size="md-12">
               {alertDialogOpen ? (
@@ -750,9 +749,9 @@ function Ride({ isEdit, requestData }) {
               </Grid>
             </Col>
           </Row>
-        </ThemeProvider>
-      </Container>
-    </Box>
+        </Container>
+      </Box>
+    </ThemeProvider>
   );
 }
 
