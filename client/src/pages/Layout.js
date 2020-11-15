@@ -39,7 +39,7 @@ export default function Layout(props) {
           style={{marginTop: "50vh", color:"#E64500", fontSize:"1.2rem"}}
         >
           Loading...<br/>
-          <CircularProgress  />
+          <CircularProgress   style={{ color:"#E64500"}}  />
         </Grid>
       ) : (
         props.children

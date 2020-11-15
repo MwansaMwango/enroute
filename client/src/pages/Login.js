@@ -28,12 +28,14 @@ const useStyles = makeStyles({
     color: "#EF5350",
   },
   img: {
-    maxWidth: "50%",
-    padding: 10,
+    maxWidth: "80%",
+    padding: "20px 20px 0 20px",
   },
   typography: {
     fontFamily: "Montserrat",
     color: "#E64500",
+    padding: 10,
+
   },
 });
 
@@ -107,18 +109,27 @@ function Login() {
     >
       <Container maxWidth="xs">
         <Card style={{ marginTop: 50 }} className={classes.root}>
-          <Grid
-            container
-            direction="column"
-            justify="center"
-            alignItems="center"
-          >
+          <Grid container direction="row" justify="center" alignItems="center">
             <img
-              src={require("../assets/undraw-map-welcome.svg")}
+              src={require("../assets/siterider-logo-color.svg")}
               className={classes.img}
             />
-            <Typography variant="h4" className={classes.typography}>
-              Welcome
+          </Grid>
+          <Grid
+            container
+            spacing={1}
+            direction="row"
+            justify="center"
+            alignItems="center"
+            alignContent="center"
+            wrap="nowrap"
+          >
+            <Typography
+              variant="subtitle"
+              className={classes.typography}
+              component="h6"
+            >
+              Transport people, parcels and vehicles between sites
             </Typography>
           </Grid>
           <CardContent className={classes.typography}>
@@ -167,7 +178,6 @@ function Login() {
                     key={error}
                     variant="caption"
                     display="block"
-                
                   >
                     {error}
                   </Typography>

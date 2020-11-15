@@ -28,8 +28,7 @@ import * as PusherPushNotifications from "@pusher/push-notifications-web";
 // const beamsClient = new PusherPushNotifications.Client({
 //   instanceId: "0bb3f3ca-f205-4863-a264-e0e2264bc4bf",
 // });
-import { ReactComponent as DriveLogo } from "../../assets/steering-wheel.svg";
-
+import { ReactComponent as DriveLogo } from "../../assets/siterider-logo-white.svg";
 
 const theme = createMuiTheme({
   palette: {
@@ -53,9 +52,19 @@ const theme = createMuiTheme({
 });
 
 const useStyles = makeStyles((theme) => {
-  return ({
+  return {
     grow: {
       flexGrow: 1,
+    },
+    img: {
+      // width: "5rem",
+      // padding: 10,
+      // width: 300
+      // height: '50%'
+      minHeight: '100%',
+      maxWidth: "100%",
+     
+      // height: '50%'
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -122,7 +131,7 @@ const useStyles = makeStyles((theme) => {
         display: "none",
       },
     },
-  });
+  };
 });
 
 export default function Nav(props) {
@@ -148,11 +157,11 @@ export default function Nav(props) {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-    history.push("/profile") 
+    history.push("/profile");
   };
   const handleMenuCloseGotoProfile = () => {
     setAnchorEl(null);
-    history.push("/profile") 
+    history.push("/profile");
   };
   const logout = () => {
     Axios.get("/api/auth/logout").then(() => {
@@ -189,7 +198,7 @@ export default function Nav(props) {
           open={isMenuOpen}
           onClose={handleMenuClose}
         >
-          <MenuItem  onClick={handleMenuClose} >Profile</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
           {/* <MenuItem onClick={handleMenuClose}>My account</MenuItem> */}
           <MenuItem onClick={logout}>Logout</MenuItem>
         </Menu>
@@ -221,7 +230,7 @@ export default function Nav(props) {
               <Badge badgeContent={0} color="secondary">
                 <LocalTaxiRoundedIcon />
               </Badge>
-            <p>Trip Notifications</p>
+              <p>Trip Notifications</p>
             </IconButton>
           </MenuItem>
           <MenuItem>
@@ -233,7 +242,7 @@ export default function Nav(props) {
               <Badge badgeContent={props.notificationStatus} color="secondary">
                 <EmojiPeopleRoundedIcon />
               </Badge>
-            <p>Ride Notifications</p>
+              <p>Ride Notifications</p>
             </IconButton>
           </MenuItem>
           <MenuItem onClick={handleProfileMenuOpen}>
@@ -242,10 +251,9 @@ export default function Nav(props) {
               aria-controls="primary-search-account-menu"
               aria-haspopup="true"
               color="inherit"
-            
             >
               <AccountCircle />
-            <p>{currentUserFullName}</p>
+              <p>{currentUserFullName}</p>
             </IconButton>
           </MenuItem>
         </Menu>
@@ -263,16 +271,22 @@ export default function Nav(props) {
           {/* dark theme */}
           <Toolbar>
             <MenuItem>
-              <IconButton
+              {/* <IconButton
                 edge="start"
                 className={classes.menuButton}
                 color="inherit"
                 aria-label="open drawer"
                 href="/Drive"
-              >
-                {/* <MenuIcon /> */}
-                <DriveLogo name="wifi" width="2rem" fill="#ffff" />
-              </IconButton>
+                // maxWidth='80%'
+              > */}
+              {/* <MenuIcon /> */}
+
+              {/* <img
+                  src={require("../../assets/siterider-logo-white.svg")}
+                  className={classes.img}
+                /> */}
+              {/* <DriveLogo /> */}
+              {/* </IconButton> */}
             </MenuItem>
             <Grid
               container
@@ -280,9 +294,16 @@ export default function Nav(props) {
               justify="flex-start"
               alignItems="center"
             >
-              <Typography className={classes.title} variant="h4" noWrap>
+              {/* <DriveLogo width='100px' fontSize="1rem" /> */}
+              {/* <Typography className={classes.title} variant="h4" noWrap>
                 Enroute
-              </Typography>
+              </Typography> */}
+              <a href="/Drive">
+                <img
+                  src={require("../../assets/siterider-logo-white.svg")}
+                  className={classes.img}
+                />
+              </a>
             </Grid>
 
             {currentUserFullName ? (
@@ -325,7 +346,6 @@ export default function Nav(props) {
                       aria-haspopup="true"
                       onClick={handleProfileMenuOpen}
                       color="inherit"
-                      
                     >
                       <AccountCircle />
                       {getUser()}
@@ -361,8 +381,8 @@ export default function Nav(props) {
             )}
           </Toolbar>
         </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+        {renderMobileMenu}
+        {renderMenu}
       </ThemeProvider>
     </div>
   );
