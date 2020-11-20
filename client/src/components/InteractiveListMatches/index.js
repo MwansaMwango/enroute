@@ -118,7 +118,7 @@ export default function InteractiveListMatches({
               </ListItemAvatar>
 
               <ListItemText
-                style={{ marginRight: "5px" }}
+                style={{ marginRight: 5 }}
                 primary={
                   <Typography
                     variant="p"
@@ -239,14 +239,14 @@ export default function InteractiveListMatches({
                             {open ? (
                               <IconButton size="small">
                                 <ExpandLess
-                                  fontSize="large"
+                                  fontSize="1.2rem"
                                   onClick={handleClick}
                                 />
                               </IconButton>
                             ) : (
                               <IconButton size="small">
                                 <ExpandMore
-                                  fontSize="large"
+                                  fontSize="1.2rem"
                                   onClick={handleClick}
                                 />
                               </IconButton>

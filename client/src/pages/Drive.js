@@ -256,7 +256,8 @@ function Drive({ isEdit, tripData }) {
       from: formObject.from,
       to: formObject.to,
       departTime:
-        moment(formObject.time).format("HH:mm") || moment().format("HH:mm"),
+        // moment(formObject.time).format("HH:mm") || moment().format("HH:mm"),
+        formObject.time || moment().format("HH:mm"),
       departDate:
         moment(formObject.date).format("yyyy-MM-DD") ||
         moment().format("yyyy-MM-DD"),

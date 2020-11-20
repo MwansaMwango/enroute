@@ -241,6 +241,7 @@ function Ride({ isEdit, requestData }) {
     console.log("event=", event.target.value);
     const { name, value } = event.target;
     setFormObject({ ...formObject, [name]: value });
+    console.log("formObject=",formObject);
   }
 
   function handleHasPackageChange(e) {
@@ -278,8 +279,9 @@ function Ride({ isEdit, requestData }) {
       from: formObject.from,
       to: formObject.to,
       departTime:
-        moment(formObject.time).format("HH:mm") ||
-        moment(new Date(Date.now())).format("HH:mm"),
+        // moment(formObject.time).format("HH:mm") ||
+       formObject.time ||
+        moment().format("HH:mm"),
       departDate:
         moment(formObject.date).format("yyyy-MM-DD") ||
         moment(new Date(Date.now())).format("yyyy-MM-DD"),
@@ -311,11 +313,11 @@ function Ride({ isEdit, requestData }) {
     let submittedEditedRequestObj = {
       from: formObject.from || request.from,
       to: formObject.to || request.to,
-      departTime: formObject.time || request.departTime,
+      // departTime: formObject.time || request.departTime,
       departDate: formObject.date // check required due to default value reverting to today's date
         ? moment(formObject.date).format("yyyy-MM-DD")
         : moment(request.departDate).format("yyyy-MM-DD"),
-      // departTime: moment(formObject.time).format("HH:mm") || moment(request.departTime).format("HH:mm"),
+      departTime: moment(formObject.time).format("HH:mm") || moment(request.departTime).format("HH:mm"),
 
       // moment(formObject?.date).format("yyyy-MM-DD") || moment(request.departDate).format("yyyy-MM-DD") ,
       isTransportVehicle: formObject.isTransportVehicle || isTransportVehicle, // not a property of request
