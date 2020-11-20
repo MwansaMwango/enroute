@@ -56,16 +56,17 @@ const useStyles = makeStyles((theme) => {
     grow: {
       flexGrow: 1,
     },
-    img: {
-      maxWidth: "12rem",
-      display: "inline-block",
-    },
-
     logo: {
       maxHeight: "1.5rem",
       display: "inline-block",
-      paddingRight: 10
+      paddingRight: 5
     },
+    img: {
+      maxWidth: "12rem",
+      display: "inline-block",
+      paddingRight: 5
+    },
+
     menuButton: {
       marginRight: theme.spacing(2),
     },
