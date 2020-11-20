@@ -418,7 +418,7 @@ function Ride({ isEdit, requestData }) {
 
                       {Object.keys(counts).map((key, index) => {
                         switch (key) {
-                          case "Nedlands":
+                          case "Port Hedland":
                             console.log(key);
                             return (
                               <div className={classes.positionNED} key={index}>
@@ -428,7 +428,7 @@ function Ride({ isEdit, requestData }) {
                                 />
                               </div>
                             );
-                          case "Perth":
+                          case "Mooka":
                             console.log(key);
                             return (
                               <div className={classes.positionPER} key={index}>
@@ -438,7 +438,7 @@ function Ride({ isEdit, requestData }) {
                                 />
                               </div>
                             );
-                          case "Victoria Park":
+                          case "Redmont":
                             return (
                               <div
                                 item
@@ -451,7 +451,7 @@ function Ride({ isEdit, requestData }) {
                                 />
                               </div>
                             );
-                          case "Belmont":
+                          case "Yandi":
                             return (
                               <div className={classes.positionBMT} key={index}>
                                 <CustomizedBadges
@@ -460,7 +460,7 @@ function Ride({ isEdit, requestData }) {
                                 />
                               </div>
                             );
-                          case "Mt. Lawley":
+                          case "MAC":
                             return (
                               <div className={classes.positionMTY} key={index}>
                                 <CustomizedBadges
@@ -469,7 +469,7 @@ function Ride({ isEdit, requestData }) {
                                 />
                               </div>
                             );
-                          case "Stirling":
+                          case "Newman":
                             console.log("Stirling count=", counts[key]);
                             return (
                               <div className={classes.positionSTR} key={index}>
@@ -479,7 +479,7 @@ function Ride({ isEdit, requestData }) {
                                 />
                               </div>
                             );
-                          case "Joondalup":
+                          case "Jimblebar":
                             return (
                               <div className={classes.positionJND} key={index}>
                                 <CustomizedBadges

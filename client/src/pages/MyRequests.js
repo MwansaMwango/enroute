@@ -81,9 +81,7 @@ function MyRequests() {
         contrastText: "#000",
       },
       // type: 'dark', // dark theme
-      typography: {
-        fontFamily: "Montserrat",
-      },
+
     },
   });
 
@@ -99,6 +97,9 @@ function MyRequests() {
       margin: "10px 0px 10px 0px",
       borderRadius: 20,
       pointerEvents: "none", // remove click options from card
+    },
+    typography: {
+      fontFamily: "Montserrat",
     },
   }));
 
@@ -216,7 +217,7 @@ function MyRequests() {
                         style={{ textAlign: "center" }}
                         component="p"
                       >
-                        No ride requests created <br />
+                        No ride requests created yet. <br />
                         Request your first ride! 😁
                       </Typography>
                     </CardContent>

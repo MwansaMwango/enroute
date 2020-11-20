@@ -57,14 +57,14 @@ const useStyles = makeStyles((theme) => {
       flexGrow: 1,
     },
     img: {
-      // width: "5rem",
-      // padding: 10,
-      // width: 300
-      // height: '50%'
-      minHeight: '100%',
-      maxWidth: "100%",
-     
-      // height: '50%'
+      maxWidth: "12rem",
+      display: "inline-block",
+    },
+
+    logo: {
+      maxHeight: "1.5rem",
+      display: "inline-block",
+      paddingRight: 10
     },
     menuButton: {
       marginRight: theme.spacing(2),
@@ -298,12 +298,31 @@ export default function Nav(props) {
               {/* <Typography className={classes.title} variant="h4" noWrap>
                 Enroute
               </Typography> */}
-              <a href="/Drive">
-                <img
-                  src={require("../../assets/siterider-logo-white.svg")}
-                  className={classes.img}
-                />
-              </a>
+              <Grid
+                container
+                spacing={1}
+                direction="row"
+                justify="start"
+                alignItems="center"
+                alignContent="center"
+                wrap="nowrap"
+                
+              >
+                
+                <a href="/Drive">
+                  <img
+                    src={require("../../assets/bhp-logo-white.svg")}
+                    className={classes.logo}
+                    />
+                </a>
+                <a href="/Drive">
+                  <img
+                    src={require("../../assets/siterider-logo-white.svg")}
+                    className={classes.img}
+                    />
+                </a>
+                    </Grid>
+           
             </Grid>
 
             {currentUserFullName ? (
