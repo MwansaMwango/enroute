@@ -373,7 +373,7 @@ function Drive({ isEdit, tripData }) {
 
                       {Object.keys(counts).map((key, index) => {
                         switch (key) {
-                          case "Nedlands":
+                          case "Port Hedland":
                             console.log(key);
                             return (
                               <div className={classes.positionNED} key={index}>
@@ -384,7 +384,7 @@ function Drive({ isEdit, tripData }) {
                                 />
                               </div>
                             );
-                          case "Perth":
+                          case "Mooka":
                             console.log(key);
                             return (
                               <div className={classes.positionPER} key={index}>
@@ -395,7 +395,7 @@ function Drive({ isEdit, tripData }) {
                                 />
                               </div>
                             );
-                          case "Victoria Park":
+                          case "Redmont":
                             return (
                               <div
                                 item
@@ -409,7 +409,7 @@ function Drive({ isEdit, tripData }) {
                                 />
                               </div>
                             );
-                          case "Belmont":
+                          case "Yandi":
                             return (
                               <div className={classes.positionBMT} key={index}>
                                 <CustomizedBadges
@@ -419,7 +419,7 @@ function Drive({ isEdit, tripData }) {
                                 />
                               </div>
                             );
-                          case "Mt. Lawley":
+                          case "MAC":
                             return (
                               <div className={classes.positionMTY} key={index}>
                                 <CustomizedBadges
@@ -429,7 +429,7 @@ function Drive({ isEdit, tripData }) {
                                 />
                               </div>
                             );
-                          case "Stirling":
+                          case "Newman":
                             console.log("Stirling count=", counts[key]);
                             return (
                               <div className={classes.positionSTR} key={index}>
@@ -440,7 +440,7 @@ function Drive({ isEdit, tripData }) {
                                 />
                               </div>
                             );
-                          case "Joondalup":
+                          case "Jimblebar":
                             return (
                               <div className={classes.positionJND} key={index}>
                                 <CustomizedBadges
