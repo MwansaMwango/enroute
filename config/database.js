@@ -5,8 +5,8 @@ const connectDb = () => {
   // mongoose.connect("mongodb://bambo:Mlab0044$@ds161794.mlab.com:61794/heroku_bzvqq08h" || "mongodb://localhost/enroute", { useNewUrlParser: true, useUnifiedTopology: true });
   // mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/enroute", { useNewUrlParser: true, useUnifiedTopology: true });
   mongoose
-    // .connect(process.env.DB_URI || "mongodb://localhost:27017/enroute", {
-    .connect( "mongodb://localhost:27017/enroute" || process.env.DB_URI, {
+     .connect(process.env.DB_URI || "mongodb://localhost:27017/enroute", {
+    //.connect( "mongodb://localhost:27017/enroute" || process.env.DB_URI, {
     //   useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
