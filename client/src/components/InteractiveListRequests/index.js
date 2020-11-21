@@ -72,7 +72,7 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
   const [open, setOpen] = React.useState(false);
   let phoneLink;
   if (props.driver_id) {
-    phoneLink = "tel:" + props.driver_id.phone;
+    phoneLink = "tel:" + props.driver_id.phone; // driver_id is foreign key and related to driver profile contact details.
   } else {
     phoneLink = "tel:" + "";
   }
@@ -98,10 +98,7 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
                 primary={
                   <Grid container alignItems="center">
                     <MyLocationIcon color="primary" />
-                    <Typography
-              
-                      className={classes.typography}
-                    >
+                    <Typography className={classes.typography}>
                       {props.from}
                     </Typography>
                   </Grid>
@@ -109,10 +106,7 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
                 secondary={
                   <Grid container alignItems="center">
                     <LocationOnIcon color="primary" />
-                    <Typography
-                
-                      className={classes.typography}
-                    >
+                    <Typography className={classes.typography}>
                       {props.to}
                     </Typography>
                   </Grid>
@@ -123,10 +117,7 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
 
               <ListItemText
                 primary={
-                  <Typography
-          
-                    className={classes.typography}
-                  >
+                  <Typography className={classes.typography}>
                     {moment(props.departDate).format("DD MMM")}
                   </Typography>
                 }
@@ -156,7 +147,12 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
                             () => handleClickDeleteRequest() // TODO delete request modal
                           }
                           startIcon={<DeleteIcon color="disabled" />}
-                          style={{width: "100px", marginBottom: "5px", padding: "2px", borderRadius: "20px"}}
+                          style={{
+                            width: "100px",
+                            marginBottom: "5px",
+                            padding: "2px",
+                            borderRadius: "20px",
+                          }}
                         >
                           DELETE
                         </Button>
@@ -172,7 +168,6 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
                         <TransitionsModalRequest
                           requestData={props}
                           editClicked={true}
-                        
                         />
                       </Grid>
                     );
@@ -207,27 +202,25 @@ export default function InteractiveListRequests({ props, deleteRequest }) {
                                 {/* Click me, I will stay visible until you click
                                 outside. */}
                                 <Typography className={classes.typography}>
-                                  <strong>More Details</strong>
+                                  <strong>Driver Details</strong>
                                   <hr />
-                                  Request Note:{" "}
-                                  {props.requestNote ? (
-                                    <Typography
-                                      fontStyle="oblique"
-                                      className={classes.typography}
-                                    >
-                                      {props.requestNote}{" "}
-                                    </Typography>
-                                  ) : (
-                                    "None"
-                                  )}{" "}
-                                  <br />
-                                  Seats required:{" "}
-                                  {props.seatsRequired
-                                    ? "  " + props.seatsRequired
+                                  <b>Name: </b>
+                                  {props.driver_id
+                                    ? props.driver_id.firstName +
+                                      " " +
+                                      props.driver_id.lastName
                                     : "None"}{" "}
                                   <br />
-                                  Has a pacakge?:{" "}
-                                  {props.hasPackage ? " Yes" : "No"} <br />
+                                  <b>Phone: </b>
+                                  {props.driver_id
+                                    ? "  " + props.driver_id.phone
+                                    : "None"}{" "}
+                                  <br />
+                                  <b>Email:{" "}</b>
+                                  {props.driver_id
+                                    ? props.driver_id.email
+                                    : "None"}{" "}
+                                  <br />
                                 </Typography>
                               </div>
                             ) : null}

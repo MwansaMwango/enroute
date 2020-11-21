@@ -7,7 +7,7 @@ const connectDb = () => {
   mongoose
      .connect(process.env.DB_URI || "mongodb://localhost:27017/enroute", {
     //.connect( "mongodb://localhost:27017/enroute" || process.env.DB_URI, {
-    //   useCreateIndex: true,
+      useCreateIndex: true,
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
