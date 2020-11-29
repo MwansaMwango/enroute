@@ -37,7 +37,7 @@ export default function Layout(props) {
           setEnableSplashScreen(false); // remove splashscreen
           return <Redirect to='/login'  />
           // history.push("/login"); // navigate to login screen
-        }, 2000);
+        }, 3000);
         return () => clearTimeout(timer);
       });
   }, []);
