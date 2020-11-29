@@ -26,6 +26,7 @@ import Axios from "axios";
 import Pusher from "pusher-js";
 import "./app.css";
 import AlertDialog from "./components/AlertDialog";
+import Intro from "./components/Intro";
 
 function App() {
   const [isNewNotification, setIsNewNotification] = useState();
@@ -96,9 +97,15 @@ function App() {
 
   const classes = useStyles();
 
+  //   useEffect(() => {
+  //   const timer = setTimeout(() => console.log("Hello, World!"), 3000);
+  //   return () => clearTimeout(timer);
+  // }, []);
+
   return (
     <Router>
       <Layout>
+      
         <NotificationContext.Provider value={isNewNotification}>
           <img
             src={require("../src/assets/map2-grey.png")}
