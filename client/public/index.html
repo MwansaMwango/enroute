@@ -13,7 +13,7 @@
     />
     <meta name="theme-color" content="#000000" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="shortcut icon" href="%PUBLIC_URL%/BHP-favicon.ico" />
     <!-- Import Google Icon Font -->
     <link
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -43,54 +43,12 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css"
     />
 
-    <title>Enroute</title>
+    <title>BHP Site Rider</title>
   </head>
 
   <body>
     <noscript> You need to enable JavaScript to run this app. </noscript>
     <div id="root"></div>
-    <!-- Import Pusher for Push notifications -->
-    <!-- <script src="https://js.pusher.com/beams/1.0/push-notifications-cdn.js"></script> -->
-    <!-- <script src="https://js.pusher.com/7.0/pusher.min.js"></script> -->
-
-    <!-- Import Axios for API calls -->
-    <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
-
-    <script>
-      // // Get current logged in user
-      // let currentUserId;
-      // const getUser = () => {
-      //   axios
-      //     .get("/api/users/current-user")
-      //     .then((res) => {
-      //       console.log("Current User ID", res.data.data._id);
-      //       currentUserId = res.data.data._id;
-      //       subscribeToPusherChannel(currentUserId);
-      //       return true;
-      //     })
-      //     .catch((err) => {
-      //       console.log("Something went wrong");
-      //     });
-      // };
-      // getUser();
-
-      // // ---------------- CHANNELS ------------------ //
-      // const subscribeToPusherChannel = (currentUserId) => {
-      //   // Enable pusher logging - don't include this in production
-      //   Pusher.logToConsole = true;
-
-      //   const pusher = new Pusher("29fa452f5422eea823e5", {
-      //     cluster: "ap1",
-      //   });
-
-      //   const channel = pusher.subscribe("private-user-" + currentUserId);
-      //   channel.bind("request-booked", function (data) {
-      //     alert(JSON.stringify(
-      //     "Good News! Booking Confirmed: " +
-      //     data.requestData.from + " to " + data.requestData.to
-      //       ));
-      //   });
-      // };
-    </script>
+    <script></script>
   </body>
 </html>
