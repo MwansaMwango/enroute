@@ -82,7 +82,7 @@ function Intro() {
           className={classes.splash}
         >
           <img
-            src={require("../../assets/bhp-logo-white.svg")}
+            src={require("../../assets/BHB-logo.png")}
             className={classes.businessLogo}
           />
           <img

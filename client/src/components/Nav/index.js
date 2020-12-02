@@ -312,7 +312,7 @@ export default function Nav(props) {
                 
                 <a href="/Drive">
                   <img
-                    src={require("../../assets/bhp-logo-white.svg")}
+                    src={require("../../assets/BHB-logo.png")}
                     className={classes.logo}
                     />
                 </a>
