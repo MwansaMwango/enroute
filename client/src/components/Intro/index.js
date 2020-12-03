@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
   businessLogo: {
     maxWidth: 250,
-    marginTop: "150px",
+    marginTop: "100px",
     zIndex: 300,
   },
   appLogo: {
