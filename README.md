@@ -2,42 +2,33 @@
 
 ## Description
 
-A carpooling app for businesses  to optimise transportation.
+Site-Rider ( formally, enroute) is a carpooling app to optimise transportation of people, parcels and vehicles across remote mine site operations.
 
-## Deployment
+## Screens
+
+
+## Technology Stack
+* HTML / CSS / Javascript
+* Material-UI
+* Mongoose - NoSQL database
+* MongoDB
+* Express.js
+* React
+* Node JS
+* Passport.js - login authentication
+* Pusher.js - real-time notifications
+
+## Deployment - Heroku
 
  [Demo](https://enroute2020.herokuapp.com/)
 
----
-## Table of Contents
-
- * [Installation](#installation)
- * [Usage](#usage)
- * [Licence](#licence)
- * [Contributing](#contributing)
- * [Tests](#tests)
- * [Questions](#questions) 
-  
----
-## Installation
-
-Clone project using node 2. npm install 3. npm run start
-
-## Usage
-
-App can be used by business to optmise existing transport routes.
-
 ## Licence
 
-Copyright reserved
+Copyright reserved 2021.
 
 ## Contribution
 
-Send me an email or pull request
-
-## Tests
-
-Work in progress
+Send me an email or pull request to further develop MVP
 
 ---
 ## Have any questions?
